@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <RootNamespace>DotVast.HashTool.WinUI.Core</RootNamespace>
+        <Platforms>AnyCPU;x64;x86</Platforms>
+        <Platforms>x64;arm64;AnyCPU</Platforms>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Folder Include="Models\" />
+    </ItemGroup>
+</Project>
