@@ -1,0 +1,1 @@
+# DotVast.HashTool.WinUI
