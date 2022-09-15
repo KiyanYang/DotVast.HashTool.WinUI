@@ -153,4 +153,13 @@
   <data name="Shell_Home.Content" xml:space="preserve">
     <value>Home</value>
   </data>
+  <data name="HashTaskMode_File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="HashTaskMode_Folder" xml:space="preserve">
+    <value>Folder</value>
+  </data>
+  <data name="HashTaskMode_Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
 </root>
