@@ -1,7 +1,5 @@
 using System.Reflection;
-using System.Windows.Input;
 
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 using DotVast.HashTool.WinUI.Contracts.Services;
@@ -13,44 +11,57 @@ using Windows.ApplicationModel;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
-public class SettingsViewModel : ObservableRecipient
+public partial class SettingsViewModel : ObservableRecipient
 {
-    private readonly IThemeSelectorService _themeSelectorService;
-    private ElementTheme _elementTheme;
+    [ObservableProperty]
     private string _versionDescription;
 
-    public ElementTheme ElementTheme
-    {
-        get => _elementTheme;
-        set => SetProperty(ref _elementTheme, value);
-    }
+    #region Language selector
 
-    public string VersionDescription
-    {
-        get => _versionDescription;
-        set => SetProperty(ref _versionDescription, value);
-    }
+    private readonly ILanguageSelectorService _languageSelectorService;
 
-    public ICommand SwitchThemeCommand
+    public AppLanguage[] AppLanguages
     {
         get;
     }
 
-    public SettingsViewModel(IThemeSelectorService themeSelectorService)
+    [ObservableProperty]
+    private AppLanguage _appLanguage;
+
+    async partial void OnAppLanguageChanged(AppLanguage value)
+    {
+        await _languageSelectorService.SetAppLanguageAsync(value);
+    }
+
+    #endregion Language selector
+
+    #region Theme selector
+
+    private readonly IThemeSelectorService _themeSelectorService;
+
+    [ObservableProperty]
+    private ElementTheme _elementTheme;
+
+    [RelayCommand]
+    private async Task SwitchTheme(ElementTheme param)
+    {
+        if (ElementTheme != param)
+        {
+            ElementTheme = param;
+            await _themeSelectorService.SetThemeAsync(param);
+        }
+    }
+
+    #endregion Theme selector
+
+    public SettingsViewModel(IThemeSelectorService themeSelectorService, ILanguageSelectorService languageSelectorService)
     {
         _themeSelectorService = themeSelectorService;
         _elementTheme = _themeSelectorService.Theme;
+        _languageSelectorService = languageSelectorService;
+        _appLanguage = _languageSelectorService.Language;
+        AppLanguages = _languageSelectorService.Languages;
         _versionDescription = GetVersionDescription();
-
-        SwitchThemeCommand = new RelayCommand<ElementTheme>(
-            async (param) =>
-            {
-                if (ElementTheme != param)
-                {
-                    ElementTheme = param;
-                    await _themeSelectorService.SetThemeAsync(param);
-                }
-            });
     }
 
     private static string GetVersionDescription()
