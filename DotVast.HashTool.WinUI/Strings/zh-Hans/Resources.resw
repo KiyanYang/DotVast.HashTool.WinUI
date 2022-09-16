@@ -120,8 +120,14 @@
   <data name="AppDescription" xml:space="preserve">
     <value>HashTool（基于 WinUI）</value>
   </data>
+  <data name="AppDescriptionDev" xml:space="preserve">
+    <value>HashTool Dev（基于 WinUI）</value>
+  </data>
   <data name="AppDisplayName" xml:space="preserve">
     <value>HashTool</value>
+  </data>
+  <data name="AppDisplayNameDev" xml:space="preserve">
+    <value>HashTool Dev</value>
   </data>
   <data name="HashTaskMode_File" xml:space="preserve">
     <value>文件</value>

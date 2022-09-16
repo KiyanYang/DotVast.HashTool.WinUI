@@ -165,4 +165,10 @@
   <data name="Settings_Language.Text" xml:space="preserve">
     <value>Language</value>
   </data>
+  <data name="AppDescriptionDev" xml:space="preserve">
+    <value>HashTool Dev (Based on WinUI)</value>
+  </data>
+  <data name="AppDisplayNameDev" xml:space="preserve">
+    <value>HashTool Dev</value>
+  </data>
 </root>

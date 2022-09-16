@@ -33,7 +33,11 @@ public sealed partial class ShellPage : Page
         App.MainWindow.ExtendsContentIntoTitleBar = true;
         App.MainWindow.SetTitleBar(AppTitleBar);
         App.MainWindow.Activated += MainWindow_Activated;
+#if DEBUG
+        AppTitleBarText.Text = "AppDisplayNameDev".GetLocalized();
+#else
         AppTitleBarText.Text = "AppDisplayName".GetLocalized();
+#endif
     }
 
     private void OnLoaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)

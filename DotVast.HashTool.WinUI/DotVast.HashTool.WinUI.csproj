@@ -19,6 +19,15 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <AppxManifest Include="Package.appxmanifest" Condition="'$(Configuration)' != 'Debug'">
+            <SubType>Designer</SubType>
+        </AppxManifest>
+        <AppxManifest Include="Package.Dev.appxmanifest" Condition="'$(Configuration)' == 'Debug'">
+            <SubType>Designer</SubType>
+        </AppxManifest>
+    </ItemGroup>
+
+    <ItemGroup>
         <Manifest Include="$(ApplicationManifest)" />
     </ItemGroup>
 

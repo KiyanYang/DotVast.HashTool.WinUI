@@ -10,6 +10,10 @@ public sealed partial class MainWindow : WindowEx
 
         AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/Icon.ico"));
         Content = null;
+#if DEBUG
+        Title = "AppDisplayNameDev".GetLocalized();
+#else
         Title = "AppDisplayName".GetLocalized();
+#endif
     }
 }
