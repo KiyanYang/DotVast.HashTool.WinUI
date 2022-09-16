@@ -8,7 +8,7 @@ internal class LanguageSelectorService : ILanguageSelectorService
     public AppLanguage Language
     {
         get; set;
-    } = AppLanguage.EnUS;
+    } = AppLanguage.ZhHans;
 
     public AppLanguage[] Languages
     {
@@ -19,7 +19,7 @@ internal class LanguageSelectorService : ILanguageSelectorService
     {
         Languages = new AppLanguage[] { AppLanguage.ZhHans, AppLanguage.EnUS };
         Language = Languages.Where(x => x.Tag == ApplicationLanguages.PrimaryLanguageOverride)
-                            .FirstOrDefault() ?? AppLanguage.EnUS;
+                            .FirstOrDefault() ?? AppLanguage.ZhHans;
         await Task.CompletedTask;
     }
 
