@@ -8,7 +8,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace DotVast.HashTool.WinUI.Services;
 
-public class NavigationViewService : INavigationViewService
+public sealed class NavigationViewService : INavigationViewService
 {
     private readonly INavigationService _navigationService;
 

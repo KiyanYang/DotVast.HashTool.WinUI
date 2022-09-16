@@ -10,7 +10,7 @@ using Windows.Storage;
 
 namespace DotVast.HashTool.WinUI.Services;
 
-public class LocalSettingsService : ILocalSettingsService
+public sealed class LocalSettingsService : ILocalSettingsService
 {
     private const string DefaultApplicationDataFolder = "DotVast.HashTool.WinUI/ApplicationData";
     private const string DefaultLocalSettingsFile = "LocalSettings.json";

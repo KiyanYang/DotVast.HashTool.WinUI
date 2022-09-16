@@ -7,7 +7,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace DotVast.HashTool.WinUI.Services;
 
-public class ActivationService : IActivationService
+public sealed class ActivationService : IActivationService
 {
     private readonly ActivationHandler<LaunchActivatedEventArgs> _defaultHandler;
     private readonly IEnumerable<IActivationHandler> _activationHandlers;

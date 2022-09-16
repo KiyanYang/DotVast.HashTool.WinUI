@@ -7,7 +7,7 @@ using Microsoft.Xaml.Interactivity;
 
 namespace DotVast.HashTool.WinUI.Behaviors;
 
-public class NavigationViewHeaderBehavior : Behavior<NavigationView>
+public sealed class NavigationViewHeaderBehavior : Behavior<NavigationView>
 {
     private static NavigationViewHeaderBehavior? s_current;
 

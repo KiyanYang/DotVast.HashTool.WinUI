@@ -23,7 +23,7 @@ public interface ILanguageSelectorService
     Task SetAppLanguageAsync(AppLanguage language);
 }
 
-public class AppLanguage : GenericEnum<Language>
+public sealed class AppLanguage : GenericEnum<Language>
 {
     public static readonly AppLanguage ZhHans = new("zh-Hans");
     public static readonly AppLanguage EnUS = new("en-US");

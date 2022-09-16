@@ -5,7 +5,7 @@ using DotVast.HashTool.WinUI.Core.Contracts.Services;
 
 namespace DotVast.HashTool.WinUI.Core.Services;
 
-public class FileService : IFileService
+public sealed class FileService : IFileService
 {
     public T Read<T>(string folderPath, string fileName)
     {

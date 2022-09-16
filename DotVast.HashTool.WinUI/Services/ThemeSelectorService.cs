@@ -5,7 +5,7 @@ using Microsoft.UI.Xaml;
 
 namespace DotVast.HashTool.WinUI.Services;
 
-public class ThemeSelectorService : IThemeSelectorService
+public sealed class ThemeSelectorService : IThemeSelectorService
 {
     private const string SettingsKey = "AppBackgroundRequestedTheme";
 

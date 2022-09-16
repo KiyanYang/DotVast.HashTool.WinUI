@@ -1,6 +1,6 @@
 namespace DotVast.HashTool.WinUI.Models.Controls;
 
-public partial class ProgressBarModel : ObservableObject
+public sealed partial class ProgressBarModel : ObservableObject
 {
     [ObservableProperty]
     private double _min;

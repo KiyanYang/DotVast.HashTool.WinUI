@@ -2,7 +2,7 @@ using DotVast.HashTool.WinUI.Services.Hash;
 
 namespace DotVast.HashTool.WinUI.Models;
 
-public class HashResult
+public sealed class HashResult
 {
     public HashResultType Type
     {
@@ -30,7 +30,7 @@ public enum HashResultType
     Text,
 }
 
-public class HashResultItem
+public sealed class HashResultItem
 {
     private readonly Hash _hash;
 

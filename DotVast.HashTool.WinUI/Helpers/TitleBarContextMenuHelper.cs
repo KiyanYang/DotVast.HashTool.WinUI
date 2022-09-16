@@ -4,7 +4,7 @@ using Microsoft.UI.Xaml;
 
 namespace DotVast.HashTool.WinUI.Helpers;
 
-internal class TitleBarContextMenuHelper
+internal sealed class TitleBarContextMenuHelper
 {
     private enum PreferredAppMode
     {

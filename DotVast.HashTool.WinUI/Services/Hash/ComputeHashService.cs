@@ -6,7 +6,7 @@ using DotVast.HashTool.WinUI.Models;
 
 namespace DotVast.HashTool.WinUI.Services.Hash;
 
-internal class ComputeHashService : IComputeHashService
+internal sealed class ComputeHashService : IComputeHashService
 {
     private readonly IProgress<double> _atomProgress = new Progress<double>();
     public Progress<double> AtomProgress => (Progress<double>)_atomProgress;

@@ -10,7 +10,7 @@ namespace DotVast.HashTool.WinUI.Helpers;
 //
 // Usage in code:
 // NavigationHelper.SetNavigateTo(navigationViewItem, typeof(MainViewModel).FullName);
-public class NavigationHelper
+public sealed class NavigationHelper
 {
     public static string GetNavigateTo(NavigationViewItem item) => (string)item.GetValue(NavigateToProperty);
 

@@ -8,7 +8,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace DotVast.HashTool.WinUI.Services;
 
-public class PageService : IPageService
+public sealed class PageService : IPageService
 {
     private readonly Dictionary<string, Type> _pages = new();
 

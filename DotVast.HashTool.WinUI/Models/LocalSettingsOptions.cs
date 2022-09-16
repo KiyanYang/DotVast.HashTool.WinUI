@@ -1,6 +1,6 @@
 namespace DotVast.HashTool.WinUI.Models;
 
-public class LocalSettingsOptions
+public sealed class LocalSettingsOptions
 {
     public string? ApplicationDataFolder
     {

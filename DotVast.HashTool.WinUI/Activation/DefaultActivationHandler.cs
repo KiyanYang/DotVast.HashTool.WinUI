@@ -5,7 +5,7 @@ using Microsoft.UI.Xaml;
 
 namespace DotVast.HashTool.WinUI.Activation;
 
-public class DefaultActivationHandler : ActivationHandler<LaunchActivatedEventArgs>
+public sealed class DefaultActivationHandler : ActivationHandler<LaunchActivatedEventArgs>
 {
     private readonly INavigationService _navigationService;
 

@@ -3,7 +3,7 @@ using Microsoft.UI.Xaml.Data;
 
 namespace DotVast.HashTool.WinUI.Helpers;
 
-public class EnumToBooleanConverter : IValueConverter
+public sealed class EnumToBooleanConverter : IValueConverter
 {
     public EnumToBooleanConverter()
     {

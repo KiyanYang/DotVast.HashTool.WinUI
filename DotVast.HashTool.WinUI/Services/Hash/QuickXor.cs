@@ -55,7 +55,7 @@ namespace DotVast.HashTool.WinUI.Services.Hash;
 ///
 /// The final hash should xor the length of the data with the least significant bits of the resulting block.
 /// </summary>
-internal class QuickXorHash : System.Security.Cryptography.HashAlgorithm
+internal sealed class QuickXorHash : System.Security.Cryptography.HashAlgorithm
 {
     private const int BitsInLastCell = 32;
     private const byte Shift = 11;

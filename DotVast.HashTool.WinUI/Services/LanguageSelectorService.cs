@@ -3,7 +3,7 @@ using DotVast.HashTool.WinUI.Contracts.Services;
 using Windows.Globalization;
 
 namespace DotVast.HashTool.WinUI.Services;
-internal class LanguageSelectorService : ILanguageSelectorService
+internal sealed class LanguageSelectorService : ILanguageSelectorService
 {
     public AppLanguage Language
     {

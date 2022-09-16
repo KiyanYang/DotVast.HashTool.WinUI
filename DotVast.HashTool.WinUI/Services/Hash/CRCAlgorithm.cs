@@ -24,7 +24,7 @@ using System.Security.Cryptography;
 
 namespace DotVast.HashTool.WinUI.Services.Hash;
 
-internal class CRCAlgorithm : HashAlgorithm
+internal sealed class CRCAlgorithm : HashAlgorithm
 {
     #region CRC 算法参数模型
 

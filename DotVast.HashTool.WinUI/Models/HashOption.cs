@@ -2,7 +2,7 @@ using DotVast.HashTool.WinUI.Services.Hash;
 
 namespace DotVast.HashTool.WinUI.Models;
 
-public partial class HashOption : ObservableObject
+public sealed partial class HashOption : ObservableObject
 {
     [ObservableProperty]
     private bool _isChecked;

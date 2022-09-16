@@ -11,7 +11,7 @@ using Windows.ApplicationModel;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
-public partial class SettingsViewModel : ObservableRecipient
+public sealed partial class SettingsViewModel : ObservableRecipient
 {
     [ObservableProperty]
     private string _versionDescription;

@@ -4,7 +4,7 @@ using Crypto = System.Security.Cryptography;
 
 namespace DotVast.HashTool.WinUI.Services.Hash;
 
-public class Hash : GenericEnum<string>
+public sealed class Hash : GenericEnum<string>
 {
     public string Name => base._value;
 

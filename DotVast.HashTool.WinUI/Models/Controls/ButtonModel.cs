@@ -2,7 +2,7 @@ using DotVast.HashTool.WinUI.Helpers;
 
 namespace DotVast.HashTool.WinUI.Models.Controls;
 
-public partial class ButtonModel : ObservableObject
+public sealed partial class ButtonModel : ObservableObject
 {
     [ObservableProperty]
     private bool _isEnabled;

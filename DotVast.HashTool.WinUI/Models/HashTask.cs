@@ -6,7 +6,7 @@ using DotVast.HashTool.WinUI.Services.Hash;
 
 namespace DotVast.HashTool.WinUI.Models;
 
-public partial class HashTask : ObservableObject
+public sealed partial class HashTask : ObservableObject
 {
     [ObservableProperty]
     private int _id;
@@ -91,7 +91,7 @@ public enum HashTaskState
     Aborted,
 }
 
-public class HashTaskMode : GenericEnum<string>
+public sealed class HashTaskMode : GenericEnum<string>
 {
     /// <summary>
     /// 文件.
