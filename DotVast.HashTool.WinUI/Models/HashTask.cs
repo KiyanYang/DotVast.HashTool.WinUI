@@ -18,7 +18,7 @@ public partial class HashTask : ObservableObject
     private TimeSpan _elapsed;
 
     [ObservableProperty]
-    private int _modeIndex;
+    private HashTaskMode _mode = HashTaskMode.File;
 
     [ObservableProperty]
     private string _content = string.Empty;
@@ -43,15 +43,6 @@ public partial class HashTask : ObservableObject
     private ObservableCollection<HashResult>? _results;
 
     public IList<Hash> SelectedHashs { get; set; } = Array.Empty<Hash>();
-
-    public HashTaskMode Mode => Modes[ModeIndex];
-
-    public static List<HashTaskMode> Modes { get; } = new()
-    {
-        HashTaskMode.File,
-        HashTaskMode.Folder,
-        HashTaskMode.Text,
-    };
 
     partial void OnResultChanged(HashResult? value)
     {
@@ -115,7 +106,7 @@ public class HashTaskMode : GenericEnum<string>
     /// <summary>
     /// 文本.
     /// </summary>
-    public static HashTaskMode Text { get; } = new("HashTaskMode_Folder".GetLocalized());
+    public static HashTaskMode Text { get; } = new("HashTaskMode_Text".GetLocalized());
 
     private HashTaskMode(string name) : base(name) { }
 }

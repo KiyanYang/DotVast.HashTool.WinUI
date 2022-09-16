@@ -8,33 +8,42 @@ namespace DotVast.HashTool.WinUI.Services.Hash;
 
 internal class ComputeHashService : IComputeHashService
 {
-    public async Task<HashTask> HashFile(HashTask hashTask, IProgress<double> atomProgress, IProgress<double> taskProgress, ManualResetEventSlim mres, CancellationToken ct)
+    private readonly IProgress<double> _atomProgress = new Progress<double>();
+    public Progress<double> AtomProgress => (Progress<double>)_atomProgress;
+
+    private readonly IProgress<(int Val, int Max)> _taskProgress = new Progress<(int, int)>();
+    public Progress<(int Val, int Max)> TaskProgress => (Progress<(int, int)>)_taskProgress;
+
+    public bool IsFree
+    {
+        get; set;
+    } = true;
+
+    public async Task<HashTask> HashFile(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct)
     {
         return await AttachHashTask(async () =>
         {
+            _taskProgress.Report((0, 1));
             using Stream stream = File.Open(hashTask.Content, FileMode.Open, FileAccess.Read, FileShare.Read);
-            var hashResult = await Task.Run(() => HashStream(hashTask.SelectedHashs, stream, atomProgress, mres, ct));
+            var hashResult = await Task.Run(() => HashStream(hashTask.SelectedHashs, stream, _atomProgress, mres, ct));
             if (hashResult != null)
             {
                 hashResult.Type = HashResultType.File;
                 hashResult.Content = hashTask.Content;
                 hashTask.Result = hashResult;
-                taskProgress.Report(100);
-            }
-            else
-            {
-                taskProgress.Report(0);
+                _taskProgress.Report((1, 1));
             }
             return;
         }, hashTask, ct);
     }
 
-    public async Task<HashTask> HashFolder(HashTask hashTask, IProgress<double> atomProgress, IProgress<double> taskProgress, ManualResetEventSlim mres, CancellationToken ct)
+    public async Task<HashTask> HashFolder(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct)
     {
         return await AttachHashTask(async () =>
         {
             hashTask.Results = new();
             var filePaths = Directory.GetFiles(hashTask.Content);
+            _taskProgress.Report((0, filePaths.Length));
             foreach (var filePath in filePaths)
             {
                 using Stream? stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
@@ -43,48 +52,47 @@ internal class ComputeHashService : IComputeHashService
                     continue;
                 }
 
-                var hashResult = await Task.Run(() => HashStream(hashTask.SelectedHashs, stream, atomProgress, mres, ct));
+                var hashResult = await Task.Run(() => HashStream(hashTask.SelectedHashs, stream, _atomProgress, mres, ct));
                 if (hashResult != null)
                 {
                     hashResult.Type = HashResultType.File;
                     hashResult.Content = filePath;
                     hashTask.Results.Add(hashResult);
                 }
-                taskProgress.Report((double)hashTask.Results.Count / filePaths.Length);
+                _taskProgress.Report((hashTask.Results.Count, filePaths.Length));
             }
         }, hashTask, ct);
     }
 
-    public async Task<HashTask> HashText(HashTask hashTask, IProgress<double> atomProgress, IProgress<double> taskProgress, ManualResetEventSlim mres, CancellationToken ct)
+    public async Task<HashTask> HashText(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct)
     {
         return await AttachHashTask(async () =>
         {
+            _taskProgress.Report((0, 1));
             var contentBytes = hashTask.Encoding?.GetBytes(hashTask.Content) ?? Array.Empty<byte>();
             using Stream stream = new MemoryStream(contentBytes);
-            var hashResult = await Task.Run(() => HashStream(hashTask.SelectedHashs, stream, atomProgress, mres, ct));
+            var hashResult = await Task.Run(() => HashStream(hashTask.SelectedHashs, stream, _atomProgress, mres, ct));
             if (hashResult != null)
             {
                 hashResult.Type = HashResultType.Text;
                 hashResult.Content = hashTask.Content;
                 hashTask.Result = hashResult;
-                taskProgress.Report(1);
-            }
-            else
-            {
-                taskProgress.Report(0);
+                _taskProgress.Report((1, 1));
             }
             return;
         }, hashTask, ct);
     }
 
-    public static async Task<HashTask> AttachHashTask(Func<Task> func, HashTask hashTask, CancellationToken ct)
+    public async Task<HashTask> AttachHashTask(Func<Task> func, HashTask hashTask, CancellationToken ct)
     {
+        IsFree = false;
         var stopWatch = Stopwatch.StartNew();
 
         hashTask.Status = HashTaskState.Working;
         await func();
         if (ct.IsCancellationRequested)
         {
+            _taskProgress.Report((0, 1));
             hashTask.Status = HashTaskState.Canceled;
         }
         else
@@ -94,6 +102,7 @@ internal class ComputeHashService : IComputeHashService
 
         stopWatch.Stop();
         hashTask.Elapsed = stopWatch.Elapsed;
+        IsFree = true;
         return hashTask;
     }
 
@@ -126,13 +135,13 @@ internal class ComputeHashService : IComputeHashService
 
         using Barrier barrier = new(hashs.Count, (b) =>
         {
-            // 实际读取长度。读取完毕时该值为 0。
+            // 实际读取长度. 读取完毕时该值为 0.
             readLength = stream.Read(buffer, 0, bufferSize);
 
-            // 暂停功能
+            // 暂停功能.
             mres.Wait();
 
-            // 报告进度
+            // 报告进度. streamLength 在此处始终大于 0.
             progress.Report((double)stream.Position / streamLength);
         });
 
@@ -158,7 +167,13 @@ internal class ComputeHashService : IComputeHashService
 
         if (ct.IsCancellationRequested)
         {
+            progress.Report(0);
             return null;
+        }
+        else
+        {
+            // 确保报告计算完成. 主要用于解决空流(stream.Length == 0)时无法在屏障进行报告的问题.
+            progress.Report(1);
         }
 
         HashResult hashResult = new()

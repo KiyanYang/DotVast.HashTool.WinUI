@@ -5,6 +5,7 @@ using DotVast.HashTool.WinUI.Core.Services;
 using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Services;
+using DotVast.HashTool.WinUI.Services.Hash;
 using DotVast.HashTool.WinUI.ViewModels;
 using DotVast.HashTool.WinUI.Views;
 
@@ -63,6 +64,8 @@ public partial class App : Application
             services.AddSingleton<IActivationService, ActivationService>();
             services.AddSingleton<IPageService, PageService>();
             services.AddSingleton<INavigationService, NavigationService>();
+
+            services.AddSingleton<IComputeHashService, ComputeHashService>();
 
             // Core Services
             services.AddSingleton<IFileService, FileService>();

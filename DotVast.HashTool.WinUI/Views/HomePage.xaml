@@ -4,8 +4,78 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:DotVast.HashTool.WinUI.Models"
+    NavigationCacheMode="Required"
     mc:Ignorable="d">
 
-    <Grid x:Name="ContentArea" />
+    <ScrollViewer>
+        <StackPanel
+            x:Name="ContentArea"
+            Orientation="Vertical"
+            Spacing="8">
+
+            <Grid ColumnSpacing="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <ComboBox
+                    Grid.Column="0"
+                    ItemsSource="{x:Bind ViewModel.HashTaskModes}"
+                    SelectedItem="{x:Bind ViewModel.CurrentHashTask.Mode, Mode=TwoWay}" />
+                <TextBox Grid.Column="1" Text="{x:Bind ViewModel.CurrentHashTask.Content, Mode=TwoWay}" />
+                <Button
+                    x:Uid="Home_Button_Pick"
+                    Grid.Column="2"
+                    Command="{x:Bind ViewModel.PickCommand}" />
+            </Grid>
+
+            <Border Style="{StaticResource CardBorderStyle}">
+                <ItemsRepeater ItemsSource="{x:Bind ViewModel.HashOptions}">
+                    <ItemsRepeater.Layout>
+                        <UniformGridLayout ItemsStretch="Fill" />
+                    </ItemsRepeater.Layout>
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate x:DataType="models:HashOption">
+                            <CheckBox Content="{x:Bind Hash.Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+                </ItemsRepeater>
+            </Border>
+
+            <ProgressBar
+                Maximum="{x:Bind ViewModel.AtomProgressBar.Max, Mode=OneWay}"
+                Minimum="{x:Bind ViewModel.AtomProgressBar.Min, Mode=OneWay}"
+                Value="{x:Bind ViewModel.AtomProgressBar.Val, Mode=OneWay}" />
+            <ProgressBar
+                Maximum="{x:Bind ViewModel.TaskProgressBar.Max, Mode=OneWay}"
+                Minimum="{x:Bind ViewModel.TaskProgressBar.Min, Mode=OneWay}"
+                Value="{x:Bind ViewModel.TaskProgressBar.Val, Mode=OneWay}" />
+
+            <Grid ColumnSpacing="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Grid.Column="0"
+                    Command="{x:Bind ViewModel.StartTaskCommand}"
+                    Content="{x:Bind ViewModel.StartButton.Content, Mode=OneWay}"
+                    IsEnabled="{x:Bind ViewModel.StartButton.IsEnabled, Mode=OneWay}" />
+                <Button
+                    Grid.Column="1"
+                    Command="{x:Bind ViewModel.ResetTaskCommand}"
+                    Content="{x:Bind ViewModel.ResetButton.Content, Mode=OneWay}"
+                    IsEnabled="{x:Bind ViewModel.ResetButton.IsEnabled, Mode=OneWay}" />
+                <Button
+                    Grid.Column="2"
+                    Command="{x:Bind ViewModel.CancelTaskCommand}"
+                    Content="{x:Bind ViewModel.CancelButton.Content, Mode=OneWay}"
+                    IsEnabled="{x:Bind ViewModel.CancelButton.IsEnabled, Mode=OneWay}" />
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
 
 </Page>
