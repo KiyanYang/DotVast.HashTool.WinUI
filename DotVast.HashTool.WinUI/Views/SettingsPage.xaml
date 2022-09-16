@@ -9,20 +9,17 @@
     mc:Ignorable="d">
     <Page.Resources>
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
-        <Style x:Key="CardGridStyle" TargetType="Grid">
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
-            <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
-            <Setter Property="CornerRadius" Value="4" />
-            <Setter Property="Padding" Value="16,8,16,8" />
-            <Setter Property="Margin" Value="{StaticResource SmallTopBottomMargin}" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-        </Style>
-        <Style x:Key="CardLeftTextBlockStyle" BasedOn="{StaticResource BodyTextBlockStyle}" TargetType="TextBlock">
+        <Style
+            x:Key="CardLeftTextBlockStyle"
+            BasedOn="{StaticResource BodyTextBlockStyle}"
+            TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
-        <Style x:Key="CardRightComboBoxStyle" BasedOn="{StaticResource DefaultComboBoxStyle}" TargetType="ComboBox">
+        <Style
+            x:Key="CardRightComboBoxStyle"
+            BasedOn="{StaticResource DefaultComboBoxStyle}"
+            TargetType="ComboBox">
             <Setter Property="HorizontalAlignment" Value="Right" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
@@ -67,7 +64,10 @@
                 </StackPanel>
             </StackPanel>
 
-            <Grid Style="{StaticResource CardGridStyle}">
+            <Grid
+                Margin="{StaticResource SmallTopBottomMargin}"
+                HorizontalAlignment="Stretch"
+                Style="{StaticResource CardGridStyle}">
                 <TextBlock x:Uid="Settings_Language" Style="{StaticResource CardLeftTextBlockStyle}" />
                 <ComboBox
                     MinWidth="160"
@@ -82,7 +82,10 @@
             <StackPanel Margin="{StaticResource XSmallTopMargin}">
                 <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Text="{x:Bind ViewModel.VersionDescription, Mode=OneWay}" />
 
-                <TextBlock x:Uid="Settings_AboutDescription" Margin="{StaticResource XSmallTopMargin}" Style="{ThemeResource BodyTextBlockStyle}" />
+                <TextBlock
+                    x:Uid="Settings_AboutDescription"
+                    Margin="{StaticResource XSmallTopMargin}"
+                    Style="{ThemeResource BodyTextBlockStyle}" />
                 <HyperlinkButton x:Uid="SettingsPage_PrivacyTermsLink" Margin="{StaticResource SettingsPageHyperlinkButtonMargin}" />
             </StackPanel>
         </StackPanel>
