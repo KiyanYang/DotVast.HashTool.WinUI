@@ -11,7 +11,11 @@ using DotVast.HashTool.WinUI.Views;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.UI.Xaml;
+
+using Serilog;
 
 namespace DotVast.HashTool.WinUI;
 
@@ -40,6 +44,8 @@ public sealed partial class App : Application
     }
 
     public static WindowEx MainWindow { get; } = new MainWindow();
+
+    private readonly ILogger<App> _logger;
 
     public App()
     {
@@ -80,16 +86,28 @@ public sealed partial class App : Application
 
             // Configuration
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
+            services.Configure<LogOptions>(context.Configuration.GetSection(nameof(LogOptions)));
+        }).
+        UseSerilog((context, services, loggerConfiguration) =>
+        {
+            var logFilePath = services.GetService<IOptions<LogOptions>>()!.Value.FilePath ?? "Log/app-.log";
+            var appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var filePath = Path.Combine(appDataFolder, logFilePath);
+            loggerConfiguration
+                .WriteTo.File(filePath, shared: true, rollingInterval: RollingInterval.Day);
         }).
         Build();
 
         UnhandledException += App_UnhandledException;
+
+        _logger = GetService<ILogger<App>>();
     }
 
     private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
     {
         // TODO: Log and handle exceptions as appropriate.
         // https://docs.microsoft.com/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.application.unhandledexception.
+        _logger.LogCritical("未处理的异常: {Message}\n{Exception}", e.Message, e.Exception);
     }
 
     protected async override void OnLaunched(LaunchActivatedEventArgs args)

@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 using CommunityToolkit.Mvvm.Input;
 
 using DotVast.HashTool.WinUI.Contracts.Services;
@@ -7,7 +5,7 @@ using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Models.Controls;
 using DotVast.HashTool.WinUI.Services.Hash;
 
-using Microsoft.Windows.ApplicationModel.Resources;
+using Microsoft.Extensions.Logging;
 
 using Windows.Storage.Pickers;
 
@@ -24,8 +22,11 @@ public sealed partial class HomeViewModel : ObservableRecipient
     private const string Uid_ButtonResume = "Home_Button_Resume";
     private const string Uid_ButtonCancel = "Home_Button_Cancel";
 
-    public HomeViewModel(IComputeHashService computeHashService)
+    private readonly ILogger<HomeViewModel> _logger;
+
+    public HomeViewModel(ILogger<HomeViewModel> logger, IComputeHashService computeHashService)
     {
+        _logger = logger;
         _computeHashService = computeHashService;
         _computeHashService.AtomProgress.ProgressChanged += (sender, e) => AtomProgressBar.Val = e;
         _computeHashService.TaskProgress.ProgressChanged += (sender, e) =>
@@ -34,9 +35,6 @@ public sealed partial class HomeViewModel : ObservableRecipient
             TaskProgressBar.Max = e.Max;
         };
         InitHashNames();
-
-        ResourceLoader loader = new();
-
     }
 
     ~HomeViewModel()
@@ -255,10 +253,17 @@ public sealed partial class HomeViewModel : ObservableRecipient
                     break;
             }
         }
+        catch (FileNotFoundException ex)
+        {
+            _logger.LogWarning("计算哈希时出现“文件未找到”异常, 模式: {Mode}, 内容: {Content}\n{Exception}", hashTask.Mode, hashTask.Content, ex);
+        }
+        catch (DirectoryNotFoundException ex)
+        {
+            _logger.LogWarning("计算哈希时出现“文件夹未找到”异常, 模式: {Mode}, 内容: {Content}\n{Exception}", hashTask.Mode, hashTask.Content, ex);
+        }
         catch (Exception ex)
         {
-            // TODO: 写入日志.
-            Debug.WriteLine(ex);
+            _logger.LogError("计算哈希时出现未预料的异常, 哈希任务: {HashTask:j}\n{Exception}", hashTask, ex);
         }
         finally
         {
