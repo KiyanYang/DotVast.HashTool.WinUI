@@ -169,6 +169,9 @@
   <data name="Settings_Language.Text" xml:space="preserve">
     <value>语言 (Language)</value>
   </data>
+  <data name="Settings_Language_Detail.Text" xml:space="preserve">
+    <value>应用将使用该语言显示。</value>
+  </data>
   <data name="Settings_Personalization.Text" xml:space="preserve">
     <value>个性化</value>
   </data>

@@ -9,18 +9,33 @@
     mc:Ignorable="d">
     <Page.Resources>
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
-        <Style
-            x:Key="CardLeftTextBlockStyle"
-            BasedOn="{StaticResource BodyTextBlockStyle}"
-            TargetType="TextBlock">
+        <Style x:Key="SettingItemIconStyle" TargetType="FontIcon">
+            <Setter Property="Grid.RowSpan" Value="2" />
+            <Setter Property="Grid.Column" Value="0" />
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="{StaticResource SymbolThemeFontFamily}" />
+        </Style>
+        <Style x:Key="SettingItemTextStyle" TargetType="TextBlock">
+            <Setter Property="Grid.Row" Value="0" />
+            <Setter Property="Grid.Column" Value="1" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+        </Style>
+        <Style x:Key="SettingItemDetailStyle" TargetType="TextBlock">
+            <Setter Property="Grid.Row" Value="1" />
+            <Setter Property="Grid.Column" Value="1" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="FontSize" Value="{StaticResource CaptionTextBlockFontSize}" />
+            <Setter Property="Foreground" Value="{StaticResource TextFillColorSecondary}" />
         </Style>
         <Style
-            x:Key="CardRightComboBoxStyle"
+            x:Key="SettingItemComboBoxStyle"
             BasedOn="{StaticResource DefaultComboBoxStyle}"
             TargetType="ComboBox">
-            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="Grid.RowSpan" Value="2" />
+            <Setter Property="Grid.Column" Value="2" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
     </Page.Resources>
@@ -64,17 +79,25 @@
                 </StackPanel>
             </StackPanel>
 
-            <Grid
-                Margin="{StaticResource SmallTopBottomMargin}"
-                HorizontalAlignment="Stretch"
-                Style="{StaticResource CardGridStyle}">
-                <TextBlock x:Uid="Settings_Language" Style="{StaticResource CardLeftTextBlockStyle}" />
+            <Grid Margin="{StaticResource SmallTopBottomMargin}" Style="{StaticResource CardGridStyle}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <FontIcon Glyph="&#xf2b7;" Style="{StaticResource SettingItemIconStyle}" />
+                <TextBlock x:Uid="Settings_Language" Style="{StaticResource SettingItemTextStyle}" />
+                <TextBlock x:Uid="Settings_Language_Detail" Style="{StaticResource SettingItemDetailStyle}" />
                 <ComboBox
                     MinWidth="160"
                     DisplayMemberPath="NativeName"
                     ItemsSource="{x:Bind ViewModel.AppLanguages}"
                     SelectedItem="{x:Bind ViewModel.AppLanguage, Mode=TwoWay}"
-                    Style="{StaticResource CardRightComboBoxStyle}" />
+                    Style="{StaticResource SettingItemComboBoxStyle}" />
             </Grid>
 
             <TextBlock x:Uid="Settings_About" Style="{ThemeResource SubtitleTextBlockStyle}" />
