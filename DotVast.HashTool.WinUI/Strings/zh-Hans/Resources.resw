@@ -129,6 +129,12 @@
   <data name="AppDisplayNameDev" xml:space="preserve">
     <value>HashTool Dev</value>
   </data>
+  <data name="HashResultType_File" xml:space="preserve">
+    <value>文件</value>
+  </data>
+  <data name="HashResultType_Text" xml:space="preserve">
+    <value>文本</value>
+  </data>
   <data name="HashTaskMode_File" xml:space="preserve">
     <value>文件</value>
   </data>
@@ -137,6 +143,21 @@
   </data>
   <data name="HashTaskMode_Text" xml:space="preserve">
     <value>文本</value>
+  </data>
+  <data name="HashTaskState_Aborted" xml:space="preserve">
+    <value>已中止</value>
+  </data>
+  <data name="HashTaskState_Canceled" xml:space="preserve">
+    <value>已取消</value>
+  </data>
+  <data name="HashTaskState_Completed" xml:space="preserve">
+    <value>已完成</value>
+  </data>
+  <data name="HashTaskState_Waiting" xml:space="preserve">
+    <value>等待中</value>
+  </data>
+  <data name="HashTaskState_Working" xml:space="preserve">
+    <value>计算中</value>
   </data>
   <data name="Home_Button_Cancel" xml:space="preserve">
     <value>取消</value>
@@ -153,6 +174,27 @@
   </data>
   <data name="Home_Button_Start" xml:space="preserve">
     <value>开始</value>
+  </data>
+  <data name="Results_Detail_CreatedDateTime.Text" xml:space="preserve">
+    <value>创建时间</value>
+  </data>
+  <data name="Results_Detail_Elapsed.Text" xml:space="preserve">
+    <value>计算用时</value>
+  </data>
+  <data name="Results_Detail_Encoding.Text" xml:space="preserve">
+    <value>文本编码</value>
+  </data>
+  <data name="Results_Detail_Id.Text" xml:space="preserve">
+    <value>序号</value>
+  </data>
+  <data name="Results_Detail_State.Text" xml:space="preserve">
+    <value>状态</value>
+  </data>
+  <data name="Results_Subtitle_TaskDetail.Text" xml:space="preserve">
+    <value>任务详情</value>
+  </data>
+  <data name="Results_Subtitle_TaskResults.Text" xml:space="preserve">
+    <value>任务结果</value>
   </data>
   <data name="SettingsPage_PrivacyTermsLink.Content" xml:space="preserve">
     <value>隐私声明</value>
@@ -189,6 +231,9 @@
   </data>
   <data name="Shell_Home.Content" xml:space="preserve">
     <value>主页</value>
+  </data>
+  <data name="Shell_Results.Content" xml:space="preserve">
+    <value>结果</value>
   </data>
   <data name="Shell_Tasks.Content" xml:space="preserve">
     <value>任务</value>

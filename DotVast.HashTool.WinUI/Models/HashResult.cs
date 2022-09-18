@@ -1,10 +1,11 @@
+using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.Services.Hash;
 
 namespace DotVast.HashTool.WinUI.Models;
 
 public sealed class HashResult
 {
-    public HashResultType Type
+    public HashResultType? Type
     {
         get; set;
     }
@@ -17,17 +18,19 @@ public sealed class HashResult
     }
 }
 
-public enum HashResultType
+public sealed class HashResultType : GenericEnum<string>
 {
     /// <summary>
     /// 文件.
     /// </summary>
-    File,
+    public static HashResultType File { get; } = new("HashResultType_File".GetLocalized());
 
     /// <summary>
     /// 文本.
     /// </summary>
-    Text,
+    public static HashResultType Text { get; } = new("HashResultType_Text".GetLocalized());
+
+    private HashResultType(string name) : base(name) { }
 }
 
 public sealed class HashResultItem

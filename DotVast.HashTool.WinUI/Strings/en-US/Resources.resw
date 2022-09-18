@@ -199,4 +199,49 @@
   <data name="Tasks_ShowResult_XamlUICommand.Description" xml:space="preserve">
     <value>Show Result</value>
   </data>
+  <data name="Shell_Results.Content" xml:space="preserve">
+    <value>Results</value>
+  </data>
+  <data name="HashResultType_File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="HashResultType_Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="HashTaskState_Aborted" xml:space="preserve">
+    <value>Aborted</value>
+  </data>
+  <data name="HashTaskState_Canceled" xml:space="preserve">
+    <value>Canceled</value>
+  </data>
+  <data name="HashTaskState_Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="HashTaskState_Waiting" xml:space="preserve">
+    <value>Waiting</value>
+  </data>
+  <data name="HashTaskState_Working" xml:space="preserve">
+    <value>Working</value>
+  </data>
+  <data name="Results_Detail_CreatedDateTime.Text" xml:space="preserve">
+    <value>Created</value>
+  </data>
+  <data name="Results_Detail_Elapsed.Text" xml:space="preserve">
+    <value>Elapsed</value>
+  </data>
+  <data name="Results_Detail_Encoding.Text" xml:space="preserve">
+    <value>Encoding</value>
+  </data>
+  <data name="Results_Detail_Id.Text" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="Results_Detail_State.Text" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="Results_Subtitle_TaskDetail.Text" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="Results_Subtitle_TaskResults.Text" xml:space="preserve">
+    <value>Results</value>
+  </data>
 </root>

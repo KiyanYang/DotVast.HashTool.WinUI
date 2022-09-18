@@ -27,7 +27,7 @@ public sealed partial class HashTask : ObservableObject
     private Encoding? _encoding;
 
     [ObservableProperty]
-    private HashTaskState _state;
+    private HashTaskState? _state;
 
     /// <summary>
     /// 单结果 (文件, 文本).
@@ -63,32 +63,34 @@ public sealed partial class HashTask : ObservableObject
     }
 }
 
-public enum HashTaskState
+public sealed class HashTaskState : GenericEnum<string>
 {
     /// <summary>
     /// 等待中.
     /// </summary>
-    Waiting,
+    public static HashTaskState Waiting { get; } = new("HashTaskState_Waiting".GetLocalized());
 
     /// <summary>
     /// 计算中.
     /// </summary>
-    Working,
+    public static HashTaskState Working { get; } = new("HashTaskState_Working".GetLocalized());
 
     /// <summary>
     /// 已完成.
     /// </summary>
-    Completed,
+    public static HashTaskState Completed { get; } = new("HashTaskState_Completed".GetLocalized());
 
     /// <summary>
     /// 任务取消.
     /// </summary>
-    Canceled,
+    public static HashTaskState Canceled { get; } = new("HashTaskState_Canceled".GetLocalized());
 
     /// <summary>
     /// 任务中止(错误/意外).
     /// </summary>
-    Aborted,
+    public static HashTaskState Aborted { get; } = new("HashTaskState_Aborted".GetLocalized());
+
+    private HashTaskState(string name) : base(name) { }
 }
 
 public sealed class HashTaskMode : GenericEnum<string>
