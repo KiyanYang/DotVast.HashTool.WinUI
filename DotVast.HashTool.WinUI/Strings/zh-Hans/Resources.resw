@@ -190,4 +190,13 @@
   <data name="Shell_Home.Content" xml:space="preserve">
     <value>主页</value>
   </data>
+  <data name="Shell_Tasks.Content" xml:space="preserve">
+    <value>任务</value>
+  </data>
+  <data name="Tasks_ShowResult_Button.Content" xml:space="preserve">
+    <value>查看</value>
+  </data>
+  <data name="Tasks_ShowResult_XamlUICommand.Description" xml:space="preserve">
+    <value>查看结果</value>
+  </data>
 </root>

@@ -1,4 +1,4 @@
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.ViewModels;
@@ -16,6 +16,7 @@ public sealed class PageService : IPageService
     {
         Configure<SettingsViewModel, SettingsPage>();
         Configure<HomeViewModel, HomePage>();
+        Configure<TasksViewModel, TasksPage>();
     }
 
     public Type GetPageType(string key)

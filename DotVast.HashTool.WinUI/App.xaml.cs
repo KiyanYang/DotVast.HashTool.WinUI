@@ -72,11 +72,14 @@ public sealed partial class App : Application
             services.AddSingleton<INavigationService, NavigationService>();
 
             services.AddSingleton<IComputeHashService, ComputeHashService>();
+            services.AddSingleton<IHashTaskService, HashTaskService>();
 
             // Core Services
             services.AddSingleton<IFileService, FileService>();
 
             // Views and ViewModels
+            services.AddTransient<TasksViewModel>();
+            services.AddTransient<TasksPage>();
             services.AddTransient<HomeViewModel>();
             services.AddTransient<HomePage>();
             services.AddTransient<SettingsViewModel>();

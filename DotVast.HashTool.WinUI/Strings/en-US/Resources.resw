@@ -190,4 +190,13 @@
   <data name="Settings_Language_Detail.Text" xml:space="preserve">
     <value>The app will display in this language.</value>
   </data>
+  <data name="Shell_Tasks.Content" xml:space="preserve">
+    <value>Tasks</value>
+  </data>
+  <data name="Tasks_ShowResult_Button.Content" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="Tasks_ShowResult_XamlUICommand.Description" xml:space="preserve">
+    <value>Show Result</value>
+  </data>
 </root>
