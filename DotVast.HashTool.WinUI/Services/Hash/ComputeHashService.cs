@@ -44,6 +44,8 @@ internal sealed class ComputeHashService : IComputeHashService
             hashTask.Results = new();
             var filePaths = Directory.GetFiles(hashTask.Content);
             _taskProgress.Report((0, filePaths.Length));
+            // TODO: 当未找到文件或文件被强制删除时，跳过该文件并继续后续文件的计算.
+            // 在获取文件夹内文件后, 如果用户删除了还未计算的文件, 则会出现文件未找到异常, 此时将终止后续运算. 
             foreach (var filePath in filePaths)
             {
                 using Stream? stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
@@ -88,16 +90,16 @@ internal sealed class ComputeHashService : IComputeHashService
         IsFree = false;
         var stopWatch = Stopwatch.StartNew();
 
-        hashTask.Status = HashTaskState.Working;
+        hashTask.State = HashTaskState.Working;
         await func();
         if (ct.IsCancellationRequested)
         {
             _taskProgress.Report((0, 1));
-            hashTask.Status = HashTaskState.Canceled;
+            hashTask.State = HashTaskState.Canceled;
         }
         else
         {
-            hashTask.Status = HashTaskState.Completed;
+            hashTask.State = HashTaskState.Completed;
         }
 
         stopWatch.Stop();

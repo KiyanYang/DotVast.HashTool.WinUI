@@ -27,7 +27,7 @@ public sealed partial class HashTask : ObservableObject
     private Encoding? _encoding;
 
     [ObservableProperty]
-    private HashTaskState _status;
+    private HashTaskState _state;
 
     /// <summary>
     /// 单结果 (文件, 文本).

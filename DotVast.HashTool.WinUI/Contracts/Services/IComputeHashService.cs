@@ -13,7 +13,7 @@ public interface IComputeHashService
     }
 
     /// <summary>
-    /// 任务进度. (Val 当前已计算的数量, Max 总量)
+    /// 当前任务的进度. (Val 当前已计算的数量, Max 总量)
     /// </summary>
     Progress<(int Val, int Max)> TaskProgress
     {
