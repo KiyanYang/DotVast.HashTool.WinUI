@@ -11,6 +11,8 @@ using Windows.Storage.Pickers;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
+// TODO: 文本模式下，应选择编码，否则无法正确计算哈希值.
+// TODO: CRC32 计算结果位数错误.
 public sealed partial class HomeViewModel : ObservableRecipient
 {
     private readonly ILogger<HomeViewModel> _logger;

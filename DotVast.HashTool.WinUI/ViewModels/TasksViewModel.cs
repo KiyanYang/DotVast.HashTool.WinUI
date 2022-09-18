@@ -25,7 +25,6 @@ public sealed partial class TasksViewModel : ObservableRecipient
     [RelayCommand]
     private void ShowResult(HashTask hashTask)
     {
-        // TODO: 新增结果页面后, 取消注释.
-        //_navigationService.NavigateTo(typeof(ResultsViewModel).FullName!, parameter: hashTask);
+        _navigationService.NavigateTo(typeof(ResultsViewModel).FullName!, parameter: hashTask);
     }
 }

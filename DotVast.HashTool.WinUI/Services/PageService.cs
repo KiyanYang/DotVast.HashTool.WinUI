@@ -17,6 +17,7 @@ public sealed class PageService : IPageService
         Configure<SettingsViewModel, SettingsPage>();
         Configure<HomeViewModel, HomePage>();
         Configure<TasksViewModel, TasksPage>();
+        Configure<ResultsViewModel, ResultsPage>();
     }
 
     public Type GetPageType(string key)
