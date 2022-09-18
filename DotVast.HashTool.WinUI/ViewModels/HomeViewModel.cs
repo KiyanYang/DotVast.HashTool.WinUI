@@ -13,6 +13,8 @@ namespace DotVast.HashTool.WinUI.ViewModels;
 
 public sealed partial class HomeViewModel : ObservableRecipient
 {
+    private readonly ILogger<HomeViewModel> _logger;
+    private readonly IHashTaskService _hashTaskService;
     private readonly IComputeHashService _computeHashService;
     private readonly ManualResetEventSlim _mres = new(true);
     private CancellationTokenSource? _cts;
@@ -22,11 +24,13 @@ public sealed partial class HomeViewModel : ObservableRecipient
     private const string Uid_ButtonResume = "Home_Button_Resume";
     private const string Uid_ButtonCancel = "Home_Button_Cancel";
 
-    private readonly ILogger<HomeViewModel> _logger;
-
-    public HomeViewModel(ILogger<HomeViewModel> logger, IComputeHashService computeHashService)
+    public HomeViewModel(
+        ILogger<HomeViewModel> logger,
+        IHashTaskService hashTaskService,
+        IComputeHashService computeHashService)
     {
         _logger = logger;
+        _hashTaskService = hashTaskService;
         _computeHashService = computeHashService;
         _computeHashService.AtomProgress.ProgressChanged += (sender, e) => AtomProgressBar.Val = e;
         _computeHashService.TaskProgress.ProgressChanged += (sender, e) =>
@@ -45,44 +49,44 @@ public sealed partial class HomeViewModel : ObservableRecipient
 
     #region public Properties
 
+    /// <summary>
+    /// 当前界面显示的哈希任务.
+    /// </summary>
     public HashTask CurrentHashTask { get; } = new();
 
-    public HashTaskMode[] HashTaskModes
-    {
-        get;
-    } = new[]
-    {
-        HashTaskMode.File,
-        HashTaskMode.Folder,
-        HashTaskMode.Text,
-    };
+    /// <summary>
+    /// 哈希任务模式. 文件, 文件夹, 文本.
+    /// </summary>
+    public HashTaskMode[] HashTaskModes { get; } = new[] { HashTaskMode.File, HashTaskMode.Folder, HashTaskMode.Text };
 
-    public ProgressBarModel AtomProgressBar
-    {
-        get;
-    } = new()
-    {
-        Min = 0,
-        Max = 1,
-        Val = 0,
-    };
+    /// <summary>
+    /// 当前流计算的进度.
+    /// </summary>
+    public ProgressBarModel AtomProgressBar { get; } = new() { Min = 0, Max = 1, Val = 0 };
 
-    public ProgressBarModel TaskProgressBar
-    {
-        get;
-    } = new()
-    {
-        Min = 0,
-        Max = 1,
-        Val = 0,
-    };
+    /// <summary>
+    /// 当前任务的进度.
+    /// </summary>
+    public ProgressBarModel TaskProgressBar { get; } = new() { Min = 0, Max = 1, Val = 0 };
 
+    /// <summary>
+    /// “开始”按钮.
+    /// </summary>
     public ButtonModel StartButton { get; } = new() { IsEnabled = true, Uid = Uid_ButtonStart };
 
+    /// <summary>
+    /// “暂停”和“继续”按钮.
+    /// </summary>
     public ButtonModel ResetButton { get; } = new() { IsEnabled = false, Uid = Uid_ButtonPause };
 
+    /// <summary>
+    /// “取消”按钮.
+    /// </summary>
     public ButtonModel CancelButton { get; } = new() { IsEnabled = false, Uid = Uid_ButtonCancel };
 
+    /// <summary>
+    /// Hash 选项.
+    /// </summary>
     public List<HashOption>? HashOptions
     {
         get; private set;
@@ -225,6 +229,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
         _cts = new();
 
         var hashTask = SealHashTask();
+        _hashTaskService.HashTasks.Add(hashTask);
 
         try
         {
@@ -237,7 +242,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
                 case var m when m == HashTaskMode.File:
                     if (File.Exists(hashTask.Content) == false)
                     {
-                        hashTask.Status = HashTaskState.Aborted;
+                        hashTask.State = HashTaskState.Aborted;
                         return;
                     }
                     await _computeHashService.HashFile(hashTask, _mres, _cts.Token);
@@ -246,7 +251,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
                 case var m when m == HashTaskMode.Folder:
                     if (Directory.Exists(hashTask.Content) == false)
                     {
-                        hashTask.Status = HashTaskState.Aborted;
+                        hashTask.State = HashTaskState.Aborted;
                         return;
                     }
                     await _computeHashService.HashFolder(hashTask, _mres, _cts.Token);
@@ -281,7 +286,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
             Mode = CurrentHashTask.Mode,
             Content = CurrentHashTask.Content,
             SelectedHashs = HashOptions!.Where(i => i.IsChecked).Select(i => i.Hash).ToList(),
-            Status = HashTaskState.Waiting,
+            State = HashTaskState.Waiting,
         };
         _hashTaskId++;
         return hashTask;
