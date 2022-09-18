@@ -41,7 +41,7 @@
             <NavigationView.MenuItems>
                 <NavigationViewItem x:Uid="Shell_Home" helpers:NavigationHelper.NavigateTo="DotVast.HashTool.WinUI.ViewModels.HomeViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7c3;" />
+                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe80f;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
