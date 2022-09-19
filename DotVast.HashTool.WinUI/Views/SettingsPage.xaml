@@ -10,6 +10,7 @@
     <Page.Resources>
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
         <x:Double x:Key="SettingItemHeight">68</x:Double>
+        <Thickness x:Key="SettingItemPadding">20,0,16,0</Thickness>
         <Style x:Key="SettingItemIconStyle" TargetType="FontIcon">
             <Setter Property="Grid.RowSpan" Value="2" />
             <Setter Property="Grid.Column" Value="0" />
@@ -83,6 +84,7 @@
             <Grid
                 Height="{StaticResource SettingItemHeight}"
                 Margin="{StaticResource SmallTopBottomMargin}"
+                Padding="{StaticResource SettingItemPadding}"
                 Style="{StaticResource CardGridStyle}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40" />
