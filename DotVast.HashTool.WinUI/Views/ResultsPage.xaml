@@ -22,7 +22,10 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="{x:Bind Name}" />
-                <TextBlock Grid.Column="1" Text="{x:Bind Hash}" />
+                <TextBlock
+                    Grid.Column="1"
+                    IsTextSelectionEnabled="True"
+                    Text="{x:Bind Hash}" />
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="HashResultDataTemplate" x:DataType="models:HashResult">
@@ -45,6 +48,7 @@
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="1"
+                    IsTextSelectionEnabled="True"
                     Text="{x:Bind Content}" />
                 <ItemsRepeater
                     Grid.Row="1"
