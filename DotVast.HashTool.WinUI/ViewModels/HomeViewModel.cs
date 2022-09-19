@@ -1,3 +1,4 @@
+using System.Text;
 using CommunityToolkit.Mvvm.Input;
 
 using DotVast.HashTool.WinUI.Contracts.Services;
@@ -54,7 +55,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
     /// <summary>
     /// 当前界面显示的哈希任务.
     /// </summary>
-    public HashTask CurrentHashTask { get; } = new();
+    public HashTask CurrentHashTask { get; } = new() { Encoding = Encoding.UTF8 };
 
     /// <summary>
     /// 哈希任务模式. 文件, 文件夹, 文本.
@@ -92,6 +93,31 @@ public sealed partial class HomeViewModel : ObservableRecipient
     public List<HashOption>? HashOptions
     {
         get; private set;
+    }
+
+    public record TextEncoding(string Name, Encoding Encoding);
+
+    public TextEncoding UTF8 { get; } = new("UTF-8", Encoding.UTF8);
+
+    private IList<TextEncoding>? _textEncodings;
+
+    /// <summary>
+    /// 文本编码.
+    /// </summary>
+    public IList<TextEncoding> TextEncodings
+    {
+        get
+        {
+            if (_textEncodings == null)
+            {
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                _textEncodings = Encoding.GetEncodings()
+                    .Select(e => new TextEncoding(e.Name.ToUpper(), e.GetEncoding()))
+                    .OrderBy(t => t.Name)
+                    .ToList();
+            }
+            return _textEncodings;
+        }
     }
 
     #endregion public Properties
@@ -287,6 +313,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
             DateTime = DateTime.Now,
             Mode = CurrentHashTask.Mode,
             Content = CurrentHashTask.Content,
+            Encoding = CurrentHashTask.Encoding,
             SelectedHashs = HashOptions!.Where(i => i.IsChecked).Select(i => i.Hash).ToList(),
             State = HashTaskState.Waiting,
         };
