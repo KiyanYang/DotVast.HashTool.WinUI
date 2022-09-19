@@ -72,7 +72,7 @@
                     </behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>
                 </behaviors:NavigationViewHeaderBehavior>
             </i:Interaction.Behaviors>
-            <ScrollViewer>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <Grid Margin="{StaticResource NavigationViewPageContentMargin}">
                     <Frame x:Name="NavigationFrame" Margin="{StaticResource LargeBottomMargin}" />
                 </Grid>

@@ -9,12 +9,10 @@
     NavigationCacheMode="Required"
     mc:Ignorable="d">
 
-    <ScrollViewer>
-        <StackPanel
-            x:Name="ContentArea"
-            Orientation="Vertical"
-            Spacing="8">
+    <Grid x:Name="ContentArea">
+        <StackPanel Orientation="Vertical" Spacing="8">
 
+            <!-- 任务模式选择, 输入, 浏览按钮, 文本编码选择 -->
             <Grid ColumnSpacing="8">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -41,6 +39,7 @@
                 </Grid>
             </Grid>
 
+            <!-- 哈希算法选择 -->
             <Border Style="{StaticResource CardBorderStyle}">
                 <ItemsRepeater ItemsSource="{x:Bind ViewModel.HashOptions}">
                     <ItemsRepeater.Layout>
@@ -54,6 +53,7 @@
                 </ItemsRepeater>
             </Border>
 
+            <!-- 进度条 -->
             <ProgressBar
                 Maximum="{x:Bind ViewModel.AtomProgressBar.Max, Mode=OneWay}"
                 Minimum="{x:Bind ViewModel.AtomProgressBar.Min, Mode=OneWay}"
@@ -62,7 +62,7 @@
                 Maximum="{x:Bind ViewModel.TaskProgressBar.Max, Mode=OneWay}"
                 Minimum="{x:Bind ViewModel.TaskProgressBar.Min, Mode=OneWay}"
                 Value="{x:Bind ViewModel.TaskProgressBar.Val, Mode=OneWay}" />
-
+            <!-- 操作按钮: 开始, 暂停(继续), 取消 -->
             <Grid ColumnSpacing="8">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -85,7 +85,8 @@
                     Content="{x:Bind ViewModel.CancelButton.Content, Mode=OneWay}"
                     IsEnabled="{x:Bind ViewModel.CancelButton.IsEnabled, Mode=OneWay}" />
             </Grid>
+
         </StackPanel>
-    </ScrollViewer>
+    </Grid>
 
 </Page>
