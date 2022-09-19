@@ -1,5 +1,3 @@
-using CommunityToolkit.Mvvm.Input;
-
 using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Models;
 
