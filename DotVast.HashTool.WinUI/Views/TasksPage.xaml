@@ -7,7 +7,6 @@
     xmlns:models="using:DotVast.HashTool.WinUI.Models"
     mc:Ignorable="d">
     <Page.Resources>
-        <Thickness x:Key="ContentAreaPadding">0,0,0,32</Thickness>
         <x:Double x:Key="TaskItemHeight">44</x:Double>
         <x:Double x:Key="TaskItemVerSpacing">8</x:Double>
         <x:Double x:Key="TaskItemColSpacing">8</x:Double>
@@ -16,7 +15,7 @@
             x:Uid="Tasks_ShowResult_XamlUICommand"
             Command="{x:Bind ViewModel.ShowResultCommand}" />
     </Page.Resources>
-    <Grid x:Name="ContentArea" Padding="{StaticResource ContentAreaPadding}">
+    <Grid x:Name="ContentArea">
         <ItemsRepeater ItemsSource="{x:Bind ViewModel.HashTasks}">
             <ItemsRepeater.Layout>
                 <StackLayout Orientation="Vertical" Spacing="{StaticResource TaskItemVerSpacing}" />
