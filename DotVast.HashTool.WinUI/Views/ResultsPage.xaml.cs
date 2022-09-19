@@ -8,7 +8,6 @@ namespace DotVast.HashTool.WinUI.Views;
 
 public sealed partial class ResultsPage : Page
 {
-    // TODO: Results_Detail_Encoding 隐藏时依旧会保留 StackLayout 间距.
     public ResultsViewModel ViewModel
     {
         get;
