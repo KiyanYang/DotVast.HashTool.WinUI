@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -212,7 +212,7 @@
     <value>语言 (Language)</value>
   </data>
   <data name="Settings_Language_Detail.Text" xml:space="preserve">
-    <value>应用将使用该语言显示。</value>
+    <value>更改应用中显示的语言</value>
   </data>
   <data name="Settings_Personalization.Text" xml:space="preserve">
     <value>个性化</value>
@@ -220,13 +220,16 @@
   <data name="Settings_Theme.Text" xml:space="preserve">
     <value>主题</value>
   </data>
-  <data name="Settings_Theme_Dark.Content" xml:space="preserve">
+  <data name="Settings_Theme_Dark" xml:space="preserve">
     <value>深色</value>
   </data>
-  <data name="Settings_Theme_Default.Content" xml:space="preserve">
+  <data name="Settings_Theme_Default" xml:space="preserve">
     <value>默认</value>
   </data>
-  <data name="Settings_Theme_Light.Content" xml:space="preserve">
+  <data name="Settings_Theme_Detail.Text" xml:space="preserve">
+    <value>更改应用中显示的主题</value>
+  </data>
+  <data name="Settings_Theme_Light" xml:space="preserve">
     <value>浅色</value>
   </data>
   <data name="Shell_Home.Content" xml:space="preserve">

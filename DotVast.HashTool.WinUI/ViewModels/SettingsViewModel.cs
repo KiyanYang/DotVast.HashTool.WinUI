@@ -37,25 +37,30 @@ public sealed partial class SettingsViewModel : ObservableRecipient
 
     private readonly IThemeSelectorService _themeSelectorService;
 
-    [ObservableProperty]
-    private ElementTheme _elementTheme;
+    public record AppTheme(string Name, ElementTheme Theme);
 
-    [RelayCommand]
-    private async Task SwitchTheme(ElementTheme param)
+    public IList<AppTheme> Themes
     {
-        if (ElementTheme != param)
-        {
-            ElementTheme = param;
-            await _themeSelectorService.SetThemeAsync(param);
-        }
-    }
+        get;
+    } = new AppTheme[]
+    {
+        new("Settings_Theme_Default".GetLocalized(), ElementTheme.Default),
+        new("Settings_Theme_Light".GetLocalized(), ElementTheme.Light),
+        new("Settings_Theme_Dark".GetLocalized(), ElementTheme.Dark),
+    };
+
+    [ObservableProperty]
+    private AppTheme _theme;
+
+    async partial void OnThemeChanged(AppTheme value) =>
+        await _themeSelectorService.SetThemeAsync(value.Theme);
 
     #endregion Theme selector
 
     public SettingsViewModel(IThemeSelectorService themeSelectorService, ILanguageSelectorService languageSelectorService)
     {
         _themeSelectorService = themeSelectorService;
-        _elementTheme = _themeSelectorService.Theme;
+        _theme = Themes.First(x => x.Theme == _themeSelectorService.Theme);
         _languageSelectorService = languageSelectorService;
         _appLanguage = _languageSelectorService.Language;
         AppLanguages = _languageSelectorService.Languages;
