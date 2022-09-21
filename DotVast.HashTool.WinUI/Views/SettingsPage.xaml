@@ -8,8 +8,11 @@
     mc:Ignorable="d">
     <Page.Resources>
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
-        <x:Double x:Key="SettingItemHeight">68</x:Double>
-        <Thickness x:Key="SettingItemPadding">20,0,16,0</Thickness>
+        <Style x:Key="SettingItemStyle" BasedOn="{StaticResource CardGridStyle}" TargetType="Grid">
+            <Setter Property="ColumnSpacing" Value="8" />
+            <Setter Property="Margin" Value="{StaticResource XXSmallTopBottomMargin}" />
+            <Setter Property="Padding" Value="20,12,16,12" />
+        </Style>
         <Style x:Key="SettingItemIconStyle" TargetType="FontIcon">
             <Setter Property="Grid.RowSpan" Value="2" />
             <Setter Property="Grid.Column" Value="0" />
@@ -17,24 +20,19 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="FontFamily" Value="{StaticResource SymbolThemeFontFamily}" />
         </Style>
-        <Style x:Key="SettingItemTextStyle" TargetType="TextBlock">
+        <Style x:Key="SettingItemBodyTextStyle" TargetType="TextBlock">
             <Setter Property="Grid.Row" Value="0" />
             <Setter Property="Grid.Column" Value="1" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="FontSize" Value="14" />
         </Style>
-        <Style x:Key="SettingItemDetailStyle" TargetType="TextBlock">
+        <Style x:Key="SettingItemDetailTextStyle" TargetType="TextBlock">
             <Setter Property="Grid.Row" Value="1" />
             <Setter Property="Grid.Column" Value="1" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="VerticalAlignment" Value="Top" />
-            <Setter Property="FontSize" Value="{StaticResource CaptionTextBlockFontSize}" />
-            <Setter Property="Foreground" Value="{StaticResource TextFillColorSecondary}" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="{ThemeResource TextFillColorSecondaryBrush}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
         </Style>
-        <Style
-            x:Key="SettingItemComboBoxStyle"
-            BasedOn="{StaticResource DefaultComboBoxStyle}"
-            TargetType="ComboBox">
+        <Style x:Key="SettingItemComboBoxStyle" BasedOn="{StaticResource DefaultComboBoxStyle}" TargetType="ComboBox">
             <Setter Property="Grid.RowSpan" Value="2" />
             <Setter Property="Grid.Column" Value="2" />
             <Setter Property="VerticalAlignment" Value="Center" />
@@ -44,23 +42,19 @@
         <StackPanel x:Name="ContentArea">
             <TextBlock x:Uid="Settings_Personalization" Style="{ThemeResource SubtitleTextBlockStyle}" />
 
-            <Grid
-                Height="{StaticResource SettingItemHeight}"
-                Margin="{StaticResource SmallTopBottomMargin}"
-                Padding="{StaticResource SettingItemPadding}"
-                Style="{StaticResource CardGridStyle}">
+            <Grid Style="{StaticResource SettingItemStyle}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="32" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
                 <FontIcon Glyph="&#xE2B1;" Style="{StaticResource SettingItemIconStyle}" />
-                <TextBlock x:Uid="Settings_Theme" Style="{StaticResource SettingItemTextStyle}" />
-                <TextBlock x:Uid="Settings_Theme_Detail" Style="{StaticResource SettingItemDetailStyle}" />
+                <TextBlock x:Uid="Settings_Theme" Style="{StaticResource SettingItemBodyTextStyle}" />
+                <TextBlock x:Uid="Settings_Theme_Detail" Style="{StaticResource SettingItemDetailTextStyle}" />
                 <ComboBox
                     MinWidth="100"
                     DisplayMemberPath="Name"
@@ -69,23 +63,19 @@
                     Style="{StaticResource SettingItemComboBoxStyle}" />
             </Grid>
 
-            <Grid
-                Height="{StaticResource SettingItemHeight}"
-                Margin="{StaticResource SmallTopBottomMargin}"
-                Padding="{StaticResource SettingItemPadding}"
-                Style="{StaticResource CardGridStyle}">
+            <Grid Style="{StaticResource SettingItemStyle}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="32" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
                 <FontIcon Glyph="&#xf2b7;" Style="{StaticResource SettingItemIconStyle}" />
-                <TextBlock x:Uid="Settings_Language" Style="{StaticResource SettingItemTextStyle}" />
-                <TextBlock x:Uid="Settings_Language_Detail" Style="{StaticResource SettingItemDetailStyle}" />
+                <TextBlock x:Uid="Settings_Language" Style="{StaticResource SettingItemBodyTextStyle}" />
+                <TextBlock x:Uid="Settings_Language_Detail" Style="{StaticResource SettingItemDetailTextStyle}" />
                 <ComboBox
                     MinWidth="160"
                     DisplayMemberPath="NativeName"
