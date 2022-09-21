@@ -16,45 +16,47 @@
             x:Uid="Tasks_ShowResult_XamlUICommand"
             Command="{x:Bind ViewModel.ShowResultCommand}" />
     </Page.Resources>
-    <Grid x:Name="ContentArea">
-        <ItemsRepeater ItemsSource="{x:Bind ViewModel.HashTasks}">
-            <ItemsRepeater.Layout>
-                <StackLayout Orientation="Vertical" Spacing="{StaticResource TaskItemVerSpacing}" />
-            </ItemsRepeater.Layout>
-            <ItemsRepeater.ItemTemplate>
-                <DataTemplate x:DataType="models:HashTask">
-                    <Grid
-                        Height="{StaticResource TaskItemHeight}"
-                        Padding="{StaticResource TaskItemPadding}"
-                        ColumnSpacing="{StaticResource TaskItemColSpacing}"
-                        Style="{StaticResource CardGridStyle}">
-                        <Grid.Resources>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="VerticalAlignment" Value="Center" />
-                            </Style>
-                        </Grid.Resources>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="20" />
-                            <ColumnDefinition Width="52" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="88" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock
-                            Grid.Column="0"
-                            HorizontalAlignment="Right"
-                            Text="{x:Bind Id}" />
-                        <TextBlock Grid.Column="1" Text="{x:Bind Mode}" />
-                        <TextBlock Grid.Column="2" Text="{x:Bind Content}" />
-                        <TextBlock Grid.Column="3" Text="{x:Bind State}" />
-                        <Button
-                            x:Uid="Tasks_ShowResult_Button"
-                            Grid.Column="4"
-                            Command="{StaticResource ShowResultCommand}"
-                            CommandParameter="{x:Bind}" />
-                    </Grid>
-                </DataTemplate>
-            </ItemsRepeater.ItemTemplate>
-        </ItemsRepeater>
-    </Grid>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewPageContentStyle}">
+            <ItemsRepeater ItemsSource="{x:Bind ViewModel.HashTasks}">
+                <ItemsRepeater.Layout>
+                    <StackLayout Orientation="Vertical" Spacing="{StaticResource TaskItemVerSpacing}" />
+                </ItemsRepeater.Layout>
+                <ItemsRepeater.ItemTemplate>
+                    <DataTemplate x:DataType="models:HashTask">
+                        <Grid
+                            Height="{StaticResource TaskItemHeight}"
+                            Padding="{StaticResource TaskItemPadding}"
+                            ColumnSpacing="{StaticResource TaskItemColSpacing}"
+                            Style="{StaticResource CardGridStyle}">
+                            <Grid.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                </Style>
+                            </Grid.Resources>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20" />
+                                <ColumnDefinition Width="52" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="88" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                Grid.Column="0"
+                                HorizontalAlignment="Right"
+                                Text="{x:Bind Id}" />
+                            <TextBlock Grid.Column="1" Text="{x:Bind Mode}" />
+                            <TextBlock Grid.Column="2" Text="{x:Bind Content}" />
+                            <TextBlock Grid.Column="3" Text="{x:Bind State}" />
+                            <Button
+                                x:Uid="Tasks_ShowResult_Button"
+                                Grid.Column="4"
+                                Command="{StaticResource ShowResultCommand}"
+                                CommandParameter="{x:Bind}" />
+                        </Grid>
+                    </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+            </ItemsRepeater>
+        </Grid>
+    </ScrollViewer>
 </Page>

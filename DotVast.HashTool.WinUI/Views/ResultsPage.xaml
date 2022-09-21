@@ -58,100 +58,102 @@
             </Grid>
         </DataTemplate>
     </Page.Resources>
-    <Grid x:Name="ContentArea">
-        <StackPanel Orientation="Vertical" Spacing="12">
-
-            <TextBlock
-                x:Uid="Results_Subtitle_TaskDetail"
-                FontSize="{StaticResource SubtitleTextBlockFontSize}"
-                FontWeight="Bold" />
-
-            <Grid Padding="{StaticResource TaskDetailGridPadding}" Style="{StaticResource CardGridStyle}">
-                <Grid.Resources>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="Height" Value="28" />
-                    </Style>
-                </Grid.Resources>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="80" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewPageContentStyle}">
+            <StackPanel Orientation="Vertical" Spacing="12">
 
                 <TextBlock
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Text="{x:Bind ViewModel.HashTask.Mode}" />
-                <TextBlock
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Text="{x:Bind ViewModel.HashTask.Content}" />
+                    x:Uid="Results_Subtitle_TaskDetail"
+                    FontSize="{StaticResource SubtitleTextBlockFontSize}"
+                    FontWeight="Bold" />
 
-                <TextBlock
-                    x:Uid="Results_Detail_Id"
-                    Grid.Row="1"
-                    Grid.Column="0" />
-                <TextBlock
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Text="{x:Bind ViewModel.HashTask.Id}" />
+                <Grid Padding="{StaticResource TaskDetailGridPadding}" Style="{StaticResource CardGridStyle}">
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Height" Value="28" />
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                <TextBlock
-                    x:Uid="Results_Detail_CreatedDateTime"
-                    Grid.Row="2"
-                    Grid.Column="0" />
-                <TextBlock
-                    Grid.Row="2"
-                    Grid.Column="1"
-                    Text="{x:Bind ViewModel.HashTask.DateTime}" />
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Text="{x:Bind ViewModel.HashTask.Mode}" />
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Text="{x:Bind ViewModel.HashTask.Content}" />
 
-                <TextBlock
-                    x:Uid="Results_Detail_Elapsed"
-                    Grid.Row="3"
-                    Grid.Column="0" />
-                <TextBlock
-                    Grid.Row="3"
-                    Grid.Column="1"
-                    Text="{x:Bind sys:String.Format('{0:N3} s', ViewModel.HashTask.Elapsed.TotalSeconds), Mode=OneWay}" />
+                    <TextBlock
+                        x:Uid="Results_Detail_Id"
+                        Grid.Row="1"
+                        Grid.Column="0" />
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Text="{x:Bind ViewModel.HashTask.Id}" />
 
-                <TextBlock
-                    x:Uid="Results_Detail_Encoding"
-                    Grid.Row="4"
-                    Grid.Column="0"
-                    Visibility="{x:Bind helpers:XamlFunctionHelper.VisibleIfText(ViewModel.HashTask.Mode)}" />
-                <TextBlock
-                    Grid.Row="4"
-                    Grid.Column="1"
-                    Text="{x:Bind ViewModel.HashTask.Encoding.WebName.ToUpper()}"
-                    Visibility="{x:Bind helpers:XamlFunctionHelper.VisibleIfText(ViewModel.HashTask.Mode)}" />
+                    <TextBlock
+                        x:Uid="Results_Detail_CreatedDateTime"
+                        Grid.Row="2"
+                        Grid.Column="0" />
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Text="{x:Bind ViewModel.HashTask.DateTime}" />
 
-                <TextBlock
-                    x:Uid="Results_Detail_State"
-                    Grid.Row="5"
-                    Grid.Column="0" />
-                <TextBlock
-                    Grid.Row="5"
-                    Grid.Column="1"
-                    Text="{x:Bind ViewModel.HashTask.State, Mode=OneWay}" />
-            </Grid>
+                    <TextBlock
+                        x:Uid="Results_Detail_Elapsed"
+                        Grid.Row="3"
+                        Grid.Column="0" />
+                    <TextBlock
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Text="{x:Bind sys:String.Format('{0:N3} s', ViewModel.HashTask.Elapsed.TotalSeconds), Mode=OneWay}" />
 
-            <TextBlock Margin="0,16,0,0" FontWeight="Bold">
-                <Run x:Uid="Results_Subtitle_TaskResults" FontSize="{StaticResource SubtitleTextBlockFontSize}" />
-                <Run FontSize="{StaticResource CaptionTextBlockFontSize}" Text="{x:Bind ViewModel.HashTask.Results.Count, Mode=OneWay}" />
-            </TextBlock>
+                    <TextBlock
+                        x:Uid="Results_Detail_Encoding"
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        Visibility="{x:Bind helpers:XamlFunctionHelper.VisibleIfText(ViewModel.HashTask.Mode)}" />
+                    <TextBlock
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        Text="{x:Bind ViewModel.HashTask.Encoding.WebName.ToUpper()}"
+                        Visibility="{x:Bind helpers:XamlFunctionHelper.VisibleIfText(ViewModel.HashTask.Mode)}" />
 
-            <ItemsRepeater
-                ItemTemplate="{StaticResource HashResultDataTemplate}"
-                ItemsSource="{x:Bind ViewModel.HashTask.Results}"
-                Layout="{StaticResource HashResultVerticalStackLayout}" />
+                    <TextBlock
+                        x:Uid="Results_Detail_State"
+                        Grid.Row="5"
+                        Grid.Column="0" />
+                    <TextBlock
+                        Grid.Row="5"
+                        Grid.Column="1"
+                        Text="{x:Bind ViewModel.HashTask.State, Mode=OneWay}" />
+                </Grid>
 
-        </StackPanel>
-    </Grid>
+                <TextBlock Margin="0,16,0,0" FontWeight="Bold">
+                    <Run x:Uid="Results_Subtitle_TaskResults" FontSize="{StaticResource SubtitleTextBlockFontSize}" />
+                    <Run FontSize="{StaticResource CaptionTextBlockFontSize}" Text="{x:Bind ViewModel.HashTask.Results.Count, Mode=OneWay}" />
+                </TextBlock>
+
+                <ItemsRepeater
+                    ItemTemplate="{StaticResource HashResultDataTemplate}"
+                    ItemsSource="{x:Bind ViewModel.HashTask.Results}"
+                    Layout="{StaticResource HashResultVerticalStackLayout}" />
+
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </Page>
