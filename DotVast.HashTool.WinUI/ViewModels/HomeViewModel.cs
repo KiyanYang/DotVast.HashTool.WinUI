@@ -11,8 +11,6 @@ using Windows.Storage.Pickers;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
-// TODO: 文本模式下，应选择编码，否则无法正确计算哈希值.
-// TODO: CRC32 计算结果位数错误.
 public sealed partial class HomeViewModel : ObservableRecipient
 {
     private readonly ILogger<HomeViewModel> _logger;
@@ -131,36 +129,36 @@ public sealed partial class HomeViewModel : ObservableRecipient
             new(false, Hash.CRC32),
 
             // MD
-            //new(false,Hash.MD4),
+            new(false,Hash.MD4),
             new(true, Hash.MD5),
 
             // SHA
             new(false, Hash.SHA1),
-            //new(false,Hash.SHA224),
+            new(false,Hash.SHA224),
             new(true, Hash.SHA256),
             new(false, Hash.SHA384),
             new(false, Hash.SHA512),
-            //new(false,Hash.SHA3_224),
-            //new(false,Hash.SHA3_256),
-            //new(false,Hash.SHA3_384),
-            //new(false,Hash.SHA3_512),
+            new(false,Hash.SHA3_224),
+            new(false,Hash.SHA3_256),
+            new(false,Hash.SHA3_384),
+            new(false,Hash.SHA3_512),
 
             // Blake2
-            //new(false,Hash.Blake2B_160),
-            //new(false,Hash.Blake2B_256),
-            //new(false,Hash.Blake2B_384),
-            //new(false,Hash.Blake2B_512),
-            //new(false,Hash.Blake2S_128),
-            //new(false,Hash.Blake2S_160),
-            //new(false,Hash.Blake2S_224),
-            //new(false,Hash.Blake2S_256),
+            new(false,Hash.Blake2B_160),
+            new(false,Hash.Blake2B_256),
+            new(false,Hash.Blake2B_384),
+            new(false,Hash.Blake2B_512),
+            new(false,Hash.Blake2S_128),
+            new(false,Hash.Blake2S_160),
+            new(false,Hash.Blake2S_224),
+            new(false,Hash.Blake2S_256),
 
             // Keccak
-            //new(false,Hash.Keccak_224),
-            //new(false,Hash.Keccak_256),
-            //new(false,Hash.Keccak_288),
-            //new(false,Hash.Keccak_384),
-            //new(false,Hash.Keccak_512),
+            new(false,Hash.Keccak_224),
+            new(false,Hash.Keccak_256),
+            new(false,Hash.Keccak_288),
+            new(false,Hash.Keccak_384),
+            new(false,Hash.Keccak_512),
 
             // QuickXor
             new(false, Hash.QuickXor),
