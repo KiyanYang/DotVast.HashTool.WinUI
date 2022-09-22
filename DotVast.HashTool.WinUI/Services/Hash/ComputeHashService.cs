@@ -135,12 +135,14 @@ internal sealed class ComputeHashService : IComputeHashService
 
         #region 使用屏障并行计算哈希值
 
+        ThreadPool.GetMinThreads(out var minWorker, out var minIOC);
+        ThreadPool.SetMinThreads(hashs.Count, minIOC);
+
         using Barrier barrier = new(hashs.Count, (b) =>
         {
             // 实际读取长度. 读取完毕时该值为 0.
             readLength = stream.Read(buffer, 0, bufferSize);
 
-            // 暂停功能.
             mres.Wait();
 
             // 报告进度. streamLength 在此处始终大于 0.
@@ -148,7 +150,7 @@ internal sealed class ComputeHashService : IComputeHashService
         });
 
         // 定义本地函数。当读取长度大于 0 时，先屏障同步（包括读取文件、报告进度等），再并行计算。
-        void action(Hash hash)
+        void Action(Hash hash)
         {
             while (readLength > 0)
             {
@@ -162,8 +164,9 @@ internal sealed class ComputeHashService : IComputeHashService
             }
         }
 
-        // 开启并行动作
-        Parallel.ForEach(hashs, action);
+        Parallel.ForEach(hashs, Action);
+
+        ThreadPool.SetMinThreads(minWorker, minIOC);
 
         #endregion
 
