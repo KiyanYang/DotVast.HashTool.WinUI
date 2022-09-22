@@ -3,17 +3,12 @@ using DotVast.HashTool.WinUI.Contracts.Services;
 using Windows.Globalization;
 
 namespace DotVast.HashTool.WinUI.Services;
+
 internal sealed class LanguageSelectorService : ILanguageSelectorService
 {
-    public AppLanguage Language
-    {
-        get; set;
-    } = AppLanguage.ZhHans;
+    public AppLanguage Language { get; set; } = AppLanguage.ZhHans;
 
-    public AppLanguage[] Languages
-    {
-        get; set;
-    } = Array.Empty<AppLanguage>();
+    public AppLanguage[] Languages { get; set; } = Array.Empty<AppLanguage>();
 
     public async Task InitializeAsync()
     {

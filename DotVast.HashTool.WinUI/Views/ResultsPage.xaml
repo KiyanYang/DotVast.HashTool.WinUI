@@ -9,13 +9,8 @@
     xmlns:sys="using:System"
     mc:Ignorable="d">
     <Page.Resources>
-        <Thickness x:Key="TaskDetailGridPadding">16,8,16,0</Thickness>
-        <x:Double x:Key="HashResultDataGridRowSpacing">8</x:Double>
-        <x:Double x:Key="HashResultVerticalStackSpacing">8</x:Double>
-        <StackLayout
-            x:Key="HashResultVerticalStackLayout"
-            Orientation="Vertical"
-            Spacing="{StaticResource HashResultVerticalStackSpacing}" />
+        <x:Double x:Key="SmallSpacing">8</x:Double>
+        <x:Double x:Key="MediumSpacing">12</x:Double>
         <DataTemplate x:Key="HashResultItemDataTemplate" x:DataType="models:HashResultItem">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -26,13 +21,14 @@
                 <TextBlock
                     Grid.Column="1"
                     IsTextSelectionEnabled="True"
-                    Text="{x:Bind Hash}" />
+                    Text="{x:Bind Hash}"
+                    TextWrapping="Wrap" />
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="HashResultDataTemplate" x:DataType="models:HashResult">
-            <Grid RowSpacing="{StaticResource HashResultDataGridRowSpacing}" Style="{StaticResource CardGridStyle}">
+            <Grid RowSpacing="{StaticResource SmallSpacing}" Style="{StaticResource CardGridStyle}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -47,14 +43,18 @@
                     Grid.Row="0"
                     Grid.Column="1"
                     IsTextSelectionEnabled="True"
-                    Text="{x:Bind Content}" />
+                    Text="{x:Bind Content}"
+                    TextWrapping="Wrap" />
                 <ItemsRepeater
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
                     ItemTemplate="{StaticResource HashResultItemDataTemplate}"
-                    ItemsSource="{x:Bind Data}"
-                    Layout="{StaticResource HashResultVerticalStackLayout}" />
+                    ItemsSource="{x:Bind Data}">
+                    <ItemsRepeater.Layout>
+                        <StackLayout Orientation="Vertical" Spacing="{StaticResource SmallSpacing}" />
+                    </ItemsRepeater.Layout>
+                </ItemsRepeater>
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -67,7 +67,7 @@
                     FontSize="{StaticResource SubtitleTextBlockFontSize}"
                     FontWeight="Bold" />
 
-                <Grid Padding="{StaticResource TaskDetailGridPadding}" Style="{StaticResource CardGridStyle}">
+                <Grid Padding="16,8,16,0" Style="{StaticResource CardGridStyle}">
                     <Grid.Resources>
                         <Style TargetType="TextBlock">
                             <Setter Property="Height" Value="28" />
@@ -148,10 +148,11 @@
                     <Run FontSize="{StaticResource CaptionTextBlockFontSize}" Text="{x:Bind ViewModel.HashTask.Results.Count, Mode=OneWay}" />
                 </TextBlock>
 
-                <ItemsRepeater
-                    ItemTemplate="{StaticResource HashResultDataTemplate}"
-                    ItemsSource="{x:Bind ViewModel.HashTask.Results}"
-                    Layout="{StaticResource HashResultVerticalStackLayout}" />
+                <ItemsRepeater ItemTemplate="{StaticResource HashResultDataTemplate}" ItemsSource="{x:Bind ViewModel.HashTask.Results, Mode=OneWay}">
+                    <ItemsRepeater.Layout>
+                        <StackLayout Orientation="Vertical" Spacing="{StaticResource MediumSpacing}" />
+                    </ItemsRepeater.Layout>
+                </ItemsRepeater>
 
             </StackPanel>
         </Grid>

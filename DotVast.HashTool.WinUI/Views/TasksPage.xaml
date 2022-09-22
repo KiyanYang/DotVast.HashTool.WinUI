@@ -36,9 +36,9 @@
                             </Grid.Resources>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="20" />
-                                <ColumnDefinition Width="52" />
+                                <ColumnDefinition Width="44" />
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="88" />
+                                <ColumnDefinition Width="84" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <TextBlock
@@ -46,8 +46,11 @@
                                 HorizontalAlignment="Right"
                                 Text="{x:Bind Id}" />
                             <TextBlock Grid.Column="1" Text="{x:Bind Mode}" />
-                            <TextBlock Grid.Column="2" Text="{x:Bind Content}" />
-                            <TextBlock Grid.Column="3" Text="{x:Bind State}" />
+                            <TextBlock
+                                Grid.Column="2"
+                                Text="{x:Bind Content}"
+                                TextTrimming="CharacterEllipsis" />
+                            <TextBlock Grid.Column="3" Text="{x:Bind State, Mode=OneWay}" />
                             <Button
                                 x:Uid="Tasks_ShowResult_Button"
                                 Grid.Column="4"
