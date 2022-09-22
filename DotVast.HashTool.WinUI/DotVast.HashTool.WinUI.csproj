@@ -16,6 +16,14 @@
         <EnableMsixTooling>true</EnableMsixTooling>
         <PlatformTarget>AnyCPU</PlatformTarget>
         <DefaultLanguage>zh-Hans</DefaultLanguage>
+        <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+        <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+        <PackageCertificateThumbprint>C33196ED8E1DB2DD9470AA4D1AEFF6880F9651FD</PackageCertificateThumbprint>
+        <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+        <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+        <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+        <GenerateTestArtifacts>True</GenerateTestArtifacts>
+        <AppxBundle>Never</AppxBundle>
     </PropertyGroup>
 
     <ItemGroup>
