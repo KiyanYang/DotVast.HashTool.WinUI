@@ -11,6 +11,8 @@ namespace DotVast.HashTool.WinUI.ViewModels;
 
 public sealed partial class SettingsViewModel : ObservableRecipient
 {
+    private readonly INavigationService _navigationService;
+
     [ObservableProperty]
     private string _versionDescription;
 
@@ -57,8 +59,12 @@ public sealed partial class SettingsViewModel : ObservableRecipient
 
     #endregion Theme selector
 
-    public SettingsViewModel(IThemeSelectorService themeSelectorService, ILanguageSelectorService languageSelectorService)
+    public SettingsViewModel(
+        INavigationService navigationService,
+        IThemeSelectorService themeSelectorService,
+        ILanguageSelectorService languageSelectorService)
     {
+        _navigationService = navigationService;
         _themeSelectorService = themeSelectorService;
         _theme = Themes.First(x => x.Theme == _themeSelectorService.Theme);
         _languageSelectorService = languageSelectorService;
@@ -66,6 +72,9 @@ public sealed partial class SettingsViewModel : ObservableRecipient
         AppLanguages = _languageSelectorService.Languages;
         _versionDescription = GetVersionDescription();
     }
+
+    [RelayCommand]
+    private void NavigateTo(string pageKey) => _navigationService.NavigateTo(pageKey);
 
     private static string GetVersionDescription()
     {

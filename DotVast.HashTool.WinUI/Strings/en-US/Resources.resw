@@ -247,4 +247,10 @@
   <data name="Settings_Theme_Detail.Text" xml:space="preserve">
     <value>Change the theme displayed in the app</value>
   </data>
+  <data name="Licenses_Header" xml:space="preserve">
+    <value>Licenses</value>
+  </data>
+  <data name="SettingsPage_Licenses.Content" xml:space="preserve">
+    <value>Licenses</value>
+  </data>
 </root>

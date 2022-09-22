@@ -95,6 +95,11 @@
                         Margin="{StaticResource XSmallTopMargin}"
                         Style="{ThemeResource BodyTextBlockStyle}" />
                     <HyperlinkButton x:Uid="SettingsPage_PrivacyTermsLink" Margin="{StaticResource SettingsPageHyperlinkButtonMargin}" />
+                    <HyperlinkButton
+                        x:Uid="SettingsPage_Licenses"
+                        Margin="{StaticResource SettingsPageHyperlinkButtonMargin}"
+                        Command="{x:Bind ViewModel.NavigateToCommand}"
+                        CommandParameter="DotVast.HashTool.WinUI.ViewModels.LicensesViewModel" />
                 </StackPanel>
             </StackPanel>
         </Grid>
