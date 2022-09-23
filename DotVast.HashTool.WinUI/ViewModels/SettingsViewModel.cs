@@ -2,6 +2,7 @@ using System.Reflection;
 
 using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Helpers;
+using DotVast.HashTool.WinUI.Models;
 
 using Microsoft.UI.Xaml;
 
@@ -75,6 +76,15 @@ public sealed partial class SettingsViewModel : ObservableRecipient
 
     [RelayCommand]
     private void NavigateTo(string pageKey) => _navigationService.NavigateTo(pageKey);
+
+    [RelayCommand]
+    private async void NavigateToLogsFolder()
+    {
+        var localAppData = PathHelper.AppDataLocalPhysicalPath;
+        var logsFilePath = App.GetOptions<LogsOptions>().Value.FilePath!;
+        var logsFolderPath = Path.GetDirectoryName(Path.Combine(localAppData, logsFilePath));
+        await Windows.System.Launcher.LaunchFolderPathAsync(logsFolderPath);
+    }
 
     private static string GetVersionDescription()
     {

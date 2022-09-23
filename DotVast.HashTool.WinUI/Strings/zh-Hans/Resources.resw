@@ -202,6 +202,9 @@
   <data name="SettingsPage_Licenses.Content" xml:space="preserve">
     <value>许可</value>
   </data>
+  <data name="SettingsPage_Logs.Content" xml:space="preserve">
+    <value>日志</value>
+  </data>
   <data name="SettingsPage_PrivacyTermsLink.Content" xml:space="preserve">
     <value>隐私声明</value>
   </data>

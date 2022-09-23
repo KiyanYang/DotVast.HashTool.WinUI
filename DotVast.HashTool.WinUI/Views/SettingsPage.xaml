@@ -100,6 +100,10 @@
                         Margin="{StaticResource SettingsPageHyperlinkButtonMargin}"
                         Command="{x:Bind ViewModel.NavigateToCommand}"
                         CommandParameter="DotVast.HashTool.WinUI.ViewModels.LicensesViewModel" />
+                    <HyperlinkButton
+                        x:Uid="SettingsPage_Logs"
+                        Margin="{StaticResource SettingsPageHyperlinkButtonMargin}"
+                        Command="{x:Bind ViewModel.NavigateToLogsFolderCommand}" />
                 </StackPanel>
             </StackPanel>
         </Grid>

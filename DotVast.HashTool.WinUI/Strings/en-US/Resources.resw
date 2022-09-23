@@ -253,4 +253,7 @@
   <data name="SettingsPage_Licenses.Content" xml:space="preserve">
     <value>Licenses</value>
   </data>
+  <data name="SettingsPage_Logs.Content" xml:space="preserve">
+    <value>Logs</value>
+  </data>
 </root>
