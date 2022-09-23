@@ -11,7 +11,8 @@
 #### A Tool for Calculating and Verifying the Hash Value of Any File, Folder, or Text!
 
 [![MIT License](https://img.shields.io/github/license/KiyanYang/DotVast.HashTool.WinUI)](https://github.com/KiyanYang/DotVast.HashTool.WinUI/blob/main/LICENSE.txt)
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/KiyanYang/DotVast.HashTool.WinUI)](https://github.com/KiyanYang/DotVast.HashTool.WinUI/releases)
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/KiyanYang/DotVast.HashTool.WinUI?include_prereleases)](https://github.com/KiyanYang/DotVast.HashTool.WinUI/releases)
+[![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/KiyanYang/DotVast.HashTool.WinUI)](https://github.com/KiyanYang/DotVast.HashTool.WinUI/releases)
 [![GitHub issues](https://img.shields.io/github/issues/KiyanYang/DotVast.HashTool.WinUI)](https://github.com/KiyanYang/DotVast.HashTool.WinUI/issues)
 
 </div>
