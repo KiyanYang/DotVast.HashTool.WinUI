@@ -43,6 +43,10 @@ public sealed partial class App : Application
         return service;
     }
 
+    public static ILogger<T> GetLogger<T>() where T : class => GetService<ILogger<T>>();
+
+    public static IOptions<T> GetOptions<T>() where T : class => GetService<IOptions<T>>();
+
     public static WindowEx MainWindow { get; } = new MainWindow();
 
     private readonly ILogger<App> _logger;
@@ -93,13 +97,11 @@ public sealed partial class App : Application
 
             // Configuration
             services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
-            services.Configure<LogOptions>(context.Configuration.GetSection(nameof(LogOptions)));
+            services.Configure<LogsOptions>(context.Configuration.GetSection(nameof(LogsOptions)));
         }).
         UseSerilog((context, services, loggerConfiguration) =>
         {
-            var logFilePath = services.GetService<IOptions<LogOptions>>()!.Value.FilePath ?? "Log/app-.log";
-            var appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var filePath = Path.Combine(appDataFolder, logFilePath);
+            var filePath = services.GetService<IOptions<LogsOptions>>()!.Value.FullPath;
             loggerConfiguration
                 .WriteTo.File(filePath, shared: true, rollingInterval: RollingInterval.Day);
         }).
