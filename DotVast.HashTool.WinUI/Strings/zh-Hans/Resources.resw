@@ -212,7 +212,7 @@
     <value>关于</value>
   </data>
   <data name="Settings_AboutDescription.Text" xml:space="preserve">
-    <value>TODO: Replace with your app description.</value>
+    <value>用于计算和校验文件、文件夹或文本哈希值的工具！</value>
   </data>
   <data name="Settings_Language.Text" xml:space="preserve">
     <value>语言 (Language)</value>
