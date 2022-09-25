@@ -1,5 +1,3 @@
-using DotVast.HashTool.WinUI.Helpers;
-
 namespace DotVast.HashTool.WinUI.Models.Controls;
 
 public sealed partial class ButtonModel : ObservableObject
@@ -8,13 +6,5 @@ public sealed partial class ButtonModel : ObservableObject
     private bool _isEnabled;
 
     [ObservableProperty]
-    private string _uid = string.Empty;
-
-    [ObservableProperty]
     private string _content = string.Empty;
-
-    partial void OnUidChanged(string value)
-    {
-        Content = value.GetLocalized();
-    }
 }

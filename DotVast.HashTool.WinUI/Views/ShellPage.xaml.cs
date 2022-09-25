@@ -32,9 +32,9 @@ public sealed partial class ShellPage : Page
         App.MainWindow.SetTitleBar(AppTitleBar);
         App.MainWindow.Activated += MainWindow_Activated;
 #if DEBUG
-        AppTitleBarText.Text = "AppDisplayNameDev".GetLocalized();
+        AppTitleBarText.Text = Localization.AppDisplayNameDev;
 #else
-        AppTitleBarText.Text = "AppDisplayName".GetLocalized();
+        AppTitleBarText.Text = Localization.AppDisplayName;
 #endif
     }
 

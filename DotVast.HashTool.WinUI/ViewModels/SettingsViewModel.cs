@@ -47,9 +47,9 @@ public sealed partial class SettingsViewModel : ObservableRecipient
         get;
     } = new AppTheme[]
     {
-        new("Settings_Theme_Default".GetLocalized(), ElementTheme.Default),
-        new("Settings_Theme_Light".GetLocalized(), ElementTheme.Light),
-        new("Settings_Theme_Dark".GetLocalized(), ElementTheme.Dark),
+        new(Localization.Settings_Theme_Default, ElementTheme.Default),
+        new(Localization.Settings_Theme_Light, ElementTheme.Light),
+        new(Localization.Settings_Theme_Dark, ElementTheme.Dark),
     };
 
     [ObservableProperty]
@@ -101,6 +101,6 @@ public sealed partial class SettingsViewModel : ObservableRecipient
             version = Assembly.GetExecutingAssembly().GetName().Version!;
         }
 
-        return $"{"AppDisplayName".GetLocalized()} - {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+        return $"{Localization.AppDisplayName} - {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
     }
 }

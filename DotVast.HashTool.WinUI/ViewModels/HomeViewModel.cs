@@ -19,11 +19,6 @@ public sealed partial class HomeViewModel : ObservableRecipient
     private readonly ManualResetEventSlim _mres = new(true);
     private CancellationTokenSource? _cts;
 
-    private const string Uid_ButtonStart = "Home_Button_Start";
-    private const string Uid_ButtonPause = "Home_Button_Pause";
-    private const string Uid_ButtonResume = "Home_Button_Resume";
-    private const string Uid_ButtonCancel = "Home_Button_Cancel";
-
     public HomeViewModel(
         ILogger<HomeViewModel> logger,
         IHashTaskService hashTaskService,
@@ -72,17 +67,17 @@ public sealed partial class HomeViewModel : ObservableRecipient
     /// <summary>
     /// “开始”按钮.
     /// </summary>
-    public ButtonModel StartButton { get; } = new() { IsEnabled = true, Uid = Uid_ButtonStart };
+    public ButtonModel StartButton { get; } = new() { IsEnabled = true, Content = Localization.Home_Button_Start };
 
     /// <summary>
     /// “暂停”和“继续”按钮.
     /// </summary>
-    public ButtonModel ResetButton { get; } = new() { IsEnabled = false, Uid = Uid_ButtonPause };
+    public ButtonModel ResetButton { get; } = new() { IsEnabled = false, Content = Localization.Home_Button_Pause };
 
     /// <summary>
     /// “取消”按钮.
     /// </summary>
-    public ButtonModel CancelButton { get; } = new() { IsEnabled = false, Uid = Uid_ButtonCancel };
+    public ButtonModel CancelButton { get; } = new() { IsEnabled = false, Content = Localization.Home_Button_Cancel };
 
     /// <summary>
     /// Hash 选项.
@@ -222,12 +217,12 @@ public sealed partial class HomeViewModel : ObservableRecipient
         }
         if (_mres.IsSet)
         {
-            ResetButton.Uid = Uid_ButtonResume;
+            ResetButton.Content = Localization.Home_Button_Resume;
             _mres.Reset();
         }
         else
         {
-            ResetButton.Uid = Uid_ButtonPause;
+            ResetButton.Content = Localization.Home_Button_Pause;
             _mres.Set();
         }
     }
@@ -242,7 +237,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
         SetButtonsIsEnabled(true, false, false);
 
         _cts!.Cancel();
-        ResetButton.Uid = Uid_ButtonPause;
+        ResetButton.Content = Localization.Home_Button_Pause;
         _mres.Set();
     }
 

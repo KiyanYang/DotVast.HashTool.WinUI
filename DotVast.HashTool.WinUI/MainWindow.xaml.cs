@@ -1,5 +1,3 @@
-using DotVast.HashTool.WinUI.Helpers;
-
 namespace DotVast.HashTool.WinUI;
 
 public sealed partial class MainWindow : WindowEx
@@ -11,9 +9,9 @@ public sealed partial class MainWindow : WindowEx
         AppWindow.SetIcon(Path.Combine(AppContext.BaseDirectory, "Assets/Icon.ico"));
         Content = null;
 #if DEBUG
-        Title = "AppDisplayNameDev".GetLocalized();
+        Title = Localization.AppDisplayNameDev;
 #else
-        Title = "AppDisplayName".GetLocalized();
+        Title = Localization.AppDisplayName;
 #endif
     }
 }
