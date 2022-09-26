@@ -1,6 +1,7 @@
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.ViewModels;
 
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 
@@ -24,6 +25,13 @@ public sealed partial class ResultsPage : Page
         if (e.Parameter is HashTask hashTask)
         {
             ViewModel.HashTask = hashTask;
+            #region {x:Bind} function to nullable, property doesn't update on null 缓解措施
+            // https://github.com/microsoft/microsoft-ui-xaml/issues/1904
+            // https://github.com/microsoft/microsoft-ui-xaml/issues/2166
+            // 修复后用法 {x:Bind helpers:XamlFunctionHelper.VisibleIfNotNull(ViewModel.HashResults)}
+            HashResultsTitle.Visibility = hashTask.State != HashTaskState.Aborted
+                ? Visibility.Visible : Visibility.Collapsed;
+            #endregion
         }
         else if (e.Parameter != null)
         {
