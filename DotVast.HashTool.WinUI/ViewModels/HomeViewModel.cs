@@ -14,25 +14,30 @@ namespace DotVast.HashTool.WinUI.ViewModels;
 public sealed partial class HomeViewModel : ObservableRecipient
 {
     private readonly ILogger<HomeViewModel> _logger;
-    private readonly IHashTaskService _hashTaskService;
     private readonly IComputeHashService _computeHashService;
+    private readonly IDialogService _dialogService;
+    private readonly IHashTaskService _hashTaskService;
     private readonly ManualResetEventSlim _mres = new(true);
     private CancellationTokenSource? _cts;
 
     public HomeViewModel(
         ILogger<HomeViewModel> logger,
-        IHashTaskService hashTaskService,
-        IComputeHashService computeHashService)
+        IComputeHashService computeHashService,
+        IDialogService dialogService,
+        IHashTaskService hashTaskService)
     {
         _logger = logger;
-        _hashTaskService = hashTaskService;
         _computeHashService = computeHashService;
+        _dialogService = dialogService;
+        _hashTaskService = hashTaskService;
+
         _computeHashService.AtomProgress.ProgressChanged += (sender, e) => AtomProgressBar.Val = e;
         _computeHashService.TaskProgress.ProgressChanged += (sender, e) =>
         {
             TaskProgressBar.Val = e.Val;
             TaskProgressBar.Max = e.Max;
         };
+
         InitHashNames();
     }
 
@@ -263,6 +268,10 @@ public sealed partial class HomeViewModel : ObservableRecipient
                     if (File.Exists(hashTask.Content) == false)
                     {
                         hashTask.State = HashTaskState.Aborted;
+                        await _dialogService.ShowInfoDialogAsync(
+                            Localization.Dialog_HashTaskAborted_Title,
+                            Localization.Dialog_HashTaskAborted_FileNotExists,
+                            Localization.Dialog_HashTaskAborted_OK);
                         return;
                     }
                     await _computeHashService.HashFile(hashTask, _mres, _cts.Token);
@@ -272,6 +281,10 @@ public sealed partial class HomeViewModel : ObservableRecipient
                     if (Directory.Exists(hashTask.Content) == false)
                     {
                         hashTask.State = HashTaskState.Aborted;
+                        await _dialogService.ShowInfoDialogAsync(
+                            Localization.Dialog_HashTaskAborted_Title,
+                            Localization.Dialog_HashTaskAborted_FolderNotExists,
+                            Localization.Dialog_HashTaskAborted_OK);
                         return;
                     }
                     await _computeHashService.HashFolder(hashTask, _mres, _cts.Token);

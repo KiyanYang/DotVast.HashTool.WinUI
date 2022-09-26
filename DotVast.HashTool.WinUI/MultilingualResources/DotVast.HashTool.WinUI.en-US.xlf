@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="zh-Hans" target-language="en-US" original="DOTVAST.HASHTOOL.WINUI/STRINGS/ZH-HANS/RESOURCES.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.1.12.0" tool-company="Microsoft"/>
+    </header>
+    <body>
+      <group id="DOTVAST.HASHTOOL.WINUI/STRINGS/ZH-HANS/RESOURCES.RESW" datatype="resx">
+        <trans-unit id="AppDescription" translate="yes" xml:space="preserve">
+          <source>HashTool（基于 WinUI）</source>
+          <target state="translated">HashTool (Based on WinUI)</target>
+        </trans-unit>
+        <trans-unit id="AppDescriptionDev" translate="yes" xml:space="preserve">
+          <source>HashTool Dev（基于 WinUI）</source>
+          <target state="translated">HashTool Dev (Based on WinUI)</target>
+        </trans-unit>
+        <trans-unit id="AppDisplayName" translate="yes" xml:space="preserve">
+          <source>HashTool</source>
+          <target state="translated">HashTool</target>
+        </trans-unit>
+        <trans-unit id="AppDisplayNameDev" translate="yes" xml:space="preserve">
+          <source>HashTool Dev</source>
+          <target state="translated">HashTool Dev</target>
+        </trans-unit>
+        <trans-unit id="Dialog_HashTaskAborted_FileNotExists" translate="yes" xml:space="preserve">
+          <source>文件不存在，任务已中止。</source>
+          <target state="translated">File does not exist, task aborted.</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">提示文件不存在的任务中止对话框的内容</note>
+        </trans-unit>
+        <trans-unit id="Dialog_HashTaskAborted_FolderNotExists" translate="yes" xml:space="preserve">
+          <source>文件夹不存在，任务已中止。</source>
+          <target state="translated">Folder does not exist, task aborted.</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">提示文件夹不存在的任务中止对话框的内容</note>
+        </trans-unit>
+        <trans-unit id="Dialog_HashTaskAborted_Title" translate="yes" xml:space="preserve">
+          <source>任务中止</source>
+          <target state="translated">Task Aborted</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">任务中止对话框的标题</note>
+        </trans-unit>
+        <trans-unit id="HashResultType_File" translate="yes" xml:space="preserve">
+          <source>文件</source>
+          <target state="translated">File</target>
+        </trans-unit>
+        <trans-unit id="HashResultType_Text" translate="yes" xml:space="preserve">
+          <source>文本</source>
+          <target state="translated">Text</target>
+        </trans-unit>
+        <trans-unit id="HashTaskMode_File" translate="yes" xml:space="preserve">
+          <source>文件</source>
+          <target state="translated">File</target>
+        </trans-unit>
+        <trans-unit id="HashTaskMode_Folder" translate="yes" xml:space="preserve">
+          <source>文件夹</source>
+          <target state="translated">Folder</target>
+        </trans-unit>
+        <trans-unit id="HashTaskMode_Text" translate="yes" xml:space="preserve">
+          <source>文本</source>
+          <target state="translated">Text</target>
+        </trans-unit>
+        <trans-unit id="HashTaskState_Aborted" translate="yes" xml:space="preserve">
+          <source>已中止</source>
+          <target state="translated">Aborted</target>
+        </trans-unit>
+        <trans-unit id="HashTaskState_Canceled" translate="yes" xml:space="preserve">
+          <source>已取消</source>
+          <target state="translated">Canceled</target>
+        </trans-unit>
+        <trans-unit id="HashTaskState_Completed" translate="yes" xml:space="preserve">
+          <source>已完成</source>
+          <target state="translated">Completed</target>
+        </trans-unit>
+        <trans-unit id="HashTaskState_Waiting" translate="yes" xml:space="preserve">
+          <source>等待中</source>
+          <target state="translated">Waiting</target>
+        </trans-unit>
+        <trans-unit id="HashTaskState_Working" translate="yes" xml:space="preserve">
+          <source>计算中</source>
+          <target state="translated">Working</target>
+        </trans-unit>
+        <trans-unit id="Home_Button_Cancel" translate="yes" xml:space="preserve">
+          <source>取消</source>
+          <target state="translated">Cancel</target>
+        </trans-unit>
+        <trans-unit id="Home_Button_Pause" translate="yes" xml:space="preserve">
+          <source>暂停</source>
+          <target state="translated">Pause</target>
+        </trans-unit>
+        <trans-unit id="Home_Button_Pick.Content" translate="yes" xml:space="preserve">
+          <source>浏览...</source>
+          <target state="translated">Pick...</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">选择文件或文件夹</note>
+        </trans-unit>
+        <trans-unit id="Home_Button_Resume" translate="yes" xml:space="preserve">
+          <source>继续</source>
+          <target state="translated">Resume</target>
+        </trans-unit>
+        <trans-unit id="Home_Button_Start" translate="yes" xml:space="preserve">
+          <source>开始</source>
+          <target state="translated">Start</target>
+        </trans-unit>
+        <trans-unit id="Licenses_Header" translate="yes" xml:space="preserve">
+          <source>许可</source>
+          <target state="translated">Licenses</target>
+        </trans-unit>
+        <trans-unit id="Results_Detail_CreatedDateTime.Text" translate="yes" xml:space="preserve">
+          <source>创建时间</source>
+          <target state="translated">Created</target>
+        </trans-unit>
+        <trans-unit id="Results_Detail_Elapsed.Text" translate="yes" xml:space="preserve">
+          <source>计算用时</source>
+          <target state="translated">Elapsed</target>
+        </trans-unit>
+        <trans-unit id="Results_Detail_Encoding.Text" translate="yes" xml:space="preserve">
+          <source>文本编码</source>
+          <target state="translated">Encoding</target>
+        </trans-unit>
+        <trans-unit id="Results_Detail_Id.Text" translate="yes" xml:space="preserve">
+          <source>序号</source>
+          <target state="translated">ID</target>
+        </trans-unit>
+        <trans-unit id="Results_Detail_State.Text" translate="yes" xml:space="preserve">
+          <source>状态</source>
+          <target state="translated">State</target>
+        </trans-unit>
+        <trans-unit id="Results_Subtitle_TaskDetail.Text" translate="yes" xml:space="preserve">
+          <source>任务详情</source>
+          <target state="translated">Detail</target>
+        </trans-unit>
+        <trans-unit id="Results_Subtitle_TaskResults.Text" translate="yes" xml:space="preserve">
+          <source>任务结果</source>
+          <target state="translated">Results</target>
+        </trans-unit>
+        <trans-unit id="SettingsPage_Licenses.Content" translate="yes" xml:space="preserve">
+          <source>许可</source>
+          <target state="translated">Licenses</target>
+        </trans-unit>
+        <trans-unit id="SettingsPage_Logs.Content" translate="yes" xml:space="preserve">
+          <source>日志</source>
+          <target state="translated">Logs</target>
+        </trans-unit>
+        <trans-unit id="SettingsPage_PrivacyTermsLink.Content" translate="yes" xml:space="preserve">
+          <source>隐私声明</source>
+          <target state="translated">Privacy Statement</target>
+        </trans-unit>
+        <trans-unit id="SettingsPage_PrivacyTermsLink.NavigateUri" translate="yes" xml:space="preserve">
+          <source>https://YourPrivacyUrlGoesHere/</source>
+          <target state="translated">https://YourPrivacyUrlGoesHere/</target>
+        </trans-unit>
+        <trans-unit id="Settings_About.Text" translate="yes" xml:space="preserve">
+          <source>关于</source>
+          <target state="translated">About</target>
+        </trans-unit>
+        <trans-unit id="Settings_AboutDescription.Text" translate="yes" xml:space="preserve">
+          <source>用于计算和校验文件、文件夹或文本哈希值的工具！</source>
+          <target state="translated">A Tool for Calculating and Verifying the Hash Value of Any File, Folder, or Text!</target>
+        </trans-unit>
+        <trans-unit id="Settings_Language.Text" translate="yes" xml:space="preserve">
+          <source>语言 (Language)</source>
+          <target state="translated">Language</target>
+        </trans-unit>
+        <trans-unit id="Settings_Language_Detail.Text" translate="yes" xml:space="preserve">
+          <source>更改应用中显示的语言</source>
+          <target state="translated">Change the language displayed in the APP</target>
+        </trans-unit>
+        <trans-unit id="Settings_Personalization.Text" translate="yes" xml:space="preserve">
+          <source>个性化</source>
+          <target state="translated">Personalization</target>
+        </trans-unit>
+        <trans-unit id="Settings_Theme.Text" translate="yes" xml:space="preserve">
+          <source>主题</source>
+          <target state="translated">Theme</target>
+        </trans-unit>
+        <trans-unit id="Settings_Theme_Dark" translate="yes" xml:space="preserve">
+          <source>深色</source>
+          <target state="translated">Dark</target>
+        </trans-unit>
+        <trans-unit id="Settings_Theme_Default" translate="yes" xml:space="preserve">
+          <source>默认</source>
+          <target state="translated">Default</target>
+        </trans-unit>
+        <trans-unit id="Settings_Theme_Detail.Text" translate="yes" xml:space="preserve">
+          <source>更改应用中显示的主题</source>
+          <target state="translated">Change the theme displayed in the APP</target>
+        </trans-unit>
+        <trans-unit id="Settings_Theme_Light" translate="yes" xml:space="preserve">
+          <source>浅色</source>
+          <target state="translated">Light</target>
+        </trans-unit>
+        <trans-unit id="Shell_Home.Content" translate="yes" xml:space="preserve">
+          <source>主页</source>
+          <target state="translated">Home</target>
+        </trans-unit>
+        <trans-unit id="Shell_Results.Content" translate="yes" xml:space="preserve">
+          <source>结果</source>
+          <target state="translated">Results</target>
+        </trans-unit>
+        <trans-unit id="Shell_Tasks.Content" translate="yes" xml:space="preserve">
+          <source>任务</source>
+          <target state="translated">Tasks</target>
+        </trans-unit>
+        <trans-unit id="Tasks_ShowResult_Button.Content" translate="yes" xml:space="preserve">
+          <source>查看</source>
+          <target state="translated">Show</target>
+        </trans-unit>
+        <trans-unit id="Tasks_ShowResult_XamlUICommand.Description" translate="yes" xml:space="preserve">
+          <source>查看结果</source>
+          <target state="translated">Show Results</target>
+        </trans-unit>
+        <trans-unit id="Dialog_HashTaskAborted_OK" translate="yes" xml:space="preserve">
+          <source>确定</source>
+          <target state="translated">OK</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">任务中止对话框的确认按钮</note>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>

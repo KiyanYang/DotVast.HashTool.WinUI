@@ -129,6 +129,22 @@
   <data name="AppDisplayNameDev" xml:space="preserve">
     <value>HashTool Dev</value>
   </data>
+  <data name="Dialog_HashTaskAborted_FileNotExists" xml:space="preserve">
+    <value>文件不存在，任务已中止。</value>
+    <comment>提示文件不存在的任务中止对话框的内容</comment>
+  </data>
+  <data name="Dialog_HashTaskAborted_FolderNotExists" xml:space="preserve">
+    <value>文件夹不存在，任务已中止。</value>
+    <comment>提示文件夹不存在的任务中止对话框的内容</comment>
+  </data>
+  <data name="Dialog_HashTaskAborted_OK" xml:space="preserve">
+    <value>确定</value>
+    <comment>任务中止对话框的确认按钮</comment>
+  </data>
+  <data name="Dialog_HashTaskAborted_Title" xml:space="preserve">
+    <value>任务中止</value>
+    <comment>任务中止对话框的标题</comment>
+  </data>
   <data name="HashResultType_File" xml:space="preserve">
     <value>文件</value>
   </data>
@@ -167,7 +183,7 @@
   </data>
   <data name="Home_Button_Pick.Content" xml:space="preserve">
     <value>浏览...</value>
-    <comment>Pick a file or folder.</comment>
+    <comment>选择文件或文件夹</comment>
   </data>
   <data name="Home_Button_Resume" xml:space="preserve">
     <value>继续</value>
