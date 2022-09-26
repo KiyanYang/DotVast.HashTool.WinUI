@@ -305,6 +305,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
         }
         finally
         {
+            _computeHashService.IsFree = true;
             SetButtonsIsEnabled(true, false, false);
         }
     }

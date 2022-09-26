@@ -25,7 +25,7 @@ public interface IComputeHashService
     /// </summary>
     bool IsFree
     {
-        get;
+        get; set;
     }
 
     Task<HashTask> HashFile(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct);
