@@ -14,6 +14,7 @@
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/KiyanYang/DotVast.HashTool.WinUI?include_prereleases)](https://github.com/KiyanYang/DotVast.HashTool.WinUI/releases)
 [![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/KiyanYang/DotVast.HashTool.WinUI)](https://github.com/KiyanYang/DotVast.HashTool.WinUI/releases)
 [![GitHub issues](https://img.shields.io/github/issues/KiyanYang/DotVast.HashTool.WinUI)](https://github.com/KiyanYang/DotVast.HashTool.WinUI/issues)
+[![GitHub all releases](https://img.shields.io/github/downloads/KiyanYang/DotVast.HashTool.WinUI/total)](https://github.com/KiyanYang/DotVast.HashTool.WinUI/releases)
 
 </div>
 
@@ -36,11 +37,17 @@ HashTool 支持文件、文件夹或文本的哈希计算。
 - 工具
   - [Visual Studio Community 2022](https://visualstudio.microsoft.com/zh-hans/vs/community/)
   - [.NET 6](https://docs.microsoft.com/zh-cn/dotnet/api/?view=net-6.0)
+  - [Template Studio](https://github.com/microsoft/TemplateStudio)
 
-- 项目
-  - [dotnet/Runtime](https://github.com/dotnet/runtime)
-  - [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/dotnet)
-  - [HashLib4CSharp](https://github.com/Xor-el/HashLib4CSharp)
+- 库
+  - [CommunityToolkit.Mvvm](https://www.nuget.org/packages/CommunityToolkit.Mvvm)
+  - [HashLib4CSharp](https://www.nuget.org/packages/HashLib4CSharp)
+  - [Microsoft.Extensions.Hosting](https://www.nuget.org/packages/Microsoft.Extensions.Hosting)
+  - [Microsoft.WindowsAppSDK](https://www.nuget.org/packages/Microsoft.WindowsAppSDK)
+  - [Microsoft.Xaml.Behaviors.WinUI.Managed](https://www.nuget.org/packages/Microsoft.Xaml.Behaviors.WinUI.Managed)
+  - [Serilog.Extensions.Hosting](https://www.nuget.org/packages/Serilog.Extensions.Hosting)
+  - [Serilog.Sinks.File](https://www.nuget.org/packages/Serilog.Sinks.File)
+  - [WinUIEx](https://www.nuget.org/packages/WinUIEx)
 
 - 代码片段
   - [QuickXorHash.cs](https://gist.github.com/rgregg/c07a91964300315c6c3e77f7b5b861e4)
