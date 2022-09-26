@@ -299,6 +299,14 @@ public sealed partial class HomeViewModel : ObservableRecipient
         {
             _logger.LogWarning("计算哈希时出现“文件夹未找到”异常, 模式: {Mode}, 内容: {Content}\n{Exception}", hashTask.Mode, hashTask.Content, ex);
         }
+        catch (UnauthorizedAccessException ex)
+        {
+            await _dialogService.ShowInfoDialogAsync(
+                Localization.Dialog_HashTaskAborted_Title,
+                Localization.Dialog_HashTaskAborted_UnauthorizedAccess,
+                Localization.Dialog_HashTaskAborted_OK);
+            _logger.LogWarning("计算哈希时出现“未授权访问”异常, 模式: {Mode}, 内容: {Content}\n{Exception}", hashTask.Mode, hashTask.Content, ex);
+        }
         catch (Exception ex)
         {
             _logger.LogError("计算哈希时出现未预料的异常, 哈希任务: {HashTask:j}\n{Exception}", hashTask, ex);

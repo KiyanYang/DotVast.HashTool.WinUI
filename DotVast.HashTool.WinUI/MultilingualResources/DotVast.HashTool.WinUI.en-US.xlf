@@ -211,6 +211,11 @@
           <target state="translated">OK</target>
           <note from="MultilingualBuild" annotates="source" priority="2">任务中止对话框的确认按钮</note>
         </trans-unit>
+        <trans-unit id="Dialog_HashTaskAborted_UnauthorizedAccess" translate="yes" xml:space="preserve">
+          <source>未授权的访问，请考虑以管理员身份重试。</source>
+          <target state="translated">Unauthorized access. Please consider retrying as an administrator.</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">提示权限不足的任务中止对话框的内容</note>
+        </trans-unit>
       </group>
     </body>
   </file>
