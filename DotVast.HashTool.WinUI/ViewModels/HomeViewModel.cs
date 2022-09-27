@@ -35,12 +35,8 @@ public sealed partial class HomeViewModel : ObservableRecipient, INavigationAwar
         _dialogService = dialogService;
         _hashTaskService = hashTaskService;
 
-        _computeHashService.AtomProgress.ProgressChanged += (sender, e) => AtomProgressBar.Val = e;
-        _computeHashService.TaskProgress.ProgressChanged += (sender, e) =>
-        {
-            TaskProgressBar.Val = e.Val;
-            TaskProgressBar.Max = e.Max;
-        };
+        _computeHashService.AtomProgressChanged += (sender, e) => AtomProgressBar.Val = e;
+        _computeHashService.TaskProgressChanged += (sender, e) => (TaskProgressBar.Val, TaskProgressBar.Max) = e;
 
         InitHashNames();
     }

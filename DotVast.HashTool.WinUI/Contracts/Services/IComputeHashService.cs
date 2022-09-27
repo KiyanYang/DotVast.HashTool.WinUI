@@ -7,18 +7,12 @@ public interface IComputeHashService
     /// <summary>
     /// 当前流计算的进度.
     /// </summary>
-    Progress<double> AtomProgress
-    {
-        get;
-    }
+    event EventHandler<double> AtomProgressChanged;
 
     /// <summary>
     /// 当前任务的进度. (Val 当前已计算的数量, Max 总量)
     /// </summary>
-    Progress<(int Val, int Max)> TaskProgress
-    {
-        get;
-    }
+    event EventHandler<(int Val, int Max)> TaskProgressChanged;
 
     /// <summary>
     /// 当前服务的状态.
