@@ -1,8 +1,12 @@
 using System.Text;
 
+using CommunityToolkit.Mvvm.Messaging;
+
 using DotVast.HashTool.WinUI.Contracts.Services;
+using DotVast.HashTool.WinUI.Contracts.ViewModels;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Models.Controls;
+using DotVast.HashTool.WinUI.Models.Messages;
 using DotVast.HashTool.WinUI.Services.Hash;
 
 using Microsoft.Extensions.Logging;
@@ -11,7 +15,7 @@ using Windows.Storage.Pickers;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
-public sealed partial class HomeViewModel : ObservableRecipient
+public sealed partial class HomeViewModel : ObservableRecipient, INavigationAware
 {
     private readonly ILogger<HomeViewModel> _logger;
     private readonly IComputeHashService _computeHashService;
@@ -167,7 +171,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
 
     #endregion InitMethods
 
-    #region Command
+    #region Commands
 
     [RelayCommand]
     public async Task Pick()
@@ -205,9 +209,8 @@ public sealed partial class HomeViewModel : ObservableRecipient
     [RelayCommand]
     private void StartTask()
     {
-        if (_computeHashService.IsFree)
+        if (_computeHashService.Status == ComputeHashStatus.Free)
         {
-            SetButtonsIsEnabled(false, true, true);
             _mres.Set();
             ComputeHash();
         }
@@ -216,7 +219,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
     [RelayCommand]
     private void ResetTask()
     {
-        if (_computeHashService.IsFree)
+        if (_computeHashService.Status == ComputeHashStatus.Free)
         {
             return;
         }
@@ -235,18 +238,46 @@ public sealed partial class HomeViewModel : ObservableRecipient
     [RelayCommand]
     private void CancelTask()
     {
-        if (_computeHashService.IsFree)
+        if (_computeHashService.Status == ComputeHashStatus.Free)
         {
             return;
         }
-        SetButtonsIsEnabled(true, false, false);
 
         _cts!.Cancel();
         ResetButton.Content = Localization.Home_Button_Pause;
         _mres.Set();
     }
 
-    #endregion Command
+    #endregion Commands
+
+
+    #region INavigationAware
+
+    public void OnNavigatedTo(object parameter)
+    {
+        IsActive = true;
+    }
+
+    public void OnNavigatedFrom()
+    {
+        IsActive = false;
+    }
+
+    #endregion INavigationAware
+
+    #region Messenger
+
+    protected override void OnActivated()
+    {
+        Messenger.Register<HomeViewModel, ComputeHashStatueChangedMessage>(this, (r, m) =>
+        {
+            SetButtonsStatus(m.Value);
+        });
+    }
+
+    #endregion Messenger
+
+    #region Helpers
 
     public async void ComputeHash()
     {
@@ -311,11 +342,6 @@ public sealed partial class HomeViewModel : ObservableRecipient
         {
             _logger.LogError("计算哈希时出现未预料的异常, 哈希任务: {HashTask:j}\n{Exception}", hashTask, ex);
         }
-        finally
-        {
-            _computeHashService.IsFree = true;
-            SetButtonsIsEnabled(true, false, false);
-        }
     }
 
     private int _hashTaskId = 0;
@@ -335,10 +361,32 @@ public sealed partial class HomeViewModel : ObservableRecipient
         return hashTask;
     }
 
-    private void SetButtonsIsEnabled(bool startBtn, bool resetBtn, bool cancelBtn)
+    private void SetButtonsStatus(ComputeHashStatus status)
     {
-        StartButton.IsEnabled = startBtn;
-        ResetButton.IsEnabled = resetBtn;
-        CancelButton.IsEnabled = cancelBtn;
+        switch (status)
+        {
+            case ComputeHashStatus.Free:
+                StartButton.IsEnabled = true;
+                ResetButton.IsEnabled = false;
+                CancelButton.IsEnabled = false;
+                ResetButton.Content = Localization.Home_Button_Pause;
+                break;
+            case ComputeHashStatus.Busy:
+                StartButton.IsEnabled = false;
+                ResetButton.IsEnabled = true;
+                CancelButton.IsEnabled = true;
+                ResetButton.Content = Localization.Home_Button_Pause;
+                break;
+            case ComputeHashStatus.Pasue:
+                StartButton.IsEnabled = false;
+                ResetButton.IsEnabled = true;
+                CancelButton.IsEnabled = true;
+                ResetButton.Content = Localization.Home_Button_Resume;
+                break;
+            default:
+                break;
+        }
     }
+
+    #endregion Helpers
 }

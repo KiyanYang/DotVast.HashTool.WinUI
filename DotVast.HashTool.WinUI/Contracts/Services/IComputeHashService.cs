@@ -21,14 +21,21 @@ public interface IComputeHashService
     }
 
     /// <summary>
-    /// 是否空闲.
+    /// 当前服务的状态.
     /// </summary>
-    bool IsFree
+    ComputeHashStatus Status
     {
-        get; set;
+        get;
     }
 
     Task<HashTask> HashFile(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct);
     Task<HashTask> HashFolder(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct);
     Task<HashTask> HashText(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct);
+}
+
+public enum ComputeHashStatus
+{
+    Free,
+    Busy,
+    Pasue,
 }

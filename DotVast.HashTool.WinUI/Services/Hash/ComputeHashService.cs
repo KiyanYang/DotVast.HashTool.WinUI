@@ -1,12 +1,15 @@
 using System.Diagnostics;
 using System.Text;
 
+using CommunityToolkit.Mvvm.Messaging;
+
 using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Models;
+using DotVast.HashTool.WinUI.Models.Messages;
 
 namespace DotVast.HashTool.WinUI.Services.Hash;
 
-internal sealed class ComputeHashService : IComputeHashService
+internal sealed partial class ComputeHashService : ObservableRecipient, IComputeHashService
 {
     private readonly IProgress<double> _atomProgress = new Progress<double>();
     public Progress<double> AtomProgress => (Progress<double>)_atomProgress;
@@ -14,14 +17,12 @@ internal sealed class ComputeHashService : IComputeHashService
     private readonly IProgress<(int Val, int Max)> _taskProgress = new Progress<(int, int)>();
     public Progress<(int Val, int Max)> TaskProgress => (Progress<(int, int)>)_taskProgress;
 
-    public bool IsFree
-    {
-        get; set;
-    } = true;
+    [ObservableProperty]
+    public ComputeHashStatus _status = ComputeHashStatus.Free;
 
     public async Task<HashTask> HashFile(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct)
     {
-        return await AttachHashTask(async () =>
+        return await PreAndPostProcess(async () =>
         {
             _taskProgress.Report((0, 1));
             using Stream stream = File.Open(hashTask.Content, FileMode.Open, FileAccess.Read, FileShare.Read);
@@ -39,7 +40,7 @@ internal sealed class ComputeHashService : IComputeHashService
 
     public async Task<HashTask> HashFolder(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct)
     {
-        return await AttachHashTask(async () =>
+        return await PreAndPostProcess(async () =>
         {
             hashTask.Results = new();
             var filePaths = Directory.GetFiles(hashTask.Content);
@@ -68,7 +69,7 @@ internal sealed class ComputeHashService : IComputeHashService
 
     public async Task<HashTask> HashText(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct)
     {
-        return await AttachHashTask(async () =>
+        return await PreAndPostProcess(async () =>
         {
             _taskProgress.Report((0, 1));
             var contentBytes = hashTask.Encoding?.GetBytes(hashTask.Content) ?? Array.Empty<byte>();
@@ -85,12 +86,14 @@ internal sealed class ComputeHashService : IComputeHashService
         }, hashTask, ct);
     }
 
-    public async Task<HashTask> AttachHashTask(Func<Task> func, HashTask hashTask, CancellationToken ct)
+    public async Task<HashTask> PreAndPostProcess(Func<Task> func, HashTask hashTask, CancellationToken ct)
     {
-        IsFree = false;
+        Status = ComputeHashStatus.Busy;
         var stopWatch = Stopwatch.StartNew();
-
         hashTask.State = HashTaskState.Working;
+
+        try
+        {
         await func();
         if (ct.IsCancellationRequested)
         {
@@ -101,14 +104,22 @@ internal sealed class ComputeHashService : IComputeHashService
         {
             hashTask.State = HashTaskState.Completed;
         }
-
+            return hashTask;
+        }
+        catch (Exception)
+        {
+            hashTask.State = HashTaskState.Aborted;
+            throw;
+        }
+        finally
+        {
         stopWatch.Stop();
         hashTask.Elapsed = stopWatch.Elapsed;
-        IsFree = true;
-        return hashTask;
+            Status = ComputeHashStatus.Free;
+    }
     }
 
-    public static HashResult? HashStream(IList<Hash> hashs, Stream stream, IProgress<double> progress, ManualResetEventSlim mres, CancellationToken ct)
+    public HashResult? HashStream(IList<Hash> hashs, Stream stream, IProgress<double> progress, ManualResetEventSlim mres, CancellationToken ct)
     {
         #region 初始化, 定义文件流读取参数及变量.
 
@@ -143,7 +154,12 @@ internal sealed class ComputeHashService : IComputeHashService
             // 实际读取长度. 读取完毕时该值为 0.
             readLength = stream.Read(buffer, 0, bufferSize);
 
+            if (!mres.IsSet)
+            {
+                Status = ComputeHashStatus.Pasue;
             mres.Wait();
+                Status = ComputeHashStatus.Busy;
+            }
 
             // 报告进度. streamLength 在此处始终大于 0.
             progress.Report((double)stream.Position / streamLength);
@@ -204,6 +220,9 @@ internal sealed class ComputeHashService : IComputeHashService
             : HashFormatHex(data);
         return new HashResultItem(hash, val);
     }
+
+    partial void OnStatusChanged(ComputeHashStatus value) =>
+        Messenger.Send(new ComputeHashStatueChangedMessage(value));
 
     #region 格式化哈希值 bytes => string
 
