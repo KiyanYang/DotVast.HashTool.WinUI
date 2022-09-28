@@ -1,6 +1,7 @@
 using System.Text;
 
 using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.WinUI;
 
 using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Contracts.ViewModels;
@@ -9,6 +10,7 @@ using DotVast.HashTool.WinUI.Models.Controls;
 using DotVast.HashTool.WinUI.Models.Messages;
 
 using Microsoft.Extensions.Logging;
+using Microsoft.UI.Dispatching;
 
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage.Pickers;
@@ -237,9 +239,10 @@ public sealed partial class HomeViewModel : ObservableRecipient, INavigationAwar
 
     protected override void OnActivated()
     {
-        Messenger.Register<HomeViewModel, ComputeHashStatueChangedMessage>(this, (r, m) =>
+        var dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+        Messenger.Register<HomeViewModel, ComputeHashStatueChangedMessage>(this, async (r, m) =>
         {
-            SetButtonsStatus(m.Value);
+            await dispatcherQueue.EnqueueAsync(() => SetButtonsStatus(m.Value));
         });
     }
 
@@ -338,18 +341,24 @@ public sealed partial class HomeViewModel : ObservableRecipient, INavigationAwar
                 ResetButton.IsEnabled = false;
                 CancelButton.IsEnabled = false;
                 ResetButton.Content = Localization.Home_Button_Pause;
+                AtomProgressBar.ShowPaused = false;
+                TaskProgressBar.ShowPaused = false;
                 break;
             case ComputeHashStatus.Busy:
                 StartButton.IsEnabled = false;
                 ResetButton.IsEnabled = true;
                 CancelButton.IsEnabled = true;
                 ResetButton.Content = Localization.Home_Button_Pause;
+                AtomProgressBar.ShowPaused = false;
+                TaskProgressBar.ShowPaused = false;
                 break;
             case ComputeHashStatus.Pasue:
                 StartButton.IsEnabled = false;
                 ResetButton.IsEnabled = true;
                 CancelButton.IsEnabled = true;
                 ResetButton.Content = Localization.Home_Button_Resume;
+                AtomProgressBar.ShowPaused = true;
+                TaskProgressBar.ShowPaused = true;
                 break;
             default:
                 break;

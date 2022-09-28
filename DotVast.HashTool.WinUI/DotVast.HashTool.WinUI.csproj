@@ -48,6 +48,7 @@
     
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+        <PackageReference Include="CommunityToolkit.WinUI.UI" Version="7.1.2" />
         <PackageReference Include="HashLib4CSharp" Version="1.5.0" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
         <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.5" />

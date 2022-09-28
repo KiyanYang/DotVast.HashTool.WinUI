@@ -10,4 +10,7 @@ public sealed partial class ProgressBarModel : ObservableObject
 
     [ObservableProperty]
     private double _val;
+
+    [ObservableProperty]
+    private bool _showPaused;
 }

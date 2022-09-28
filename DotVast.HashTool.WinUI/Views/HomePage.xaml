@@ -69,10 +69,12 @@
                 <ProgressBar
                     Maximum="{x:Bind ViewModel.AtomProgressBar.Max, Mode=OneWay}"
                     Minimum="{x:Bind ViewModel.AtomProgressBar.Min, Mode=OneWay}"
+                    ShowPaused="{x:Bind ViewModel.AtomProgressBar.ShowPaused, Mode=OneWay}"
                     Value="{x:Bind ViewModel.AtomProgressBar.Val, Mode=OneWay}" />
                 <ProgressBar
                     Maximum="{x:Bind ViewModel.TaskProgressBar.Max, Mode=OneWay}"
                     Minimum="{x:Bind ViewModel.TaskProgressBar.Min, Mode=OneWay}"
+                    ShowPaused="{x:Bind ViewModel.TaskProgressBar.ShowPaused, Mode=OneWay}"
                     Value="{x:Bind ViewModel.TaskProgressBar.Val, Mode=OneWay}" />
 
                 <!-- 操作按钮: 开始, 暂停(继续), 取消 -->
