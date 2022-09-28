@@ -59,6 +59,11 @@ internal sealed partial class ComputeHashService : ObservableRecipient, ICompute
             // 在获取文件夹内文件后, 如果用户删除了还未计算的文件, 则会出现文件未找到异常, 此时将终止后续运算. 
             foreach (var filePath in filePaths)
             {
+                if (File.Exists(filePath) == false)
+                {
+                    continue;
+                }
+
                 using Stream? stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
                 if (stream == null)
                 {
@@ -104,16 +109,16 @@ internal sealed partial class ComputeHashService : ObservableRecipient, ICompute
 
         try
         {
-        await func();
-        if (ct.IsCancellationRequested)
-        {
-            _taskProgress.Report((0, 1));
-            hashTask.State = HashTaskState.Canceled;
-        }
-        else
-        {
-            hashTask.State = HashTaskState.Completed;
-        }
+            await func();
+            if (ct.IsCancellationRequested)
+            {
+                _taskProgress.Report((0, 1));
+                hashTask.State = HashTaskState.Canceled;
+            }
+            else
+            {
+                hashTask.State = HashTaskState.Completed;
+            }
             return hashTask;
         }
         catch (Exception)
@@ -123,10 +128,10 @@ internal sealed partial class ComputeHashService : ObservableRecipient, ICompute
         }
         finally
         {
-        stopWatch.Stop();
-        hashTask.Elapsed = stopWatch.Elapsed;
+            stopWatch.Stop();
+            hashTask.Elapsed = stopWatch.Elapsed;
             Status = ComputeHashStatus.Free;
-    }
+        }
     }
 
     public HashResult? HashStream(IList<Hash> hashs, Stream stream, ManualResetEventSlim mres, CancellationToken ct)
@@ -167,7 +172,7 @@ internal sealed partial class ComputeHashService : ObservableRecipient, ICompute
             if (!mres.IsSet)
             {
                 Status = ComputeHashStatus.Pasue;
-            mres.Wait();
+                mres.Wait();
                 Status = ComputeHashStatus.Busy;
             }
 

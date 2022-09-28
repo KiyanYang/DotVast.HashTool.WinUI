@@ -7,7 +7,6 @@ using DotVast.HashTool.WinUI.Contracts.ViewModels;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Models.Controls;
 using DotVast.HashTool.WinUI.Models.Messages;
-using DotVast.HashTool.WinUI.Services.Hash;
 
 using Microsoft.Extensions.Logging;
 
@@ -20,6 +19,7 @@ public sealed partial class HomeViewModel : ObservableRecipient, INavigationAwar
     private readonly ILogger<HomeViewModel> _logger;
     private readonly IComputeHashService _computeHashService;
     private readonly IDialogService _dialogService;
+    private readonly IHashOptionsService _hashOptionsService;
     private readonly IHashTaskService _hashTaskService;
     private readonly ManualResetEventSlim _mres = new(true);
     private CancellationTokenSource? _cts;
@@ -28,17 +28,19 @@ public sealed partial class HomeViewModel : ObservableRecipient, INavigationAwar
         ILogger<HomeViewModel> logger,
         IComputeHashService computeHashService,
         IDialogService dialogService,
+        IHashOptionsService hashOptionsService,
         IHashTaskService hashTaskService)
     {
         _logger = logger;
         _computeHashService = computeHashService;
         _dialogService = dialogService;
+        _hashOptionsService = hashOptionsService;
         _hashTaskService = hashTaskService;
 
         _computeHashService.AtomProgressChanged += (sender, e) => AtomProgressBar.Val = e;
         _computeHashService.TaskProgressChanged += (sender, e) => (TaskProgressBar.Val, TaskProgressBar.Max) = e;
 
-        InitHashNames();
+        HashOptions = hashOptionsService.HashOptions;
     }
 
     ~HomeViewModel()
@@ -47,7 +49,7 @@ public sealed partial class HomeViewModel : ObservableRecipient, INavigationAwar
         _cts?.Dispose();
     }
 
-    #region public Properties
+    #region Public Properties
 
     /// <summary>
     /// 当前界面显示的哈希任务.
@@ -87,9 +89,9 @@ public sealed partial class HomeViewModel : ObservableRecipient, INavigationAwar
     /// <summary>
     /// Hash 选项.
     /// </summary>
-    public List<HashOption>? HashOptions
+    public List<HashOption> HashOptions
     {
-        get; private set;
+        get;
     }
 
     public record TextEncoding(string Name, Encoding Encoding);
@@ -117,55 +119,7 @@ public sealed partial class HomeViewModel : ObservableRecipient, INavigationAwar
         }
     }
 
-    #endregion public Properties
-
-    #region InitMethods
-
-    private void InitHashNames()
-    {
-        HashOptions = new()
-        {
-            // CRC
-            new(false, Hash.CRC32),
-
-            // MD
-            new(false,Hash.MD4),
-            new(true, Hash.MD5),
-
-            // SHA
-            new(false, Hash.SHA1),
-            new(false,Hash.SHA224),
-            new(true, Hash.SHA256),
-            new(false, Hash.SHA384),
-            new(false, Hash.SHA512),
-            new(false,Hash.SHA3_224),
-            new(false,Hash.SHA3_256),
-            new(false,Hash.SHA3_384),
-            new(false,Hash.SHA3_512),
-
-            // Blake2
-            new(false,Hash.Blake2B_160),
-            new(false,Hash.Blake2B_256),
-            new(false,Hash.Blake2B_384),
-            new(false,Hash.Blake2B_512),
-            new(false,Hash.Blake2S_128),
-            new(false,Hash.Blake2S_160),
-            new(false,Hash.Blake2S_224),
-            new(false,Hash.Blake2S_256),
-
-            // Keccak
-            new(false,Hash.Keccak_224),
-            new(false,Hash.Keccak_256),
-            new(false,Hash.Keccak_288),
-            new(false,Hash.Keccak_384),
-            new(false,Hash.Keccak_512),
-
-            // QuickXor
-            new(false, Hash.QuickXor),
-        };
-    }
-
-    #endregion InitMethods
+    #endregion Public Properties
 
     #region Commands
 
@@ -244,8 +198,11 @@ public sealed partial class HomeViewModel : ObservableRecipient, INavigationAwar
         _mres.Set();
     }
 
-    #endregion Commands
+    [RelayCommand]
+    private async Task SetHashOptionAsync(HashOption hashOption) =>
+        await _hashOptionsService.SetHashOptionAsync(hashOption);
 
+    #endregion Commands
 
     #region INavigationAware
 

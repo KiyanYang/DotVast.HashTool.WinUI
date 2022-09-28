@@ -77,6 +77,7 @@ public sealed partial class App : Application
 
             services.AddSingleton<IComputeHashService, ComputeHashService>();
             services.AddSingleton<IDialogService, DialogService>();
+            services.AddSingleton<IHashOptionsService, HashOptionsService>();
             services.AddSingleton<IHashTaskService, HashTaskService>();
 
             // Core Services

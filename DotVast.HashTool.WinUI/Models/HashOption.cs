@@ -5,14 +5,14 @@ namespace DotVast.HashTool.WinUI.Models;
 public sealed partial class HashOption : ObservableObject
 {
     [ObservableProperty]
-    private bool _isChecked;
-
-    [ObservableProperty]
     private Hash _hash;
 
-    public HashOption(bool isChecked, Hash hash)
+    [ObservableProperty]
+    private bool _isChecked;
+
+    public HashOption(Hash hash, bool isChecked = false)
     {
-        _isChecked = isChecked;
         _hash = hash;
+        _isChecked = isChecked;
     }
 }
