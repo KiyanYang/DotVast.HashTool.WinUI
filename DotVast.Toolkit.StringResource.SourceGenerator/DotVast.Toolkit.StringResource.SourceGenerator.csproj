@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<ImplicitUsings>disable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+		<Nullable>enable</Nullable>
 		<NoWarn>$(NoWarn);RS2008</NoWarn>
 		<LangVersion>10.0</LangVersion>
 		<!-- Do not include the generator as a lib dependency -->

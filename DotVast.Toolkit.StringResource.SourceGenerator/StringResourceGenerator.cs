@@ -1,96 +1,63 @@
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Xml.Linq;
-
-using DotVast.Toolkit.StringResource.Attributes;
-using DotVast.Toolkit.StringResource.SourceGenerator;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace DotVast.ToolKit.StringResource.SourceGenerator;
+namespace DotVast.Toolkit.StringResource.SourceGenerator;
 
 [Generator(LanguageNames.CSharp)]
 public class StringResourceGenerator : IIncrementalGenerator
 {
+    private const string TargetAttributeName = "DotVast.Toolkit.StringResource.Attributes.StringResourceAttribute";
+    private const string TargetAttributeQualifiedName = "global::DotVast.Toolkit.StringResource.Attributes.StringResourceAttribute";
+
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         IncrementalValuesProvider<StringResourceInfo> strReswInfos = context.SyntaxProvider
-                               .CreateSyntaxProvider(CouldBeGenerateStringResource, GetStringResourceInfo)
-                               .Where(type => type != null)!;
+            .ForAttributeWithMetadataName(
+                TargetAttributeName,
+                static (node, _) => node is ClassDeclarationSyntax n && n.Modifiers.Any(m => m.IsKind(SyntaxKind.PartialKeyword)),
+                static (context, c) =>
+                {
+                    if (context.TargetSymbol is not ITypeSymbol type)
+                        return null;
+
+                    var basePath = context.TargetNode.SyntaxTree.FilePath;
+
+                    var args = GetAttributeCtorArgsValue(context.Attributes, TargetAttributeQualifiedName);
+
+                    return args?.Count switch
+                    {
+                        // Path
+                        1 => new StringResourceInfo(type, Path.Combine(basePath, args[0])),
+                        // Path, ExtensionMethod, ExtensionMethodNamespace
+                        3 => new StringResourceInfo(type, Path.Combine(basePath, args[0]))
+                        {
+                            ExMethed = args[1],
+                            ExMethedNamespace = args[2]
+                        },
+                        _ => null,
+                    };
+                })
+            .Where(static i => i != null)!;
 
         var infos = strReswInfos
-            .Where(i => File.Exists(i.ReswPath));
+            .Where(static i => i.ReswPath.EndsWith(".resw"))
+            .Where(static i => File.Exists(i.ReswPath));
 
-        context.RegisterSourceOutput(infos, GenerateCode);
+        context.RegisterSourceOutput(strReswInfos, GenerateCode);
     }
 
-    private static bool CouldBeGenerateStringResource(SyntaxNode syntaxNode, CancellationToken cancellationToken)
-    {
-        if (syntaxNode is not AttributeSyntax attribute)
-            return false;
-
-        var name = attribute.Name switch
-        {
-            SimpleNameSyntax ins => ins.Identifier.Text,
-            QualifiedNameSyntax qns => qns.Right.Identifier.Text,
-            _ => null
-        };
-
-        if (name is not ("StringResource" or "StringResourceAttribute"))
-            return false;
-
-        var hasPathProperty = attribute!.ArgumentList?.Arguments
-            .Any(a => a.NameEquals?.Name.Identifier.ValueText == "Path");
-
-        if (hasPathProperty == false)
-            return false;
-
-        // attribute.Parent is AttributeListSyntax
-        // attribute.Parent.Parent is the attributeTarget
-        if (attribute.Parent?.Parent is not ClassDeclarationSyntax classDeclaration)
-            return false;
-
-        // check partial class
-        return classDeclaration.Modifiers.Any(m => m.IsKind(SyntaxKind.PartialKeyword));
-    }
-
-    private static StringResourceInfo? GetStringResourceInfo(GeneratorSyntaxContext context, CancellationToken cancellationToken)
-    {
-        var attribute = (AttributeSyntax)context.Node;
-        var classDeclaration = (ClassDeclarationSyntax)context.Node.Parent!.Parent!;
-
-        if (context.SemanticModel.GetSymbolInfo(attribute).Symbol is not ISymbol attr)
-            return null;
-
-        if (attr.ContainingType.ToDisplayString() != "DotVast.Toolkit.StringResource.Attributes.StringResourceAttribute")
-            return null;
-
-        if (context.SemanticModel.GetDeclaredSymbol(classDeclaration) is not ITypeSymbol type)
-            return null;
-
-        var relativePath = GetAttributeArgumentValue(attribute, nameof(StringResourceAttribute.Path));
-
-        if (relativePath == null)
-            return null;
-
-        var basePath = classDeclaration.SyntaxTree.FilePath;
-
-        return new StringResourceInfo(type, Path.Combine(basePath, relativePath))
-        {
-            ExMethed = GetAttributeArgumentValue(attribute, nameof(StringResourceAttribute.ExtensionMethod)),
-            ExMethedNamespace = GetAttributeArgumentValue(attribute, nameof(StringResourceAttribute.ExtensionMethodNamespace))
-        };
-    }
-
-    private static string? GetAttributeArgumentValue(AttributeSyntax attribute, string name) =>
-        attribute.ArgumentList?.Arguments
-            .Where(a => a.NameEquals?.Name.Identifier.ValueText == name)
-            .Select(a => (a.Expression as LiteralExpressionSyntax)?.Token.ValueText)
-            .FirstOrDefault();
+    private static IList<string>? GetAttributeCtorArgsValue(ImmutableArray<AttributeData> attributeData, string attributeQualifiedName) =>
+        attributeData.FirstOrDefault(a => a.AttributeClass?.HasFullyQualifiedName(attributeQualifiedName) == true)
+            ?.ConstructorArguments.Select(ca => ca.Value!.ToString()).ToList();
 
     private static void GenerateCode(SourceProductionContext context, StringResourceInfo info)
     {
@@ -106,8 +73,7 @@ public class StringResourceGenerator : IIncrementalGenerator
 #pragma warning disable
 #nullable enable
 
-{(exMethedNs != null ? $"using {exMethedNs};" : string.Empty)}
-
+{(exMethedNs != null ? $"using {exMethedNs};{Environment.NewLine}" : string.Empty)}
 namespace {ns}
 {{");
         sb.Append(@$"
