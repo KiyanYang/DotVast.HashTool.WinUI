@@ -1,7 +1,5 @@
 using DotVast.HashTool.WinUI.Helpers;
 
-using Microsoft.UI.Xaml;
-
 using Windows.Globalization;
 
 namespace DotVast.HashTool.WinUI.Contracts.Services;
