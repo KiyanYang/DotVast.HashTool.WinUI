@@ -179,6 +179,10 @@
   <data name="HashTaskState_Working" xml:space="preserve">
     <value>计算中</value>
   </data>
+  <data name="HomePage_DargToSetPath" xml:space="preserve">
+    <value>设置路径</value>
+    <comment>主页面拖放项目以设置路径的标题</comment>
+  </data>
   <data name="Home_Button_Cancel" xml:space="preserve">
     <value>取消</value>
   </data>

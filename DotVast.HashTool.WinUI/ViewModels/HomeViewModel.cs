@@ -10,6 +10,7 @@ using DotVast.HashTool.WinUI.Models.Messages;
 
 using Microsoft.Extensions.Logging;
 
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage.Pickers;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
@@ -201,6 +202,20 @@ public sealed partial class HomeViewModel : ObservableRecipient, INavigationAwar
     [RelayCommand]
     private async Task SetHashOptionAsync(HashOption hashOption) =>
         await _hashOptionsService.SetHashOptionAsync(hashOption);
+
+    public async Task SetHashTaskContenFromDrag(DataPackageView view)
+    {
+        if (!view.Contains(StandardDataFormats.StorageItems))
+        {
+            return;
+        }
+
+        var items = await view.GetStorageItemsAsync();
+        if (items.Count > 0)
+        {
+            CurrentHashTask.Content = items[0].Path;
+        }
+    }
 
     #endregion Commands
 

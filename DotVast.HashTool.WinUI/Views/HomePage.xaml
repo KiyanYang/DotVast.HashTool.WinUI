@@ -6,6 +6,9 @@
     xmlns:helpers="using:DotVast.HashTool.WinUI.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:DotVast.HashTool.WinUI.Models"
+    AllowDrop="True"
+    DragOver="Page_DragOver"
+    Drop="Page_Drop"
     NavigationCacheMode="Required"
     mc:Ignorable="d">
 

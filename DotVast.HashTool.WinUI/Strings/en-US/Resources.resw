@@ -171,4 +171,8 @@
     <value>Unauthorized access. Please consider retrying as an administrator.</value>
     <comment>提示权限不足的任务中止对话框的内容</comment>
   </data>
+  <data name="HomePage_DargToSetPath" xml:space="preserve">
+    <value>Set Path</value>
+    <comment>主页面拖放项目以设置路径的标题</comment>
+  </data>
 </root>
