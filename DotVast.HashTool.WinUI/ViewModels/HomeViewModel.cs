@@ -4,7 +4,6 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
 
 using DotVast.HashTool.WinUI.Contracts.Services;
-using DotVast.HashTool.WinUI.Contracts.ViewModels;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Models.Controls;
 using DotVast.HashTool.WinUI.Models.Messages;
@@ -17,7 +16,7 @@ using Windows.Storage.Pickers;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
-public sealed partial class HomeViewModel : ObservableRecipient, INavigationAware
+public sealed partial class HomeViewModel : ObservableRecipient
 {
     private readonly ILogger<HomeViewModel> _logger;
     private readonly IComputeHashService _computeHashService;
@@ -44,6 +43,8 @@ public sealed partial class HomeViewModel : ObservableRecipient, INavigationAwar
         _computeHashService.TaskProgressChanged += (sender, e) => (TaskProgressBar.Val, TaskProgressBar.Max) = e;
 
         HashOptions = hashOptionsService.HashOptions;
+
+        IsActive = true;
     }
 
     ~HomeViewModel()
@@ -220,20 +221,6 @@ public sealed partial class HomeViewModel : ObservableRecipient, INavigationAwar
     }
 
     #endregion Commands
-
-    #region INavigationAware
-
-    public void OnNavigatedTo(object parameter)
-    {
-        IsActive = true;
-    }
-
-    public void OnNavigatedFrom()
-    {
-        IsActive = false;
-    }
-
-    #endregion INavigationAware
 
     #region Messenger
 
