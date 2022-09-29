@@ -223,6 +223,12 @@
   <data name="Results_Subtitle_TaskResults.Text" xml:space="preserve">
     <value>任务结果</value>
   </data>
+  <data name="SettingsPage_AlwaysOnTop.Description" xml:space="preserve">
+    <value>设置应用窗口是否总是置顶</value>
+  </data>
+  <data name="SettingsPage_AlwaysOnTop.Header" xml:space="preserve">
+    <value>窗口置顶</value>
+  </data>
   <data name="SettingsPage_Language.Description" xml:space="preserve">
     <value>更改应用中显示的语言</value>
   </data>

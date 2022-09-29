@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="/Styles/Card.xaml" />
                 <ResourceDictionary Source="/Styles/NavigationViewPage.xaml" />
                 <ResourceDictionary Source="/Styles/TextBlock.xaml" />
+                <ResourceDictionary Source="/Styles/ToggleSwitch.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

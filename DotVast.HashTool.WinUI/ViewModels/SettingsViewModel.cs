@@ -17,6 +17,18 @@ public sealed partial class SettingsViewModel : ObservableRecipient
     [ObservableProperty]
     private string _versionDescription;
 
+    #region AlwaysOnTop
+
+    private readonly IAlwaysOnTopService _alwaysOnTopService;
+
+    [ObservableProperty]
+    private bool _isAlwaysOnTop;
+
+    partial void OnIsAlwaysOnTopChanged(bool value) =>
+        _alwaysOnTopService.SetIsAlwaysOnTopAsync(value);
+
+    #endregion AlwaysOnTop
+
     #region Language selector
 
     private readonly ILanguageSelectorService _languageSelectorService;
@@ -61,16 +73,21 @@ public sealed partial class SettingsViewModel : ObservableRecipient
     #endregion Theme selector
 
     public SettingsViewModel(
+        IAlwaysOnTopService alwaysOnTopService,
+        ILanguageSelectorService languageSelectorService,
         INavigationService navigationService,
-        IThemeSelectorService themeSelectorService,
-        ILanguageSelectorService languageSelectorService)
+        IThemeSelectorService themeSelectorService)
     {
+        _alwaysOnTopService = alwaysOnTopService;
+        _languageSelectorService = languageSelectorService;
         _navigationService = navigationService;
         _themeSelectorService = themeSelectorService;
-        _theme = Themes.First(x => x.Theme == _themeSelectorService.Theme);
-        _languageSelectorService = languageSelectorService;
+
+        _isAlwaysOnTop = _alwaysOnTopService.IsAlwaysOnTop;
         _appLanguage = _languageSelectorService.Language;
         AppLanguages = _languageSelectorService.Languages;
+        _theme = Themes.First(x => x.Theme == _themeSelectorService.Theme);
+
         _versionDescription = GetVersionDescription();
     }
 

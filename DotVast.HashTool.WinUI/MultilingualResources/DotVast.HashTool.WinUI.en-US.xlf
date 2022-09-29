@@ -221,6 +221,14 @@
           <source>更改应用中显示的语言</source>
           <target state="translated">Change the theme displayed in the APP</target>
         </trans-unit>
+        <trans-unit id="SettingsPage_AlwaysOnTop.Description" translate="yes" xml:space="preserve">
+          <source>设置应用窗口是否总是置顶</source>
+          <target state="translated">Set the APP window always on top</target>
+        </trans-unit>
+        <trans-unit id="SettingsPage_AlwaysOnTop.Header" translate="yes" xml:space="preserve">
+          <source>窗口置顶</source>
+          <target state="translated">Always On Top</target>
+        </trans-unit>
       </group>
     </body>
   </file>

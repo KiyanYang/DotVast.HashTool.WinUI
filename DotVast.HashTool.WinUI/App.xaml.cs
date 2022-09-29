@@ -75,6 +75,7 @@ public sealed partial class App : Application
             services.AddSingleton<IPageService, PageService>();
             services.AddSingleton<INavigationService, NavigationService>();
 
+            services.AddSingleton<IAlwaysOnTopService, AlwaysOnTopService>();
             services.AddSingleton<IComputeHashService, ComputeHashService>();
             services.AddSingleton<IDialogService, DialogService>();
             services.AddSingleton<IHashOptionsService, HashOptionsService>();

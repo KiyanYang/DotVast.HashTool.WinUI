@@ -11,6 +11,7 @@ public sealed class ActivationService : IActivationService
 {
     private readonly ActivationHandler<LaunchActivatedEventArgs> _defaultHandler;
     private readonly IEnumerable<IActivationHandler> _activationHandlers;
+    private readonly IAlwaysOnTopService _alwaysOnTopService;
     private readonly IHashOptionsService _hashOptionsService;
     private readonly ILanguageSelectorService _languageSelectorService;
     private readonly IThemeSelectorService _themeSelectorService;
@@ -19,12 +20,14 @@ public sealed class ActivationService : IActivationService
     public ActivationService(
         ActivationHandler<LaunchActivatedEventArgs> defaultHandler,
         IEnumerable<IActivationHandler> activationHandlers,
+        IAlwaysOnTopService alwaysOnTopService,
         IHashOptionsService hashOptionsService,
         ILanguageSelectorService languageSelectorService,
         IThemeSelectorService themeSelectorService)
     {
         _defaultHandler = defaultHandler;
         _activationHandlers = activationHandlers;
+        _alwaysOnTopService = alwaysOnTopService;
         _hashOptionsService = hashOptionsService;
         _languageSelectorService = languageSelectorService;
         _themeSelectorService = themeSelectorService;
@@ -72,12 +75,13 @@ public sealed class ActivationService : IActivationService
         await _themeSelectorService.InitializeAsync().ConfigureAwait(false);
         await _languageSelectorService.InitializeAsync().ConfigureAwait(false);
         await _hashOptionsService.InitializeAsync().ConfigureAwait(false);
-        await Task.CompletedTask;
+        await _alwaysOnTopService.InitializeAsync().ConfigureAwait(false);
     }
 
     private async Task StartupAsync()
     {
         await _themeSelectorService.SetRequestedThemeAsync();
+        await _alwaysOnTopService.SetRequestedIsAlwaysOnTopAsync();
         await Task.CompletedTask;
     }
 }

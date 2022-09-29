@@ -12,6 +12,7 @@
         <Style TargetType="dvhc:SettingItem">
             <Setter Property="Margin" Value="{StaticResource XXSmallTopBottomMargin}" />
         </Style>
+        <Style BasedOn="{StaticResource LeftContentToggleSwitchStyle}" TargetType="ToggleSwitch" />
     </Page.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewPageContentStyle}">
@@ -20,6 +21,13 @@
                     x:Uid="Settings_Personalization"
                     Margin="{StaticResource SmallBottomMargin}"
                     Style="{ThemeResource SubtitleTextBlockStyle}" />
+
+                <dvhc:SettingItem x:Uid="SettingsPage_AlwaysOnTop">
+                    <dvhc:SettingItem.Icon>
+                        <FontIcon Glyph="&#xE840;" />
+                    </dvhc:SettingItem.Icon>
+                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsAlwaysOnTop, Mode=TwoWay}" />
+                </dvhc:SettingItem>
 
                 <dvhc:SettingItem x:Uid="SettingsPage_Theme">
                     <dvhc:SettingItem.Icon>
