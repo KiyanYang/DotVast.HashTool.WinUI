@@ -154,21 +154,9 @@
           <source>用于计算和校验文件、文件夹或文本哈希值的工具！</source>
           <target state="translated">A Tool for Calculating and Verifying the Hash Value of Any File, Folder, or Text!</target>
         </trans-unit>
-        <trans-unit id="Settings_Language.Text" translate="yes" xml:space="preserve">
-          <source>语言 (Language)</source>
-          <target state="translated">Language</target>
-        </trans-unit>
-        <trans-unit id="Settings_Language_Detail.Text" translate="yes" xml:space="preserve">
-          <source>更改应用中显示的语言</source>
-          <target state="translated">Change the language displayed in the APP</target>
-        </trans-unit>
         <trans-unit id="Settings_Personalization.Text" translate="yes" xml:space="preserve">
           <source>个性化</source>
           <target state="translated">Personalization</target>
-        </trans-unit>
-        <trans-unit id="Settings_Theme.Text" translate="yes" xml:space="preserve">
-          <source>主题</source>
-          <target state="translated">Theme</target>
         </trans-unit>
         <trans-unit id="Settings_Theme_Dark" translate="yes" xml:space="preserve">
           <source>深色</source>
@@ -177,10 +165,6 @@
         <trans-unit id="Settings_Theme_Default" translate="yes" xml:space="preserve">
           <source>默认</source>
           <target state="translated">Default</target>
-        </trans-unit>
-        <trans-unit id="Settings_Theme_Detail.Text" translate="yes" xml:space="preserve">
-          <source>更改应用中显示的主题</source>
-          <target state="translated">Change the theme displayed in the APP</target>
         </trans-unit>
         <trans-unit id="Settings_Theme_Light" translate="yes" xml:space="preserve">
           <source>浅色</source>
@@ -220,6 +204,22 @@
           <source>设置路径</source>
           <target state="translated">Set Path</target>
           <note from="MultilingualBuild" annotates="source" priority="2">主页面拖放项目以设置路径的标题</note>
+        </trans-unit>
+        <trans-unit id="SettingsPage_Language.Header" translate="yes" xml:space="preserve">
+          <source>语言 (Language)</source>
+          <target state="translated">Language</target>
+        </trans-unit>
+        <trans-unit id="SettingsPage_Theme.Description" translate="yes" xml:space="preserve">
+          <source>更改应用中显示的主题</source>
+          <target state="translated">Change the language displayed in the APP</target>
+        </trans-unit>
+        <trans-unit id="SettingsPage_Theme.Header" translate="yes" xml:space="preserve">
+          <source>主题</source>
+          <target state="translated">Theme</target>
+        </trans-unit>
+        <trans-unit id="SettingsPage_Language.Description" translate="yes" xml:space="preserve">
+          <source>更改应用中显示的语言</source>
+          <target state="translated">Change the theme displayed in the APP</target>
         </trans-unit>
       </group>
     </body>

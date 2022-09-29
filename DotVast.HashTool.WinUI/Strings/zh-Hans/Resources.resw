@@ -223,6 +223,12 @@
   <data name="Results_Subtitle_TaskResults.Text" xml:space="preserve">
     <value>任务结果</value>
   </data>
+  <data name="SettingsPage_Language.Description" xml:space="preserve">
+    <value>更改应用中显示的语言</value>
+  </data>
+  <data name="SettingsPage_Language.Header" xml:space="preserve">
+    <value>语言 (Language)</value>
+  </data>
   <data name="SettingsPage_Licenses.Content" xml:space="preserve">
     <value>许可</value>
   </data>
@@ -235,32 +241,26 @@
   <data name="SettingsPage_PrivacyTermsLink.NavigateUri" xml:space="preserve">
     <value>https://YourPrivacyUrlGoesHere/</value>
   </data>
+  <data name="SettingsPage_Theme.Description" xml:space="preserve">
+    <value>更改应用中显示的主题</value>
+  </data>
+  <data name="SettingsPage_Theme.Header" xml:space="preserve">
+    <value>主题</value>
+  </data>
   <data name="Settings_About.Text" xml:space="preserve">
     <value>关于</value>
   </data>
   <data name="Settings_AboutDescription.Text" xml:space="preserve">
     <value>用于计算和校验文件、文件夹或文本哈希值的工具！</value>
   </data>
-  <data name="Settings_Language.Text" xml:space="preserve">
-    <value>语言 (Language)</value>
-  </data>
-  <data name="Settings_Language_Detail.Text" xml:space="preserve">
-    <value>更改应用中显示的语言</value>
-  </data>
   <data name="Settings_Personalization.Text" xml:space="preserve">
     <value>个性化</value>
-  </data>
-  <data name="Settings_Theme.Text" xml:space="preserve">
-    <value>主题</value>
   </data>
   <data name="Settings_Theme_Dark" xml:space="preserve">
     <value>深色</value>
   </data>
   <data name="Settings_Theme_Default" xml:space="preserve">
     <value>默认</value>
-  </data>
-  <data name="Settings_Theme_Detail.Text" xml:space="preserve">
-    <value>更改应用中显示的主题</value>
   </data>
   <data name="Settings_Theme_Light" xml:space="preserve">
     <value>浅色</value>

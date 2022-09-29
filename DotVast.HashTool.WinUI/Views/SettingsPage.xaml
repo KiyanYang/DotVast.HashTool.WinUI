@@ -3,91 +3,52 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dvhc="using:DotVast.HashTool.WinUI.Controls"
     xmlns:helpers="using:DotVast.HashTool.WinUI.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Page.Resources>
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
-        <Style x:Key="SettingItemStyle" BasedOn="{StaticResource CardGridStyle}" TargetType="Grid">
-            <Setter Property="ColumnSpacing" Value="8" />
+        <Style TargetType="dvhc:SettingItem">
             <Setter Property="Margin" Value="{StaticResource XXSmallTopBottomMargin}" />
-            <Setter Property="Padding" Value="20,12,16,12" />
-        </Style>
-        <Style x:Key="SettingItemIconStyle" TargetType="FontIcon">
-            <Setter Property="Grid.RowSpan" Value="2" />
-            <Setter Property="Grid.Column" Value="0" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="FontFamily" Value="{StaticResource SymbolThemeFontFamily}" />
-        </Style>
-        <Style x:Key="SettingItemBodyTextStyle" TargetType="TextBlock">
-            <Setter Property="Grid.Row" Value="0" />
-            <Setter Property="Grid.Column" Value="1" />
-            <Setter Property="FontSize" Value="14" />
-        </Style>
-        <Style x:Key="SettingItemDetailTextStyle" TargetType="TextBlock">
-            <Setter Property="Grid.Row" Value="1" />
-            <Setter Property="Grid.Column" Value="1" />
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="Foreground" Value="{ThemeResource TextFillColorSecondaryBrush}" />
-            <Setter Property="TextWrapping" Value="Wrap" />
-        </Style>
-        <Style x:Key="SettingItemComboBoxStyle" BasedOn="{StaticResource DefaultComboBoxStyle}" TargetType="ComboBox">
-            <Setter Property="Grid.RowSpan" Value="2" />
-            <Setter Property="Grid.Column" Value="2" />
-            <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
     </Page.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewPageContentStyle}">
             <StackPanel>
-                <TextBlock x:Uid="Settings_Personalization" Style="{ThemeResource SubtitleTextBlockStyle}" />
+                <TextBlock
+                    x:Uid="Settings_Personalization"
+                    Margin="{StaticResource SmallBottomMargin}"
+                    Style="{ThemeResource SubtitleTextBlockStyle}" />
 
-                <Grid Style="{StaticResource SettingItemStyle}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="32" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <FontIcon Glyph="&#xE2B1;" Style="{StaticResource SettingItemIconStyle}" />
-                    <TextBlock x:Uid="Settings_Theme" Style="{StaticResource SettingItemBodyTextStyle}" />
-                    <TextBlock x:Uid="Settings_Theme_Detail" Style="{StaticResource SettingItemDetailTextStyle}" />
+                <dvhc:SettingItem x:Uid="SettingsPage_Theme">
+                    <dvhc:SettingItem.Icon>
+                        <FontIcon Glyph="&#xE2B1;" />
+                    </dvhc:SettingItem.Icon>
                     <ComboBox
                         MinWidth="100"
                         DisplayMemberPath="Name"
                         ItemsSource="{x:Bind ViewModel.Themes}"
-                        SelectedItem="{x:Bind ViewModel.Theme, Mode=TwoWay}"
-                        Style="{StaticResource SettingItemComboBoxStyle}" />
-                </Grid>
+                        SelectedItem="{x:Bind ViewModel.Theme, Mode=TwoWay}" />
+                </dvhc:SettingItem>
 
-                <Grid Style="{StaticResource SettingItemStyle}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="32" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <FontIcon Glyph="&#xf2b7;" Style="{StaticResource SettingItemIconStyle}" />
-                    <TextBlock x:Uid="Settings_Language" Style="{StaticResource SettingItemBodyTextStyle}" />
-                    <TextBlock x:Uid="Settings_Language_Detail" Style="{StaticResource SettingItemDetailTextStyle}" />
+                <dvhc:SettingItem x:Uid="SettingsPage_Language">
+                    <dvhc:SettingItem.Icon>
+                        <FontIcon Glyph="&#xF2B7;" />
+                    </dvhc:SettingItem.Icon>
                     <ComboBox
                         MinWidth="140"
                         DisplayMemberPath="NativeName"
                         ItemsSource="{x:Bind ViewModel.AppLanguages}"
-                        SelectedItem="{x:Bind ViewModel.AppLanguage, Mode=TwoWay}"
-                        Style="{StaticResource SettingItemComboBoxStyle}" />
-                </Grid>
+                        SelectedItem="{x:Bind ViewModel.AppLanguage, Mode=TwoWay}" />
+                </dvhc:SettingItem>
 
-                <TextBlock x:Uid="Settings_About" Style="{ThemeResource SubtitleTextBlockStyle}" />
+                <TextBlock
+                    x:Uid="Settings_About"
+                    Margin="{StaticResource SmallTopBottomMargin}"
+                    Style="{ThemeResource SubtitleTextBlockStyle}" />
 
-                <StackPanel Margin="{StaticResource XSmallTopMargin}">
+                <StackPanel>
                     <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Text="{x:Bind ViewModel.VersionDescription}" />
 
                     <TextBlock
