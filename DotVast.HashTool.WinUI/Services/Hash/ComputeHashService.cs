@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Text;
 
 using CommunityToolkit.Mvvm.Messaging;
 
@@ -231,32 +230,11 @@ internal sealed partial class ComputeHashService : ObservableRecipient, ICompute
     private static HashResultItem MakeHashResultItem(Hash hash, byte[] data)
     {
         var val = hash == Hash.QuickXor
-            ? HashFormatBase64(data)
-            : HashFormatHex(data);
+            ? Convert.ToBase64String(data)
+            : Convert.ToHexString(data);
         return new HashResultItem(hash, val);
     }
 
     partial void OnStatusChanged(ComputeHashStatus value) =>
         Messenger.Send(new ComputeHashStatueChangedMessage(value));
-
-    #region 格式化哈希值 bytes => string
-
-    private static string HashFormatHex(byte[] data)
-    {
-        StringBuilder sBuilder = new(data.Length << 1);
-
-        foreach (var b in data)
-        {
-            sBuilder.Append($"{b:X2}");
-        }
-
-        return sBuilder.ToString();
-    }
-
-    private static string HashFormatBase64(byte[] data)
-    {
-        return Convert.ToBase64String(data);
-    }
-
-    #endregion 格式化哈希值 bytes => string
 }
