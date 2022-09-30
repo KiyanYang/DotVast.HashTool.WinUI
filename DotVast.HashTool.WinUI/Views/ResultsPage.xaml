@@ -59,7 +59,10 @@
             </Grid>
         </DataTemplate>
     </Page.Resources>
-    <ScrollViewer x:DefaultBindMode="OneWay" VerticalScrollBarVisibility="Auto">
+    <ScrollViewer
+        x:Name="ContentScrollViewer"
+        x:DefaultBindMode="OneWay"
+        VerticalScrollBarVisibility="Auto">
         <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewPageContentStyle}">
             <StackPanel Orientation="Vertical" Spacing="12">
 
