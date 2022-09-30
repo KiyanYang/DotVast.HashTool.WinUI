@@ -27,7 +27,7 @@ internal sealed partial class ComputeHashService : ObservableRecipient, ICompute
     }
 
     [ObservableProperty]
-    public ComputeHashStatus _status = ComputeHashStatus.Free;
+    private ComputeHashStatus _status = ComputeHashStatus.Free;
 
     public async Task<HashTask> HashFile(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct)
     {
@@ -43,7 +43,6 @@ internal sealed partial class ComputeHashService : ObservableRecipient, ICompute
                 hashTask.Result = hashResult;
                 _taskProgress.Report((1, 1));
             }
-            return;
         }, hashTask, ct);
     }
 
@@ -53,30 +52,35 @@ internal sealed partial class ComputeHashService : ObservableRecipient, ICompute
         {
             hashTask.Results = new();
             var filePaths = Directory.GetFiles(hashTask.Content);
-            _taskProgress.Report((0, filePaths.Length));
-            // TODO: 当未找到文件或文件被强制删除时，跳过该文件并继续后续文件的计算.
-            // 在获取文件夹内文件后, 如果用户删除了还未计算的文件, 则会出现文件未找到异常, 此时将终止后续运算. 
+            var filesCount = filePaths.Length;
+            _taskProgress.Report((0, filesCount));
             foreach (var filePath in filePaths)
             {
-                if (File.Exists(filePath) == false)
+                // 出现异常情况的频率极低，因此不使用 File.Exists 等涉及 IO 的额外判断操作
+                try
                 {
-                    continue;
+                    using var stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+                    var hashResult = await Task.Run(() => HashStream(hashTask.SelectedHashs, stream, mres, ct));
+                    if (hashResult != null)
+                    {
+                        hashResult.Type = HashResultType.File;
+                        hashResult.Content = filePath;
+                        hashTask.Results.Add(hashResult);
+                    }
                 }
-
-                using Stream? stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
-                if (stream == null)
+                catch (FileNotFoundException)
                 {
-                    continue;
+                    Messenger.Send(new FileNotFoundInHashFolderMessage(filePath));
+                    filesCount--;
                 }
-
-                var hashResult = await Task.Run(() => HashStream(hashTask.SelectedHashs, stream, mres, ct));
-                if (hashResult != null)
+                catch (Exception)
                 {
-                    hashResult.Type = HashResultType.File;
-                    hashResult.Content = filePath;
-                    hashTask.Results.Add(hashResult);
+                    throw;
                 }
-                _taskProgress.Report((hashTask.Results.Count, filePaths.Length));
+                finally
+                {
+                    _taskProgress.Report((hashTask.Results.Count, filesCount));
+                }
             }
         }, hashTask, ct);
     }
@@ -96,11 +100,10 @@ internal sealed partial class ComputeHashService : ObservableRecipient, ICompute
                 hashTask.Result = hashResult;
                 _taskProgress.Report((1, 1));
             }
-            return;
         }, hashTask, ct);
     }
 
-    public async Task<HashTask> PreAndPostProcess(Func<Task> func, HashTask hashTask, CancellationToken ct)
+    private async Task<HashTask> PreAndPostProcess(Func<Task> func, HashTask hashTask, CancellationToken ct)
     {
         Status = ComputeHashStatus.Busy;
         var stopWatch = Stopwatch.StartNew();
@@ -133,7 +136,7 @@ internal sealed partial class ComputeHashService : ObservableRecipient, ICompute
         }
     }
 
-    public HashResult? HashStream(IList<Hash> hashs, Stream stream, ManualResetEventSlim mres, CancellationToken ct)
+    private HashResult? HashStream(IList<Hash> hashs, Stream stream, ManualResetEventSlim mres, CancellationToken ct)
     {
         #region 初始化, 定义文件流读取参数及变量.
 

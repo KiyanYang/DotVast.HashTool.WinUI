@@ -229,6 +229,15 @@
           <source>窗口置顶</source>
           <target state="translated">Always On Top</target>
         </trans-unit>
+        <trans-unit id="Tip_FileSkipped_FileNotFound" translate="yes" xml:space="preserve">
+          <source>文件 {0} 未找到，已跳过。</source>
+          <target state="needs-review-translation">File "{0}" not found, which skipped.</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+        </trans-unit>
+        <trans-unit id="Tip_FileSkipped_Title" translate="yes" xml:space="preserve">
+          <source>已跳过文件</source>
+          <target state="translated">File Skipped</target>
+        </trans-unit>
       </group>
     </body>
   </file>

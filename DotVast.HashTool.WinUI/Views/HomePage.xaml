@@ -101,6 +101,12 @@
                         IsEnabled="{x:Bind ViewModel.CancelButton.IsEnabled, Mode=OneWay}" />
                 </Grid>
 
+                <TeachingTip
+                    x:DefaultBindMode="OneWay"
+                    Title="{x:Bind ViewModel.TipMessage.Title}"
+                    IsOpen="{x:Bind ViewModel.TipMessage.IsOpen}"
+                    Subtitle="{x:Bind ViewModel.TipMessage.Subtitle}" />
+
             </StackPanel>
         </Grid>
     </ScrollViewer>

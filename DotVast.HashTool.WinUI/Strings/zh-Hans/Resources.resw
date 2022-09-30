@@ -286,4 +286,10 @@
   <data name="Tasks_ShowResult_XamlUICommand.Description" xml:space="preserve">
     <value>查看结果</value>
   </data>
+  <data name="Tip_FileSkipped_FileNotFound" xml:space="preserve">
+    <value>文件 “{0}” 未找到，已跳过。</value>
+  </data>
+  <data name="Tip_FileSkipped_Title" xml:space="preserve">
+    <value>已跳过文件</value>
+  </data>
 </root>

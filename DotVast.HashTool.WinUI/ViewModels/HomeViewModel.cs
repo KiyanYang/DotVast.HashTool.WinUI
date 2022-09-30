@@ -123,6 +123,8 @@ public sealed partial class HomeViewModel : ObservableRecipient
         }
     }
 
+    public TeachingTipModel TipMessage { get; } = new();
+
     #endregion Public Properties
 
     #region Commands
@@ -230,6 +232,12 @@ public sealed partial class HomeViewModel : ObservableRecipient
         Messenger.Register<HomeViewModel, ComputeHashStatueChangedMessage>(this, async (r, m) =>
         {
             await dispatcherQueue.EnqueueAsync(() => SetButtonsStatus(m.Value));
+        });
+        Messenger.Register<HomeViewModel, FileNotFoundInHashFolderMessage>(this, async (r, m) =>
+        {
+            await dispatcherQueue.EnqueueAsync(() => ShowTipMessage(
+                    Localization.Tip_FileSkipped_Title,
+                    string.Format(Localization.Tip_FileSkipped_FileNotFound, m.Value)));
         });
     }
 
@@ -350,6 +358,13 @@ public sealed partial class HomeViewModel : ObservableRecipient
             default:
                 break;
         }
+    }
+
+    private void ShowTipMessage(string title, string subTitle)
+    {
+        TipMessage.Title = title;
+        TipMessage.Subtitle = subTitle;
+        TipMessage.IsOpen = true;
     }
 
     #endregion Helpers
