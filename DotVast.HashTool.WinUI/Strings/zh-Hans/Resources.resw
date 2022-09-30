@@ -202,6 +202,9 @@
   <data name="Licenses_Header" xml:space="preserve">
     <value>许可</value>
   </data>
+  <data name="RestartApp.Content" xml:space="preserve">
+    <value>重启应用</value>
+  </data>
   <data name="Results_Detail_CreatedDateTime.Text" xml:space="preserve">
     <value>创建时间</value>
   </data>

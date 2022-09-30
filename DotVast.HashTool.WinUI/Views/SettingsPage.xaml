@@ -3,9 +3,10 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:behaviors="using:DotVast.HashTool.WinUI.Behaviors"
     xmlns:dvhc="using:DotVast.HashTool.WinUI.Controls"
     xmlns:helpers="using:DotVast.HashTool.WinUI.Helpers"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Page.Resources>
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
@@ -14,6 +15,25 @@
         </Style>
         <Style BasedOn="{StaticResource LeftContentToggleSwitchStyle}" TargetType="ToggleSwitch" />
     </Page.Resources>
+
+    <behaviors:NavigationViewHeaderBehavior.HeaderTemplate>
+        <DataTemplate>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="{Binding}" />
+                <Button
+                    x:Name="RestartAppButton"
+                    x:Uid="RestartApp"
+                    Grid.Column="1"
+                    Click="RestartAppButton_Click"
+                    Visibility="Visible" />
+            </Grid>
+        </DataTemplate>
+    </behaviors:NavigationViewHeaderBehavior.HeaderTemplate>
+
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewPageContentStyle}">
             <StackPanel>

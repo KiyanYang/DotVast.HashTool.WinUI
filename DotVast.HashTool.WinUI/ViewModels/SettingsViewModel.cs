@@ -41,10 +41,8 @@ public sealed partial class SettingsViewModel : ObservableRecipient
     [ObservableProperty]
     private AppLanguage _appLanguage;
 
-    async partial void OnAppLanguageChanged(AppLanguage value)
-    {
+    async partial void OnAppLanguageChanged(AppLanguage value) =>
         await _languageSelectorService.SetAppLanguageAsync(value);
-    }
 
     #endregion Language selector
 
@@ -84,8 +82,10 @@ public sealed partial class SettingsViewModel : ObservableRecipient
         _themeSelectorService = themeSelectorService;
 
         _isAlwaysOnTop = _alwaysOnTopService.IsAlwaysOnTop;
+
         _appLanguage = _languageSelectorService.Language;
         AppLanguages = _languageSelectorService.Languages;
+
         _theme = Themes.First(x => x.Theme == _themeSelectorService.Theme);
 
         _versionDescription = GetVersionDescription();
@@ -101,6 +101,11 @@ public sealed partial class SettingsViewModel : ObservableRecipient
         var logsFilePath = App.GetOptions<LogsOptions>().Value.FilePath!;
         var logsFolderPath = Path.GetDirectoryName(Path.Combine(localAppData, logsFilePath));
         await Windows.System.Launcher.LaunchFolderPathAsync(logsFolderPath);
+    }
+
+    public void RestartApp()
+    {
+        Microsoft.Windows.AppLifecycle.AppInstance.Restart("");
     }
 
     private static string GetVersionDescription()

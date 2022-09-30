@@ -12,7 +12,7 @@
     "EnableAttributeReordering": true,
     "AttributeOrderingRuleGroups": [
         "x:Class",
-        "xmlns, xmlns:x",
+        "xmlns, xmlns:x, xmlns:d, xmlns:mc",
         "xmlns:*",
         "x:Key, Key, x:Name, Name, x:Uid, Uid, x:*, Title",
         "Grid.Row, Grid.RowSpan, Grid.Column, Grid.ColumnSpan, Canvas.Left, Canvas.Top, Canvas.Right, Canvas.Bottom",
