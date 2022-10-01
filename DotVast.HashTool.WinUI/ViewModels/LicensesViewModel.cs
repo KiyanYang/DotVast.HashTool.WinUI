@@ -10,10 +10,11 @@ public sealed partial class LicensesViewModel : ObservableRecipient
     } = new LicenseInfo[]
     {
         new("CommunityToolkit.MVVM", License.MIT, "https://licenses.nuget.org/MIT"),
+        new("CommunityToolkit.WinUI.UI", License.MIT, "https://licenses.nuget.org/MIT"),
+        new("CommunityToolkit.WinUI.UI.Behaviors", License.MIT, "https://licenses.nuget.org/MIT"),
         new("HashLib4CSharp", License.MIT, "https://www.nuget.org/packages/HashLib4CSharp/1.5.0/license"),
         new("Microsoft.Extensions.Hosting", License.MIT, "https://licenses.nuget.org/MIT"),
         new("Microsoft.WindowsAppSDK", License.Unknown, "https://www.nuget.org/packages/Microsoft.WindowsAppSDK/1.1.5/license"),
-        new("Microsoft.Xaml.Behaviors.WinUI.Managed", License.MIT, "https://licenses.nuget.org/MIT"),
         new("Serilog.Extensions.Hosting", License.Apache_2_0, "https://licenses.nuget.org/Apache-2.0"),
         new("Serilog.Sinks.File", License.Apache_2_0, "https://licenses.nuget.org/Apache-2.0"),
         new("WinUIEx", License.Apache_2_0, "https://licenses.nuget.org/Apache-2.0"),
