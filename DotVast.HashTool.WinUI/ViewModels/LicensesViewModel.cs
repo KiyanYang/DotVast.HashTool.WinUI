@@ -1,4 +1,4 @@
-using DotVast.HashTool.WinUI.Models.Records;
+using DotVast.HashTool.WinUI.Models;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
