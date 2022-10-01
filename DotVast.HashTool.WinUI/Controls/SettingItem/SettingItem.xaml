@@ -17,10 +17,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="dvhc:SettingItem">
                     <Grid
-                        MinHeight="68"
                         Padding="{TemplateBinding Padding}"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Center"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"

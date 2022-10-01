@@ -10,7 +10,10 @@
     mc:Ignorable="d">
     <Page.Resources>
         <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
-        <Style TargetType="dvhc:SettingItem">
+        <Style BasedOn="{StaticResource CardSettingItem}" TargetType="dvhc:SettingItem">
+            <Setter Property="Margin" Value="{StaticResource XXSmallTopBottomMargin}" />
+        </Style>
+        <Style x:Key="CardButtonSettingItemWithMargin" BasedOn="{StaticResource CardButtonSettingItem}" TargetType="Button">
             <Setter Property="Margin" Value="{StaticResource XXSmallTopBottomMargin}" />
         </Style>
         <Style BasedOn="{StaticResource LeftContentToggleSwitchStyle}" TargetType="ToggleSwitch" />
@@ -37,11 +40,20 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewPageContentStyle}">
             <StackPanel>
-                <TextBlock
-                    x:Uid="Settings_Personalization"
-                    Margin="{StaticResource SmallBottomMargin}"
-                    Style="{ThemeResource SubtitleTextBlockStyle}" />
+                <!-- 跳转设置: 哈希选项 -->
+                <Button
+                    Command="{x:Bind ViewModel.NavigateToCommand}"
+                    CommandParameter="DotVast.HashTool.WinUI.ViewModels.HashOptionSettingsViewModel"
+                    Style="{StaticResource CardButtonSettingItemWithMargin}">
+                    <dvhc:SettingItem x:Uid="SettingsPage_HashOptions" Style="{StaticResource CardSettingItemNoBorder}">
+                        <dvhc:SettingItem.Icon>
+                            <FontIcon Glyph="&#xE9D5;" />
+                        </dvhc:SettingItem.Icon>
+                        <FontIcon Glyph="&#xE76C;" />
+                    </dvhc:SettingItem>
+                </Button>
 
+                <!-- 设置: 置顶 -->
                 <dvhc:SettingItem x:Uid="SettingsPage_AlwaysOnTop">
                     <dvhc:SettingItem.Icon>
                         <FontIcon Glyph="&#xE840;" />
@@ -49,6 +61,13 @@
                     <ToggleSwitch IsOn="{x:Bind ViewModel.IsAlwaysOnTop, Mode=TwoWay}" />
                 </dvhc:SettingItem>
 
+                <!-- 副标题: 个性化 -->
+                <TextBlock
+                    x:Uid="Settings_Personalization"
+                    Margin="{StaticResource SmallTopBottomMargin}"
+                    Style="{ThemeResource SubtitleTextBlockStyle}" />
+
+                <!-- 设置: 主题 -->
                 <dvhc:SettingItem x:Uid="SettingsPage_Theme">
                     <dvhc:SettingItem.Icon>
                         <FontIcon Glyph="&#xE2B1;" />
@@ -60,6 +79,7 @@
                         SelectedItem="{x:Bind ViewModel.Theme, Mode=TwoWay}" />
                 </dvhc:SettingItem>
 
+                <!-- 设置: 语言 -->
                 <dvhc:SettingItem x:Uid="SettingsPage_Language">
                     <dvhc:SettingItem.Icon>
                         <FontIcon Glyph="&#xF2B7;" />
@@ -71,6 +91,7 @@
                         SelectedItem="{x:Bind ViewModel.AppLanguage, Mode=TwoWay}" />
                 </dvhc:SettingItem>
 
+                <!-- 副标题: 关于 -->
                 <TextBlock
                     x:Uid="Settings_About"
                     Margin="{StaticResource SmallTopBottomMargin}"

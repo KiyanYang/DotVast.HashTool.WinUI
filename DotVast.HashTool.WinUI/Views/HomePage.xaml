@@ -49,7 +49,7 @@
 
                 <!-- 哈希算法选择 -->
                 <Border Style="{StaticResource CardBorderStyle}">
-                    <ItemsRepeater ItemsSource="{x:Bind ViewModel.HashOptions}">
+                    <ItemsRepeater ItemsSource="{x:Bind ViewModel.HashOptions, Mode=OneWay}">
                         <ItemsRepeater.Layout>
                             <UniformGridLayout ItemsStretch="Fill" />
                         </ItemsRepeater.Layout>

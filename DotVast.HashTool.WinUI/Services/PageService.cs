@@ -1,5 +1,3 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-
 using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.ViewModels;
 using DotVast.HashTool.WinUI.Views;
@@ -19,6 +17,7 @@ public sealed class PageService : IPageService
         Configure<TasksViewModel, TasksPage>();
         Configure<ResultsViewModel, ResultsPage>();
         Configure<LicensesViewModel, LicensesPage>();
+        Configure<HashOptionSettingsViewModel, HashOptionSettingsPage>();
     }
 
     public Type GetPageType(string key)

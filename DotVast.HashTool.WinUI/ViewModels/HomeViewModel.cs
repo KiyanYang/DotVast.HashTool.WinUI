@@ -1,5 +1,7 @@
+using System.Diagnostics;
 using System.Text;
 
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using CommunityToolkit.WinUI;
 
 using DotVast.HashTool.WinUI.Contracts.Services;
@@ -40,8 +42,6 @@ public sealed partial class HomeViewModel : ObservableRecipient
 
         _computeHashService.AtomProgressChanged += (sender, e) => AtomProgressBar.Val = e;
         _computeHashService.TaskProgressChanged += (sender, e) => (TaskProgressBar.Val, TaskProgressBar.Max) = e;
-
-        HashOptions = hashOptionsService.HashOptions;
 
         IsActive = true;
     }
@@ -92,10 +92,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
     /// <summary>
     /// Hash 选项.
     /// </summary>
-    public List<HashOption> HashOptions
-    {
-        get;
-    }
+    public IEnumerable<HashOption> HashOptions => _hashOptionsService.HashOptions.Where(i => i.IsEnabled);
 
     public record TextEncoding(string Name, Encoding Encoding);
 
@@ -237,6 +234,19 @@ public sealed partial class HomeViewModel : ObservableRecipient
             await dispatcherQueue.EnqueueAsync(() => ShowTipMessage(
                     Localization.Tip_FileSkipped_Title,
                     string.Format(Localization.Tip_FileSkipped_FileNotFound, m.Value)));
+        });
+
+        // PropertyChangedMessage[HashOption.IsEnabled]
+        Messenger.Register<HomeViewModel, PropertyChangedMessage<bool>>(this, (r, m) =>
+        {
+            if (m.Sender is HashOption hashOption && m.PropertyName == nameof(HashOption.IsEnabled))
+            {
+                Debug.WriteLine($"---------------- {DateTime.Now} -- HomeViewModel.Messenger.PropertyChangedMessage[HashOption.IsEnabled]");
+                Debug.WriteLine($"Hash.Name: {hashOption.Hash.Name}");
+                Debug.WriteLine($"IsEnabled:{hashOption.IsEnabled}");
+
+                OnPropertyChanged(nameof(HashOptions));
+            }
         });
     }
 

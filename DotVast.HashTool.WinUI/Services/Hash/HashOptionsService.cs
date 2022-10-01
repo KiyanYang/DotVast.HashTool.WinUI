@@ -9,7 +9,7 @@ internal class HashOptionsService : IHashOptionsService
 
     private readonly ILocalSettingsService _localSettingsService;
 
-    public List<HashOption> HashOptions { get; set; } = new();
+    public List<HashOption> HashOptions { get; } = new();
 
     public HashOptionsService(ILocalSettingsService localSettingsService)
     {
@@ -65,13 +65,20 @@ internal class HashOptionsService : IHashOptionsService
 
     private async Task<HashOption> LoadHashOptionFromSettingsAsync(Hash hash)
     {
-        var isChecked = await _localSettingsService.ReadSettingAsync<bool>($"{SettingsKeyPrefix}{hash.Name}");
-
-        return new(hash, isChecked);
+        var hashOption = await _localSettingsService.ReadSettingAsync<HashOption>($"{SettingsKeyPrefix}{hash.Name}");
+        if (hashOption == null)
+        {
+            return new(hash);
+        }
+        else
+        {
+            hashOption.Hash = hash;
+            return hashOption;
+        }
     }
 
     private async Task SaveHashOptionAsync(HashOption hashOption)
     {
-        await _localSettingsService.SaveSettingAsync($"{SettingsKeyPrefix}{hashOption.Hash.Name}", hashOption.IsChecked);
+        await _localSettingsService.SaveSettingAsync($"{SettingsKeyPrefix}{hashOption.Hash.Name}", hashOption);
     }
 }

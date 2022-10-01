@@ -1,18 +1,31 @@
+using System.Text.Json.Serialization;
+
 using DotVast.HashTool.WinUI.Services.Hash;
 
 namespace DotVast.HashTool.WinUI.Models;
 
-public sealed partial class HashOption : ObservableObject
+public sealed partial class HashOption : ObservableRecipient
 {
-    [ObservableProperty]
     private Hash _hash;
+
+    [JsonIgnore]
+    public Hash Hash
+    {
+        get => _hash;
+        set => SetProperty(ref _hash, value);
+    }
 
     [ObservableProperty]
     private bool _isChecked;
 
-    public HashOption(Hash hash, bool isChecked = false)
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    private bool _isEnabled;
+
+    public HashOption(Hash hash, bool isChecked = false, bool isEnabled = true)
     {
         _hash = hash;
         _isChecked = isChecked;
+        _isEnabled = isEnabled;
     }
 }

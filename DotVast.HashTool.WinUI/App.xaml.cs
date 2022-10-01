@@ -85,6 +85,8 @@ public sealed partial class App : Application
             services.AddSingleton<IFileService, FileService>();
 
             // Views and ViewModels
+            services.AddTransient<HashOptionSettingsViewModel>();
+            services.AddTransient<HashOptionSettingsPage>();
             services.AddTransient<LicensesViewModel>();
             services.AddTransient<LicensesPage>();
             services.AddTransient<ResultsViewModel>();

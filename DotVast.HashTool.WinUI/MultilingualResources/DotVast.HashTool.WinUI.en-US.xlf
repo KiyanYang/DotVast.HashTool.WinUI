@@ -241,6 +241,18 @@
           <source>重启应用</source>
           <target state="translated">Restart App</target>
         </trans-unit>
+        <trans-unit id="HashOptionSettingsPage_Header" translate="yes" xml:space="preserve">
+          <source>哈希选项</source>
+          <target state="translated">Hash Option</target>
+        </trans-unit>
+        <trans-unit id="SettingsPage_HashOptions.Description" translate="yes" xml:space="preserve">
+          <source>设置首页显示哪些哈希选项</source>
+          <target state="translated">Set hash options which are displayed on the Home</target>
+        </trans-unit>
+        <trans-unit id="SettingsPage_HashOptions.Header" translate="yes" xml:space="preserve">
+          <source>哈希选项</source>
+          <target state="translated">Hash Option</target>
+        </trans-unit>
       </group>
     </body>
   </file>
