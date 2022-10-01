@@ -1,6 +1,5 @@
 using System.Text;
 
-using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI;
 
 using DotVast.HashTool.WinUI.Contracts.Services;
