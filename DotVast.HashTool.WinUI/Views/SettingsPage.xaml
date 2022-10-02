@@ -49,7 +49,7 @@
                         <dvhc:SettingItem.Icon>
                             <FontIcon Glyph="&#xE9D5;" />
                         </dvhc:SettingItem.Icon>
-                        <FontIcon Glyph="&#xE76C;" />
+                        <FontIcon FontSize="14" Glyph="&#xE76C;" />
                     </dvhc:SettingItem>
                 </Button>
 
@@ -98,22 +98,25 @@
                     Style="{ThemeResource SubtitleTextBlockStyle}" />
 
                 <StackPanel>
-                    <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Text="{x:Bind ViewModel.VersionDescription}" />
+                    <StackPanel.Resources>
+                        <Style BasedOn="{StaticResource DefaultHyperlinkButtonStyle}" TargetType="HyperlinkButton">
+                            <Setter Property="Margin" Value="{StaticResource SettingsPageHyperlinkButtonMargin}" />
+                        </Style>
+                    </StackPanel.Resources>
 
+                    <!-- 版本及描述 -->
+                    <TextBlock Style="{ThemeResource BodyTextBlockStyle}" Text="{x:Bind ViewModel.VersionDescription}" />
                     <TextBlock
                         x:Uid="Settings_AboutDescription"
                         Margin="{StaticResource XSmallTopMargin}"
                         Style="{ThemeResource BodyTextBlockStyle}" />
-                    <HyperlinkButton x:Uid="SettingsPage_PrivacyTermsLink" Margin="{StaticResource SettingsPageHyperlinkButtonMargin}" />
+
+                    <HyperlinkButton x:Uid="SettingsPage_PrivacyTermsLink" />
                     <HyperlinkButton
                         x:Uid="SettingsPage_Licenses"
-                        Margin="{StaticResource SettingsPageHyperlinkButtonMargin}"
                         Command="{x:Bind ViewModel.NavigateToCommand}"
                         CommandParameter="DotVast.HashTool.WinUI.ViewModels.LicensesViewModel" />
-                    <HyperlinkButton
-                        x:Uid="SettingsPage_Logs"
-                        Margin="{StaticResource SettingsPageHyperlinkButtonMargin}"
-                        Command="{x:Bind ViewModel.NavigateToLogsFolderCommand}" />
+                    <HyperlinkButton x:Uid="SettingsPage_Logs" Command="{x:Bind ViewModel.NavigateToLogsFolderCommand}" />
                 </StackPanel>
             </StackPanel>
         </Grid>
