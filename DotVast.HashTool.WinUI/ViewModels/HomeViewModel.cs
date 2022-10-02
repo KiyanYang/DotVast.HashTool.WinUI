@@ -119,6 +119,58 @@ public sealed partial class HomeViewModel : ObservableRecipient
         }
     }
 
+    #region Verifying Hash
+
+    private string _verifyingHash1 = string.Empty;
+    private string _verifyingHash2 = string.Empty;
+
+    public string VerifyingHash1
+    {
+        get => _verifyingHash1;
+        set
+        {
+            SetProperty(ref _verifyingHash1, value.Trim());
+            OnPropertyChanged(nameof(VerifyingResult));
+        }
+    }
+
+    public string VerifyingHash2
+    {
+        get => _verifyingHash2;
+        set
+        {
+            SetProperty(ref _verifyingHash2, value.Trim());
+            OnPropertyChanged(nameof(VerifyingResult));
+        }
+    }
+
+    public string? VerifyingResult
+    {
+        get
+        {
+            if (VerifyingHash1 == string.Empty || VerifyingHash2 == string.Empty)
+            {
+                return null;
+            }
+
+            if (string.Equals(VerifyingHash1, VerifyingHash2, StringComparison.Ordinal))
+            {
+                return "=";
+            }
+
+            // Quick Xor, Base64, 必须完全相等
+            if (!VerifyingHash1.EndsWith('=')
+                && string.Equals(VerifyingHash1, VerifyingHash2, StringComparison.OrdinalIgnoreCase))
+            {
+                return "≈";
+            }
+
+            return "≠";
+        }
+    }
+
+    #endregion Verifying Hash
+
     public TeachingTipModel TipMessage { get; } = new();
 
     #endregion Public Properties

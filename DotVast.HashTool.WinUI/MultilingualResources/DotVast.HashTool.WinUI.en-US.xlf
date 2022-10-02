@@ -253,6 +253,11 @@
           <source>哈希选项</source>
           <target state="translated">Hash Option</target>
         </trans-unit>
+        <trans-unit id="HomePage_VerifyingHashBox.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>要对比的哈希值</source>
+          <target state="translated">Hash to be compared</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">[主页] 哈希对比框的占位符</note>
+        </trans-unit>
       </group>
     </body>
   </file>

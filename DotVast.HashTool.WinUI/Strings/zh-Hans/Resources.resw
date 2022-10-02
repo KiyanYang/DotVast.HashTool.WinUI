@@ -186,6 +186,10 @@
     <value>设置路径</value>
     <comment>主页面拖放项目以设置路径的标题</comment>
   </data>
+  <data name="HomePage_VerifyingHashBox.PlaceholderText" xml:space="preserve">
+    <value>要对比的哈希值</value>
+    <comment>[主页] 哈希对比框的占位符</comment>
+  </data>
   <data name="Home_Button_Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
