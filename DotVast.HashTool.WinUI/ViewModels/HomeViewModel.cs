@@ -92,7 +92,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
     /// <summary>
     /// Hash 选项.
     /// </summary>
-    public IEnumerable<HashOption> HashOptions => _hashOptionsService.HashOptions.Where(i => i.IsEnabled);
+    public List<HashOption> HashOptions => _hashOptionsService.HashOptions.Where(i => i.IsEnabled).ToList();
 
     public record TextEncoding(string Name, Encoding Encoding);
 
@@ -253,8 +253,8 @@ public sealed partial class HomeViewModel : ObservableRecipient
     }
 
     [RelayCommand]
-    private async Task SetHashOptionAsync(HashOption hashOption) =>
-        await _hashOptionsService.SetHashOptionAsync(hashOption);
+    private async Task SetHashOptionAsync() =>
+        await _hashOptionsService.SetHashOptionsAsync(_hashOptionsService.HashOptions);
 
     public async Task SetHashTaskContenFromDrag(DataPackageView view)
     {

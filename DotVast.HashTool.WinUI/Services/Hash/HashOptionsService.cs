@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+
 using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Models;
 
@@ -5,11 +7,11 @@ namespace DotVast.HashTool.WinUI.Services;
 
 internal class HashOptionsService : IHashOptionsService
 {
-    private const string SettingsKeyPrefix = "HashOption_";
+    private const string SettingsKey = "HashOptions";
 
     private readonly ILocalSettingsService _localSettingsService;
 
-    public List<HashOption> HashOptions { get; } = new();
+    public ObservableCollection<HashOption> HashOptions { get; } = new();
 
     public HashOptionsService(ILocalSettingsService localSettingsService)
     {
@@ -18,67 +20,55 @@ internal class HashOptionsService : IHashOptionsService
 
     public async Task InitializeAsync()
     {
-        var hashes = new[]
+        var hashOptions = await LoadHashOptionsFromSettingsAsync() ?? new List<HashOption>()
         {
-            Hash.CRC32,
+            new(Hash.CRC32),
 
-            Hash.MD4,
-            Hash.MD5,
+            new(Hash.MD4),
+            new(Hash.MD5, isChecked: true),
 
-            Hash.SHA1,
-            Hash.SHA224,
-            Hash.SHA256,
-            Hash.SHA384,
-            Hash.SHA512,
-            Hash.SHA3_224,
-            Hash.SHA3_256,
-            Hash.SHA3_384 ,
-            Hash.SHA3_512,
+            new(Hash.SHA1, isChecked:true),
+            new(Hash.SHA224),
+            new(Hash.SHA256, isChecked:true),
+            new(Hash.SHA384),
+            new(Hash.SHA512),
+            new(Hash.SHA3_224),
+            new(Hash.SHA3_256),
+            new(Hash.SHA3_384 ),
+            new(Hash.SHA3_512),
 
-            Hash.Blake2B_160,
-            Hash.Blake2B_256,
-            Hash.Blake2B_384,
-            Hash.Blake2B_512,
-            Hash.Blake2S_128,
-            Hash.Blake2S_160,
-            Hash.Blake2S_224,
-            Hash.Blake2S_256,
+            new(Hash.Blake2B_160),
+            new(Hash.Blake2B_256),
+            new(Hash.Blake2B_384),
+            new(Hash.Blake2B_512),
+            new(Hash.Blake2S_128),
+            new(Hash.Blake2S_160),
+            new(Hash.Blake2S_224),
+            new(Hash.Blake2S_256),
 
-            Hash.Keccak_224,
-            Hash.Keccak_256,
-            Hash.Keccak_288,
-            Hash.Keccak_384,
-            Hash.Keccak_512,
+            new(Hash.Keccak_224),
+            new(Hash.Keccak_256),
+            new(Hash.Keccak_288),
+            new(Hash.Keccak_384),
+            new(Hash.Keccak_512),
 
-            Hash.QuickXor,
+            new(Hash.QuickXor),
         };
-        foreach (var hash in hashes)
-        {
-            HashOptions.Add(await LoadHashOptionFromSettingsAsync(hash));
-        }
+        hashOptions.ForEach(i => HashOptions.Add(i));
     }
 
-    public async Task SetHashOptionAsync(HashOption hashOption)
+    public async Task SetHashOptionsAsync(IList<HashOption> hashOptions)
     {
-        await SaveHashOptionAsync(hashOption);
+        await SaveHashOptionsAsync(hashOptions);
     }
 
-    private async Task<HashOption> LoadHashOptionFromSettingsAsync(Hash hash)
+    private async Task<List<HashOption>?> LoadHashOptionsFromSettingsAsync()
     {
-        var hashOption = await _localSettingsService.ReadSettingAsync<HashOption>($"{SettingsKeyPrefix}{hash.Name}");
-        if (hashOption == null)
-        {
-            return new(hash);
-        }
-        else
-        {
-            hashOption.Hash = hash;
-            return hashOption;
-        }
+        return await _localSettingsService.ReadSettingAsync<List<HashOption>>(SettingsKey);
     }
 
-    private async Task SaveHashOptionAsync(HashOption hashOption)
+    private async Task SaveHashOptionsAsync(IList<HashOption> hashOptions)
     {
-        await _localSettingsService.SaveSettingAsync($"{SettingsKeyPrefix}{hashOption.Hash.Name}", hashOption);
+        await _localSettingsService.SaveSettingAsync(SettingsKey, hashOptions);
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 using CommunityToolkit.Mvvm.Messaging.Messages;
@@ -17,7 +18,7 @@ public partial class HashOptionSettingsViewModel : ObservableRecipient, INavigat
         _hashOptionsService = hashOptionsService;
     }
 
-    public List<HashOption> HashOptions => _hashOptionsService.HashOptions;
+    public ObservableCollection<HashOption> HashOptions => _hashOptionsService.HashOptions;
 
     #region Messenger
 
@@ -32,7 +33,7 @@ public partial class HashOptionSettingsViewModel : ObservableRecipient, INavigat
                 Debug.WriteLine($"Hash.Name: {hashOption.Hash.Name}");
                 Debug.WriteLine($"IsEnabled:{hashOption.IsEnabled}");
 
-                await _hashOptionsService.SetHashOptionAsync(hashOption);
+                await _hashOptionsService.SetHashOptionsAsync(HashOptions);
             }
         });
     }
