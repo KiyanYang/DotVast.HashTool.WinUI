@@ -1,14 +1,9 @@
-using System.Text.Json.Serialization;
-
-using DotVast.HashTool.WinUI.Services.Hash;
-
 namespace DotVast.HashTool.WinUI.Models;
 
 public sealed partial class HashOption : ObservableRecipient
 {
     private Hash _hash;
 
-    [JsonIgnore]
     public Hash Hash
     {
         get => _hash;

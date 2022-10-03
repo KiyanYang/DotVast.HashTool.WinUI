@@ -6,7 +6,7 @@ using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Models.Messages;
 
-namespace DotVast.HashTool.WinUI.Services.Hash;
+namespace DotVast.HashTool.WinUI.Services;
 
 internal sealed partial class ComputeHashService : ObservableRecipient, IComputeHashService
 {

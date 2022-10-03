@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Models;
 
-namespace DotVast.HashTool.WinUI.Services.Hash;
+namespace DotVast.HashTool.WinUI.Services;
 
 internal class HashTaskService : IHashTaskService
 {

@@ -371,7 +371,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
         }
     }
 
-    private int _hashTaskId = 0;
+    private int _hashTaskId = 1;
     private HashTask SealHashTask()
     {
         HashTask hashTask = new()
@@ -381,7 +381,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
             Mode = CurrentHashTask.Mode,
             Content = CurrentHashTask.Content,
             Encoding = CurrentHashTask.Encoding,
-            SelectedHashs = HashOptions!.Where(i => i.IsChecked).Select(i => i.Hash).ToList(),
+            SelectedHashs = HashOptions.Where(i => i.IsChecked).Select(i => i.Hash).ToList(),
             State = HashTaskState.Waiting,
         };
         _hashTaskId++;

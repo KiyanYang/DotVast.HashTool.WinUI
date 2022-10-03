@@ -20,7 +20,7 @@
 // THE SOFTWARE.
 //---------------------------------------------------------------------------------------------
 
-namespace DotVast.HashTool.WinUI.Services.Hash;
+namespace DotVast.HashTool.WinUI.Models.Hashes;
 
 /// <summary>
 /// A quick, simple non-cryptographic hash algorithm that works by XORing the bytes in a circular-shifting fashion.

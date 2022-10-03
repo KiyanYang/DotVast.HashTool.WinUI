@@ -1,4 +1,8 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 using DotVast.HashTool.WinUI.Helpers;
+using DotVast.HashTool.WinUI.Models.Hashes;
 
 using HashLib4CSharp.Checksum;
 
@@ -7,11 +11,12 @@ using static HashLib4CSharp.Base.HashFactory.Crypto;
 
 using Crypto = System.Security.Cryptography;
 
-namespace DotVast.HashTool.WinUI.Services.Hash;
+namespace DotVast.HashTool.WinUI.Models;
 
+[JsonConverter(typeof(HashJsonConverter))]
 public sealed class Hash : GenericEnum<string>
 {
-    public string Name => base._value;
+    public string Name => _value;
 
     public Crypto.HashAlgorithm Algorithm
     {
@@ -65,5 +70,46 @@ public sealed class Hash : GenericEnum<string>
     private Hash(string name, Crypto.HashAlgorithm hashAlgorithm) : base(name)
     {
         Algorithm = hashAlgorithm;
+    }
+
+    private sealed class HashJsonConverter : JsonConverter<Hash>
+    {
+        public override Hash? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            return reader.GetString() switch
+            {
+                var name when name == CRC32.Name => CRC32,
+                var name when name == MD4.Name => MD4,
+                var name when name == MD5.Name => MD5,
+                var name when name == SHA1.Name => SHA1,
+                var name when name == SHA224.Name => SHA224,
+                var name when name == SHA256.Name => SHA256,
+                var name when name == SHA384.Name => SHA384,
+                var name when name == SHA512.Name => SHA512,
+                var name when name == SHA3_224.Name => SHA3_224,
+                var name when name == SHA3_256.Name => SHA3_256,
+                var name when name == SHA3_384.Name => SHA3_384,
+                var name when name == SHA3_512.Name => SHA3_512,
+                var name when name == Blake2B_160.Name => Blake2B_160,
+                var name when name == Blake2B_256.Name => Blake2B_256,
+                var name when name == Blake2B_384.Name => Blake2B_384,
+                var name when name == Blake2B_512.Name => Blake2B_512,
+                var name when name == Blake2S_128.Name => Blake2S_128,
+                var name when name == Blake2S_160.Name => Blake2S_160,
+                var name when name == Blake2S_224.Name => Blake2S_224,
+                var name when name == Blake2S_256.Name => Blake2S_256,
+                var name when name == Keccak_224.Name => Keccak_224,
+                var name when name == Keccak_256.Name => Keccak_256,
+                var name when name == Keccak_288.Name => Keccak_288,
+                var name when name == Keccak_384.Name => Keccak_384,
+                var name when name == Keccak_512.Name => Keccak_512,
+                var name when name == QuickXor.Name => QuickXor,
+                _ => null,
+            };
+        }
+        public override void Write(Utf8JsonWriter writer, Hash value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(value.Name);
+        }
     }
 }

@@ -1,6 +1,6 @@
 using System.Security.Cryptography;
 
-namespace DotVast.HashTool.WinUI.Services.Hash;
+namespace DotVast.HashTool.WinUI.Models.Hashes;
 
 internal static class HashLib4CSharpAdapterExtensions
 {

@@ -2,7 +2,6 @@ using System.Collections.ObjectModel;
 using System.Text;
 
 using DotVast.HashTool.WinUI.Helpers;
-using DotVast.HashTool.WinUI.Services.Hash;
 
 namespace DotVast.HashTool.WinUI.Models;
 
