@@ -1,4 +1,4 @@
-using DotVast.Toolkit.StringResource.Attributes;
+using DotVast.Toolkit.StringResource;
 
 namespace DotVast.HashTool.WinUI.Strings;
 

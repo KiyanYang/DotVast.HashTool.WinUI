@@ -7,10 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotVast.HashTool.WinUI", "D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotVast.HashTool.WinUI.Core", "DotVast.HashTool.WinUI.Core\DotVast.HashTool.WinUI.Core.csproj", "{9595E053-0B9C-4A69-9653-C4C5F975AAA8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotVast.Toolkit.StringResource.Attributes", "DotVast.Toolkit.StringResource.Attributes\DotVast.Toolkit.StringResource.Attributes.csproj", "{93FBD946-1BEA-4CB3-BCBB-01CB8C18438C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotVast.Toolkit.StringResource.SourceGenerator", "DotVast.Toolkit.StringResource.SourceGenerator\DotVast.Toolkit.StringResource.SourceGenerator.csproj", "{BE02480B-991D-415C-B29D-FFDEF260BD17}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,30 +47,6 @@ Global
 		{9595E053-0B9C-4A69-9653-C4C5F975AAA8}.Release|arm64.Build.0 = Release|arm64
 		{9595E053-0B9C-4A69-9653-C4C5F975AAA8}.Release|x64.ActiveCfg = Release|x64
 		{9595E053-0B9C-4A69-9653-C4C5F975AAA8}.Release|x64.Build.0 = Release|x64
-		{93FBD946-1BEA-4CB3-BCBB-01CB8C18438C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93FBD946-1BEA-4CB3-BCBB-01CB8C18438C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93FBD946-1BEA-4CB3-BCBB-01CB8C18438C}.Debug|arm64.ActiveCfg = Debug|Any CPU
-		{93FBD946-1BEA-4CB3-BCBB-01CB8C18438C}.Debug|arm64.Build.0 = Debug|Any CPU
-		{93FBD946-1BEA-4CB3-BCBB-01CB8C18438C}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{93FBD946-1BEA-4CB3-BCBB-01CB8C18438C}.Debug|x64.Build.0 = Debug|Any CPU
-		{93FBD946-1BEA-4CB3-BCBB-01CB8C18438C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93FBD946-1BEA-4CB3-BCBB-01CB8C18438C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{93FBD946-1BEA-4CB3-BCBB-01CB8C18438C}.Release|arm64.ActiveCfg = Release|Any CPU
-		{93FBD946-1BEA-4CB3-BCBB-01CB8C18438C}.Release|arm64.Build.0 = Release|Any CPU
-		{93FBD946-1BEA-4CB3-BCBB-01CB8C18438C}.Release|x64.ActiveCfg = Release|Any CPU
-		{93FBD946-1BEA-4CB3-BCBB-01CB8C18438C}.Release|x64.Build.0 = Release|Any CPU
-		{BE02480B-991D-415C-B29D-FFDEF260BD17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE02480B-991D-415C-B29D-FFDEF260BD17}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE02480B-991D-415C-B29D-FFDEF260BD17}.Debug|arm64.ActiveCfg = Debug|Any CPU
-		{BE02480B-991D-415C-B29D-FFDEF260BD17}.Debug|arm64.Build.0 = Debug|Any CPU
-		{BE02480B-991D-415C-B29D-FFDEF260BD17}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{BE02480B-991D-415C-B29D-FFDEF260BD17}.Debug|x64.Build.0 = Debug|Any CPU
-		{BE02480B-991D-415C-B29D-FFDEF260BD17}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE02480B-991D-415C-B29D-FFDEF260BD17}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE02480B-991D-415C-B29D-FFDEF260BD17}.Release|arm64.ActiveCfg = Release|Any CPU
-		{BE02480B-991D-415C-B29D-FFDEF260BD17}.Release|arm64.Build.0 = Release|Any CPU
-		{BE02480B-991D-415C-B29D-FFDEF260BD17}.Release|x64.ActiveCfg = Release|Any CPU
-		{BE02480B-991D-415C-B29D-FFDEF260BD17}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
