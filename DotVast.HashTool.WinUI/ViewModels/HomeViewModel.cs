@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
 
@@ -42,6 +43,16 @@ public sealed partial class HomeViewModel : ObservableRecipient
 
         _computeHashService.AtomProgressChanged += (sender, e) => AtomProgressBar.Val = e;
         _computeHashService.TaskProgressChanged += (sender, e) => (TaskProgressBar.Val, TaskProgressBar.Max) = e;
+
+        // 响应哈希选项排序
+        _hashOptionsService.HashOptions.CollectionChanged += (sender, e) =>
+        {
+            if (sender is ObservableCollection<HashOption>
+                && e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+            {
+                OnPropertyChanged(nameof(HashOptions));
+            }
+        };
 
         IsActive = true;
     }

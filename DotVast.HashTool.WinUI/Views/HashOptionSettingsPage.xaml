@@ -24,15 +24,24 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewPageContentStyle}">
-            <ItemsRepeater ItemTemplate="{StaticResource HashOptionDataTemplate}" ItemsSource="{x:Bind ViewModel.HashOptions}">
-                <ItemsRepeater.Layout>
-                    <UniformGridLayout
-                        ItemsStretch="Fill"
-                        MinColumnSpacing="16"
-                        MinItemWidth="180"
-                        MinRowSpacing="8" />
-                </ItemsRepeater.Layout>
-            </ItemsRepeater>
+            <GridView
+                AllowDrop="True"
+                CanReorderItems="True"
+                ItemTemplate="{StaticResource HashOptionDataTemplate}"
+                ItemsSource="{x:Bind ViewModel.HashOptions}"
+                SelectionMode="None">
+                <GridView.ItemContainerStyle>
+                    <Style TargetType="GridViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="Margin" Value="8,4,8,4" />
+                    </Style>
+                </GridView.ItemContainerStyle>
+                <GridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Horizontal" SizeChanged="ItemsWrapGrid_SizeChanged" />
+                    </ItemsPanelTemplate>
+                </GridView.ItemsPanel>
+            </GridView>
         </Grid>
     </ScrollViewer>
 </Page>
