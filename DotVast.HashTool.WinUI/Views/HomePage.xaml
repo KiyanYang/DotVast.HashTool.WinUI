@@ -31,7 +31,10 @@
                         Grid.Column="0"
                         ItemsSource="{x:Bind ViewModel.HashTaskModes}"
                         SelectedItem="{x:Bind ViewModel.InputtingMode, Mode=TwoWay}" />
-                    <TextBox Grid.Column="1" Text="{x:Bind ViewModel.InputtingContent, Mode=TwoWay}" />
+                    <TextBox
+                        Grid.Column="1"
+                        IsSpellCheckEnabled="False"
+                        Text="{x:Bind ViewModel.InputtingContent, Mode=TwoWay}" />
                     <Grid Grid.Column="2">
                         <Button
                             x:Uid="Home_Button_Pick"
@@ -116,6 +119,7 @@
                     <TextBox
                         x:Uid="HomePage_VerifyingHashBox"
                         Grid.Column="0"
+                        IsSpellCheckEnabled="False"
                         Text="{x:Bind ViewModel.VerifyingHash1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBlock
                         Grid.Column="1"
@@ -126,6 +130,7 @@
                     <TextBox
                         x:Uid="HomePage_VerifyingHashBox"
                         Grid.Column="2"
+                        IsSpellCheckEnabled="False"
                         Text="{x:Bind ViewModel.VerifyingHash2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
 
