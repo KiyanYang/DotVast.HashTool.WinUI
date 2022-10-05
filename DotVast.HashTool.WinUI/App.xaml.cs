@@ -128,6 +128,13 @@ public sealed partial class App : Application
     {
         base.OnLaunched(args);
 
+#if DEBUG
+        if (System.Diagnostics.Debugger.IsAttached)
+        {
+            //DebugSettings.IsTextPerformanceVisualizationEnabled = true;
+        }
+#endif
+
         await App.GetService<IActivationService>().ActivateAsync(args);
 
         TitleBarContextMenuHelper.SetTitleBarContextMenuAllowDark();
