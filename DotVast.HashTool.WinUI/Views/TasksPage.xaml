@@ -5,61 +5,82 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:DotVast.HashTool.WinUI.Models"
+    xmlns:views="using:DotVast.HashTool.WinUI.Views"
     mc:Ignorable="d">
+
     <Page.Resources>
-        <x:Double x:Key="TaskItemHeight">48</x:Double>
-        <Thickness x:Key="TaskItemPadding">12,4</Thickness>
-        <x:Double x:Key="TaskItemVerSpacing">8</x:Double>
-        <x:Double x:Key="TaskItemColSpacing">8</x:Double>
         <XamlUICommand
             x:Key="ShowResultCommand"
             x:Uid="Tasks_ShowResult_XamlUICommand"
             Command="{x:Bind ViewModel.ShowResultCommand}" />
+        <StackLayout
+            x:Key="TaskItemLayout"
+            Orientation="Vertical"
+            Spacing="4" />
+        <DataTemplate x:Key="TaskItemDataTemplate" x:DataType="models:HashTask">
+            <Grid
+                Padding="12,12"
+                ColumnSpacing="8"
+                RowSpacing="4"
+                Style="{StaticResource CardGridStyle}">
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                    </Style>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="24" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Padding="0,0,4,0"
+                    HorizontalAlignment="Right"
+                    Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind Id}" />
+                <TextBlock
+                    Grid.Column="1"
+                    IsTextSelectionEnabled="True"
+                    Text="{x:Bind Content}"
+                    TextTrimming="CharacterEllipsis" />
+                <TextBlock
+                    Grid.RowSpan="2"
+                    Grid.Column="2"
+                    Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind State, Mode=OneWay}" />
+                <Button
+                    x:Uid="Tasks_ShowResult_Button"
+                    Grid.RowSpan="2"
+                    Grid.Column="3"
+                    VerticalAlignment="Center"
+                    Command="{StaticResource ShowResultCommand}"
+                    CommandParameter="{x:Bind}" />
+
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    FontSize="12"
+                    Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind views:TasksPage.GetSecondaryInformationText((models:HashTask))}"
+                    TextTrimming="CharacterEllipsis" />
+            </Grid>
+        </DataTemplate>
     </Page.Resources>
+
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewPageContentStyle}">
-            <ItemsRepeater ItemsSource="{x:Bind ViewModel.HashTasks}">
-                <ItemsRepeater.Layout>
-                    <StackLayout Orientation="Vertical" Spacing="{StaticResource TaskItemVerSpacing}" />
-                </ItemsRepeater.Layout>
-                <ItemsRepeater.ItemTemplate>
-                    <DataTemplate x:DataType="models:HashTask">
-                        <Grid
-                            Height="{StaticResource TaskItemHeight}"
-                            Padding="{StaticResource TaskItemPadding}"
-                            ColumnSpacing="{StaticResource TaskItemColSpacing}"
-                            Style="{StaticResource CardGridStyle}">
-                            <Grid.Resources>
-                                <Style TargetType="TextBlock">
-                                    <Setter Property="VerticalAlignment" Value="Center" />
-                                </Style>
-                            </Grid.Resources>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="20" />
-                                <ColumnDefinition Width="44" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="84" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock
-                                Grid.Column="0"
-                                HorizontalAlignment="Right"
-                                Text="{x:Bind Id}" />
-                            <TextBlock Grid.Column="1" Text="{x:Bind Mode}" />
-                            <TextBlock
-                                Grid.Column="2"
-                                Text="{x:Bind Content}"
-                                TextTrimming="CharacterEllipsis" />
-                            <TextBlock Grid.Column="3" Text="{x:Bind State, Mode=OneWay}" />
-                            <Button
-                                x:Uid="Tasks_ShowResult_Button"
-                                Grid.Column="4"
-                                Command="{StaticResource ShowResultCommand}"
-                                CommandParameter="{x:Bind}" />
-                        </Grid>
-                    </DataTemplate>
-                </ItemsRepeater.ItemTemplate>
-            </ItemsRepeater>
+            <ItemsRepeater
+                ItemTemplate="{StaticResource TaskItemDataTemplate}"
+                ItemsSource="{x:Bind ViewModel.HashTasks}"
+                Layout="{StaticResource TaskItemLayout}" />
         </Grid>
     </ScrollViewer>
+
 </Page>
