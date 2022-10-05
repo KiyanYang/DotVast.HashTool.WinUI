@@ -419,7 +419,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
             Id = _hashTaskId,
             DateTime = DateTime.Now,
             Mode = InputtingMode,
-            Content = InputtingContent,
+            Content = InputtingMode == HashTaskMode.Text ? InputtingContent : InputtingContent.Trim().Trim('"'),
             Encoding = InputtingTextEncoding.Encoding,
             SelectedHashs = HashOptions.Where(i => i.IsChecked).Select(i => i.Hash).ToList(),
             State = HashTaskState.Waiting,
