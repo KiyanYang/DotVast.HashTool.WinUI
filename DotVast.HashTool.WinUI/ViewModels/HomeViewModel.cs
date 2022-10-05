@@ -63,17 +63,62 @@ public sealed partial class HomeViewModel : ObservableRecipient
         _cts?.Dispose();
     }
 
+    public record TextEncoding(string Name, Encoding Encoding);
+
     #region Public Properties
 
+    #region Inputting
+
     /// <summary>
-    /// 当前界面显示的哈希任务.
+    /// 当前界面输入的哈希任务模式.
     /// </summary>
-    public HashTask CurrentHashTask { get; } = new() { Encoding = Encoding.UTF8 };
+    [ObservableProperty]
+    private HashTaskMode _inputtingMode = HashTaskMode.File;
+
+    /// <summary>
+    /// 当前界面输入的哈希任务内容.
+    /// </summary>
+    [ObservableProperty]
+    private string _inputtingContent = string.Empty;
+
+    /// <summary>
+    /// 当前界面输入的哈希任务文本编码.
+    /// </summary>
+    [ObservableProperty]
+    private TextEncoding _inputtingTextEncoding = new("UTF-8", Encoding.UTF8);
+
+    #endregion Inputting
 
     /// <summary>
     /// 哈希任务模式. 文件, 文件夹, 文本.
     /// </summary>
     public HashTaskMode[] HashTaskModes { get; } = new[] { HashTaskMode.File, HashTaskMode.Folder, HashTaskMode.Text };
+
+    private IList<TextEncoding>? _textEncodings;
+
+    /// <summary>
+    /// 文本编码.
+    /// </summary>
+    public IList<TextEncoding> TextEncodings
+    {
+        get
+        {
+            if (_textEncodings == null)
+            {
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                _textEncodings = Encoding.GetEncodings()
+                    .Select(e => new TextEncoding(e.Name.ToUpper(), e.GetEncoding()))
+                    .OrderBy(t => t.Name)
+                    .ToList();
+            }
+            return _textEncodings;
+        }
+    }
+
+    /// <summary>
+    /// Hash 选项.
+    /// </summary>
+    public List<HashOption> HashOptions => _hashOptionsService.HashOptions.Where(i => i.IsEnabled).ToList();
 
     /// <summary>
     /// 当前流计算的进度.
@@ -101,34 +146,10 @@ public sealed partial class HomeViewModel : ObservableRecipient
     public ButtonModel CancelButton { get; } = new() { IsEnabled = false, Content = Localization.Home_Button_Cancel };
 
     /// <summary>
-    /// Hash 选项.
+    /// 当前界面计算的哈希任务.
     /// </summary>
-    public List<HashOption> HashOptions => _hashOptionsService.HashOptions.Where(i => i.IsEnabled).ToList();
-
-    public record TextEncoding(string Name, Encoding Encoding);
-
-    public TextEncoding UTF8 { get; } = new("UTF-8", Encoding.UTF8);
-
-    private IList<TextEncoding>? _textEncodings;
-
-    /// <summary>
-    /// 文本编码.
-    /// </summary>
-    public IList<TextEncoding> TextEncodings
-    {
-        get
-        {
-            if (_textEncodings == null)
-            {
-                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-                _textEncodings = Encoding.GetEncodings()
-                    .Select(e => new TextEncoding(e.Name.ToUpper(), e.GetEncoding()))
-                    .OrderBy(t => t.Name)
-                    .ToList();
-            }
-            return _textEncodings;
-        }
-    }
+    [ObservableProperty]
+    private HashTask? _currentHashTask;
 
     #region Verifying Hash
 
@@ -189,9 +210,11 @@ public sealed partial class HomeViewModel : ObservableRecipient
     #region Commands
 
     [RelayCommand]
-    public async Task Pick()
+    private async Task PickAsync()
     {
-        if (CurrentHashTask.Mode == HashTaskMode.File)
+        try
+    {
+            if (InputtingMode == HashTaskMode.File)
         {
             FileOpenPicker picker = new();
             picker.FileTypeFilter.Add("*");
@@ -202,10 +225,10 @@ public sealed partial class HomeViewModel : ObservableRecipient
             var result = await picker.PickSingleFileAsync();
             if (result != null)
             {
-                CurrentHashTask.Content = result.Path;
+                    InputtingContent = result.Path;
             }
         }
-        else if (CurrentHashTask.Mode == HashTaskMode.Folder)
+            else if (InputtingMode == HashTaskMode.Folder)
         {
             FolderPicker picker = new();
             picker.FileTypeFilter.Add("*");
@@ -216,8 +239,13 @@ public sealed partial class HomeViewModel : ObservableRecipient
             var result = await picker.PickSingleFolderAsync();
             if (result != null)
             {
-                CurrentHashTask.Content = result.Path;
+                    InputtingContent = result.Path;
+                }
             }
+            }
+        catch (Exception ex)
+        {
+            _logger.LogError("选取{Mode}时出现未预料的异常\n{Exception}", InputtingMode, ex);
         }
     }
 
@@ -277,7 +305,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
         var items = await view.GetStorageItemsAsync();
         if (items.Count > 0)
         {
-            CurrentHashTask.Content = items[0].Path;
+            InputtingContent = items[0].Path;
         }
     }
 
@@ -323,6 +351,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
         _cts = new();
 
         var hashTask = SealHashTask();
+        CurrentHashTask = hashTask;
         _hashTaskService.HashTasks.Add(hashTask);
 
         try
@@ -389,9 +418,9 @@ public sealed partial class HomeViewModel : ObservableRecipient
         {
             Id = _hashTaskId,
             DateTime = DateTime.Now,
-            Mode = CurrentHashTask.Mode,
-            Content = CurrentHashTask.Content,
-            Encoding = CurrentHashTask.Encoding,
+            Mode = InputtingMode,
+            Content = InputtingContent,
+            Encoding = InputtingTextEncoding.Encoding,
             SelectedHashs = HashOptions.Where(i => i.IsChecked).Select(i => i.Hash).ToList(),
             State = HashTaskState.Waiting,
         };

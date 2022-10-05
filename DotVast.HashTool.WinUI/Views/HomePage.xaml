@@ -30,20 +30,18 @@
                     <ComboBox
                         Grid.Column="0"
                         ItemsSource="{x:Bind ViewModel.HashTaskModes}"
-                        SelectedItem="{x:Bind ViewModel.CurrentHashTask.Mode, Mode=TwoWay}" />
-                    <TextBox Grid.Column="1" Text="{x:Bind ViewModel.CurrentHashTask.Content, Mode=TwoWay}" />
+                        SelectedItem="{x:Bind ViewModel.InputtingMode, Mode=TwoWay}" />
+                    <TextBox Grid.Column="1" Text="{x:Bind ViewModel.InputtingContent, Mode=TwoWay}" />
                     <Grid Grid.Column="2">
                         <Button
                             x:Uid="Home_Button_Pick"
                             Command="{x:Bind ViewModel.PickCommand}"
-                            Visibility="{x:Bind helpers:XamlFunctionHelper.VisibleIfNotText(ViewModel.CurrentHashTask.Mode), Mode=OneWay}" />
+                            Visibility="{x:Bind helpers:XamlFunctionHelper.VisibleIfNotText(ViewModel.InputtingMode), Mode=OneWay}" />
                         <ComboBox
                             DisplayMemberPath="Name"
                             ItemsSource="{x:Bind ViewModel.TextEncodings}"
-                            SelectedItem="{x:Bind ViewModel.UTF8}"
-                            SelectedValue="{x:Bind ViewModel.CurrentHashTask.Encoding, Mode=TwoWay}"
-                            SelectedValuePath="Encoding"
-                            Visibility="{x:Bind helpers:XamlFunctionHelper.VisibleIfText(ViewModel.CurrentHashTask.Mode), Mode=OneWay}" />
+                            SelectedItem="{x:Bind ViewModel.InputtingTextEncoding, Mode=TwoWay}"
+                            Visibility="{x:Bind helpers:XamlFunctionHelper.VisibleIfText(ViewModel.InputtingMode), Mode=OneWay}" />
                     </Grid>
                 </Grid>
 
