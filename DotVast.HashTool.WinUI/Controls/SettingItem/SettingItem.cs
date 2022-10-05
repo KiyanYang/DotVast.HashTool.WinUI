@@ -24,7 +24,7 @@ public sealed class SettingItem : ContentControl
        nameof(Header),
        typeof(string),
        typeof(SettingItem),
-       null);
+       new PropertyMetadata(null));
 
     public static readonly DependencyProperty DescriptionProperty = DependencyProperty.Register(
         nameof(Description),
@@ -46,7 +46,7 @@ public sealed class SettingItem : ContentControl
     }
 
     [Localizable(true)]
-    public string Description
+    public string? Description
     {
         get => (string)GetValue(DescriptionProperty);
         set => SetValue(DescriptionProperty, value);

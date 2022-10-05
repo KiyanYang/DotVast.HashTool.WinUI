@@ -8,7 +8,7 @@ using Microsoft.UI.Xaml.Shapes;
 namespace DotVast.HashTool.WinUI.Behaviors;
 
 /// <summary>
-/// 使 ContentDialog 的 SmokeLayerBackground 覆盖标题栏
+/// 使 ContentDialog 的 SmokeLayerBackground 覆盖标题栏.
 /// </summary>
 internal class ContentDialogBehavior : BehaviorBase<FrameworkElement>
 {

@@ -1,5 +1,7 @@
 using Microsoft.Windows.ApplicationModel.Resources;
 
+using Windows.Globalization;
+
 namespace DotVast.HashTool.WinUI.Helpers;
 
 public static class ResourceExtensions
@@ -12,7 +14,7 @@ public static class ResourceExtensions
     {
         s_resourceManager = new();
         s_resourceContext = s_resourceManager.CreateResourceContext();
-        s_resourceContext.QualifierValues["Language"] = Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride;
+        s_resourceContext.QualifierValues["Language"] = ApplicationLanguages.PrimaryLanguageOverride;
         s_resourceMap = s_resourceManager.MainResourceMap.GetSubtree("Resources");
     }
 

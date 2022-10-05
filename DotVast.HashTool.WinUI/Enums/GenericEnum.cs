@@ -1,4 +1,4 @@
-namespace DotVast.HashTool.WinUI.Helpers;
+namespace DotVast.HashTool.WinUI.Enums;
 
 public class GenericEnum<T>
 {

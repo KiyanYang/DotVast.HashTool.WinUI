@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-using DotVast.HashTool.WinUI.Helpers;
+using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models.Hashes;
 
 using HashLib4CSharp.Checksum;

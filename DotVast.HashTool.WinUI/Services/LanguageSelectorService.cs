@@ -1,4 +1,5 @@
 using DotVast.HashTool.WinUI.Contracts.Services;
+using DotVast.HashTool.WinUI.Enums;
 
 using Windows.Globalization;
 

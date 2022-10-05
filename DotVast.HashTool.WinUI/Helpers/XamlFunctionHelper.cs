@@ -1,4 +1,4 @@
-using DotVast.HashTool.WinUI.Models;
+using DotVast.HashTool.WinUI.Enums;
 
 using Microsoft.UI.Xaml;
 

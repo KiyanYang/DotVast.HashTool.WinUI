@@ -1,6 +1,4 @@
-using DotVast.HashTool.WinUI.Helpers;
-
-using Windows.Globalization;
+using DotVast.HashTool.WinUI.Enums;
 
 namespace DotVast.HashTool.WinUI.Contracts.Services;
 
@@ -19,18 +17,4 @@ public interface ILanguageSelectorService
     Task InitializeAsync();
 
     Task SetAppLanguageAsync(AppLanguage language);
-}
-
-public sealed class AppLanguage : GenericEnum<Language>
-{
-    public static readonly AppLanguage ZhHans = new("zh-Hans");
-    public static readonly AppLanguage EnUS = new("en-US");
-
-    public string Tag => _value.LanguageTag;
-
-    public string DisplayName => _value.DisplayName;
-
-    public string NativeName => _value.NativeName;
-
-    private AppLanguage(string languageTag) : base(new(languageTag)) { }
 }

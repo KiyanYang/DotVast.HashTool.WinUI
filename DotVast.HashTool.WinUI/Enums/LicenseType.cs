@@ -1,8 +1,6 @@
-namespace DotVast.HashTool.WinUI.Models;
+namespace DotVast.HashTool.WinUI.Enums;
 
-public sealed record LicenseInfo(string Name, string License, string Url);
-
-public sealed class License
+public sealed class LicenseType
 {
     public static readonly string Unknown = "License";
     public static readonly string Apache_2_0 = "Apache License 2.0";

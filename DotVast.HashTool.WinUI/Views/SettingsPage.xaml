@@ -6,10 +6,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:behaviors="using:DotVast.HashTool.WinUI.Behaviors"
     xmlns:dvhc="using:DotVast.HashTool.WinUI.Controls"
-    xmlns:helpers="using:DotVast.HashTool.WinUI.Helpers"
     mc:Ignorable="d">
     <Page.Resources>
-        <helpers:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
         <Style BasedOn="{StaticResource CardSettingItem}" TargetType="dvhc:SettingItem">
             <Setter Property="Margin" Value="{StaticResource XXSmallTopBottomMargin}" />
         </Style>
