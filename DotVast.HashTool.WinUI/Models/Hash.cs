@@ -1,6 +1,8 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
+using CryptoBase.Digests.SM3;
+
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models.Hashes;
 
@@ -44,6 +46,9 @@ public sealed class Hash : GenericEnum<string>
     public static readonly Hash SHA3_256 = new("SHA3-256", CreateSHA3_256().ToHashAlgorithm());
     public static readonly Hash SHA3_384 = new("SHA3-384", CreateSHA3_384().ToHashAlgorithm());
     public static readonly Hash SHA3_512 = new("SHA3-512", CreateSHA3_512().ToHashAlgorithm());
+
+    // SM
+    public static readonly Hash SM3 = new("SM3", new SM3Digest().ToHashAlgorithm());
 
     // Blake2B
     public static readonly Hash Blake2B_160 = new("Blake2B-160", CreateBlake2B_160().ToHashAlgorithm());
@@ -90,6 +95,7 @@ public sealed class Hash : GenericEnum<string>
                 var name when name == SHA3_256.Name => SHA3_256,
                 var name when name == SHA3_384.Name => SHA3_384,
                 var name when name == SHA3_512.Name => SHA3_512,
+                var name when name == SM3.Name => SM3,
                 var name when name == Blake2B_160.Name => Blake2B_160,
                 var name when name == Blake2B_256.Name => Blake2B_256,
                 var name when name == Blake2B_384.Name => Blake2B_384,

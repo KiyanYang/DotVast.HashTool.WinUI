@@ -20,7 +20,7 @@ internal class HashOptionsService : IHashOptionsService
 
     public async Task InitializeAsync()
     {
-        var hashOptions = await LoadHashOptionsFromSettingsAsync() ?? new List<HashOption>()
+        var allHasheOptions = new HashOption[]
         {
             new(Hash.CRC32),
 
@@ -36,6 +36,8 @@ internal class HashOptionsService : IHashOptionsService
             new(Hash.SHA3_256),
             new(Hash.SHA3_384 ),
             new(Hash.SHA3_512),
+
+            new(Hash.SM3),
 
             new(Hash.Blake2B_160),
             new(Hash.Blake2B_256),
@@ -54,7 +56,16 @@ internal class HashOptionsService : IHashOptionsService
 
             new(Hash.QuickXor),
         };
-        hashOptions.ForEach(i => HashOptions.Add(i));
+
+        // 反序列化时, HashOption 的属性 Hash 可能为 null
+        var hashOptions = (await LoadHashOptionsFromSettingsAsync() ?? new())
+            .Where(i => i.Hash != null)
+            .UnionBy(allHasheOptions, hashOption => hashOption.Hash);
+
+        foreach (var hashOption in hashOptions)
+        {
+            HashOptions.Add(hashOption);
+        }
     }
 
     public async Task SetHashOptionsAsync(IList<HashOption> hashOptions)
