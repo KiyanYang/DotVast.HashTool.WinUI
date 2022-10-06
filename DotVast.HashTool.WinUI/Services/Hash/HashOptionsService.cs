@@ -47,6 +47,12 @@ internal class HashOptionsService : IHashOptionsService
             new(Hash.Blake2S_160),
             new(Hash.Blake2S_224),
             new(Hash.Blake2S_256),
+            new(Hash.Blake3),
+
+            new(Hash.RIPEMD128),
+            new(Hash.RIPEMD160),
+            new(Hash.RIPEMD256),
+            new(Hash.RIPEMD320),
 
             new(Hash.Keccak_224),
             new(Hash.Keccak_256),

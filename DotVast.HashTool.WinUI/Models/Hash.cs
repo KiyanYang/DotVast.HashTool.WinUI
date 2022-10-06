@@ -62,6 +62,15 @@ public sealed class Hash : GenericEnum<string>
     public static readonly Hash Blake2S_224 = new("Blake2S-224", CreateBlake2S_224().ToHashAlgorithm());
     public static readonly Hash Blake2S_256 = new("Blake2S-256", CreateBlake2S_256().ToHashAlgorithm());
 
+    // Blake3
+    public static readonly Hash Blake3 = new("Blake3", CreateBlake3_256().ToHashAlgorithm());
+
+    // RIPEMD
+    public static readonly Hash RIPEMD128 = new("RIPEMD128", CreateRIPEMD128().ToHashAlgorithm());
+    public static readonly Hash RIPEMD160 = new("RIPEMD160", CreateRIPEMD160().ToHashAlgorithm());
+    public static readonly Hash RIPEMD256 = new("RIPEMD256", CreateRIPEMD256().ToHashAlgorithm());
+    public static readonly Hash RIPEMD320 = new("RIPEMD320", CreateRIPEMD320().ToHashAlgorithm());
+
     // Keccak
     public static readonly Hash Keccak_224 = new("Keccak-224", CreateKeccak_224().ToHashAlgorithm());
     public static readonly Hash Keccak_256 = new("Keccak-256", CreateKeccak_256().ToHashAlgorithm());
@@ -104,6 +113,11 @@ public sealed class Hash : GenericEnum<string>
                 var name when name == Blake2S_160.Name => Blake2S_160,
                 var name when name == Blake2S_224.Name => Blake2S_224,
                 var name when name == Blake2S_256.Name => Blake2S_256,
+                var name when name == Blake3.Name => Blake3,
+                var name when name == RIPEMD128.Name => RIPEMD128,
+                var name when name == RIPEMD160.Name => RIPEMD160,
+                var name when name == RIPEMD256.Name => RIPEMD256,
+                var name when name == RIPEMD320.Name => RIPEMD320,
                 var name when name == Keccak_224.Name => Keccak_224,
                 var name when name == Keccak_256.Name => Keccak_256,
                 var name when name == Keccak_288.Name => Keccak_288,
