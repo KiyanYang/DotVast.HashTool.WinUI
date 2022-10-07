@@ -34,16 +34,7 @@ internal sealed partial class ComputeHashService : ObservableRecipient, ICompute
     {
         return await PreAndPostProcess(async () =>
         {
-            _taskProgress.Report((0, 1));
-            using Stream stream = File.Open(hashTask.Content, FileMode.Open, FileAccess.Read, FileShare.Read);
-            var hashResult = await Task.Run(() => HashStream(hashTask.SelectedHashs, stream, mres, ct));
-            if (hashResult != null)
-            {
-                hashResult.Type = HashResultType.File;
-                hashResult.Content = hashTask.Content;
-                hashTask.Result = hashResult;
-                _taskProgress.Report((1, 1));
-            }
+            await InternalHashFiles(hashTask, hashTask.Content.Split('|'), mres, ct);
         }, hashTask, ct);
     }
 
@@ -51,39 +42,43 @@ internal sealed partial class ComputeHashService : ObservableRecipient, ICompute
     {
         return await PreAndPostProcess(async () =>
         {
-            hashTask.Results = new();
-            var filePaths = Directory.GetFiles(hashTask.Content);
-            var filesCount = filePaths.Length;
-            _taskProgress.Report((0, filesCount));
-            foreach (var filePath in filePaths)
+            await InternalHashFiles(hashTask, Directory.GetFiles(hashTask.Content), mres, ct);
+        }, hashTask, ct);
+    }
+
+    private async Task InternalHashFiles(HashTask hashTask, IList<string> filePaths, ManualResetEventSlim mres, CancellationToken ct)
+    {
+        hashTask.Results = new();
+        var filesCount = filePaths.Count;
+        _taskProgress.Report((0, filesCount));
+        foreach (var filePath in filePaths)
+        {
+            // 出现异常情况的频率较低，因此不使用 File.Exists 等涉及 IO 的额外判断操作
+            try
             {
-                // 出现异常情况的频率极低，因此不使用 File.Exists 等涉及 IO 的额外判断操作
-                try
+                using var stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+                var hashResult = await Task.Run(() => HashStream(hashTask.SelectedHashs, stream, mres, ct));
+                if (hashResult != null)
                 {
-                    using var stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
-                    var hashResult = await Task.Run(() => HashStream(hashTask.SelectedHashs, stream, mres, ct));
-                    if (hashResult != null)
-                    {
-                        hashResult.Type = HashResultType.File;
-                        hashResult.Content = filePath;
-                        hashTask.Results.Add(hashResult);
-                    }
-                }
-                catch (FileNotFoundException)
-                {
-                    Messenger.Send(new FileNotFoundInHashFolderMessage(filePath));
-                    filesCount--;
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-                finally
-                {
-                    _taskProgress.Report((hashTask.Results.Count, filesCount));
+                    hashResult.Type = HashResultType.File;
+                    hashResult.Content = filePath;
+                    hashTask.Results.Add(hashResult);
                 }
             }
-        }, hashTask, ct);
+            catch (Exception e) when (e is DirectoryNotFoundException or FileNotFoundException)
+            {
+                Messenger.Send(new FileNotFoundInHashFilesMessage(filePath));
+                filesCount--;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                _taskProgress.Report((hashTask.Results.Count, filesCount));
+            }
+        }
     }
 
     public async Task<HashTask> HashText(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct)
@@ -91,14 +86,14 @@ internal sealed partial class ComputeHashService : ObservableRecipient, ICompute
         return await PreAndPostProcess(async () =>
         {
             _taskProgress.Report((0, 1));
-            var contentBytes = hashTask.Encoding?.GetBytes(hashTask.Content) ?? Array.Empty<byte>();
+            var contentBytes = hashTask.Encoding!.GetBytes(hashTask.Content);
             using Stream stream = new MemoryStream(contentBytes);
             var hashResult = await Task.Run(() => HashStream(hashTask.SelectedHashs, stream, mres, ct));
             if (hashResult != null)
             {
                 hashResult.Type = HashResultType.Text;
                 hashResult.Content = hashTask.Content;
-                hashTask.Result = hashResult;
+                hashTask.Results = new() { hashResult };
                 _taskProgress.Report((1, 1));
             }
         }, hashTask, ct);

@@ -214,36 +214,36 @@ public sealed partial class HomeViewModel : ObservableRecipient
     private async Task PickAsync()
     {
         try
-    {
+        {
             if (InputtingMode == HashTaskMode.File)
-        {
-            FileOpenPicker picker = new();
-            picker.FileTypeFilter.Add("*");
-
-            var hwnd = HwndExtensions.GetActiveWindow();
-            WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
-
-            var result = await picker.PickSingleFileAsync();
-            if (result != null)
             {
-                    InputtingContent = result.Path;
+                FileOpenPicker picker = new();
+                picker.FileTypeFilter.Add("*");
+
+                var hwnd = HwndExtensions.GetActiveWindow();
+                WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
+
+                var result = await picker.PickMultipleFilesAsync();
+                if (result != null)
+                {
+                    InputtingContent = string.Join('|', result.Select(r => r.Path));
+                }
             }
-        }
             else if (InputtingMode == HashTaskMode.Folder)
-        {
-            FolderPicker picker = new();
-            picker.FileTypeFilter.Add("*");
-
-            var hwnd = HwndExtensions.GetActiveWindow();
-            WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
-
-            var result = await picker.PickSingleFolderAsync();
-            if (result != null)
             {
+                FolderPicker picker = new();
+                picker.FileTypeFilter.Add("*");
+
+                var hwnd = HwndExtensions.GetActiveWindow();
+                WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
+
+                var result = await picker.PickSingleFolderAsync();
+                if (result != null)
+                {
                     InputtingContent = result.Path;
                 }
             }
-            }
+        }
         catch (Exception ex)
         {
             _logger.LogError("选取{Mode}时出现未预料的异常\n{Exception}", InputtingMode, ex);
@@ -306,7 +306,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
         var items = await view.GetStorageItemsAsync();
         if (items.Count > 0)
         {
-            InputtingContent = items[0].Path;
+            InputtingContent = string.Join('|', items.Select(i => i.Path));
         }
     }
 
@@ -321,7 +321,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
         {
             await dispatcherQueue.EnqueueAsync(() => SetButtonsStatus(m.Value));
         });
-        Messenger.Register<HomeViewModel, FileNotFoundInHashFolderMessage>(this, async (r, m) =>
+        Messenger.Register<HomeViewModel, FileNotFoundInHashFilesMessage>(this, async (r, m) =>
         {
             await dispatcherQueue.EnqueueAsync(() => ShowTipMessage(
                     Localization.Tip_FileSkipped_Title,
@@ -364,7 +364,8 @@ public sealed partial class HomeViewModel : ObservableRecipient
                     break;
 
                 case var m when m == HashTaskMode.File:
-                    if (File.Exists(hashTask.Content) == false)
+                    // 仅验证第一个文件是否存在, 以便尽快进入实际计算
+                    if (File.Exists(hashTask.Content.Split('|')[0]) == false)
                     {
                         hashTask.State = HashTaskState.Aborted;
                         await _dialogService.ShowInfoDialogAsync(
@@ -390,14 +391,6 @@ public sealed partial class HomeViewModel : ObservableRecipient
                     break;
             }
         }
-        catch (FileNotFoundException ex)
-        {
-            _logger.LogWarning("计算哈希时出现“文件未找到”异常, 模式: {Mode}, 内容: {Content}\n{Exception}", hashTask.Mode, hashTask.Content, ex);
-        }
-        catch (DirectoryNotFoundException ex)
-        {
-            _logger.LogWarning("计算哈希时出现“文件夹未找到”异常, 模式: {Mode}, 内容: {Content}\n{Exception}", hashTask.Mode, hashTask.Content, ex);
-        }
         catch (UnauthorizedAccessException ex)
         {
             await _dialogService.ShowInfoDialogAsync(
@@ -420,7 +413,9 @@ public sealed partial class HomeViewModel : ObservableRecipient
             Id = _hashTaskId,
             DateTime = DateTime.Now,
             Mode = InputtingMode,
-            Content = InputtingMode == HashTaskMode.Text ? InputtingContent : InputtingContent.Trim().Trim('"'),
+            Content = InputtingMode == HashTaskMode.Text
+                ? InputtingContent
+                : string.Join('|', InputtingContent.Split('|').Select(i => i.Trim().Trim('"'))),
             Encoding = InputtingTextEncoding.Encoding,
             SelectedHashs = HashOptions.Where(i => i.IsChecked).Select(i => i.Hash).ToList(),
             State = HashTaskState.Waiting,
