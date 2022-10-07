@@ -227,6 +227,9 @@
   <data name="Results_Detail_State.Text" xml:space="preserve">
     <value>状态</value>
   </data>
+  <data name="Results_FilterByContent.PlaceholderText" xml:space="preserve">
+    <value>筛选</value>
+  </data>
   <data name="Results_Subtitle_TaskDetail.Text" xml:space="preserve">
     <value>任务详情</value>
   </data>

@@ -149,15 +149,34 @@
                         Text="{x:Bind ViewModel.HashTask.State}" />
                 </Grid>
 
-                <TextBlock
-                    x:Name="HashResultsTitle"
+                <Grid
                     Margin="0,16,0,0"
-                    FontWeight="Bold">
-                    <Run x:Uid="Results_Subtitle_TaskResults" FontSize="{StaticResource SubtitleTextBlockFontSize}" />
-                    <Run FontSize="{StaticResource CaptionTextBlockFontSize}" Text="{x:Bind ViewModel.HashTask.Results.Count}" />
-                </TextBlock>
+                    ColumnSpacing="32"
+                    Visibility="{x:Bind ViewModel.HashResultsVisibility, Mode=OneWay}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                <ItemsRepeater ItemTemplate="{StaticResource HashResultDataTemplate}" ItemsSource="{x:Bind ViewModel.HashTask.Results}">
+                    <TextBlock Grid.Column="0" FontWeight="Bold">
+                        <Run x:Uid="Results_Subtitle_TaskResults" FontSize="{StaticResource SubtitleTextBlockFontSize}" />
+                        <Run FontSize="{StaticResource CaptionTextBlockFontSize}" Text="{x:Bind ViewModel.HashTask.Results.Count}" />
+                    </TextBlock>
+
+                    <TextBox
+                        x:Uid="Results_FilterByContent"
+                        Grid.Column="1"
+                        MinWidth="200"
+                        HorizontalAlignment="Right"
+                        IsEnabled="{x:Bind ViewModel.HashResultsFilterByContentIsEnabled, Mode=OneWay}"
+                        IsSpellCheckEnabled="False"
+                        Text="{x:Bind ViewModel.HashResultsFilterByContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </Grid>
+
+                <ItemsRepeater
+                    ItemTemplate="{StaticResource HashResultDataTemplate}"
+                    ItemsSource="{x:Bind ViewModel.HashResultsFiltered, Mode=OneWay}"
+                    Visibility="{x:Bind ViewModel.HashResultsVisibility, Mode=OneWay}">
                     <ItemsRepeater.Layout>
                         <StackLayout Orientation="Vertical" Spacing="{StaticResource MediumSpacing}" />
                     </ItemsRepeater.Layout>
