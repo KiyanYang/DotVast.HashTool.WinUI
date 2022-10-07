@@ -49,7 +49,8 @@
                     Grid.Column="1"
                     IsTextSelectionEnabled="True"
                     Text="{x:Bind Content}"
-                    TextTrimming="CharacterEllipsis" />
+                    TextTrimming="CharacterEllipsis"
+                    ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}" />
                 <TextBlock
                     Grid.RowSpan="2"
                     Grid.Column="2"
@@ -69,7 +70,8 @@
                     FontSize="12"
                     Foreground="{StaticResource TextFillColorSecondaryBrush}"
                     Text="{x:Bind views:TasksPage.GetSecondaryInformationText((models:HashTask))}"
-                    TextTrimming="CharacterEllipsis" />
+                    TextTrimming="CharacterEllipsis"
+                    ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}" />
             </Grid>
         </DataTemplate>
     </Page.Resources>

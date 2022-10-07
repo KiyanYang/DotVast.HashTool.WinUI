@@ -97,7 +97,9 @@
                     <TextBlock
                         Grid.Row="0"
                         Grid.Column="1"
-                        Text="{x:Bind ViewModel.HashTask.Content}" />
+                        Text="{x:Bind ViewModel.HashTask.Content}"
+                        TextTrimming="CharacterEllipsis"
+                        ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}" />
 
                     <TextBlock
                         x:Uid="Results_Detail_Id"
