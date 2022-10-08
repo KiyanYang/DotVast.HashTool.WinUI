@@ -4,37 +4,39 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dvhc="using:DotVast.HashTool.WinUI.Controls"
     xmlns:models="using:DotVast.HashTool.WinUI.Models"
     mc:Ignorable="d">
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewPageContentStyle}">
-            <ItemsRepeater ItemsSource="{x:Bind ViewModel.Licenses}">
+    <Page.Resources>
+        <DataTemplate x:Key="LicenseDataTemplate" x:DataType="models:LicenseInfo">
+            <Grid Style="{StaticResource CardGridStyle}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" MinWidth="120" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind Name}"
+                    TextTrimming="CharacterEllipsis" />
+                <HyperlinkButton
+                    Grid.Column="1"
+                    HorizontalAlignment="Right"
+                    Content="{x:Bind License}"
+                    NavigateUri="{x:Bind Url}" />
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <dvhc:NavigationViewBodyScrollViewer>
+        <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewBodyContentStyle}">
+            <ItemsRepeater ItemTemplate="{StaticResource LicenseDataTemplate}" ItemsSource="{x:Bind ViewModel.Licenses}">
                 <ItemsRepeater.Layout>
                     <StackLayout Orientation="Vertical" Spacing="8" />
                 </ItemsRepeater.Layout>
-                <ItemsRepeater.ItemTemplate>
-                    <DataTemplate x:DataType="models:LicenseInfo">
-                        <Grid Style="{StaticResource CardGridStyle}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" MinWidth="120" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock
-                                Grid.Column="0"
-                                VerticalAlignment="Center"
-                                Text="{x:Bind Name}"
-                                TextTrimming="CharacterEllipsis" />
-                            <HyperlinkButton
-                                Grid.Column="1"
-                                HorizontalAlignment="Right"
-                                Content="{x:Bind License}"
-                                NavigateUri="{x:Bind Url}" />
-                        </Grid>
-                    </DataTemplate>
-                </ItemsRepeater.ItemTemplate>
             </ItemsRepeater>
         </Grid>
-    </ScrollViewer>
+    </dvhc:NavigationViewBodyScrollViewer>
 
 </Page>

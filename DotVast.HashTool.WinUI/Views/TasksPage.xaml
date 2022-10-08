@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dvhc="using:DotVast.HashTool.WinUI.Controls"
     xmlns:models="using:DotVast.HashTool.WinUI.Models"
     xmlns:views="using:DotVast.HashTool.WinUI.Views"
     mc:Ignorable="d">
@@ -76,13 +77,13 @@
         </DataTemplate>
     </Page.Resources>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewPageContentStyle}">
+    <dvhc:NavigationViewBodyScrollViewer>
+        <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewBodyContentStyle}">
             <ItemsRepeater
                 ItemTemplate="{StaticResource TaskItemDataTemplate}"
                 ItemsSource="{x:Bind ViewModel.HashTasks}"
                 Layout="{StaticResource TaskItemLayout}" />
         </Grid>
-    </ScrollViewer>
+    </dvhc:NavigationViewBodyScrollViewer>
 
 </Page>

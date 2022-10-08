@@ -15,6 +15,10 @@
                 <ResourceDictionary Source="/Styles/TextBlock.xaml" />
                 <ResourceDictionary Source="/Styles/ToggleSwitch.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <!-- https://learn.microsoft.com/en-us/windows/apps/design/layout/screen-sizes-and-breakpoints-for-responsive-design -->
+            <x:Double x:Key="SmallScreenBreakpoint">640</x:Double>
+            <x:Double x:Key="LargeScreenBreakpoint">1008</x:Double>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

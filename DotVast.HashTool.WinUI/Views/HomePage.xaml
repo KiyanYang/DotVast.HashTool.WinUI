@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dvhc="using:DotVast.HashTool.WinUI.Controls"
     xmlns:helpers="using:DotVast.HashTool.WinUI.Helpers"
     xmlns:models="using:DotVast.HashTool.WinUI.Models"
     AllowDrop="True"
@@ -16,8 +17,8 @@
         <XamlUICommand x:Key="SetHashOptionCommand" Command="{x:Bind ViewModel.SetHashOptionCommand}" />
     </Page.Resources>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewPageContentStyle}">
+    <dvhc:NavigationViewBodyScrollViewer>
+        <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewBodyContentStyle}">
             <StackPanel Orientation="Vertical" Spacing="8">
 
                 <!-- 任务模式选择, 输入, 浏览按钮, 文本编码选择 -->
@@ -142,6 +143,6 @@
 
             </StackPanel>
         </Grid>
-    </ScrollViewer>
+    </dvhc:NavigationViewBodyScrollViewer>
 
 </Page>

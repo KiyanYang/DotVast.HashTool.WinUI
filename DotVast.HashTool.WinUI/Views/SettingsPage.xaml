@@ -7,6 +7,7 @@
     xmlns:behaviors="using:DotVast.HashTool.WinUI.Behaviors"
     xmlns:dvhc="using:DotVast.HashTool.WinUI.Controls"
     mc:Ignorable="d">
+
     <Page.Resources>
         <Style BasedOn="{StaticResource CardSettingItem}" TargetType="dvhc:SettingItem">
             <Setter Property="Margin" Value="{StaticResource XXSmallTopBottomMargin}" />
@@ -19,24 +20,26 @@
 
     <behaviors:NavigationViewHeaderBehavior.HeaderTemplate>
         <DataTemplate>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="{Binding}" />
-                <Button
-                    x:Name="RestartAppButton"
-                    x:Uid="RestartApp"
-                    Grid.Column="1"
-                    Click="RestartAppButton_Click"
-                    Visibility="Visible" />
-            </Grid>
+            <dvhc:NavigationViewHeader>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="{Binding}" />
+                    <Button
+                        x:Name="RestartAppButton"
+                        x:Uid="RestartApp"
+                        Grid.Column="1"
+                        Click="RestartAppButton_Click"
+                        Visibility="Visible" />
+                </Grid>
+            </dvhc:NavigationViewHeader>
         </DataTemplate>
     </behaviors:NavigationViewHeaderBehavior.HeaderTemplate>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewPageContentStyle}">
+    <dvhc:NavigationViewBodyScrollViewer>
+        <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewBodyContentStyle}">
             <StackPanel>
                 <!-- 跳转设置: 哈希选项 -->
                 <Button
@@ -118,5 +121,6 @@
                 </StackPanel>
             </StackPanel>
         </Grid>
-    </ScrollViewer>
+    </dvhc:NavigationViewBodyScrollViewer>
+
 </Page>

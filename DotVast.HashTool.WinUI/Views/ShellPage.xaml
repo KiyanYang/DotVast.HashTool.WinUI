@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:behaviors="using:DotVast.HashTool.WinUI.Behaviors"
+    xmlns:dvhc="using:DotVast.HashTool.WinUI.Controls"
     xmlns:helpers="using:DotVast.HashTool.WinUI.Helpers"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     Loaded="OnLoaded">
@@ -56,18 +57,18 @@
             </NavigationView.MenuItems>
             <NavigationView.HeaderTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <dvhc:NavigationViewHeader>
                         <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="{Binding}" />
-                    </Grid>
+                    </dvhc:NavigationViewHeader>
                 </DataTemplate>
             </NavigationView.HeaderTemplate>
             <i:Interaction.Behaviors>
                 <behaviors:NavigationViewHeaderBehavior DefaultHeader="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=OneWay}">
                     <behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <dvhc:NavigationViewHeader>
                                 <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="{Binding}" />
-                            </Grid>
+                            </dvhc:NavigationViewHeader>
                         </DataTemplate>
                     </behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>
                 </behaviors:NavigationViewHeaderBehavior>
