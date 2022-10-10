@@ -49,10 +49,10 @@ csharp_space_between_method_declaration_empty_parameter_list_parentheses = false
 #place a space character after the opening parenthesis and before the closing parenthesis of a method declaration parameter list.
 csharp_space_between_method_declaration_parameter_list_parentheses = false
 
-#Formatting - wrapping options
+# Wrap options https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/style-rules/csharp-formatting-options#wrap-options
 
-#leave code block on separate lines
-csharp_preserve_single_line_blocks = false
+csharp_preserve_single_line_statements = false
+csharp_preserve_single_line_blocks = true
 
 #Style - Code block preferences
 

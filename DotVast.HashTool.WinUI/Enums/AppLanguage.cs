@@ -1,17 +1,24 @@
+using DotVast.HashTool.WinUI.Core.Enums;
+
 using Windows.Globalization;
 
 namespace DotVast.HashTool.WinUI.Enums;
 
-public sealed class AppLanguage : GenericEnum<Language>
+public sealed class AppLanguage : GenericEnum<string>
 {
     public static readonly AppLanguage ZhHans = new("zh-Hans");
     public static readonly AppLanguage EnUS = new("en-US");
 
-    public string Tag => _value.LanguageTag;
+    private readonly Language _language;
 
-    public string DisplayName => _value.DisplayName;
+    public string Tag => _language.LanguageTag;
 
-    public string NativeName => _value.NativeName;
+    public string DisplayName => _language.DisplayName;
 
-    private AppLanguage(string languageTag) : base(new(languageTag)) { }
+    public string NativeName => _language.NativeName;
+
+    private AppLanguage(string languageTag) : base(languageTag)
+    {
+        _language = new(languageTag);
+    }
 }
