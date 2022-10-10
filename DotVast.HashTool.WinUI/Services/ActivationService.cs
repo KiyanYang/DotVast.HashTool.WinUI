@@ -1,5 +1,6 @@
 using DotVast.HashTool.WinUI.Activation;
 using DotVast.HashTool.WinUI.Contracts.Services;
+using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Views;
 
 using Microsoft.UI.Xaml;
@@ -11,26 +12,20 @@ public sealed class ActivationService : IActivationService
 {
     private readonly ActivationHandler<LaunchActivatedEventArgs> _defaultHandler;
     private readonly IEnumerable<IActivationHandler> _activationHandlers;
-    private readonly IAlwaysOnTopService _alwaysOnTopService;
+    private readonly IAppearanceSettingsService _appearanceSettingsService;
     private readonly IHashOptionsService _hashOptionsService;
-    private readonly ILanguageSelectorService _languageSelectorService;
-    private readonly IThemeSelectorService _themeSelectorService;
     private UIElement? _shell = null;
 
     public ActivationService(
         ActivationHandler<LaunchActivatedEventArgs> defaultHandler,
         IEnumerable<IActivationHandler> activationHandlers,
-        IAlwaysOnTopService alwaysOnTopService,
-        IHashOptionsService hashOptionsService,
-        ILanguageSelectorService languageSelectorService,
-        IThemeSelectorService themeSelectorService)
+        IAppearanceSettingsService appearanceSettingsService,
+        IHashOptionsService hashOptionsService)
     {
         _defaultHandler = defaultHandler;
         _activationHandlers = activationHandlers;
-        _alwaysOnTopService = alwaysOnTopService;
+        _appearanceSettingsService = appearanceSettingsService;
         _hashOptionsService = hashOptionsService;
-        _languageSelectorService = languageSelectorService;
-        _themeSelectorService = themeSelectorService;
     }
 
     public async Task ActivateAsync(object activationArgs)
@@ -72,16 +67,12 @@ public sealed class ActivationService : IActivationService
 
     private async Task InitializeAsync()
     {
-        await _themeSelectorService.InitializeAsync().ConfigureAwait(false);
-        await _languageSelectorService.InitializeAsync().ConfigureAwait(false);
         await _hashOptionsService.InitializeAsync().ConfigureAwait(false);
-        await _alwaysOnTopService.InitializeAsync().ConfigureAwait(false);
+        await _appearanceSettingsService.InitializeAsync().ConfigureAwait(false);
     }
 
     private async Task StartupAsync()
     {
-        await _themeSelectorService.SetRequestedThemeAsync();
-        await _alwaysOnTopService.SetRequestedIsAlwaysOnTopAsync();
-        await Task.CompletedTask;
+        await _appearanceSettingsService.StartupAsync();
     }
 }

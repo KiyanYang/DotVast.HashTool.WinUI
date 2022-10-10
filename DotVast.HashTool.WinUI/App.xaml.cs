@@ -1,10 +1,12 @@
 using DotVast.HashTool.WinUI.Activation;
 using DotVast.HashTool.WinUI.Contracts.Services;
+using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Core.Contracts.Services;
 using DotVast.HashTool.WinUI.Core.Services;
 using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Services;
+using DotVast.HashTool.WinUI.Services.Settings;
 using DotVast.HashTool.WinUI.ViewModels;
 using DotVast.HashTool.WinUI.Views;
 
@@ -66,15 +68,13 @@ public sealed partial class App : Application
 
             // Services
             services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
-            services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
-            services.AddSingleton<ILanguageSelectorService, LanguageSelectorService>();
             services.AddTransient<INavigationViewService, NavigationViewService>();
 
             services.AddSingleton<IActivationService, ActivationService>();
             services.AddSingleton<IPageService, PageService>();
             services.AddSingleton<INavigationService, NavigationService>();
 
-            services.AddSingleton<IAlwaysOnTopService, AlwaysOnTopService>();
+            services.AddSingleton<IAppearanceSettingsService, AppearanceSettingsService>();
             services.AddSingleton<IComputeHashService, ComputeHashService>();
             services.AddSingleton<IDialogService, DialogService>();
             services.AddSingleton<IHashOptionsService, HashOptionsService>();

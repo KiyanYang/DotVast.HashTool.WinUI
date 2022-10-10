@@ -1,6 +1,7 @@
 using System.Reflection;
 
 using DotVast.HashTool.WinUI.Contracts.Services;
+using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.Models;
@@ -14,80 +15,64 @@ namespace DotVast.HashTool.WinUI.ViewModels;
 public sealed partial class SettingsViewModel : ObservableRecipient
 {
     private readonly INavigationService _navigationService;
+    private readonly IAppearanceSettingsService _appearanceSettingsService;
 
     [ObservableProperty]
     private string _versionDescription;
 
     #region AlwaysOnTop
 
-    private readonly IAlwaysOnTopService _alwaysOnTopService;
-
     [ObservableProperty]
     private bool _isAlwaysOnTop;
 
     partial void OnIsAlwaysOnTopChanged(bool value) =>
-        _alwaysOnTopService.SetIsAlwaysOnTopAsync(value);
+        _appearanceSettingsService.IsAlwaysOnTop = value;
 
     #endregion AlwaysOnTop
 
-    #region Language selector
+    #region Language
 
-    private readonly ILanguageSelectorService _languageSelectorService;
-
-    public AppLanguage[] AppLanguages
-    {
-        get;
-    }
+    public AppLanguage[] AppLanguages => _appearanceSettingsService.Languages;
 
     [ObservableProperty]
     private AppLanguage _appLanguage;
 
-    async partial void OnAppLanguageChanged(AppLanguage value) =>
-        await _languageSelectorService.SetAppLanguageAsync(value);
+    partial void OnAppLanguageChanged(AppLanguage value) =>
+       _appearanceSettingsService.Language = value;
 
-    #endregion Language selector
+    #endregion Language
 
-    #region Theme selector
-
-    private readonly IThemeSelectorService _themeSelectorService;
+    #region Theme
 
     public record AppTheme(string Name, ElementTheme Theme);
 
-    public IList<AppTheme> Themes
-    {
-        get;
-    } = new AppTheme[]
-    {
-        new(Localization.Settings_Theme_Default, ElementTheme.Default),
-        new(Localization.Settings_Theme_Light, ElementTheme.Light),
-        new(Localization.Settings_Theme_Dark, ElementTheme.Dark),
-    };
+    public IList<AppTheme> Themes { get; } = new AppTheme[]
+        {
+            new(Localization.Settings_Theme_Default, ElementTheme.Default),
+            new(Localization.Settings_Theme_Light, ElementTheme.Light),
+            new(Localization.Settings_Theme_Dark, ElementTheme.Dark),
+        };
 
     [ObservableProperty]
     private AppTheme _theme;
 
-    async partial void OnThemeChanged(AppTheme value) =>
-        await _themeSelectorService.SetThemeAsync(value.Theme);
+    partial void OnThemeChanged(AppTheme value) =>
+        _appearanceSettingsService.Theme = value.Theme;
 
-    #endregion Theme selector
+    #endregion Theme
 
     public SettingsViewModel(
-        IAlwaysOnTopService alwaysOnTopService,
-        ILanguageSelectorService languageSelectorService,
         INavigationService navigationService,
-        IThemeSelectorService themeSelectorService)
+        IAppearanceSettingsService appearanceSettingsService)
     {
-        _alwaysOnTopService = alwaysOnTopService;
-        _languageSelectorService = languageSelectorService;
         _navigationService = navigationService;
-        _themeSelectorService = themeSelectorService;
+        _appearanceSettingsService = appearanceSettingsService;
 
-        _isAlwaysOnTop = _alwaysOnTopService.IsAlwaysOnTop;
+        _isAlwaysOnTop = _appearanceSettingsService.IsAlwaysOnTop;
 
-        _appLanguage = _languageSelectorService.Language;
-        AppLanguages = _languageSelectorService.Languages;
+        _appLanguage = _appearanceSettingsService.Language;
 
-        _theme = Themes.First(x => x.Theme == _themeSelectorService.Theme);
+        _theme = Themes.First(x => x.Theme == _appearanceSettingsService.Theme);
 
         _versionDescription = GetVersionDescription();
     }
