@@ -28,7 +28,7 @@ public interface IComputeHashService
     /// </summary>
     ComputeHashStatus Status { get; }
 
-    Task<HashTask> HashFile(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct);
-    Task<HashTask> HashFolder(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct);
-    Task<HashTask> HashText(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct);
+    Task<HashTask> HashFileAsync(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct);
+    Task<HashTask> HashFolderAsync(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct);
+    Task<HashTask> HashTextAsync(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct);
 }

@@ -44,23 +44,23 @@ internal sealed partial class ComputeHashService : IComputeHashService
         }
     }
 
-    public async Task<HashTask> HashFile(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct)
+    public async Task<HashTask> HashFileAsync(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct)
     {
-        return await PreAndPostProcess(async () =>
+        return await PreAndPostProcessAsync(async () =>
         {
-            await InternalHashFiles(hashTask, hashTask.Content.Split('|'), mres, ct);
+            await InternalHashFilesAsync(hashTask, hashTask.Content.Split('|'), mres, ct);
         }, hashTask, ct);
     }
 
-    public async Task<HashTask> HashFolder(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct)
+    public async Task<HashTask> HashFolderAsync(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct)
     {
-        return await PreAndPostProcess(async () =>
+        return await PreAndPostProcessAsync(async () =>
         {
-            await InternalHashFiles(hashTask, Directory.GetFiles(hashTask.Content), mres, ct);
+            await InternalHashFilesAsync(hashTask, Directory.GetFiles(hashTask.Content), mres, ct);
         }, hashTask, ct);
     }
 
-    private async Task InternalHashFiles(HashTask hashTask, IList<string> filePaths, ManualResetEventSlim mres, CancellationToken ct)
+    private async Task InternalHashFilesAsync(HashTask hashTask, IList<string> filePaths, ManualResetEventSlim mres, CancellationToken ct)
     {
         hashTask.Results = new();
         var filesCount = filePaths.Count;
@@ -95,9 +95,9 @@ internal sealed partial class ComputeHashService : IComputeHashService
         }
     }
 
-    public async Task<HashTask> HashText(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct)
+    public async Task<HashTask> HashTextAsync(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct)
     {
-        return await PreAndPostProcess(async () =>
+        return await PreAndPostProcessAsync(async () =>
         {
             _taskProgress.Report((0, 1));
             var contentBytes = hashTask.Encoding!.GetBytes(hashTask.Content);
@@ -113,7 +113,7 @@ internal sealed partial class ComputeHashService : IComputeHashService
         }, hashTask, ct);
     }
 
-    private async Task<HashTask> PreAndPostProcess(Func<Task> func, HashTask hashTask, CancellationToken ct)
+    private async Task<HashTask> PreAndPostProcessAsync(Func<Task> func, HashTask hashTask, CancellationToken ct)
     {
         Status = ComputeHashStatus.Busy;
         var stopWatch = Stopwatch.StartNew();

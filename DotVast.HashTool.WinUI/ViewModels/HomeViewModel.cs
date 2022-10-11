@@ -362,7 +362,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
             switch (hashTask.Mode)
             {
                 case var m when m == HashTaskMode.Text:
-                    await _computeHashService.HashText(hashTask, _mres, _cts.Token);
+                    await _computeHashService.HashTextAsync(hashTask, _mres, _cts.Token);
                     break;
 
                 case var m when m == HashTaskMode.File:
@@ -376,7 +376,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
                             Localization.Dialog_HashTaskAborted_OK);
                         return;
                     }
-                    await _computeHashService.HashFile(hashTask, _mres, _cts.Token);
+                    await _computeHashService.HashFileAsync(hashTask, _mres, _cts.Token);
                     break;
 
                 case var m when m == HashTaskMode.Folder:
@@ -389,7 +389,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
                             Localization.Dialog_HashTaskAborted_OK);
                         return;
                     }
-                    await _computeHashService.HashFolder(hashTask, _mres, _cts.Token);
+                    await _computeHashService.HashFolderAsync(hashTask, _mres, _cts.Token);
                     break;
             }
         }

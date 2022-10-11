@@ -7,10 +7,7 @@ public sealed class HashResult
     /// <summary>
     /// 哈希结果的计算类型.
     /// </summary>
-    public HashResultType? Type
-    {
-        get; set;
-    }
+    public HashResultType? Type { get; set; }
 
     /// <summary>
     /// 哈希结果的计算内容.
@@ -20,10 +17,7 @@ public sealed class HashResult
     /// <summary>
     /// 哈希结果.
     /// </summary>
-    public IList<HashResultItem>? Data
-    {
-        get; set;
-    }
+    public IList<HashResultItem>? Data { get; set; }
 }
 
 public sealed class HashResultItem

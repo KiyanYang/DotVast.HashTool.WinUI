@@ -118,7 +118,9 @@
                 <StackPanel>
                     <StackPanel.Resources>
                         <Style BasedOn="{StaticResource DefaultHyperlinkButtonStyle}" TargetType="HyperlinkButton">
-                            <Setter Property="Margin" Value="{StaticResource SettingsPageHyperlinkButtonMargin}" />
+                            <Setter Property="Margin" Value="0,8,0,0" />
+                            <Setter Property="Padding" Value="0,2" />
+                            <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
                         </Style>
                     </StackPanel.Resources>
 
