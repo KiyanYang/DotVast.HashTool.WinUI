@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 using DotVast.HashTool.WinUI.Activation;
 using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
@@ -51,9 +53,12 @@ public sealed partial class App : Application
     public static WindowEx MainWindow { get; } = new MainWindow();
 
     private readonly ILogger<App> _logger;
+    private Stopwatch? _stopwatch;
 
     public App()
     {
+        _stopwatch = Stopwatch.StartNew();
+
         InitializeComponent();
 
         Host = Microsoft.Extensions.Hosting.Host.
@@ -114,7 +119,6 @@ public sealed partial class App : Application
         UnhandledException += App_UnhandledException;
 
         _logger = GetLogger<App>();
-        _logger.LogInformation("软件启动");
     }
 
     private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
@@ -127,7 +131,7 @@ public sealed partial class App : Application
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
 #if DEBUG
-        if (System.Diagnostics.Debugger.IsAttached)
+        if (Debugger.IsAttached)
         {
             //DebugSettings.IsTextPerformanceVisualizationEnabled = true;
         }
@@ -141,5 +145,9 @@ public sealed partial class App : Application
         await App.GetService<IActivationService>().ActivateAsync(args);
 
         TitleBarContextMenuHelper.SetTitleBarContextMenuAllowDark();
+
+        _stopwatch!.Stop();
+        _logger.LogInformation("软件已启动, 用时: {LaunchedElapsed} ms.", _stopwatch!.ElapsedMilliseconds);
+        _stopwatch = null;
     }
 }
