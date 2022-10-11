@@ -9,7 +9,7 @@ using DotVast.HashTool.WinUI.Models.Messages;
 
 namespace DotVast.HashTool.WinUI.Services;
 
-internal sealed partial class ComputeHashService : ObservableRecipient, IComputeHashService
+internal sealed partial class ComputeHashService : IComputeHashService
 {
     private readonly IProgress<double> _atomProgress = new Progress<double>();
 
@@ -27,8 +27,22 @@ internal sealed partial class ComputeHashService : ObservableRecipient, ICompute
         remove => (_taskProgress as Progress<(int, int)>)!.ProgressChanged -= value;
     }
 
-    [ObservableProperty]
+    public event EventHandler<ComputeHashStatus>? StatusChanged;
+
     private ComputeHashStatus _status = ComputeHashStatus.Free;
+
+    public ComputeHashStatus Status
+    {
+        get => _status;
+        set
+        {
+            if (_status != value)
+            {
+                _status = value;
+                OnStatusChanged(value);
+            }
+        }
+    }
 
     public async Task<HashTask> HashFile(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct)
     {
@@ -67,7 +81,7 @@ internal sealed partial class ComputeHashService : ObservableRecipient, ICompute
             }
             catch (Exception e) when (e is DirectoryNotFoundException or FileNotFoundException)
             {
-                Messenger.Send(new FileNotFoundInHashFilesMessage(filePath));
+                WeakReferenceMessenger.Default.Send(new FileNotFoundInHashFilesMessage(filePath));
                 filesCount--;
             }
             catch (Exception)
@@ -234,6 +248,9 @@ internal sealed partial class ComputeHashService : ObservableRecipient, ICompute
         return new HashResultItem(hash, val);
     }
 
-    partial void OnStatusChanged(ComputeHashStatus value) =>
-        Messenger.Send(new ComputeHashStatueChangedMessage(value));
+    private void OnStatusChanged(ComputeHashStatus value)
+    {
+        var statusChanged = StatusChanged;
+        statusChanged?.Invoke(this, value);
+    }
 }

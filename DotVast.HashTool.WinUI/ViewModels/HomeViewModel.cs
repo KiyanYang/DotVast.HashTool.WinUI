@@ -44,6 +44,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
 
         _computeHashService.AtomProgressChanged += (sender, e) => AtomProgressBar.Val = e;
         _computeHashService.TaskProgressChanged += (sender, e) => (TaskProgressBar.Val, TaskProgressBar.Max) = e;
+        _computeHashService.StatusChanged += (sender, e) => SetButtonsStatus(e);
 
         // 响应哈希选项排序
         _hashOptionsService.HashOptions.CollectionChanged += (sender, e) =>
@@ -317,10 +318,6 @@ public sealed partial class HomeViewModel : ObservableRecipient
     protected override void OnActivated()
     {
         var dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-        Messenger.Register<HomeViewModel, ComputeHashStatueChangedMessage>(this, async (r, m) =>
-        {
-            await dispatcherQueue.EnqueueAsync(() => SetButtonsStatus(m.Value));
-        });
         Messenger.Register<HomeViewModel, FileNotFoundInHashFilesMessage>(this, async (r, m) =>
         {
             await dispatcherQueue.EnqueueAsync(() => ShowTipMessage(
