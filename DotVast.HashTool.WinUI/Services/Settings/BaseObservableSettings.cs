@@ -6,7 +6,7 @@ using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 
 namespace DotVast.HashTool.WinUI.Services.Settings;
 
-internal abstract class BaseObservableSettings : ObservableRecipient, IBaseObservableSettings
+internal abstract partial class BaseObservableSettings : ObservableObject, IBaseObservableSettings
 {
     public abstract Task InitializeAsync();
     public abstract Task StartupAsync();
@@ -19,7 +19,7 @@ internal abstract class BaseObservableSettings : ObservableRecipient, IBaseObser
     protected async Task<T> LoadAsync<T>(string key, T defaultValue) =>
         await _localSettingsService.ReadSettingAsync<T>(key) ?? defaultValue;
 
-    protected async Task SaveAsync<T>(T value, [CallerMemberName] string key = "") =>
+    protected async Task SaveAsync<T>(T value, string key) =>
         await _localSettingsService.SaveSettingAsync(key, value);
 
     protected void Save<T>(T value, [CallerMemberName] string key = "") =>

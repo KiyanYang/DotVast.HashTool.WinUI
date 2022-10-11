@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using CommunityToolkit.WinUI;
 
 using DotVast.HashTool.WinUI.Contracts.Services;
+using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Models.Controls;
@@ -22,24 +23,25 @@ namespace DotVast.HashTool.WinUI.ViewModels;
 public sealed partial class HomeViewModel : ObservableRecipient
 {
     private readonly ILogger<HomeViewModel> _logger;
+    private readonly IPreferencesSettingsService _preferencesSettingsService;
     private readonly IComputeHashService _computeHashService;
     private readonly IDialogService _dialogService;
-    private readonly IHashOptionsService _hashOptionsService;
     private readonly IHashTaskService _hashTaskService;
     private readonly ManualResetEventSlim _mres = new(true);
     private CancellationTokenSource? _cts;
 
     public HomeViewModel(
         ILogger<HomeViewModel> logger,
+        IPreferencesSettingsService preferencesSettingsService,
         IComputeHashService computeHashService,
         IDialogService dialogService,
-        IHashOptionsService hashOptionsService,
+        IHashTaskService hashTaskService,
         IHashTaskService hashTaskService)
     {
         _logger = logger;
+        _preferencesSettingsService = preferencesSettingsService;
         _computeHashService = computeHashService;
         _dialogService = dialogService;
-        _hashOptionsService = hashOptionsService;
         _hashTaskService = hashTaskService;
 
         _computeHashService.AtomProgressChanged += (sender, e) => AtomProgressBar.Val = e;
@@ -47,7 +49,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
         _computeHashService.StatusChanged += (sender, e) => SetButtonsStatus(e);
 
         // 响应哈希选项排序
-        _hashOptionsService.HashOptions.CollectionChanged += (sender, e) =>
+        _preferencesSettingsService.HashOptions.CollectionChanged += (sender, e) =>
         {
             if (sender is ObservableCollection<HashOption>
                 && e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
@@ -120,7 +122,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
     /// <summary>
     /// Hash 选项.
     /// </summary>
-    public List<HashOption> HashOptions => _hashOptionsService.HashOptions.Where(i => i.IsEnabled).ToList();
+    public IEnumerable<HashOption> HashOptions => _preferencesSettingsService.HashOptions.Where(i => i.IsEnabled);
 
     /// <summary>
     /// 当前流计算的进度.
@@ -293,9 +295,12 @@ public sealed partial class HomeViewModel : ObservableRecipient
         _mres.Set();
     }
 
+    /// <summary>
+    /// 保存哈希选项.
+    /// </summary>
     [RelayCommand]
-    private async Task SetHashOptionAsync() =>
-        await _hashOptionsService.SetHashOptionsAsync(_hashOptionsService.HashOptions);
+    private async Task SaveHashOptionAsync() =>
+        await _preferencesSettingsService.SaveHashOptionsAsync();
 
     public async Task SetHashTaskContenFromDrag(DataPackageView view)
     {

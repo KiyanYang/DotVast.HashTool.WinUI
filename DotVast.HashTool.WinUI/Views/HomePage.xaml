@@ -14,7 +14,7 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <XamlUICommand x:Key="SetHashOptionCommand" Command="{x:Bind ViewModel.SetHashOptionCommand}" />
+        <XamlUICommand x:Key="SaveHashOptionCommand" Command="{x:Bind ViewModel.SaveHashOptionCommand}" />
     </Page.Resources>
 
     <dvhc:NavigationViewBodyScrollViewer>
@@ -58,7 +58,7 @@
                         <ItemsRepeater.ItemTemplate>
                             <DataTemplate x:DataType="models:HashOption">
                                 <CheckBox
-                                    Command="{StaticResource SetHashOptionCommand}"
+                                    Command="{StaticResource SaveHashOptionCommand}"
                                     CommandParameter="{x:Bind}"
                                     Content="{x:Bind Hash.Name}"
                                     IsChecked="{x:Bind IsChecked, Mode=TwoWay}" />

@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 using CommunityToolkit.Mvvm.Messaging.Messages;
 
-using DotVast.HashTool.WinUI.Contracts.Services;
+using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Contracts.ViewModels;
 using DotVast.HashTool.WinUI.Models;
 
@@ -11,14 +11,14 @@ namespace DotVast.HashTool.WinUI.ViewModels;
 
 public partial class HashOptionSettingsViewModel : ObservableRecipient, INavigationAware
 {
-    private readonly IHashOptionsService _hashOptionsService;
+    private readonly IPreferencesSettingsService _preferencesSettingsService;
 
-    public HashOptionSettingsViewModel(IHashOptionsService hashOptionsService)
+    public HashOptionSettingsViewModel(IPreferencesSettingsService preferencesSettingsService)
     {
-        _hashOptionsService = hashOptionsService;
+        _preferencesSettingsService = preferencesSettingsService;
     }
 
-    public ObservableCollection<HashOption> HashOptions => _hashOptionsService.HashOptions;
+    public ObservableCollection<HashOption> HashOptions => _preferencesSettingsService.HashOptions;
 
     #region Messenger
 
@@ -33,7 +33,7 @@ public partial class HashOptionSettingsViewModel : ObservableRecipient, INavigat
                 Debug.WriteLine($"Hash.Name: {hashOption.Hash.Name}");
                 Debug.WriteLine($"IsEnabled:{hashOption.IsEnabled}");
 
-                await _hashOptionsService.SetHashOptionsAsync(HashOptions);
+                await _preferencesSettingsService.SaveHashOptionsAsync();
             }
         });
     }
@@ -58,10 +58,10 @@ public partial class HashOptionSettingsViewModel : ObservableRecipient, INavigat
 
     private void HashOptions_CollectionChanged_Reorder(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
-        if (sender is ObservableCollection<HashOption> hashOptions
+        if (sender is ObservableCollection<HashOption>
             && e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
         {
-            _hashOptionsService.SetHashOptionsAsync(hashOptions);
+            _preferencesSettingsService.SaveHashOptionsAsync();
         }
     }
 }

@@ -13,19 +13,19 @@ public sealed class ActivationService : IActivationService
     private readonly ActivationHandler<LaunchActivatedEventArgs> _defaultHandler;
     private readonly IEnumerable<IActivationHandler> _activationHandlers;
     private readonly IAppearanceSettingsService _appearanceSettingsService;
-    private readonly IHashOptionsService _hashOptionsService;
+    private readonly IPreferencesSettingsService _preferencesSettingsService;
     private UIElement? _shell = null;
 
     public ActivationService(
         ActivationHandler<LaunchActivatedEventArgs> defaultHandler,
         IEnumerable<IActivationHandler> activationHandlers,
         IAppearanceSettingsService appearanceSettingsService,
-        IHashOptionsService hashOptionsService)
+        IPreferencesSettingsService preferencesSettingsService)
     {
         _defaultHandler = defaultHandler;
         _activationHandlers = activationHandlers;
         _appearanceSettingsService = appearanceSettingsService;
-        _hashOptionsService = hashOptionsService;
+        _preferencesSettingsService = preferencesSettingsService;
     }
 
     public async Task ActivateAsync(object activationArgs)
@@ -67,12 +67,13 @@ public sealed class ActivationService : IActivationService
 
     private async Task InitializeAsync()
     {
-        await _hashOptionsService.InitializeAsync().ConfigureAwait(false);
         await _appearanceSettingsService.InitializeAsync().ConfigureAwait(false);
+        await _preferencesSettingsService.InitializeAsync().ConfigureAwait(false);
     }
 
     private async Task StartupAsync()
     {
         await _appearanceSettingsService.StartupAsync();
+        await _preferencesSettingsService.StartupAsync();
     }
 }
