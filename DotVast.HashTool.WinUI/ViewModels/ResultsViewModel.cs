@@ -1,3 +1,4 @@
+using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Contracts.ViewModels;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
@@ -8,8 +9,16 @@ namespace DotVast.HashTool.WinUI.ViewModels;
 
 public sealed partial class ResultsViewModel : ObservableRecipient, INavigationAware
 {
-    public ResultsViewModel()
+    private readonly IAppearanceSettingsService _appearanceSettingsService;
+
+    public ResultsViewModel(IAppearanceSettingsService appearanceSettingsService)
     {
+        _appearanceSettingsService = appearanceSettingsService;
+
+        _hashFontFamilyName = _appearanceSettingsService.HashFontFamilyName;
+
+        _appearanceSettingsService.PropertyChanged -= AppearanceSettingsService_PropertyChanged;
+        _appearanceSettingsService.PropertyChanged += AppearanceSettingsService_PropertyChanged;
     }
 
     [ObservableProperty]
@@ -42,6 +51,9 @@ public sealed partial class ResultsViewModel : ObservableRecipient, INavigationA
         private set => SetProperty(ref _hashResultsFiltered, value);
     }
 
+    [ObservableProperty]
+    private string _hashFontFamilyName;
+
     #region INavigationAware
 
     public void OnNavigatedTo(object? parameter)
@@ -61,6 +73,18 @@ public sealed partial class ResultsViewModel : ObservableRecipient, INavigationA
     }
 
     #endregion INavigationAware
+
+    private void AppearanceSettingsService_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (sender is not IAppearanceSettingsService settings)
+        {
+            return;
+        }
+        if (e.PropertyName == nameof(IAppearanceSettingsService.HashFontFamilyName))
+        {
+            HashFontFamilyName = settings.HashFontFamilyName;
+        }
+    }
 
     partial void OnHashTaskChanging(HashTask? value)
     {

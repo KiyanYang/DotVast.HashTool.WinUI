@@ -12,17 +12,22 @@
     mc:Ignorable="d">
 
     <Page.Resources>
+        <GridLength x:Key="ItemLeftWidth">100</GridLength>
         <x:Double x:Key="SmallSpacing">8</x:Double>
         <x:Double x:Key="MediumSpacing">12</x:Double>
         <DataTemplate x:Key="HashResultItemDataTemplate" x:DataType="models:HashResultItem">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="{StaticResource ItemLeftWidth}" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="{x:Bind Name}" />
+                <TextBlock
+                    Grid.Column="0"
+                    FontFamily="{Binding Path=HashFontFamilyName, Source={StaticResource AppearanceSettingsService}}"
+                    Text="{x:Bind Name}" />
                 <TextBlock
                     Grid.Column="1"
+                    FontFamily="{Binding Path=HashFontFamilyName, Source={StaticResource AppearanceSettingsService}}"
                     IsTextSelectionEnabled="True"
                     Text="{x:Bind Hash}"
                     TextWrapping="Wrap" />
@@ -35,7 +40,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="{StaticResource ItemLeftWidth}" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <TextBlock
@@ -86,7 +91,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="{StaticResource ItemLeftWidth}" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 

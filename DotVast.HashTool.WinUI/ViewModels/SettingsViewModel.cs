@@ -61,6 +61,16 @@ public sealed partial class SettingsViewModel : ObservableRecipient
 
     #endregion Theme
 
+    #region HashFontFamily
+
+    [ObservableProperty]
+    private string _hashFontFamilyName;
+
+    partial void OnHashFontFamilyNameChanged(string value) =>
+        _appearanceSettingsService.HashFontFamilyName = value;
+
+    #endregion HashFontFamily
+
     public SettingsViewModel(
         INavigationService navigationService,
         IAppearanceSettingsService appearanceSettingsService)
@@ -73,6 +83,8 @@ public sealed partial class SettingsViewModel : ObservableRecipient
         _appLanguage = _appearanceSettingsService.Language;
 
         _theme = Themes.First(x => x.Theme == _appearanceSettingsService.Theme);
+
+        _hashFontFamilyName = _appearanceSettingsService.HashFontFamilyName;
 
         _versionDescription = GetVersionDescription();
     }

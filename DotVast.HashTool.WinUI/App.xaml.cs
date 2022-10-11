@@ -126,14 +126,17 @@ public sealed partial class App : Application
 
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        base.OnLaunched(args);
-
 #if DEBUG
         if (System.Diagnostics.Debugger.IsAttached)
         {
             //DebugSettings.IsTextPerformanceVisualizationEnabled = true;
         }
 #endif
+        base.OnLaunched(args);
+
+        // TODO: Resources 里的 DataTemplate 不能绑定到 ViewModel, 因此使用静态资源访问.
+        // 该表达式要在 IActivationService.ActivateAsync() 之前.
+        App.Current.Resources[nameof(AppearanceSettingsService)] = App.GetService<IAppearanceSettingsService>();
 
         await App.GetService<IActivationService>().ActivateAsync(args);
 

@@ -38,7 +38,7 @@
         </DataTemplate>
     </behaviors:NavigationViewHeaderBehavior.HeaderTemplate>
 
-    <dvhc:NavigationViewBodyScrollViewer>
+    <dvhc:NavigationViewBodyScrollViewer HorizontalScrollBarVisibility="Auto">
         <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewBodyContentStyle}">
             <StackPanel>
                 <!-- 跳转设置: 哈希选项 -->
@@ -67,6 +67,23 @@
                     x:Uid="Settings_Personalization"
                     Margin="{StaticResource SmallTopBottomMargin}"
                     Style="{ThemeResource SubtitleTextBlockStyle}" />
+
+                <!-- 设置: -->
+                <dvhc:SettingItem x:Uid="SettingsPage_HashFontFamily">
+                    <dvhc:SettingItem.Icon>
+                        <FontIcon Glyph="&#xE8D2;" />
+                    </dvhc:SettingItem.Icon>
+                    <TextBox
+                        MinWidth="200"
+                        MaxWidth="480"
+                        FontFamily="{Binding Path=HashFontFamilyName, Source={StaticResource AppearanceSettingsService}}"
+                        IsSpellCheckEnabled="False"
+                        MaxLength="160"
+                        PlaceholderText="FontFamily"
+                        Style="{StaticResource CenterVerticalTextAlignmentTextBoxStyle}"
+                        Text="{x:Bind ViewModel.HashFontFamilyName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        TextAlignment="Center" />
+                </dvhc:SettingItem>
 
                 <!-- 设置: 主题 -->
                 <dvhc:SettingItem x:Uid="SettingsPage_Theme">

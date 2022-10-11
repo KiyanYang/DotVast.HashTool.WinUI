@@ -262,6 +262,14 @@
           <source>筛选</source>
           <target state="translated">Filter</target>
         </trans-unit>
+        <trans-unit id="SettingsPage_HashFontFamily.Description" translate="yes" xml:space="preserve">
+          <source>设置显示哈希值的字体</source>
+          <target state="translated">Set the font family to display the hash</target>
+        </trans-unit>
+        <trans-unit id="SettingsPage_HashFontFamily.Header" translate="yes" xml:space="preserve">
+          <source>哈希字体</source>
+          <target state="translated">Hash FontFamily</target>
+        </trans-unit>
       </group>
     </body>
   </file>

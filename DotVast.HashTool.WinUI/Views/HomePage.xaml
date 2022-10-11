@@ -120,6 +120,7 @@
                     <TextBox
                         x:Uid="HomePage_VerifyingHashBox"
                         Grid.Column="0"
+                        FontFamily="{Binding Path=HashFontFamilyName, Source={StaticResource AppearanceSettingsService}}"
                         IsSpellCheckEnabled="False"
                         Text="{x:Bind ViewModel.VerifyingHash1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBlock
@@ -131,6 +132,7 @@
                     <TextBox
                         x:Uid="HomePage_VerifyingHashBox"
                         Grid.Column="2"
+                        FontFamily="{Binding Path=HashFontFamilyName, Source={StaticResource AppearanceSettingsService}}"
                         IsSpellCheckEnabled="False"
                         Text="{x:Bind ViewModel.VerifyingHash2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>

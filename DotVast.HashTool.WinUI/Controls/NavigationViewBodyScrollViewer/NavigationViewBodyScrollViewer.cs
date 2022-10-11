@@ -1,3 +1,4 @@
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace DotVast.HashTool.WinUI.Controls;
@@ -12,6 +13,22 @@ public sealed class NavigationViewBodyScrollViewer : ContentControl
     {
         DefaultStyleKey = typeof(NavigationViewBodyScrollViewer);
     }
+
+    #region Dependency Properties
+
+    public static readonly DependencyProperty HorizontalScrollBarVisibilityProperty = DependencyProperty.Register(
+        nameof(HorizontalScrollBarVisibility),
+        typeof(ScrollBarVisibility),
+        typeof(NavigationViewBodyScrollViewer),
+        new PropertyMetadata(null));
+
+    public ScrollBarVisibility HorizontalScrollBarVisibility
+    {
+        get => (ScrollBarVisibility)GetValue(HorizontalScrollBarVisibilityProperty);
+        set => SetValue(HorizontalScrollBarVisibilityProperty, value);
+    }
+
+    #endregion Dependency Properties
 
     protected override void OnApplyTemplate()
     {

@@ -26,7 +26,9 @@
                             <!-- Icon -->
                             <ColumnDefinition Width="Auto" />
                             <!-- Header and Description -->
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <!-- MinWidth Separation -->
+                            <ColumnDefinition Width="*" MinWidth="16" />
                             <!-- Action Control -->
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
@@ -58,7 +60,7 @@
                         </StackPanel>
 
                         <ContentPresenter
-                            Grid.Column="2"
+                            Grid.Column="3"
                             VerticalAlignment="Center"
                             Content="{TemplateBinding Content}" />
 

@@ -242,6 +242,12 @@
   <data name="SettingsPage_AlwaysOnTop.Header" xml:space="preserve">
     <value>窗口置顶</value>
   </data>
+  <data name="SettingsPage_HashFontFamily.Description" xml:space="preserve">
+    <value>设置显示哈希值的字体</value>
+  </data>
+  <data name="SettingsPage_HashFontFamily.Header" xml:space="preserve">
+    <value>哈希字体</value>
+  </data>
   <data name="SettingsPage_HashOptions.Description" xml:space="preserve">
     <value>设置首页显示哪些哈希选项</value>
   </data>
