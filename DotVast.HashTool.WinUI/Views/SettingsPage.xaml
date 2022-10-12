@@ -2,11 +2,8 @@
     x:Class="DotVast.HashTool.WinUI.Views.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:behaviors="using:DotVast.HashTool.WinUI.Behaviors"
-    xmlns:dvhc="using:DotVast.HashTool.WinUI.Controls"
-    mc:Ignorable="d">
+    xmlns:dvhc="using:DotVast.HashTool.WinUI.Controls">
 
     <Page.Resources>
         <Style BasedOn="{StaticResource CardSettingItem}" TargetType="dvhc:SettingItem">
@@ -28,10 +25,9 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="{Binding}" />
                     <Button
-                        x:Name="RestartAppButton"
                         x:Uid="RestartApp"
                         Grid.Column="1"
-                        Click="RestartAppButton_Click"
+                        Command="{StaticResource RestartAppCommand}"
                         Visibility="Visible" />
                 </Grid>
             </dvhc:NavigationViewHeader>
@@ -68,15 +64,16 @@
                     Margin="{StaticResource SmallTopBottomMargin}"
                     Style="{ThemeResource SubtitleTextBlockStyle}" />
 
-                <!-- 设置: -->
+                <!-- 设置: 哈希字体 -->
                 <dvhc:SettingItem x:Uid="SettingsPage_HashFontFamily">
                     <dvhc:SettingItem.Icon>
                         <FontIcon Glyph="&#xE8D2;" />
                     </dvhc:SettingItem.Icon>
                     <TextBox
+                        x:Name="HashFontFamilyName"
                         MinWidth="200"
                         MaxWidth="480"
-                        FontFamily="{Binding Path=HashFontFamilyName, Source={StaticResource AppearanceSettingsService}}"
+                        FontFamily="{x:Bind HashFontFamilyName.Text, Mode=OneWay}"
                         IsSpellCheckEnabled="False"
                         MaxLength="160"
                         PlaceholderText="FontFamily"

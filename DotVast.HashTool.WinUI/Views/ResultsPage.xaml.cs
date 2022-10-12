@@ -9,10 +9,7 @@ namespace DotVast.HashTool.WinUI.Views;
 
 public sealed partial class ResultsPage : Page
 {
-    public ResultsViewModel ViewModel
-    {
-        get;
-    }
+    public ResultsViewModel ViewModel { get; }
 
     public ResultsPage()
     {

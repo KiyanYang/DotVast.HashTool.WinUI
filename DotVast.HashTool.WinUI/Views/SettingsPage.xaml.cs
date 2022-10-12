@@ -6,17 +6,12 @@ namespace DotVast.HashTool.WinUI.Views;
 
 public sealed partial class SettingsPage : Page
 {
-    public SettingsViewModel ViewModel
-    {
-        get;
-    }
+    public SettingsViewModel ViewModel { get; }
 
     public SettingsPage()
     {
         ViewModel = App.GetService<SettingsViewModel>();
+        Resources.TryAddFromVM(() => ViewModel.RestartAppCommand);
         InitializeComponent();
     }
-
-    private void RestartAppButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) =>
-        ViewModel.RestartApp();
 }

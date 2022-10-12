@@ -101,9 +101,10 @@ public sealed partial class SettingsViewModel : ObservableRecipient
         await Windows.System.Launcher.LaunchFolderPathAsync(logsFolderPath);
     }
 
-    public void RestartApp()
+    [RelayCommand]
+    private void RestartApp()
     {
-        Microsoft.Windows.AppLifecycle.AppInstance.Restart("");
+        Microsoft.Windows.AppLifecycle.AppInstance.Restart(string.Empty);
     }
 
     private static string GetVersionDescription()

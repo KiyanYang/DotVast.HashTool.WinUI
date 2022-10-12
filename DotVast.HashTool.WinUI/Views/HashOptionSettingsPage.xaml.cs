@@ -9,10 +9,7 @@ public sealed partial class HashOptionSettingsPage : Page
 {
     private const double HashOptionGridViewItemMinWidth = 200;
 
-    public HashOptionSettingsViewModel ViewModel
-    {
-        get;
-    }
+    public HashOptionSettingsViewModel ViewModel { get; }
 
     public HashOptionSettingsPage()
     {

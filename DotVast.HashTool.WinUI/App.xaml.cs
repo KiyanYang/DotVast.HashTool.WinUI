@@ -30,10 +30,7 @@ public sealed partial class App : Application
     // https://docs.microsoft.com/dotnet/core/extensions/dependency-injection
     // https://docs.microsoft.com/dotnet/core/extensions/configuration
     // https://docs.microsoft.com/dotnet/core/extensions/logging
-    public IHost Host
-    {
-        get;
-    }
+    public IHost Host { get; }
 
     public static T GetService<T>()
         where T : class
@@ -72,15 +69,15 @@ public sealed partial class App : Application
             // Other Activation Handlers
 
             // Services
-            services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
-            services.AddTransient<INavigationViewService, NavigationViewService>();
-
             services.AddSingleton<IActivationService, ActivationService>();
             services.AddSingleton<IPageService, PageService>();
             services.AddSingleton<INavigationService, NavigationService>();
+            services.AddTransient<INavigationViewService, NavigationViewService>();
 
+            services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
             services.AddSingleton<IAppearanceSettingsService, AppearanceSettingsService>();
             services.AddSingleton<IPreferencesSettingsService, PreferencesSettingsService>();
+
             services.AddSingleton<IComputeHashService, ComputeHashService>();
             services.AddSingleton<IDialogService, DialogService>();
             services.AddSingleton<IHashTaskService, HashTaskService>();

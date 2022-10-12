@@ -2,11 +2,8 @@
     x:Class="DotVast.HashTool.WinUI.Views.LicensesPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:dvhc="using:DotVast.HashTool.WinUI.Controls"
-    xmlns:models="using:DotVast.HashTool.WinUI.Models"
-    mc:Ignorable="d">
+    xmlns:models="using:DotVast.HashTool.WinUI.Models">
 
     <Page.Resources>
         <DataTemplate x:Key="LicenseDataTemplate" x:DataType="models:LicenseInfo">

@@ -7,10 +7,7 @@ namespace DotVast.HashTool.WinUI.Views;
 
 public sealed partial class LicensesPage : Page
 {
-    public LicensesViewModel ViewModel
-    {
-        get;
-    }
+    public LicensesViewModel ViewModel { get; }
 
     public LicensesPage()
     {
