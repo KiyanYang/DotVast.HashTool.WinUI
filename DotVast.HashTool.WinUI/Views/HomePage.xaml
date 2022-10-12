@@ -90,18 +90,15 @@
                         Grid.Column="0"
                         Command="{x:Bind ViewModel.StartTaskCommand}"
                         Content="{x:Bind ViewModel.StartButton.Content, Mode=OneWay}"
-                        IsEnabled="{x:Bind ViewModel.StartButton.IsEnabled, Mode=OneWay}"
                         Style="{ThemeResource AccentButtonStyle}" />
                     <Button
                         Grid.Column="1"
                         Command="{x:Bind ViewModel.ResetTaskCommand}"
-                        Content="{x:Bind ViewModel.ResetButton.Content, Mode=OneWay}"
-                        IsEnabled="{x:Bind ViewModel.ResetButton.IsEnabled, Mode=OneWay}" />
+                        Content="{x:Bind ViewModel.ResetButton.Content, Mode=OneWay}" />
                     <Button
                         Grid.Column="2"
                         Command="{x:Bind ViewModel.CancelTaskCommand}"
-                        Content="{x:Bind ViewModel.CancelButton.Content, Mode=OneWay}"
-                        IsEnabled="{x:Bind ViewModel.CancelButton.IsEnabled, Mode=OneWay}" />
+                        Content="{x:Bind ViewModel.CancelButton.Content, Mode=OneWay}" />
                 </Grid>
 
                 <!-- 对比框 -->
