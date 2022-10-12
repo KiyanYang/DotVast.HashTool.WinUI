@@ -143,8 +143,8 @@
           <target state="translated">Privacy Statement</target>
         </trans-unit>
         <trans-unit id="SettingsPage_PrivacyTermsLink.NavigateUri" translate="yes" xml:space="preserve">
-          <source>https://YourPrivacyUrlGoesHere/</source>
-          <target state="translated">https://YourPrivacyUrlGoesHere/</target>
+          <source>https://github.com/KiyanYang/DotVast.HashTool.WinUI/wiki/隐私声明</source>
+          <target state="translated">https://github.com/KiyanYang/DotVast.HashTool.WinUI/wiki/Privacy-Statement</target>
         </trans-unit>
         <trans-unit id="Settings_About.Text" translate="yes" xml:space="preserve">
           <source>关于</source>
