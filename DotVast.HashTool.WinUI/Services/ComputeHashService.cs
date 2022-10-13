@@ -245,7 +245,7 @@ internal sealed partial class ComputeHashService : IComputeHashService
         var val = hash == Hash.QuickXor
             ? Convert.ToBase64String(data)
             : Convert.ToHexString(data);
-        return new HashResultItem(hash, val);
+        return new HashResultItem(hash.Name, val);
     }
 
     private void OnStatusChanged(ComputeHashStatus value)

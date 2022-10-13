@@ -2,13 +2,7 @@ namespace DotVast.HashTool.WinUI.Models;
 
 public sealed partial class HashOption : ObservableRecipient
 {
-    private Hash _hash;
-
-    public Hash Hash
-    {
-        get => _hash;
-        set => SetProperty(ref _hash, value);
-    }
+    public Hash Hash { get; }
 
     [ObservableProperty]
     private bool _isChecked;
@@ -19,7 +13,7 @@ public sealed partial class HashOption : ObservableRecipient
 
     public HashOption(Hash hash, bool isChecked = false, bool isEnabled = true)
     {
-        _hash = hash;
+        Hash = hash;
         _isChecked = isChecked;
         _isEnabled = isEnabled;
     }
