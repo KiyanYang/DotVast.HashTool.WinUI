@@ -1,0 +1,30 @@
+<ContentDialog
+    x:Class="DotVast.HashTool.WinUI.UserControls.Dialogs.GithubUpdateDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    Style="{StaticResource DefaultContentDialogStyle}">
+
+    <ContentDialog.Title>
+        <StackPanel Orientation="Horizontal" Spacing="16">
+            <TextBlock x:Name="TitleText" />
+            <TextBlock
+                x:Name="PublishAtText"
+                VerticalAlignment="Bottom"
+                Style="{StaticResource BodyTextBlockStyle}" />
+        </StackPanel>
+    </ContentDialog.Title>
+
+    <ScrollViewer
+        MaxHeight="320"
+        HorizontalScrollMode="Disabled"
+        VerticalScrollBarVisibility="Hidden">
+        <controls:MarkdownTextBlock
+            x:Name="MarkdownText"
+            Background="Transparent"
+            FontSize="14"
+            Header3FontSize="16"
+            TextWrapping="WrapWholeWords" />
+    </ScrollViewer>
+
+</ContentDialog>

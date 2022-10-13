@@ -1,5 +1,3 @@
-using System.Reflection;
-
 using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Enums;
@@ -8,17 +6,17 @@ using DotVast.HashTool.WinUI.Models;
 
 using Microsoft.UI.Xaml;
 
-using Windows.ApplicationModel;
-
 namespace DotVast.HashTool.WinUI.ViewModels;
 
 public sealed partial class SettingsViewModel : ObservableRecipient
 {
     private readonly INavigationService _navigationService;
     private readonly IAppearanceSettingsService _appearanceSettingsService;
+    private readonly ICheckUpdateService _checkUpdateService;
+    private readonly IDialogService _dialogService;
 
-    [ObservableProperty]
-    private string _versionDescription;
+    public string AppVersionHeader { get; }
+    public string AppVersionDescription { get; }
 
     #region AlwaysOnTop
 
@@ -73,10 +71,14 @@ public sealed partial class SettingsViewModel : ObservableRecipient
 
     public SettingsViewModel(
         INavigationService navigationService,
-        IAppearanceSettingsService appearanceSettingsService)
+        IAppearanceSettingsService appearanceSettingsService,
+        ICheckUpdateService checkUpdateService,
+        IDialogService dialogService)
     {
         _navigationService = navigationService;
         _appearanceSettingsService = appearanceSettingsService;
+        _checkUpdateService = checkUpdateService;
+        _dialogService = dialogService;
 
         _isAlwaysOnTop = _appearanceSettingsService.IsAlwaysOnTop;
 
@@ -86,7 +88,12 @@ public sealed partial class SettingsViewModel : ObservableRecipient
 
         _hashFontFamilyName = _appearanceSettingsService.HashFontFamilyName;
 
-        _versionDescription = GetVersionDescription();
+#if DEBUG
+        AppVersionHeader = $"{Localization.AppDisplayNameDev} - {RuntimeHelper.AppVersion}";
+#else
+        AppVersionHeader = $"{Localization.AppDisplayName} - {RuntimeHelper.AppVersion}";
+#endif
+        AppVersionDescription = Localization.SettingsPage_AppDescription;
     }
 
     [RelayCommand]
@@ -107,21 +114,49 @@ public sealed partial class SettingsViewModel : ObservableRecipient
         Microsoft.Windows.AppLifecycle.AppInstance.Restart(string.Empty);
     }
 
-    private static string GetVersionDescription()
+    [ObservableProperty]
+    private bool _isCheckUpdateProgressActive;
+
+    private bool _isUpdateChecked = false;
+
+    [RelayCommand]
+    private async Task CheckUpdateAsync()
     {
-        Version version;
+        IsCheckUpdateProgressActive = true;
 
-        if (RuntimeHelper.IsMSIX)
+        // 首次请求需要预热, 用时 1s 左右, 后续用时 100ms - 500ms(网络状况差时), 因此增加一个延时
+        if (_isUpdateChecked)
         {
-            var packageVersion = Package.Current.Id.Version;
-
-            version = new(packageVersion.Major, packageVersion.Minor, packageVersion.Build, packageVersion.Revision);
+            await Task.Delay(500);
         }
         else
         {
-            version = Assembly.GetExecutingAssembly().GetName().Version!;
+            _isUpdateChecked = true;
         }
 
-        return $"{Localization.AppDisplayName} - {version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+        // TODO: 增加“是否检测预览版”设置
+        var release = await _checkUpdateService.GetLatestGitHubReleaseAsync(true);
+
+        IsCheckUpdateProgressActive = false;
+
+        if (release == null)
+        {
+            await _dialogService.ShowInfoDialogAsync(
+                Localization.Dialog_GitHubUpdate_Failed,
+                Localization.Dialog_GitHubUpdate_CheckNetwork,
+                Localization.Dialog_Base_Close);
+            return;
+        }
+
+        if (release.Version > RuntimeHelper.AppVersion)
+        {
+            await _dialogService.ShowGithubUpdateDialogAsync(release);
+        }
+        else
+        {
+            await _dialogService.ShowInfoDialogAsync(
+                Localization.Dialog_GitHubUpdate_UpToDate,
+                Localization.Dialog_Base_Close);
+        }
     }
 }

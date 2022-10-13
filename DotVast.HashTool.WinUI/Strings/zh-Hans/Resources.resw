@@ -129,6 +129,28 @@
   <data name="AppDisplayNameDev" xml:space="preserve">
     <value>HashTool Dev</value>
   </data>
+  <data name="Dialog_Base_Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Dialog_Base_Close" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="Dialog_Base_OK" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="Dialog_GitHubUpdate_CheckNetwork" xml:space="preserve">
+    <value>请检查网络。</value>
+  </data>
+  <data name="Dialog_GitHubUpdate_Download" xml:space="preserve">
+    <value>下载</value>
+  </data>
+  <data name="Dialog_GitHubUpdate_Failed" xml:space="preserve">
+    <value>检查更新失败</value>
+  </data>
+  <data name="Dialog_GitHubUpdate_UpToDate" xml:space="preserve">
+    <value>当前已是最新版本</value>
+    <comment>用作标题, 不要标点符号</comment>
+  </data>
   <data name="Dialog_HashTaskAborted_FileNotExists" xml:space="preserve">
     <value>文件不存在，任务已中止。</value>
     <comment>提示文件不存在的任务中止对话框的内容</comment>
@@ -136,10 +158,6 @@
   <data name="Dialog_HashTaskAborted_FolderNotExists" xml:space="preserve">
     <value>文件夹不存在，任务已中止。</value>
     <comment>提示文件夹不存在的任务中止对话框的内容</comment>
-  </data>
-  <data name="Dialog_HashTaskAborted_OK" xml:space="preserve">
-    <value>确定</value>
-    <comment>任务中止对话框的确认按钮</comment>
   </data>
   <data name="Dialog_HashTaskAborted_Title" xml:space="preserve">
     <value>任务中止</value>
@@ -242,6 +260,12 @@
   <data name="SettingsPage_AlwaysOnTop.Header" xml:space="preserve">
     <value>窗口置顶</value>
   </data>
+  <data name="SettingsPage_AppDescription" xml:space="preserve">
+    <value>用于计算和校验文件、文件夹或文本哈希值的工具！</value>
+  </data>
+  <data name="SettingsPage_CheckForUpdates" xml:space="preserve">
+    <value>检查更新</value>
+  </data>
   <data name="SettingsPage_HashFontFamily.Description" xml:space="preserve">
     <value>设置显示哈希值的字体</value>
   </data>
@@ -280,9 +304,6 @@
   </data>
   <data name="Settings_About.Text" xml:space="preserve">
     <value>关于</value>
-  </data>
-  <data name="Settings_AboutDescription.Text" xml:space="preserve">
-    <value>用于计算和校验文件、文件夹或文本哈希值的工具！</value>
   </data>
   <data name="Settings_Personalization.Text" xml:space="preserve">
     <value>个性化</value>

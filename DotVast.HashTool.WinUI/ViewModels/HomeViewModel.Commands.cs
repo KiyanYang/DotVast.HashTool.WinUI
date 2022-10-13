@@ -153,7 +153,7 @@ public partial class HomeViewModel
                         await _dialogService.ShowInfoDialogAsync(
                             Localization.Dialog_HashTaskAborted_Title,
                             Localization.Dialog_HashTaskAborted_FileNotExists,
-                            Localization.Dialog_HashTaskAborted_OK);
+                            Localization.Dialog_Base_OK);
                         return;
                     }
                     await _computeHashService.HashFileAsync(hashTask, _mres, _cts.Token);
@@ -166,7 +166,7 @@ public partial class HomeViewModel
                         await _dialogService.ShowInfoDialogAsync(
                             Localization.Dialog_HashTaskAborted_Title,
                             Localization.Dialog_HashTaskAborted_FolderNotExists,
-                            Localization.Dialog_HashTaskAborted_OK);
+                            Localization.Dialog_Base_OK);
                         return;
                     }
                     await _computeHashService.HashFolderAsync(hashTask, _mres, _cts.Token);
@@ -178,7 +178,7 @@ public partial class HomeViewModel
             await _dialogService.ShowInfoDialogAsync(
                 Localization.Dialog_HashTaskAborted_Title,
                 Localization.Dialog_HashTaskAborted_UnauthorizedAccess,
-                Localization.Dialog_HashTaskAborted_OK);
+                Localization.Dialog_Base_OK);
             _logger.LogWarning("计算哈希时出现“未授权访问”异常, 模式: {Mode}, 内容: {Content}\n{Exception}", hashTask.Mode, hashTask.Content, ex);
         }
         catch (Exception ex)

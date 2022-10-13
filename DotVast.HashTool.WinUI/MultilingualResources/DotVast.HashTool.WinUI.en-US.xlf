@@ -150,10 +150,6 @@
           <source>关于</source>
           <target state="translated">About</target>
         </trans-unit>
-        <trans-unit id="Settings_AboutDescription.Text" translate="yes" xml:space="preserve">
-          <source>用于计算和校验文件、文件夹或文本哈希值的工具！</source>
-          <target state="translated">A Tool for Calculating and Verifying the Hash Value of Any File, Folder, or Text!</target>
-        </trans-unit>
         <trans-unit id="Settings_Personalization.Text" translate="yes" xml:space="preserve">
           <source>个性化</source>
           <target state="translated">Personalization</target>
@@ -189,11 +185,6 @@
         <trans-unit id="Tasks_ShowResult_XamlUICommand.Description" translate="yes" xml:space="preserve">
           <source>查看结果</source>
           <target state="translated">Show Results</target>
-        </trans-unit>
-        <trans-unit id="Dialog_HashTaskAborted_OK" translate="yes" xml:space="preserve">
-          <source>确定</source>
-          <target state="translated">OK</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">任务中止对话框的确认按钮</note>
         </trans-unit>
         <trans-unit id="Dialog_HashTaskAborted_UnauthorizedAccess" translate="yes" xml:space="preserve">
           <source>未授权的访问，请考虑以管理员身份重试。</source>
@@ -269,6 +260,43 @@
         <trans-unit id="SettingsPage_HashFontFamily.Header" translate="yes" xml:space="preserve">
           <source>哈希字体</source>
           <target state="translated">Hash FontFamily</target>
+        </trans-unit>
+        <trans-unit id="Dialog_Base_OK" translate="yes" xml:space="preserve">
+          <source>确定</source>
+          <target state="translated">OK</target>
+        </trans-unit>
+        <trans-unit id="Dialog_Base_Cancel" translate="yes" xml:space="preserve">
+          <source>取消</source>
+          <target state="translated">Cancel</target>
+        </trans-unit>
+        <trans-unit id="Dialog_Base_Close" translate="yes" xml:space="preserve">
+          <source>关闭</source>
+          <target state="translated">Close</target>
+        </trans-unit>
+        <trans-unit id="Dialog_GitHubUpdate_Download" translate="yes" xml:space="preserve">
+          <source>下载</source>
+          <target state="translated">Download</target>
+        </trans-unit>
+        <trans-unit id="SettingsPage_AppDescription" translate="yes" xml:space="preserve">
+          <source>用于计算和校验文件、文件夹或文本哈希值的工具！</source>
+          <target state="translated">A Tool for Calculating and Verifying the Hash Value of Any File, Folder, or Text!</target>
+        </trans-unit>
+        <trans-unit id="Dialog_GitHubUpdate_UpToDate" translate="yes" xml:space="preserve">
+          <source>当前已是最新版本</source>
+          <target state="translated">The App is up to date</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">用作标题, 不要标点符号</note>
+        </trans-unit>
+        <trans-unit id="SettingsPage_CheckForUpdates" translate="yes" xml:space="preserve">
+          <source>检查更新</source>
+          <target state="translated">Check for updates</target>
+        </trans-unit>
+        <trans-unit id="Dialog_GitHubUpdate_CheckNetwork" translate="yes" xml:space="preserve">
+          <source>请检查网络。</source>
+          <target state="translated">Please check the network.</target>
+        </trans-unit>
+        <trans-unit id="Dialog_GitHubUpdate_Failed" translate="yes" xml:space="preserve">
+          <source>检查更新失败</source>
+          <target state="translated">Failed to check for updates</target>
         </trans-unit>
       </group>
     </body>

@@ -63,6 +63,8 @@ public sealed partial class App : Application
         UseContentRoot(AppContext.BaseDirectory).
         ConfigureServices((context, services) =>
         {
+            services.AddHttpClient();
+
             // Default Activation Handler
             services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
 
@@ -78,6 +80,7 @@ public sealed partial class App : Application
             services.AddSingleton<IAppearanceSettingsService, AppearanceSettingsService>();
             services.AddSingleton<IPreferencesSettingsService, PreferencesSettingsService>();
 
+            services.AddSingleton<ICheckUpdateService, CheckUpdateService>();
             services.AddSingleton<IComputeHashService, ComputeHashService>();
             services.AddSingleton<IDialogService, DialogService>();
             services.AddSingleton<IHashTaskService, HashTaskService>();
