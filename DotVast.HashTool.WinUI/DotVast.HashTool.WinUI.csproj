@@ -14,7 +14,6 @@
         <Nullable>enable</Nullable>
         <UseWinUI>true</UseWinUI>
         <EnableMsixTooling>true</EnableMsixTooling>
-        <PlatformTarget>AnyCPU</PlatformTarget>
         <DefaultLanguage>zh-Hans</DefaultLanguage>
         <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
         <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
@@ -24,13 +23,6 @@
         <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
         <GenerateTestArtifacts>True</GenerateTestArtifacts>
         <AppxBundle>Never</AppxBundle>
-    </PropertyGroup>
-
-    <PropertyGroup Label="MultilingualAppToolkit">
-        <MultilingualAppToolkitVersion>4.0</MultilingualAppToolkitVersion>
-        <MultilingualFallbackLanguage>zh-Hans</MultilingualFallbackLanguage>
-        <TranslationReport Condition="'$(Configuration)' == 'Release'">true</TranslationReport>
-        <SuppressPseudoWarning Condition="'$(Configuration)' == 'Debug'">true</SuppressPseudoWarning>
     </PropertyGroup>
 
     <ItemGroup>
@@ -78,6 +70,13 @@
 
     <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
         <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
+    </PropertyGroup>
+
+    <PropertyGroup Label="MultilingualAppToolkit">
+        <MultilingualAppToolkitVersion>4.0</MultilingualAppToolkitVersion>
+        <MultilingualFallbackLanguage>zh-Hans</MultilingualFallbackLanguage>
+        <TranslationReport Condition="'$(Configuration)' == 'Release'">true</TranslationReport>
+        <SuppressPseudoWarning Condition="'$(Configuration)' == 'Debug'">true</SuppressPseudoWarning>
     </PropertyGroup>
 
     <Import Project="$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.PriResources.targets" Label="MultilingualAppToolkit" Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\v$(MultilingualAppToolkitVersion)\Microsoft.Multilingual.PriResources.targets')" />
