@@ -15,8 +15,6 @@ internal class CheckUpdateService : ICheckUpdateService
     private readonly HttpClient _client;
     private readonly ILogger<CheckUpdateService> _logger;
 
-    private GitHubRelease? _gitHubRelease;
-
     public CheckUpdateService(
         IHttpClientFactory httpClientFactory,
         ILogger<CheckUpdateService> logger)
@@ -35,11 +33,7 @@ internal class CheckUpdateService : ICheckUpdateService
 
     public async Task<GitHubRelease?> GetLatestGitHubReleaseAsync(bool includePreRelease = false)
     {
-        if (_gitHubRelease != null)
-        {
-            return _gitHubRelease;
-        }
-
+        GitHubRelease? _gitHubRelease = null;
         try
         {
             if (includePreRelease)
