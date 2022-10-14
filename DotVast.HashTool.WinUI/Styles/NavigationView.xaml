@@ -15,6 +15,7 @@
 
     <Style x:Key="NavigationViewBodyContentStyle" TargetType="Grid">
         <Setter Property="Margin" Value="0,24,0,36" />
+        <Setter Property="Background" Value="Transparent" />
     </Style>
 
 </ResourceDictionary>
