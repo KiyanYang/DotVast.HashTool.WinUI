@@ -7,6 +7,9 @@ namespace DotVast.HashTool.WinUI.Controls;
 
 public sealed class SettingItem : ContentControl
 {
+    private SettingItem? _settingItem;
+    private ContentPresenter? _contentPresenter;
+
     public SettingItem()
     {
         DefaultStyleKey = typeof(SettingItem);
@@ -56,13 +59,40 @@ public sealed class SettingItem : ContentControl
 
     protected override void OnApplyTemplate()
     {
+        SizeChanged -= SettingItem_SizeChanged;
+        _settingItem = this;
+        _contentPresenter = (ContentPresenter)_settingItem.GetTemplateChild("ContentPresenter");
         UpdateIconState();
         UpdateDescriptionState();
+        SizeChanged += SettingItem_SizeChanged;
         base.OnApplyTemplate();
     }
 
-    private void UpdateIconState()
+    private void SettingItem_SizeChanged(object sender, SizeChangedEventArgs e)
     {
+        if (App.MainWindow.Width <= 640)
+        {
+            UpdateIconState("NoIconState");
+        }
+        else
+        {
+            UpdateIconState();
+        }
+
+        if (_settingItem != null && _contentPresenter != null)
+        {
+            _contentPresenter.MaxWidth = _settingItem.ActualWidth * 0.6;
+        }
+    }
+
+    private void UpdateIconState(string? defaultState = null)
+    {
+        if (defaultState != null)
+        {
+            VisualStateManager.GoToState(this, defaultState, true);
+            return;
+        }
+
         var state = Icon == null ? "NoIconState" : "IconState";
         VisualStateManager.GoToState(this, state, true);
     }

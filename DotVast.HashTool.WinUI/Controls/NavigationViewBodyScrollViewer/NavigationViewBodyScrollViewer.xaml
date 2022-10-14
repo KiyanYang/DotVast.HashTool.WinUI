@@ -13,7 +13,7 @@
                         Margin="{TemplateBinding Margin}"
                         Padding="{TemplateBinding Padding}"
                         Background="{TemplateBinding Background}"
-                        HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}"
+                        HorizontalScrollMode="Disabled"
                         VerticalScrollBarVisibility="Auto">
                         <ContentPresenter Content="{TemplateBinding Content}" />
 

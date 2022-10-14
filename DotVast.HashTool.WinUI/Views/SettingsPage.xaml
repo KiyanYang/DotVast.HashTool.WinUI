@@ -35,7 +35,7 @@
         </DataTemplate>
     </behaviors:NavigationViewHeaderBehavior.HeaderTemplate>
 
-    <dvhc:NavigationViewBodyScrollViewer HorizontalScrollBarVisibility="Auto">
+    <dvhc:NavigationViewBodyScrollViewer>
         <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewBodyContentStyle}">
             <StackPanel>
                 <!-- 跳转设置: 哈希选项 -->
@@ -73,7 +73,6 @@
                     <TextBox
                         x:Name="HashFontFamilyName"
                         MinWidth="200"
-                        MaxWidth="480"
                         FontFamily="{x:Bind HashFontFamilyName.Text, Mode=OneWay}"
                         IsSpellCheckEnabled="False"
                         MaxLength="160"
