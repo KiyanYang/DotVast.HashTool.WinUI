@@ -1,0 +1,79 @@
+name: 问题报告
+description: 提交问题报告以帮助我们提高应用体验
+title: "[Bug]: "
+labels:
+  - "🐛 bug"
+assignees:
+  - KiyanYang
+
+body:
+  - type: checkboxes
+    id: check
+    attributes:
+      label: 检查
+      description: 请在反馈问题之前确认以下问题。
+      options:
+        - label: 没有在仓库[议题](https://github.com/KiyanYang/DotVast.HashTool.WinUI/issues)搜索到相关的议题。
+          required: true
+        - label: 此问题可以在最新版本中复现。
+          required: true
+
+  - type: textarea
+    id: bug-description
+    validations:
+      required: true
+    attributes:
+      label: 问题描述
+      description: 简要描述你遇到的问题。
+
+  - type: textarea
+    id: reproduce-steps
+    validations:
+      required: true
+    attributes:
+      label: 复现步骤
+      description: 详细地描述复现的具体步骤。
+      value: |
+        1. 进入……页面
+        2. 点击……
+        3. 滚动到……
+        4. 出现……问题
+
+  - type: textarea
+    id: expected-behavior
+    validations:
+      required: true
+    attributes:
+      label: 预期行为
+      description: 清晰且简洁地描述你希望看到什么样的结果。
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: 截图
+      description: 如果静态截图无法合适的描述问题，可以使用 [ScreenToGif](https://github.com/NickeManarin/ScreenToGif) 来录制 Gif 动图。
+
+  - type: textarea
+    id: environment
+    validations:
+      required: true
+    attributes:
+      label: 环境
+      description: |
+        打开“设置”搜索“Windows 规格”查看版本信息。
+      value: |
+        - 应用版本: v0.1.0
+        - 系统版本: Windows 11 21H2 (22623.746)
+      render: Markdown
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志
+      description: 添加日志文件，打开软件->设置->日志，将包含问题的日志上传（一般只用上传当天的日志）
+
+  - type: textarea
+    id: remarks
+    attributes:
+      label: 备注
+      description: 添加其他你认为有必要的信息。
