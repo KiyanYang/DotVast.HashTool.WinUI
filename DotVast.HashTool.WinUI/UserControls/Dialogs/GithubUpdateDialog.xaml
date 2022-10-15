@@ -16,6 +16,7 @@
     </ContentDialog.Title>
 
     <ScrollViewer
+        MinWidth="400"
         MaxHeight="320"
         HorizontalScrollMode="Disabled"
         VerticalScrollBarVisibility="Hidden">
