@@ -8,10 +8,10 @@
 
     <Page.Resources>
         <Style BasedOn="{StaticResource CardSettingItem}" TargetType="dvhc:SettingItem">
-            <Setter Property="Margin" Value="{StaticResource XXSmallTopBottomMargin}" />
+            <Setter Property="Margin" Value="{ThemeResource XXSmallTopBottomMargin}" />
         </Style>
         <Style x:Key="CardButtonSettingItemWithMargin" BasedOn="{StaticResource CardButtonSettingItem}" TargetType="Button">
-            <Setter Property="Margin" Value="{StaticResource XXSmallTopBottomMargin}" />
+            <Setter Property="Margin" Value="{ThemeResource XXSmallTopBottomMargin}" />
         </Style>
         <Style BasedOn="{StaticResource LeftContentToggleSwitchStyle}" TargetType="ToggleSwitch" />
     </Page.Resources>
@@ -62,7 +62,7 @@
                 <!-- 副标题: 个性化 -->
                 <TextBlock
                     x:Uid="Settings_Personalization"
-                    Margin="{StaticResource SmallTopBottomMargin}"
+                    Margin="{ThemeResource SmallTopBottomMargin}"
                     Style="{ThemeResource SubtitleTextBlockStyle}" />
 
                 <!-- 设置: 哈希字体 -->
@@ -109,7 +109,7 @@
                 <!-- 副标题: 关于 -->
                 <TextBlock
                     x:Uid="Settings_About"
-                    Margin="{StaticResource SmallTopBottomMargin}"
+                    Margin="{ThemeResource SmallTopBottomMargin}"
                     Style="{ThemeResource SubtitleTextBlockStyle}" />
 
                 <!-- 关于: 版本 -->

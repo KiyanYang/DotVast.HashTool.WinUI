@@ -41,7 +41,7 @@
                     Grid.Column="0"
                     Padding="0,0,4,0"
                     HorizontalAlignment="Right"
-                    Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Text="{x:Bind Id}" />
                 <TextBlock
                     Grid.Column="1"
@@ -52,7 +52,7 @@
                 <TextBlock
                     Grid.RowSpan="2"
                     Grid.Column="2"
-                    Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Text="{x:Bind State, Mode=OneWay}" />
                 <Button
                     x:Uid="Tasks_ShowResult_Button"
@@ -66,7 +66,7 @@
                     Grid.Row="1"
                     Grid.Column="1"
                     FontSize="12"
-                    Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Text="{x:Bind views:TasksPage.GetSecondaryInformationText((models:HashTask))}"
                     TextTrimming="CharacterEllipsis"
                     ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}" />

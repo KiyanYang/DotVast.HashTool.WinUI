@@ -15,7 +15,7 @@
         <DataTemplate x:Key="HashResultItemDataTemplate" x:DataType="models:HashResultItem">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="{StaticResource ItemLeftWidth}" />
+                    <ColumnDefinition Width="{ThemeResource ItemLeftWidth}" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <TextBlock
@@ -31,13 +31,13 @@
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="HashResultDataTemplate" x:DataType="models:HashResult">
-            <Grid RowSpacing="{StaticResource SmallSpacing}" Style="{StaticResource CardGridStyle}">
+            <Grid RowSpacing="{ThemeResource SmallSpacing}" Style="{StaticResource CardGridStyle}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="{StaticResource ItemLeftWidth}" />
+                    <ColumnDefinition Width="{ThemeResource ItemLeftWidth}" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <TextBlock
@@ -57,7 +57,7 @@
                     ItemTemplate="{StaticResource HashResultItemDataTemplate}"
                     ItemsSource="{x:Bind Data}">
                     <ItemsRepeater.Layout>
-                        <StackLayout Orientation="Vertical" Spacing="{StaticResource SmallSpacing}" />
+                        <StackLayout Orientation="Vertical" Spacing="{ThemeResource SmallSpacing}" />
                     </ItemsRepeater.Layout>
                 </ItemsRepeater>
             </Grid>
@@ -70,7 +70,7 @@
 
                 <TextBlock
                     x:Uid="Results_Subtitle_TaskDetail"
-                    FontSize="{StaticResource SubtitleTextBlockFontSize}"
+                    FontSize="{ThemeResource SubtitleTextBlockFontSize}"
                     FontWeight="Bold" />
 
                 <Grid Padding="16,8,16,0" Style="{StaticResource CardGridStyle}">
@@ -88,7 +88,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="{StaticResource ItemLeftWidth}" />
+                        <ColumnDefinition Width="{ThemeResource ItemLeftWidth}" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
@@ -161,8 +161,8 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Column="0" FontWeight="Bold">
-                        <Run x:Uid="Results_Subtitle_TaskResults" FontSize="{StaticResource SubtitleTextBlockFontSize}" />
-                        <Run FontSize="{StaticResource CaptionTextBlockFontSize}" Text="{x:Bind ViewModel.HashTask.Results.Count}" />
+                        <Run x:Uid="Results_Subtitle_TaskResults" FontSize="{ThemeResource SubtitleTextBlockFontSize}" />
+                        <Run FontSize="{ThemeResource CaptionTextBlockFontSize}" Text="{x:Bind ViewModel.HashTask.Results.Count}" />
                     </TextBlock>
 
                     <TextBox
@@ -180,7 +180,7 @@
                     ItemsSource="{x:Bind ViewModel.HashResultsFiltered, Mode=OneWay}"
                     Visibility="{x:Bind ViewModel.HashResultsVisibility, Mode=OneWay}">
                     <ItemsRepeater.Layout>
-                        <StackLayout Orientation="Vertical" Spacing="{StaticResource MediumSpacing}" />
+                        <StackLayout Orientation="Vertical" Spacing="{ThemeResource MediumSpacing}" />
                     </ItemsRepeater.Layout>
                 </ItemsRepeater>
 
