@@ -1,5 +1,8 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <!-- 缓解暗色模式下, 点击 PaneToggleButton 时, Panel 背景闪烁的问题. 首次点击时仍然存在闪烁问题. -->
+    <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Opacity="0">Transparent</SolidColorBrush>
+
     <Thickness x:Key="NavigationViewContentGridBorderThickness">1,1,0,0</Thickness>
     <CornerRadius x:Key="NavigationViewContentGridCornerRadius">8,0,0,0</CornerRadius>
     <Thickness x:Key="NavigationViewMinimalHeaderMargin">-80,0,0,0</Thickness>
