@@ -61,6 +61,8 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
 
     private void SetTheme()
     {
+        //TODO: 等待 Application.Current.RequestedTheme 的动态更改功能, https://github.com/microsoft/microsoft-ui-xaml/issues/4474
+
         if (App.MainWindow.Content is FrameworkElement rootElement)
         {
             rootElement.RequestedTheme = Theme;

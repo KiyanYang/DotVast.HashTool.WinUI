@@ -1,5 +1,6 @@
 using DotVast.HashTool.WinUI.Behaviors;
 using DotVast.HashTool.WinUI.Contracts.Services;
+using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.UserControls.Dialogs;
 
@@ -10,6 +11,13 @@ namespace DotVast.HashTool.WinUI.Services;
 
 internal class DialogService : IDialogService
 {
+    private readonly IAppearanceSettingsService _appearanceSettingsService;
+
+    public DialogService(IAppearanceSettingsService appearanceSettingsService)
+    {
+        _appearanceSettingsService = appearanceSettingsService;
+    }
+
     public async Task<ContentDialogResult> ShowInfoDialogAsync(string title, string closeButtonText)
     {
         var dialog = new ContentDialog
@@ -51,8 +59,10 @@ internal class DialogService : IDialogService
         return await dialog.ShowAsync();
     }
 
-    private static void SetupDialog(ContentDialog dialog)
+    private void SetupDialog(ContentDialog dialog)
     {
+        // TODO: 设置主题, 临时解决对话框主题问题 https://github.com/microsoft/microsoft-ui-xaml/issues/2331
+        dialog.RequestedTheme = _appearanceSettingsService.Theme;
         dialog.XamlRoot = App.MainWindow.Content.XamlRoot;
         Interaction.SetBehaviors(dialog, new() { new ContentDialogBehavior() });
     }
