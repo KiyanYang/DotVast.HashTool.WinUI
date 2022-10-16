@@ -28,7 +28,7 @@
                     <TextBox
                         Grid.Column="1"
                         IsSpellCheckEnabled="False"
-                        Text="{x:Bind ViewModel.InputtingContent, Mode=TwoWay}" />
+                        Text="{x:Bind ViewModel.InputtingContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <Grid Grid.Column="2">
                         <Button
                             x:Uid="Home_Button_Pick"

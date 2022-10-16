@@ -10,6 +10,9 @@ namespace DotVast.HashTool.WinUI.ViewModels;
 
 public partial class HomeViewModel
 {
+    private const char FilesSeparator = '|';
+    private const int MaxFilesCount = 100;
+
     [RelayCommand]
     private async Task PickAsync()
     {
@@ -26,7 +29,7 @@ public partial class HomeViewModel
                 var result = await picker.PickMultipleFilesAsync();
                 if (result != null)
                 {
-                    InputtingContent = string.Join('|', result.Select(r => r.Path));
+                    InputtingContent = string.Join(FilesSeparator, result.Take(MaxFilesCount).Select(r => r.Path));
                 }
             }
             else if (InputtingMode == HashTaskMode.Folder)
@@ -50,7 +53,10 @@ public partial class HomeViewModel
         }
     }
 
-    public bool CanExecuteStart => _computeHashService.Status == ComputeHashStatus.Free;
+    public bool CanExecuteStart => !(_computeHashService.Status != ComputeHashStatus.Free
+                    || HashOptions.All(h => h.IsChecked == false)
+                    || (InputtingMode == HashTaskMode.File && !FilesExists(InputtingContent))
+                    || (InputtingMode == HashTaskMode.Folder && !Directory.Exists(InputtingContent)));
 
     [RelayCommand(CanExecute = nameof(CanExecuteStart))]
     private async Task StartTaskAsync()
@@ -103,7 +109,7 @@ public partial class HomeViewModel
         var items = await view.GetStorageItemsAsync();
         if (items.Count > 0)
         {
-            InputtingContent = string.Join('|', items.Select(i => i.Path));
+            InputtingContent = string.Join(FilesSeparator, items.Take(MaxFilesCount).Select(i => i.Path));
         }
     }
 
@@ -118,11 +124,14 @@ public partial class HomeViewModel
             Id = _hashTaskId,
             DateTime = DateTime.Now,
             Mode = InputtingMode,
-            Content = InputtingMode == HashTaskMode.Text
-                ? InputtingContent
-                : string.Join('|', InputtingContent.Split('|').Select(i => i.Trim().Trim('"'))),
+            Content = InputtingMode switch
+            {
+                var m when m == HashTaskMode.Folder => PathTrim(InputtingContent),
+                var m when m == HashTaskMode.File => string.Join(FilesSeparator, InputtingContent.Split(FilesSeparator).Select(i => PathTrim(i))),
+                _ => InputtingContent,
+            },
             Encoding = InputtingTextEncoding.Encoding,
-            SelectedHashs = HashOptions.Where(i => i.IsChecked).Select(i => i.Hash).ToList(),
+            SelectedHashs = HashOptions.Where(i => i.IsChecked).Select(i => i.Hash).ToArray(),
             State = HashTaskState.Waiting,
         };
         _hashTaskId++;
@@ -146,29 +155,10 @@ public partial class HomeViewModel
                     break;
 
                 case var m when m == HashTaskMode.File:
-                    // 仅验证第一个文件是否存在, 以便尽快进入实际计算
-                    if (File.Exists(hashTask.Content.Split('|')[0]) == false)
-                    {
-                        hashTask.State = HashTaskState.Aborted;
-                        await _dialogService.ShowInfoDialogAsync(
-                            Localization.Dialog_HashTaskAborted_Title,
-                            Localization.Dialog_HashTaskAborted_FileNotExists,
-                            Localization.Dialog_Base_OK);
-                        return;
-                    }
                     await _computeHashService.HashFileAsync(hashTask, _mres, _cts.Token);
                     break;
 
                 case var m when m == HashTaskMode.Folder:
-                    if (Directory.Exists(hashTask.Content) == false)
-                    {
-                        hashTask.State = HashTaskState.Aborted;
-                        await _dialogService.ShowInfoDialogAsync(
-                            Localization.Dialog_HashTaskAborted_Title,
-                            Localization.Dialog_HashTaskAborted_FolderNotExists,
-                            Localization.Dialog_Base_OK);
-                        return;
-                    }
                     await _computeHashService.HashFolderAsync(hashTask, _mres, _cts.Token);
                     break;
             }
@@ -189,6 +179,27 @@ public partial class HomeViewModel
         {
             _cts.Dispose();
         }
+    }
+
+    /// <summary>
+    /// 修剪路径, 去除其前后空白和引号(").
+    /// </summary>
+    /// <param name="path">路径.</param>
+    /// <returns></returns>
+    private static string PathTrim(string path)
+    {
+        return path.Trim().Trim('"');
+    }
+
+    /// <summary>
+    /// 验证文件是否存在.
+    /// </summary>
+    /// <returns>文件均存在为 <see langword="true"/>, 否则为 <see langword="false"/>.</returns>
+    private static bool FilesExists(string paths)
+    {
+        return paths.Split(FilesSeparator)
+                    .Select(p => PathTrim(p))
+                    .All(p => File.Exists(p));
     }
 
     #endregion Helper

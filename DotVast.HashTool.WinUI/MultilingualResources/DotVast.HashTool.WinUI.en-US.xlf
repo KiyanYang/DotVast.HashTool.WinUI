@@ -22,16 +22,6 @@
           <source>HashTool Dev</source>
           <target state="translated">HashTool Dev</target>
         </trans-unit>
-        <trans-unit id="Dialog_HashTaskAborted_FileNotExists" translate="yes" xml:space="preserve">
-          <source>文件不存在，任务已中止。</source>
-          <target state="translated">File does not exist, task aborted.</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">提示文件不存在的任务中止对话框的内容</note>
-        </trans-unit>
-        <trans-unit id="Dialog_HashTaskAborted_FolderNotExists" translate="yes" xml:space="preserve">
-          <source>文件夹不存在，任务已中止。</source>
-          <target state="translated">Folder does not exist, task aborted.</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">提示文件夹不存在的任务中止对话框的内容</note>
-        </trans-unit>
         <trans-unit id="Dialog_HashTaskAborted_Title" translate="yes" xml:space="preserve">
           <source>任务中止</source>
           <target state="translated">Task Aborted</target>

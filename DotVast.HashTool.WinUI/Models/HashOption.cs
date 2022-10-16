@@ -5,6 +5,7 @@ public sealed partial class HashOption : ObservableRecipient
     public Hash Hash { get; }
 
     [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
     private bool _isChecked;
 
     [ObservableProperty]

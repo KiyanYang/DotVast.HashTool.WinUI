@@ -151,14 +151,6 @@
     <value>当前已是最新版本</value>
     <comment>用作标题, 不要标点符号</comment>
   </data>
-  <data name="Dialog_HashTaskAborted_FileNotExists" xml:space="preserve">
-    <value>文件不存在，任务已中止。</value>
-    <comment>提示文件不存在的任务中止对话框的内容</comment>
-  </data>
-  <data name="Dialog_HashTaskAborted_FolderNotExists" xml:space="preserve">
-    <value>文件夹不存在，任务已中止。</value>
-    <comment>提示文件夹不存在的任务中止对话框的内容</comment>
-  </data>
   <data name="Dialog_HashTaskAborted_Title" xml:space="preserve">
     <value>任务中止</value>
     <comment>任务中止对话框的标题</comment>

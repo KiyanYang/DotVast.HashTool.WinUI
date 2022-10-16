@@ -65,16 +65,31 @@ public sealed partial class HomeViewModel : ObservableRecipient
                     string.Format(Localization.Tip_FileSkipped_FileNotFound, m.Value)));
         });
 
-        // PropertyChangedMessage[HashOption.IsEnabled]
         Messenger.Register<HomeViewModel, PropertyChangedMessage<bool>>(this, (r, m) =>
         {
-            if (m.Sender is HashOption hashOption && m.PropertyName == nameof(HashOption.IsEnabled))
+            switch (m.Sender)
             {
-                Debug.WriteLine($"---------------- {DateTime.Now} -- HomeViewModel.Messenger.PropertyChangedMessage[HashOption.IsEnabled]");
-                Debug.WriteLine($"Hash.Name: {hashOption.Hash.Name}");
-                Debug.WriteLine($"IsEnabled:{hashOption.IsEnabled}");
-
-                OnPropertyChanged(nameof(HashOptions));
+                case HashOption hashOption:
+                    switch (m.PropertyName)
+                    {
+                        case nameof(HashOption.IsChecked):
+                            Debug.WriteLine($"---------------- {DateTime.Now} -- HomeViewModel.Messenger.PropertyChangedMessage[HashOption.IsChecked]");
+                            Debug.WriteLine($"Hash.Name: {hashOption.Hash.Name}");
+                            Debug.WriteLine($"IsChecked:{hashOption.IsEnabled}");
+                            StartTaskCommand.NotifyCanExecuteChanged();
+                            break;
+                        case nameof(HashOption.IsEnabled):
+                            Debug.WriteLine($"---------------- {DateTime.Now} -- HomeViewModel.Messenger.PropertyChangedMessage[HashOption.IsEnabled]");
+                            Debug.WriteLine($"Hash.Name: {hashOption.Hash.Name}");
+                            Debug.WriteLine($"IsEnabled:{hashOption.IsEnabled}");
+                            OnPropertyChanged(nameof(HashOptions));
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                default:
+                    break;
             }
         });
     }

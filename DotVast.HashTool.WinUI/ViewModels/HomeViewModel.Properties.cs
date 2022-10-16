@@ -14,12 +14,14 @@ public partial class HomeViewModel
     /// 当前界面输入的哈希任务模式.
     /// </summary>
     [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(StartTaskCommand))]
     private HashTaskMode _inputtingMode = HashTaskMode.File;
 
     /// <summary>
     /// 当前界面输入的哈希任务内容.
     /// </summary>
     [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(StartTaskCommand))]
     private string _inputtingContent = string.Empty;
 
     /// <summary>
