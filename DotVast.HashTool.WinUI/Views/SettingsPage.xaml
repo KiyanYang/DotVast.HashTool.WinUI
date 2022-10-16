@@ -85,7 +85,7 @@
                 <!-- 设置: 主题 -->
                 <dvhc:SettingItem x:Uid="SettingsPage_Theme">
                     <dvhc:SettingItem.Icon>
-                        <FontIcon Glyph="&#xE2B1;" />
+                        <FontIcon Glyph="&#xE790;" />
                     </dvhc:SettingItem.Icon>
                     <ComboBox
                         MinWidth="100"

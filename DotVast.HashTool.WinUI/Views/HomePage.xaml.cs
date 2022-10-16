@@ -1,3 +1,4 @@
+using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.ViewModels;
 
 using Microsoft.UI.Xaml.Controls;
@@ -26,5 +27,15 @@ public sealed partial class HomePage : Page
     private async void Page_Drop(object sender, Microsoft.UI.Xaml.DragEventArgs e)
     {
         await ViewModel.SetHashTaskContenFromDrag(e.DataView);
+    }
+
+    public static string? GetPickerFontIconGlyph(HashTaskMode mode)
+    {
+        return mode switch
+        {
+            var m when m == HashTaskMode.File => "\xE8E5",
+            var m when m == HashTaskMode.Folder => "\xE8DA",
+            _ => null,
+        };
     }
 }

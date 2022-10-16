@@ -206,9 +206,9 @@
   <data name="Home_Button_Pause" xml:space="preserve">
     <value>暂停</value>
   </data>
-  <data name="Home_Button_Pick.Content" xml:space="preserve">
-    <value>浏览...</value>
-    <comment>选择文件或文件夹</comment>
+  <data name="Home_Button_Pick" xml:space="preserve">
+    <value>浏览... (Ctrl+O)</value>
+    <comment>选择文件或文件夹; 快捷键 Ctrl+O</comment>
   </data>
   <data name="Home_Button_Resume" xml:space="preserve">
     <value>继续</value>

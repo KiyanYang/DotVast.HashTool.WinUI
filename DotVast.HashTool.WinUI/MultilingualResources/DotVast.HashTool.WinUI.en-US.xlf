@@ -75,11 +75,6 @@
           <source>暂停</source>
           <target state="translated">Pause</target>
         </trans-unit>
-        <trans-unit id="Home_Button_Pick.Content" translate="yes" xml:space="preserve">
-          <source>浏览...</source>
-          <target state="translated">Pick...</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">选择文件或文件夹</note>
-        </trans-unit>
         <trans-unit id="Home_Button_Resume" translate="yes" xml:space="preserve">
           <source>继续</source>
           <target state="translated">Resume</target>
@@ -287,6 +282,11 @@
         <trans-unit id="Dialog_GitHubUpdate_Failed" translate="yes" xml:space="preserve">
           <source>检查更新失败</source>
           <target state="translated">Failed to check for updates</target>
+        </trans-unit>
+        <trans-unit id="Home_Button_Pick" translate="yes" xml:space="preserve">
+          <source>浏览... (Ctrl+O)</source>
+          <target state="translated">Pick... (Ctrl+O)</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">选择文件或文件夹; 快捷键 Ctrl+O</note>
         </trans-unit>
       </group>
     </body>
