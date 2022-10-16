@@ -27,7 +27,7 @@ public partial class HomeViewModel
                 WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
 
                 var result = await picker.PickMultipleFilesAsync();
-                if (result != null)
+                if (result.Count > 0)
                 {
                     InputtingContent = string.Join(FilesSeparator, result.Take(MaxFilesCount).Select(r => r.Path));
                 }
