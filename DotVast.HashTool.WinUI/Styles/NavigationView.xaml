@@ -9,15 +9,15 @@
     <Thickness x:Key="NavigationViewHeaderMargin">0,0,0,0</Thickness>
     <Thickness x:Key="NavigationViewContentMargin">0,48,0,0</Thickness>
 
-    <Thickness x:Key="NavigationViewHeaderLargePadding">48,32,48,0</Thickness>
-    <Thickness x:Key="NavigationViewHeaderMediumPadding">36,32,36,0</Thickness>
-    <Thickness x:Key="NavigationViewHeaderSmallPadding">24,20,24,0</Thickness>
+    <Thickness x:Key="NavigationViewHeaderLargePadding">48,20,48,0</Thickness>
+    <Thickness x:Key="NavigationViewHeaderMediumPadding">36,20,36,0</Thickness>
+    <Thickness x:Key="NavigationViewHeaderSmallPadding">24,12,24,0</Thickness>
     <Thickness x:Key="NavigationViewBodyLargePadding">48,0</Thickness>
     <Thickness x:Key="NavigationViewBodyMediumPadding">36,0</Thickness>
     <Thickness x:Key="NavigationViewBodySmallPadding">24,0</Thickness>
 
     <Style x:Key="NavigationViewBodyContentStyle" TargetType="Grid">
-        <Setter Property="Margin" Value="0,24,0,36" />
+        <Setter Property="Margin" Value="0,16,0,36" />
         <Setter Property="Background" Value="Transparent" />
     </Style>
 

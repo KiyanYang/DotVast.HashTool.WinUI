@@ -75,7 +75,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
                         case nameof(HashOption.IsChecked):
                             Debug.WriteLine($"---------------- {DateTime.Now} -- HomeViewModel.Messenger.PropertyChangedMessage[HashOption.IsChecked]");
                             Debug.WriteLine($"Hash.Name: {hashOption.Hash.Name}");
-                            Debug.WriteLine($"IsChecked:{hashOption.IsEnabled}");
+                            Debug.WriteLine($"IsChecked:{hashOption.IsChecked}");
                             StartTaskCommand.NotifyCanExecuteChanged();
                             break;
                         case nameof(HashOption.IsEnabled):

@@ -24,7 +24,7 @@ public static class ResourceExtensions
     public static string GetLocalized(this string resourceKey) =>
         s_resourceMap.GetValue(resourceKey, s_resourceContext).ValueAsString;
 
-    public static bool TryAddFromVM<T>(this ResourceDictionary resources, Expression<Func<T>> expression)
+    public static bool TryAdd<T>(this ResourceDictionary resources, Expression<Func<T>> expression)
     {
         if (expression.Body is MemberExpression member)
         {

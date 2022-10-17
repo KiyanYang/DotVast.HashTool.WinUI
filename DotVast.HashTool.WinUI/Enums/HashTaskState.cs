@@ -1,7 +1,10 @@
+using System.Text.Json.Serialization;
+
 using DotVast.HashTool.WinUI.Core.Enums;
 
 namespace DotVast.HashTool.WinUI.Enums;
 
+[JsonConverter(typeof(JsonConverterFactoryForGenericEnumDerived))]
 public sealed class HashTaskState : GenericEnum<string>
 {
     /// <summary>

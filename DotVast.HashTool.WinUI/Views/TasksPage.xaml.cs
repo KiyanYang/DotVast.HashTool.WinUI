@@ -1,4 +1,5 @@
 using DotVast.HashTool.WinUI.Enums;
+using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.ViewModels;
 
@@ -13,6 +14,8 @@ public sealed partial class TasksPage : Page
     public TasksPage()
     {
         ViewModel = App.GetService<TasksViewModel>();
+        Resources.TryAdd(() => ViewModel.SaveCommand);
+        Resources.TryAdd(() => Localization.Command_Save_Tip);
         InitializeComponent();
     }
 

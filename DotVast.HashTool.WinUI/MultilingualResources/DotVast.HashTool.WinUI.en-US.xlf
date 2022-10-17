@@ -99,10 +99,6 @@
           <source>文本编码</source>
           <target state="translated">Encoding</target>
         </trans-unit>
-        <trans-unit id="Results_Detail_Id.Text" translate="yes" xml:space="preserve">
-          <source>序号</source>
-          <target state="translated">ID</target>
-        </trans-unit>
         <trans-unit id="Results_Detail_State.Text" translate="yes" xml:space="preserve">
           <source>状态</source>
           <target state="translated">State</target>
@@ -287,6 +283,11 @@
           <source>浏览... (Ctrl+O)</source>
           <target state="translated">Pick... (Ctrl+O)</target>
           <note from="MultilingualBuild" annotates="source" priority="2">选择文件或文件夹; 快捷键 Ctrl+O</note>
+        </trans-unit>
+        <trans-unit id="Command_Save_Tip" translate="yes" xml:space="preserve">
+          <source>保存 (Ctrl+S)</source>
+          <target state="translated">Save (Ctrl+S)</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">保存; 快捷键 Ctrl+S</note>
         </trans-unit>
       </group>
     </body>

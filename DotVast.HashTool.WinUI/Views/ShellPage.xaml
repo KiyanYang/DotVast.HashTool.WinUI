@@ -53,19 +53,15 @@
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
-            <NavigationView.HeaderTemplate>
-                <DataTemplate>
-                    <dvhc:NavigationViewHeader>
-                        <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="{Binding}" />
-                    </dvhc:NavigationViewHeader>
-                </DataTemplate>
-            </NavigationView.HeaderTemplate>
             <i:Interaction.Behaviors>
                 <behaviors:NavigationViewHeaderBehavior DefaultHeader="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=OneWay}">
                     <behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>
                         <DataTemplate>
                             <dvhc:NavigationViewHeader>
-                                <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="{Binding}" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Style="{ThemeResource TitleTextBlockStyle}"
+                                    Text="{Binding}" />
                             </dvhc:NavigationViewHeader>
                         </DataTemplate>
                     </behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>

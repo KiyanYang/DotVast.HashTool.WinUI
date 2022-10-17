@@ -11,7 +11,7 @@ public sealed partial class SettingsPage : Page
     public SettingsPage()
     {
         ViewModel = App.GetService<SettingsViewModel>();
-        Resources.TryAddFromVM(() => ViewModel.RestartAppCommand);
+        Resources.TryAdd(() => ViewModel.RestartAppCommand);
         InitializeComponent();
     }
 }

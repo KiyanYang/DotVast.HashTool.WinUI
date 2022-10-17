@@ -115,13 +115,10 @@ public partial class HomeViewModel
 
     #region Helper
 
-    private int _hashTaskId = 1;
-
     private HashTask CreateHashTask()
     {
-        HashTask hashTask = new()
+        return new()
         {
-            Id = _hashTaskId,
             DateTime = DateTime.Now,
             Mode = InputtingMode,
             Content = InputtingMode switch
@@ -130,12 +127,10 @@ public partial class HomeViewModel
                 var m when m == HashTaskMode.File => string.Join(FilesSeparator, InputtingContent.Split(FilesSeparator).Select(i => PathTrim(i))),
                 _ => InputtingContent,
             },
-            Encoding = InputtingTextEncoding.Encoding,
+            Encoding = InputtingMode == HashTaskMode.Text ? InputtingTextEncoding.Encoding : null,
             SelectedHashs = HashOptions.Where(i => i.IsChecked).Select(i => i.Hash).ToArray(),
             State = HashTaskState.Waiting,
         };
-        _hashTaskId++;
-        return hashTask;
     }
 
     private async Task ComputeHashAsync()

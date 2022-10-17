@@ -1,5 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 using DotVast.HashTool.WinUI.Enums;
 
@@ -7,11 +9,6 @@ namespace DotVast.HashTool.WinUI.Models;
 
 public sealed partial class HashTask : ObservableObject
 {
-    /// <summary>
-    /// ID.
-    /// </summary>
-    public int Id { get; set; }
-
     /// <summary>
     /// 任务创建时间.
     /// </summary>
@@ -33,6 +30,8 @@ public sealed partial class HashTask : ObservableObject
 
     public string Content { get; set; } = string.Empty;
 
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    [JsonConverter(typeof(EncodingJsonConverter))]
     public Encoding? Encoding { get; set; }
 
     public IList<Hash> SelectedHashs { get; init; } = Array.Empty<Hash>();
@@ -42,4 +41,20 @@ public sealed partial class HashTask : ObservableObject
     /// </summary>
     [ObservableProperty]
     private ObservableCollection<HashResult>? _results;
+
+    private sealed class EncodingJsonConverter : JsonConverter<Encoding?>
+    {
+        public override Encoding? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            var name = reader.GetString();
+            return Encoding.GetEncodings()
+                           .FirstOrDefault(e => string.Equals(name, e.Name, StringComparison.OrdinalIgnoreCase))?
+                           .GetEncoding();
+        }
+
+        public override void Write(Utf8JsonWriter writer, Encoding? value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(value?.WebName);
+        }
+    }
 }

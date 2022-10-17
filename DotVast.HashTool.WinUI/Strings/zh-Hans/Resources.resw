@@ -129,6 +129,10 @@
   <data name="AppDisplayNameDev" xml:space="preserve">
     <value>HashTool Dev</value>
   </data>
+  <data name="Command_Save_Tip" xml:space="preserve">
+    <value>保存 (Ctrl+S)</value>
+    <comment>保存; 快捷键 Ctrl+S</comment>
+  </data>
   <data name="Dialog_Base_Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
@@ -230,9 +234,6 @@
   </data>
   <data name="Results_Detail_Encoding.Text" xml:space="preserve">
     <value>文本编码</value>
-  </data>
-  <data name="Results_Detail_Id.Text" xml:space="preserve">
-    <value>序号</value>
   </data>
   <data name="Results_Detail_State.Text" xml:space="preserve">
     <value>状态</value>

@@ -13,7 +13,7 @@
                         Margin="{TemplateBinding Margin}"
                         Padding="{TemplateBinding Padding}"
                         Background="{TemplateBinding Background}">
-                        <ContentPresenter Content="{TemplateBinding Content}" />
+                        <ContentPresenter Height="48" Content="{TemplateBinding Content}" />
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="LayoutVisualStates">

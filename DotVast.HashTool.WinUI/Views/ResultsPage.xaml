@@ -104,15 +104,6 @@
                         ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}" />
 
                     <TextBlock
-                        x:Uid="Results_Detail_Id"
-                        Grid.Row="1"
-                        Grid.Column="0" />
-                    <TextBlock
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Text="{x:Bind ViewModel.HashTask.Id}" />
-
-                    <TextBlock
                         x:Uid="Results_Detail_CreatedDateTime"
                         Grid.Row="2"
                         Grid.Column="0" />

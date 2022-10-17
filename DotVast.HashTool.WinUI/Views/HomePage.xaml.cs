@@ -14,7 +14,7 @@ public sealed partial class HomePage : Page
     public HomePage()
     {
         ViewModel = App.GetService<HomeViewModel>();
-        Resources.TryAddFromVM(() => ViewModel.SaveHashOptionCommand);
+        Resources.TryAdd(() => ViewModel.SaveHashOptionCommand);
         InitializeComponent();
     }
 
