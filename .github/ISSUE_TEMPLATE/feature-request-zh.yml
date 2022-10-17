@@ -1,10 +1,9 @@
 name: 功能建议
 description: 为本项目创建一份合理可行的建议
-title: "[Feature]: "
 labels:
-  - "✨ enhancement"
+  - enhancement
 assignees:
-  - "KiyanYang"
+  - KiyanYang
 
 body:
   - type: textarea

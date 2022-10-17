@@ -1,8 +1,7 @@
 name: 问题报告
 description: 提交问题报告以帮助我们提高应用体验
-title: "[Bug]: "
 labels:
-  - "🐛 bug"
+  - bug
 assignees:
   - KiyanYang
 
@@ -63,7 +62,7 @@ body:
         打开“设置”搜索“Windows 规格”查看版本信息。
       value: |
         - 应用版本: v0.1.0
-        - 系统版本: Windows 11 21H2 (22623.746)
+        - 系统版本: Windows 11 22H2 (22623.746)
       render: Markdown
 
   - type: textarea
