@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:dvhc="using:DotVast.HashTool.WinUI.Controls"
+    xmlns:enums="using:DotVast.HashTool.WinUI.Enums"
     xmlns:helpers="using:DotVast.HashTool.WinUI.Helpers"
     xmlns:i18n="using:DotVast.HashTool.WinUI.Strings"
     xmlns:local="using:DotVast.HashTool.WinUI.Views"
@@ -11,6 +12,24 @@
     DragOver="Page_DragOver"
     Drop="Page_Drop"
     NavigationCacheMode="Required">
+
+    <Page.Resources>
+        <DataTemplate x:Key="ComboBoxNormal" x:DataType="enums:HashTaskMode">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <FontIcon Glyph="{x:Bind local:HomePage.GetHashTaskModeFontIconGlyph((enums:HashTaskMode))}" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="ComboBoxDropDown" x:DataType="enums:HashTaskMode">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <FontIcon Glyph="{x:Bind local:HomePage.GetHashTaskModeFontIconGlyph((enums:HashTaskMode))}" />
+                <TextBlock Text="{x:Bind}" />
+            </StackPanel>
+        </DataTemplate>
+        <local:ComboBoxIconDataTemplateSelector
+            x:Key="ComboBoxIconDataTemplateSelector"
+            DropDown="{StaticResource ComboBoxDropDown}"
+            Normal="{StaticResource ComboBoxNormal}" />
+    </Page.Resources>
 
     <dvhc:NavigationViewBodyScrollViewer>
         <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewBodyContentStyle}">
@@ -25,6 +44,7 @@
                     </Grid.ColumnDefinitions>
                     <ComboBox
                         Grid.Column="0"
+                        ItemTemplateSelector="{StaticResource ComboBoxIconDataTemplateSelector}"
                         ItemsSource="{x:Bind ViewModel.HashTaskModes}"
                         SelectedItem="{x:Bind ViewModel.InputtingMode, Mode=TwoWay}" />
                     <TextBox

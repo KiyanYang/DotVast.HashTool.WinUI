@@ -1,6 +1,7 @@
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.ViewModels;
 
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 using Windows.ApplicationModel.DataTransfer;
@@ -36,6 +37,21 @@ public sealed partial class HomePage : Page
             var m when m == HashTaskMode.File => "\xE8E5",
             var m when m == HashTaskMode.Folder => "\xE8DA",
             _ => null,
+        };
+    }
+}
+
+public sealed class ComboBoxIconDataTemplateSelector : DataTemplateSelector
+{
+    public DataTemplate? Normal { get; set; }
+    public DataTemplate? DropDown { get; set; }
+
+    protected override DataTemplate? SelectTemplateCore(object item, DependencyObject container)
+    {
+        return container switch
+        {
+            ContentPresenter => Normal,
+            _ => DropDown,
         };
     }
 }
