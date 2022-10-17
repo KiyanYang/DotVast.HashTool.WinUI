@@ -7,5 +7,5 @@ namespace DotVast.HashTool.WinUI.Services;
 
 internal class HashTaskService : IHashTaskService
 {
-    public IList<HashTask> HashTasks { get; } = new ObservableCollection<HashTask>();
+    public ObservableCollection<HashTask> HashTasks { get; } = new();
 }
