@@ -89,7 +89,6 @@
                     </dvhc:SettingItem.Icon>
                     <ComboBox
                         MinWidth="100"
-                        DisplayMemberPath="Name"
                         ItemsSource="{x:Bind ViewModel.Themes}"
                         SelectedItem="{x:Bind ViewModel.Theme, Mode=TwoWay}" />
                 </dvhc:SettingItem>

@@ -224,20 +224,15 @@ internal sealed partial class ComputeHashService : IComputeHashService
             _atomProgress.Report(1);
         }
 
-        HashResult hashResult = new()
-        {
-            Data = new List<HashResultItem>()
-        };
         foreach (var item in hashs)
         {
             item.Algorithm.TransformFinalBlock(buffer, 0, 0);
-            if (item.Algorithm.Hash is byte[] hashValue)
-            {
-                hashResult.Data.Add(MakeHashResultItem(item, item.Algorithm.Hash));
-            }
         }
 
-        return hashResult;
+        return new HashResult()
+        {
+            Data = hashs.Select(h => MakeHashResultItem(h, h.Algorithm.Hash!)).ToArray(),
+        };
     }
 
     private static HashResultItem MakeHashResultItem(Hash hash, byte[] data)

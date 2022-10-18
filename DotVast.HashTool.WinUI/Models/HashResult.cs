@@ -17,7 +17,7 @@ public sealed class HashResult
     /// <summary>
     /// 哈希结果.
     /// </summary>
-    public IList<HashResultItem>? Data { get; set; }
+    public IReadOnlyList<HashResultItem>? Data { get; set; }
 }
 
-public sealed record HashResultItem(string Name, string Hash);
+public readonly record struct HashResultItem(string Name, string Hash);

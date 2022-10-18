@@ -1,5 +1,6 @@
 using System.Text;
 
+using DotVast.HashTool.WinUI.Core.Enums;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Models.Controls;
@@ -35,7 +36,7 @@ public partial class HomeViewModel
     /// <summary>
     /// 哈希任务模式. 文件, 文件夹, 文本.
     /// </summary>
-    public HashTaskMode[] HashTaskModes { get; } = new[] { HashTaskMode.File, HashTaskMode.Folder, HashTaskMode.Text };
+    public HashTaskMode[] HashTaskModes { get; } = GenericEnum.GetFieldValues<HashTaskMode>();
 
     private IList<TextEncoding>? _textEncodings;
 

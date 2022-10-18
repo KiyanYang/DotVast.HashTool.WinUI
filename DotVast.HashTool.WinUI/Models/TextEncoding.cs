@@ -2,4 +2,4 @@ using System.Text;
 
 namespace DotVast.HashTool.WinUI.Models;
 
-public record TextEncoding(string Name, Encoding Encoding);
+public readonly record struct TextEncoding(string Name, Encoding Encoding);

@@ -1,5 +1,6 @@
 using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
+using DotVast.HashTool.WinUI.Core.Enums;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.Models;
@@ -42,14 +43,7 @@ public sealed partial class SettingsViewModel : ObservableRecipient
 
     #region Theme
 
-    public record AppTheme(string Name, ElementTheme Theme);
-
-    public IList<AppTheme> Themes { get; } = new AppTheme[]
-        {
-            new(Localization.Settings_Theme_Default, ElementTheme.Default),
-            new(Localization.Settings_Theme_Light, ElementTheme.Light),
-            new(Localization.Settings_Theme_Dark, ElementTheme.Dark),
-        };
+    public AppTheme[] Themes { get; } = GenericEnum.GetFieldValues<AppTheme>();
 
     [ObservableProperty]
     private AppTheme _theme;
