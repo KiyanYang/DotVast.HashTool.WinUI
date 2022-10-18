@@ -2,6 +2,7 @@
     x:Class="DotVast.HashTool.WinUI.Views.HomePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="using:DotVast.HashTool.WinUI.Behaviors"
     xmlns:dvhc="using:DotVast.HashTool.WinUI.Controls"
     xmlns:enums="using:DotVast.HashTool.WinUI.Enums"
     xmlns:helpers="using:DotVast.HashTool.WinUI.Helpers"
@@ -33,6 +34,20 @@
             DropDown="{StaticResource ComboBoxDropDown}"
             Normal="{StaticResource ComboBoxNormal}" />
     </Page.Resources>
+
+    <behaviors:NavigationViewHeaderBehavior.HeaderTemplate>
+        <DataTemplate>
+            <dvhc:NavigationViewHeader
+                AllowDrop="True"
+                DragOver="Page_DragOver"
+                Drop="Page_Drop">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Style="{ThemeResource TitleTextBlockStyle}"
+                    Text="{Binding}" />
+            </dvhc:NavigationViewHeader>
+        </DataTemplate>
+    </behaviors:NavigationViewHeaderBehavior.HeaderTemplate>
 
     <dvhc:NavigationViewBodyScrollViewer>
         <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewBodyContentStyle}">
