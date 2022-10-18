@@ -289,6 +289,11 @@
           <target state="translated">Save (Ctrl+S)</target>
           <note from="MultilingualBuild" annotates="source" priority="2">保存; 快捷键 Ctrl+S</note>
         </trans-unit>
+        <trans-unit id="Home_Button_FullContent_Tip" translate="yes" xml:space="preserve">
+          <source>展开输入</source>
+          <target state="translated">Expand the input box</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">用于展开主页输入文本框的切换按钮的提示</note>
+        </trans-unit>
       </group>
     </body>
   </file>

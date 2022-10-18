@@ -14,6 +14,9 @@
     NavigationCacheMode="Required">
 
     <Page.Resources>
+        <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
+            <Setter Property="IsSpellCheckEnabled" Value="False" />
+        </Style>
         <DataTemplate x:Key="ComboBoxNormal" x:DataType="enums:HashTaskMode">
             <StackPanel Orientation="Horizontal" Spacing="8">
                 <FontIcon Glyph="{x:Bind local:HomePage.GetHashTaskModeFontIconGlyph((enums:HashTaskMode))}" />
@@ -36,10 +39,11 @@
             <StackPanel Orientation="Vertical" Spacing="8">
 
                 <!-- 任务模式选择, 输入, 浏览按钮, 文本编码选择 -->
-                <Grid ColumnSpacing="8">
+                <Grid ColumnSpacing="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <ComboBox
@@ -48,10 +52,34 @@
                         ItemsSource="{x:Bind ViewModel.HashTaskModes}"
                         SelectedItem="{x:Bind ViewModel.InputtingMode, Mode=TwoWay}" />
                     <TextBox
+                        x:Name="InputtingContent"
                         Grid.Column="1"
-                        IsSpellCheckEnabled="False"
-                        Text="{x:Bind ViewModel.InputtingContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <Grid Grid.Column="2">
+                        AcceptsReturn="False"
+                        Text="{x:Bind ViewModel.InputtingContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="NoWrap" />
+                    <Popup
+                        x:Name="InputtingContentFullPopup"
+                        Grid.Column="1"
+                        IsLightDismissEnabled="True"
+                        IsOpen="{x:Bind helpers:XamlFunctionHelper.TrueIfTrue(InputtingContentToggleButton.IsChecked), Mode=OneWay}">
+                        <Border Background="{ThemeResource CardStrokeColorDefaultSolidBrush}" CornerRadius="{ThemeResource ControlCornerRadius}">
+                            <TextBox
+                                x:Name="InputtingContentFull"
+                                MinHeight="64"
+                                AcceptsReturn="True"
+                                Loaded="InputtingContentFull_Loaded"
+                                Text="{x:Bind ViewModel.InputtingContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                TextWrapping="Wrap" />
+                        </Border>
+                    </Popup>
+                    <ToggleButton
+                        x:Name="InputtingContentToggleButton"
+                        Grid.Column="2"
+                        IsChecked="{x:Bind InputtingContentFullPopup.IsOpen, Mode=OneWay}"
+                        ToolTipService.ToolTip="{x:Bind i18n:Localization.Home_Button_FullContent_Tip}">
+                        <FontIcon Glyph="&#xE740;" />
+                    </ToggleButton>
+                    <Grid Grid.Column="3">
                         <Button
                             Command="{x:Bind ViewModel.PickCommand}"
                             ToolTipService.ToolTip="{x:Bind i18n:Localization.Home_Button_Pick}"
@@ -138,7 +166,6 @@
                         x:Uid="HomePage_VerifyingHashBox"
                         Grid.Column="0"
                         FontFamily="{Binding Path=HashFontFamilyName, Source={StaticResource AppearanceSettingsService}}"
-                        IsSpellCheckEnabled="False"
                         Text="{x:Bind ViewModel.VerifyingHash1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBlock
                         Grid.Column="1"
@@ -150,7 +177,6 @@
                         x:Uid="HomePage_VerifyingHashBox"
                         Grid.Column="2"
                         FontFamily="{Binding Path=HashFontFamilyName, Source={StaticResource AppearanceSettingsService}}"
-                        IsSpellCheckEnabled="False"
                         Text="{x:Bind ViewModel.VerifyingHash2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
 

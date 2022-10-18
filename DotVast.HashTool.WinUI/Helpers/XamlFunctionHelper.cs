@@ -6,6 +6,9 @@ namespace DotVast.HashTool.WinUI.Helpers;
 
 public static class XamlFunctionHelper
 {
+    public static bool TrueIfTrue(object? obj) =>
+        (obj as bool?) == true;
+
     public static Visibility VisibleIfNotNull(object? obj) =>
         obj != null ? Visibility.Visible : Visibility.Collapsed;
 

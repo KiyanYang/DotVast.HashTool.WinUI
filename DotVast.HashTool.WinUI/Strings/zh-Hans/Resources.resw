@@ -207,6 +207,10 @@
   <data name="Home_Button_Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
+  <data name="Home_Button_FullContent_Tip" xml:space="preserve">
+    <value>展开输入</value>
+    <comment>用于展开主页输入文本框的切换按钮的提示</comment>
+  </data>
   <data name="Home_Button_Pause" xml:space="preserve">
     <value>暂停</value>
   </data>

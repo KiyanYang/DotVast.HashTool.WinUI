@@ -43,6 +43,7 @@
                 <TextBlock
                     Grid.Column="1"
                     IsTextSelectionEnabled="True"
+                    MaxLines="2"
                     Text="{x:Bind HashTask.Content}"
                     TextTrimming="CharacterEllipsis"
                     ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}" />

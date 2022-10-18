@@ -30,6 +30,27 @@ public sealed partial class HomePage : Page
         await ViewModel.SetHashTaskContenFromDrag(e.DataView);
     }
 
+    private void InputtingContentFull_Loaded(object sender, RoutedEventArgs e)
+    {
+        if (sender is TextBox box)
+        {
+            box.Width = InputtingContent.ActualWidth;
+        }
+    }
+
+    #region x:Bind Function
+
+    public static string? GetHashTaskModeFontIconGlyph(HashTaskMode mode)
+    {
+        return mode switch
+        {
+            var m when m == HashTaskMode.File => "\xE7C3",
+            var m when m == HashTaskMode.Folder => "\xE8B7",
+            var m when m == HashTaskMode.Text => "\xE8C1",
+            _ => null,
+        };
+    }
+
     public static string? GetPickerFontIconGlyph(HashTaskMode mode)
     {
         return mode switch
@@ -39,6 +60,8 @@ public sealed partial class HomePage : Page
             _ => null,
         };
     }
+
+    #endregion x:Bind Function
 }
 
 public sealed class ComboBoxIconDataTemplateSelector : DataTemplateSelector
