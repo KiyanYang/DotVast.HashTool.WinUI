@@ -47,10 +47,12 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <ComboBox
+                        x:Name="InputtingModeComboBox"
                         Grid.Column="0"
                         ItemTemplateSelector="{StaticResource ComboBoxIconDataTemplateSelector}"
                         ItemsSource="{x:Bind ViewModel.HashTaskModes}"
-                        SelectedItem="{x:Bind ViewModel.InputtingMode, Mode=TwoWay}" />
+                        SelectedItem="{x:Bind ViewModel.InputtingMode, Mode=TwoWay}"
+                        ToolTipService.ToolTip="{x:Bind InputtingModeComboBox.SelectedItem, Mode=OneWay}" />
                     <TextBox
                         x:Name="InputtingContent"
                         Grid.Column="1"
