@@ -18,11 +18,11 @@ public static class ResourceExtensions
         s_resourceManager = new();
         s_resourceContext = s_resourceManager.CreateResourceContext();
         s_resourceContext.QualifierValues["Language"] = ApplicationLanguages.PrimaryLanguageOverride;
-        s_resourceMap = s_resourceManager.MainResourceMap.GetSubtree("Resources");
+        s_resourceMap = s_resourceManager.MainResourceMap;
     }
 
-    public static string GetLocalized(this string resourceKey) =>
-        s_resourceMap.GetValue(resourceKey, s_resourceContext).ValueAsString;
+    public static string GetLocalized(this string resourceKey, string subtree = "Resources") =>
+        s_resourceMap.GetSubtree(subtree).GetValue(resourceKey, s_resourceContext).ValueAsString;
 
     public static bool TryAdd<T>(this ResourceDictionary resources, Expression<Func<T>> expression)
     {

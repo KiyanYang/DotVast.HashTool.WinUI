@@ -69,7 +69,7 @@
             <StackPanel Orientation="Vertical" Spacing="12">
 
                 <TextBlock
-                    x:Uid="Results_Subtitle_TaskDetail"
+                    x:Uid="ResultsPage_Subtitle_TaskDetail"
                     FontSize="{ThemeResource SubtitleTextBlockFontSize}"
                     FontWeight="Bold" />
 
@@ -104,7 +104,7 @@
                         ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}" />
 
                     <TextBlock
-                        x:Uid="Results_Detail_CreatedDateTime"
+                        x:Uid="ResultsPage_Detail_CreatedDateTime"
                         Grid.Row="2"
                         Grid.Column="0" />
                     <TextBlock
@@ -113,7 +113,7 @@
                         Text="{x:Bind ViewModel.HashTask.DateTime}" />
 
                     <TextBlock
-                        x:Uid="Results_Detail_Elapsed"
+                        x:Uid="ResultsPage_Detail_Elapsed"
                         Grid.Row="3"
                         Grid.Column="0" />
                     <TextBlock
@@ -122,7 +122,7 @@
                         Text="{x:Bind sys:String.Format('{0:N3} s', ViewModel.HashTask.Elapsed.TotalSeconds)}" />
 
                     <TextBlock
-                        x:Uid="Results_Detail_Encoding"
+                        x:Uid="ResultsPage_Detail_Encoding"
                         Grid.Row="4"
                         Grid.Column="0"
                         Visibility="{x:Bind helpers:XamlFunctionHelper.VisibleIfText(ViewModel.HashTask.Mode)}" />
@@ -133,7 +133,7 @@
                         Visibility="{x:Bind helpers:XamlFunctionHelper.VisibleIfText(ViewModel.HashTask.Mode)}" />
 
                     <TextBlock
-                        x:Uid="Results_Detail_State"
+                        x:Uid="ResultsPage_Detail_State"
                         Grid.Row="5"
                         Grid.Column="0" />
                     <TextBlock
@@ -152,12 +152,12 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Column="0" FontWeight="Bold">
-                        <Run x:Uid="Results_Subtitle_TaskResults" FontSize="{ThemeResource SubtitleTextBlockFontSize}" />
+                        <Run x:Uid="ResultsPage_Subtitle_TaskResults" FontSize="{ThemeResource SubtitleTextBlockFontSize}" />
                         <Run FontSize="{ThemeResource CaptionTextBlockFontSize}" Text="{x:Bind ViewModel.HashTask.Results.Count}" />
                     </TextBlock>
 
                     <TextBox
-                        x:Uid="Results_FilterByContent"
+                        x:Uid="ResultsPage_FilterByContent"
                         Grid.Column="1"
                         MinWidth="200"
                         HorizontalAlignment="Right"

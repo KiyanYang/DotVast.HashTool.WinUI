@@ -5,8 +5,6 @@ using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.Models;
 
-using Microsoft.UI.Xaml;
-
 namespace DotVast.HashTool.WinUI.ViewModels;
 
 public sealed partial class SettingsViewModel : ObservableRecipient
@@ -18,7 +16,6 @@ public sealed partial class SettingsViewModel : ObservableRecipient
     private readonly IDialogService _dialogService;
 
     public string AppVersionHeader { get; }
-    public string AppVersionDescription { get; }
 
     #region AlwaysOnTop
 
@@ -102,7 +99,6 @@ public sealed partial class SettingsViewModel : ObservableRecipient
 #else
         AppVersionHeader = $"{Localization.AppDisplayName} - {RuntimeHelper.AppVersion}";
 #endif
-        AppVersionDescription = Localization.SettingsPage_AppDescription;
     }
 
     [RelayCommand]
@@ -150,9 +146,9 @@ public sealed partial class SettingsViewModel : ObservableRecipient
         if (release == null)
         {
             await _dialogService.ShowInfoDialogAsync(
-                Localization.Dialog_GitHubUpdate_Failed,
-                Localization.Dialog_GitHubUpdate_CheckNetwork,
-                Localization.Dialog_Base_Close);
+                LocalizationDialog.GitHubUpdate_Failed,
+                LocalizationDialog.GitHubUpdate_CheckNetwork,
+                LocalizationDialog.Base_Close);
             return;
         }
 
@@ -163,8 +159,8 @@ public sealed partial class SettingsViewModel : ObservableRecipient
         else
         {
             await _dialogService.ShowInfoDialogAsync(
-                Localization.Dialog_GitHubUpdate_UpToDate,
-                Localization.Dialog_Base_Close);
+                LocalizationDialog.GitHubUpdate_UpToDate,
+                LocalizationDialog.Base_Close);
         }
     }
 }

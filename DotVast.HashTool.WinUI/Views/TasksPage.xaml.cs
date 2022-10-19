@@ -15,6 +15,7 @@ public sealed partial class TasksPage : Page
     {
         ViewModel = App.GetService<TasksViewModel>();
         Resources.TryAdd(() => ViewModel.SaveCommand);
+        Resources.TryAdd(() => ViewModel.ShowResultCommand);
         Resources.TryAdd(() => Localization.Command_Save_Tip);
         InitializeComponent();
     }

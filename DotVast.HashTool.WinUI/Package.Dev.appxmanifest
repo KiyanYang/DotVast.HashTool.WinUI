@@ -35,7 +35,7 @@
           EntryPoint="$targetentrypoint$">
             <uap:VisualElements
               DisplayName="ms-resource:AppDisplayNameDev"
-              Description="ms-resource:AppDescriptionDev"
+              Description="ms-resource:AppDescription"
               BackgroundColor="transparent"
               Square150x150Logo="Assets\Square150x150Logo.png"
               Square44x44Logo="Assets\AppImages\Square44x44Logo.png">

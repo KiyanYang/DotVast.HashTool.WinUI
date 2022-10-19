@@ -50,8 +50,8 @@ internal class DialogService : IDialogService
         var dialog = new GithubUpdateDialog
         {
             Release = release,
-            PrimaryButtonText = Localization.Dialog_GitHubUpdate_Download,
-            CloseButtonText = Localization.Dialog_Base_Close,
+            PrimaryButtonText = LocalizationDialog.GitHubUpdate_Download,
+            CloseButtonText = LocalizationDialog.Base_Close,
         };
 
         SetupDialog(dialog);

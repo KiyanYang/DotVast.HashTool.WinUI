@@ -37,17 +37,17 @@
             IsSettingsVisible="True"
             SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}">
             <NavigationView.MenuItems>
-                <NavigationViewItem x:Uid="Shell_Home" helpers:NavigationHelper.NavigateTo="DotVast.HashTool.WinUI.ViewModels.HomeViewModel">
+                <NavigationViewItem x:Uid="ShellPage_Home" helpers:NavigationHelper.NavigateTo="DotVast.HashTool.WinUI.ViewModels.HomeViewModel">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe80f;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_Tasks" helpers:NavigationHelper.NavigateTo="DotVast.HashTool.WinUI.ViewModels.TasksViewModel">
+                <NavigationViewItem x:Uid="ShellPage_Tasks" helpers:NavigationHelper.NavigateTo="DotVast.HashTool.WinUI.ViewModels.TasksViewModel">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xea37;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Uid="Shell_Results" helpers:NavigationHelper.NavigateTo="DotVast.HashTool.WinUI.ViewModels.ResultsViewModel">
+                <NavigationViewItem x:Uid="ShellPage_Results" helpers:NavigationHelper.NavigateTo="DotVast.HashTool.WinUI.ViewModels.ResultsViewModel">
                     <NavigationViewItem.Icon>
                         <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xf000;" />
                     </NavigationViewItem.Icon>

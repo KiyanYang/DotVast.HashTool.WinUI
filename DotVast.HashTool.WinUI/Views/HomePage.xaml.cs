@@ -22,7 +22,7 @@ public sealed partial class HomePage : Page
     private void Page_DragOver(object sender, Microsoft.UI.Xaml.DragEventArgs e)
     {
         e.AcceptedOperation = DataPackageOperation.Link;
-        e.DragUIOverride.Caption = Localization.HomePage_DargToSetPath;
+        e.DragUIOverride.Caption = Localization.Home_DargToSetPath;
     }
 
     private async void Page_Drop(object sender, Microsoft.UI.Xaml.DragEventArgs e)

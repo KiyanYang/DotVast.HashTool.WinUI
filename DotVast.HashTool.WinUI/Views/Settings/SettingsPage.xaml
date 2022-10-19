@@ -26,9 +26,9 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="{Binding}" />
                     <Button
-                        x:Uid="RestartApp"
                         Grid.Column="1"
                         Command="{StaticResource RestartAppCommand}"
+                        Content="{StaticResource Command_RestartApp}"
                         Visibility="Visible" />
                 </Grid>
             </dvhc:NavigationViewHeader>
@@ -61,7 +61,7 @@
 
                 <!-- 副标题: 个性化 -->
                 <TextBlock
-                    x:Uid="Settings_Personalization"
+                    x:Uid="SettingsPage_Personalization"
                     Margin="{ThemeResource SmallTopBottomMargin}"
                     Style="{ThemeResource SubtitleTextBlockStyle}" />
 
@@ -107,7 +107,7 @@
 
                 <!-- 副标题: 关于 -->
                 <TextBlock
-                    x:Uid="Settings_About"
+                    x:Uid="SettingsPage_About"
                     Margin="{ThemeResource SmallTopBottomMargin}"
                     Style="{ThemeResource SubtitleTextBlockStyle}" />
 
@@ -115,7 +115,7 @@
                 <Expander Style="{StaticResource SettingExpanderStyle}">
                     <Expander.Header>
                         <dvhc:SettingItem
-                            Description="{x:Bind ViewModel.AppVersionDescription}"
+                            Description="{x:Bind i18n:Localization.AppDescription}"
                             Header="{x:Bind ViewModel.AppVersionHeader}"
                             Style="{StaticResource ExpanderHeaderSettingItemStyle}">
                             <dvhc:SettingItem.Icon>
@@ -123,7 +123,7 @@
                             </dvhc:SettingItem.Icon>
                             <StackPanel Orientation="Horizontal" Spacing="16">
                                 <ProgressRing IsActive="{x:Bind ViewModel.IsCheckUpdateProgressActive, Mode=OneWay}" />
-                                <Button Command="{x:Bind ViewModel.CheckUpdateCommand}" Content="{x:Bind i18n:Localization.SettingsPage_CheckForUpdates}" />
+                                <Button Command="{x:Bind ViewModel.CheckUpdateCommand}" Content="{x:Bind i18n:Localization.Command_CheckForUpdates}" />
                             </StackPanel>
                         </dvhc:SettingItem>
                     </Expander.Header>

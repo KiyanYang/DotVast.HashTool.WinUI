@@ -13,6 +13,6 @@ public sealed partial class LicensesPage : Page
     {
         ViewModel = App.GetService<LicensesViewModel>();
         InitializeComponent();
-        NavigationViewHeaderBehavior.SetHeaderContext(this, Localization.Licenses_Header);
+        NavigationViewHeaderBehavior.SetHeaderContext(this, Localization.Licenses_Title);
     }
 }

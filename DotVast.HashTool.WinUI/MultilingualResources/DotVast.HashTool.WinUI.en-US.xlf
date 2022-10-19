@@ -7,12 +7,8 @@
     <body>
       <group id="DOTVAST.HASHTOOL.WINUI/STRINGS/ZH-HANS/RESOURCES.RESW" datatype="resx">
         <trans-unit id="AppDescription" translate="yes" xml:space="preserve">
-          <source>HashTool（基于 WinUI）</source>
-          <target state="translated">HashTool (Based on WinUI)</target>
-        </trans-unit>
-        <trans-unit id="AppDescriptionDev" translate="yes" xml:space="preserve">
-          <source>HashTool Dev（基于 WinUI）</source>
-          <target state="translated">HashTool Dev (Based on WinUI)</target>
+          <source>用于计算和校验文件、文件夹或文本哈希值的工具！</source>
+          <target state="translated">A Tool for Calculating and Verifying the Hash Value of Any File, Folder, or Text!</target>
         </trans-unit>
         <trans-unit id="AppDisplayName" translate="yes" xml:space="preserve">
           <source>HashTool</source>
@@ -21,11 +17,6 @@
         <trans-unit id="AppDisplayNameDev" translate="yes" xml:space="preserve">
           <source>HashTool Dev</source>
           <target state="translated">HashTool Dev</target>
-        </trans-unit>
-        <trans-unit id="Dialog_HashTaskAborted_Title" translate="yes" xml:space="preserve">
-          <source>任务中止</source>
-          <target state="translated">Task Aborted</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">任务中止对话框的标题</note>
         </trans-unit>
         <trans-unit id="HashResultType_File" translate="yes" xml:space="preserve">
           <source>文件</source>
@@ -83,34 +74,6 @@
           <source>开始</source>
           <target state="translated">Start</target>
         </trans-unit>
-        <trans-unit id="Licenses_Header" translate="yes" xml:space="preserve">
-          <source>许可</source>
-          <target state="translated">Licenses</target>
-        </trans-unit>
-        <trans-unit id="Results_Detail_CreatedDateTime.Text" translate="yes" xml:space="preserve">
-          <source>创建时间</source>
-          <target state="translated">Created</target>
-        </trans-unit>
-        <trans-unit id="Results_Detail_Elapsed.Text" translate="yes" xml:space="preserve">
-          <source>计算用时</source>
-          <target state="translated">Elapsed</target>
-        </trans-unit>
-        <trans-unit id="Results_Detail_Encoding.Text" translate="yes" xml:space="preserve">
-          <source>文本编码</source>
-          <target state="translated">Encoding</target>
-        </trans-unit>
-        <trans-unit id="Results_Detail_State.Text" translate="yes" xml:space="preserve">
-          <source>状态</source>
-          <target state="translated">State</target>
-        </trans-unit>
-        <trans-unit id="Results_Subtitle_TaskDetail.Text" translate="yes" xml:space="preserve">
-          <source>任务详情</source>
-          <target state="translated">Detail</target>
-        </trans-unit>
-        <trans-unit id="Results_Subtitle_TaskResults.Text" translate="yes" xml:space="preserve">
-          <source>任务结果</source>
-          <target state="translated">Results</target>
-        </trans-unit>
         <trans-unit id="SettingsPage_Licenses.Content" translate="yes" xml:space="preserve">
           <source>许可</source>
           <target state="translated">Licenses</target>
@@ -127,14 +90,6 @@
           <source>https://github.com/KiyanYang/DotVast.HashTool.WinUI/wiki/隐私声明</source>
           <target state="translated">https://github.com/KiyanYang/DotVast.HashTool.WinUI/wiki/Privacy-Statement</target>
         </trans-unit>
-        <trans-unit id="Settings_About.Text" translate="yes" xml:space="preserve">
-          <source>关于</source>
-          <target state="translated">About</target>
-        </trans-unit>
-        <trans-unit id="Settings_Personalization.Text" translate="yes" xml:space="preserve">
-          <source>个性化</source>
-          <target state="translated">Personalization</target>
-        </trans-unit>
         <trans-unit id="Settings_Theme_Dark" translate="yes" xml:space="preserve">
           <source>深色</source>
           <target state="translated">Dark</target>
@@ -146,36 +101,6 @@
         <trans-unit id="Settings_Theme_Light" translate="yes" xml:space="preserve">
           <source>浅色</source>
           <target state="translated">Light</target>
-        </trans-unit>
-        <trans-unit id="Shell_Home.Content" translate="yes" xml:space="preserve">
-          <source>主页</source>
-          <target state="translated">Home</target>
-        </trans-unit>
-        <trans-unit id="Shell_Results.Content" translate="yes" xml:space="preserve">
-          <source>结果</source>
-          <target state="translated">Results</target>
-        </trans-unit>
-        <trans-unit id="Shell_Tasks.Content" translate="yes" xml:space="preserve">
-          <source>任务</source>
-          <target state="translated">Tasks</target>
-        </trans-unit>
-        <trans-unit id="Tasks_ShowResult_Button.Content" translate="yes" xml:space="preserve">
-          <source>查看</source>
-          <target state="translated">Show</target>
-        </trans-unit>
-        <trans-unit id="Tasks_ShowResult_XamlUICommand.Description" translate="yes" xml:space="preserve">
-          <source>查看结果</source>
-          <target state="translated">Show Results</target>
-        </trans-unit>
-        <trans-unit id="Dialog_HashTaskAborted_UnauthorizedAccess" translate="yes" xml:space="preserve">
-          <source>未授权的访问，请考虑以管理员身份重试。</source>
-          <target state="translated">Unauthorized access. Please consider retrying as an administrator.</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">提示权限不足的任务中止对话框的内容</note>
-        </trans-unit>
-        <trans-unit id="HomePage_DargToSetPath" translate="yes" xml:space="preserve">
-          <source>设置路径</source>
-          <target state="translated">Set Path</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">主页面拖放项目以设置路径的标题</note>
         </trans-unit>
         <trans-unit id="SettingsPage_Language.Header" translate="yes" xml:space="preserve">
           <source>语言 (Language)</source>
@@ -209,14 +134,6 @@
           <source>已跳过文件</source>
           <target state="translated">File Skipped</target>
         </trans-unit>
-        <trans-unit id="RestartApp.Content" translate="yes" xml:space="preserve">
-          <source>重启应用</source>
-          <target state="translated">Restart App</target>
-        </trans-unit>
-        <trans-unit id="HashOptionSettingsPage_Header" translate="yes" xml:space="preserve">
-          <source>哈希选项</source>
-          <target state="translated">Hash Option</target>
-        </trans-unit>
         <trans-unit id="SettingsPage_HashOptions.Description" translate="yes" xml:space="preserve">
           <source>设置首页显示哪些哈希选项</source>
           <target state="translated">Set hash options which are displayed on the Home</target>
@@ -230,10 +147,6 @@
           <target state="translated">Hash to be compared</target>
           <note from="MultilingualBuild" annotates="source" priority="2">[主页] 哈希对比框的占位符</note>
         </trans-unit>
-        <trans-unit id="Results_FilterByContent.PlaceholderText" translate="yes" xml:space="preserve">
-          <source>筛选</source>
-          <target state="translated">Filter</target>
-        </trans-unit>
         <trans-unit id="SettingsPage_HashFontFamily.Description" translate="yes" xml:space="preserve">
           <source>设置显示哈希值的字体</source>
           <target state="translated">Set the font family to display the hash</target>
@@ -241,43 +154,6 @@
         <trans-unit id="SettingsPage_HashFontFamily.Header" translate="yes" xml:space="preserve">
           <source>哈希字体</source>
           <target state="translated">Hash FontFamily</target>
-        </trans-unit>
-        <trans-unit id="Dialog_Base_OK" translate="yes" xml:space="preserve">
-          <source>确定</source>
-          <target state="translated">OK</target>
-        </trans-unit>
-        <trans-unit id="Dialog_Base_Cancel" translate="yes" xml:space="preserve">
-          <source>取消</source>
-          <target state="translated">Cancel</target>
-        </trans-unit>
-        <trans-unit id="Dialog_Base_Close" translate="yes" xml:space="preserve">
-          <source>关闭</source>
-          <target state="translated">Close</target>
-        </trans-unit>
-        <trans-unit id="Dialog_GitHubUpdate_Download" translate="yes" xml:space="preserve">
-          <source>下载</source>
-          <target state="translated">Download</target>
-        </trans-unit>
-        <trans-unit id="SettingsPage_AppDescription" translate="yes" xml:space="preserve">
-          <source>用于计算和校验文件、文件夹或文本哈希值的工具！</source>
-          <target state="translated">A Tool for Calculating and Verifying the Hash Value of Any File, Folder, or Text!</target>
-        </trans-unit>
-        <trans-unit id="Dialog_GitHubUpdate_UpToDate" translate="yes" xml:space="preserve">
-          <source>当前已是最新版本</source>
-          <target state="translated">The App is up to date</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">用作标题, 不要标点符号</note>
-        </trans-unit>
-        <trans-unit id="SettingsPage_CheckForUpdates" translate="yes" xml:space="preserve">
-          <source>检查更新</source>
-          <target state="translated">Check for updates</target>
-        </trans-unit>
-        <trans-unit id="Dialog_GitHubUpdate_CheckNetwork" translate="yes" xml:space="preserve">
-          <source>请检查网络。</source>
-          <target state="translated">Please check the network.</target>
-        </trans-unit>
-        <trans-unit id="Dialog_GitHubUpdate_Failed" translate="yes" xml:space="preserve">
-          <source>检查更新失败</source>
-          <target state="translated">Failed to check for updates</target>
         </trans-unit>
         <trans-unit id="Home_Button_Pick" translate="yes" xml:space="preserve">
           <source>浏览... (Ctrl+O)</source>
@@ -298,6 +174,131 @@
           <source>包含预发行版本</source>
           <target state="translated">Include Pre-Release</target>
           <note from="MultilingualBuild" annotates="source" priority="2">检测更新时是否包含预发行版本</note>
+        </trans-unit>
+        <trans-unit id="HashOptionSettings_Title" translate="yes" xml:space="preserve">
+          <source>哈希选项</source>
+          <target state="translated">Hash Options</target>
+        </trans-unit>
+        <trans-unit id="Home_DargToSetPath" translate="yes" xml:space="preserve">
+          <source>设置路径</source>
+          <target state="translated">Set Path</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">主页面拖放项目以设置路径的标题</note>
+        </trans-unit>
+        <trans-unit id="Licenses_Title" translate="yes" xml:space="preserve">
+          <source>许可</source>
+          <target state="translated">Licenses</target>
+        </trans-unit>
+        <trans-unit id="Command_RestartApp" translate="yes" xml:space="preserve">
+          <source>重启应用</source>
+          <target state="translated">Restart App</target>
+        </trans-unit>
+        <trans-unit id="SettingsPage_Personalization.Text" translate="yes" xml:space="preserve">
+          <source>个性化</source>
+          <target state="translated">Personalization</target>
+        </trans-unit>
+        <trans-unit id="Command_CheckForUpdates" translate="yes" xml:space="preserve">
+          <source>检查更新</source>
+          <target state="translated">Check for updates</target>
+        </trans-unit>
+        <trans-unit id="SettingsPage_About.Text" translate="yes" xml:space="preserve">
+          <source>关于</source>
+          <target state="translated">About</target>
+        </trans-unit>
+        <trans-unit id="ShellPage_Home.Content" translate="yes" xml:space="preserve">
+          <source>主页</source>
+          <target state="translated">Home</target>
+        </trans-unit>
+        <trans-unit id="ShellPage_Results.Content" translate="yes" xml:space="preserve">
+          <source>结果</source>
+          <target state="translated">Results</target>
+        </trans-unit>
+        <trans-unit id="ShellPage_Tasks.Content" translate="yes" xml:space="preserve">
+          <source>任务</source>
+          <target state="translated">Tasks</target>
+        </trans-unit>
+        <trans-unit id="ResultsPage_Detail_CreatedDateTime.Text" translate="yes" xml:space="preserve">
+          <source>创建时间</source>
+          <target state="translated">Created</target>
+        </trans-unit>
+        <trans-unit id="ResultsPage_Detail_Elapsed.Text" translate="yes" xml:space="preserve">
+          <source>计算用时</source>
+          <target state="translated">Elapsed</target>
+        </trans-unit>
+        <trans-unit id="ResultsPage_Detail_Encoding.Text" translate="yes" xml:space="preserve">
+          <source>文本编码</source>
+          <target state="translated">Encoding</target>
+        </trans-unit>
+        <trans-unit id="ResultsPage_Detail_State.Text" translate="yes" xml:space="preserve">
+          <source>状态</source>
+          <target state="translated">State</target>
+        </trans-unit>
+        <trans-unit id="ResultsPage_FilterByContent.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>筛选</source>
+          <target state="translated">Filter</target>
+        </trans-unit>
+        <trans-unit id="ResultsPage_Subtitle_TaskDetail.Text" translate="yes" xml:space="preserve">
+          <source>任务详情</source>
+          <target state="translated">Detail</target>
+        </trans-unit>
+        <trans-unit id="ResultsPage_Subtitle_TaskResults.Text" translate="yes" xml:space="preserve">
+          <source>任务结果</source>
+          <target state="translated">Results</target>
+        </trans-unit>
+        <trans-unit id="TasksPage_ShowResult_Button.Content" translate="yes" xml:space="preserve">
+          <source>查看</source>
+          <target state="translated">Show</target>
+        </trans-unit>
+        <trans-unit id="TasksPage_ShowResult_Button.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>查看结果</source>
+          <target state="translated">Show Results</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+  <file datatype="xml" source-language="zh-Hans" target-language="en-US" original="DOTVAST.HASHTOOL.WINUI/STRINGS/ZH-HANS/DIALOGS.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="0.0.0.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="DOTVAST.HASHTOOL.WINUI/STRINGS/ZH-HANS/DIALOGS.RESW" datatype="resx">
+        <trans-unit id="Base_Cancel" translate="yes" xml:space="preserve">
+          <source>取消</source>
+          <target state="translated">Cancel</target>
+        </trans-unit>
+        <trans-unit id="Base_Close" translate="yes" xml:space="preserve">
+          <source>关闭</source>
+          <target state="translated">Close</target>
+        </trans-unit>
+        <trans-unit id="Base_OK" translate="yes" xml:space="preserve">
+          <source>确定</source>
+          <target state="translated">OK</target>
+        </trans-unit>
+        <trans-unit id="GitHubUpdate_CheckNetwork" translate="yes" xml:space="preserve">
+          <source>请检查网络。</source>
+          <target state="translated">Please check the network.</target>
+        </trans-unit>
+        <trans-unit id="GitHubUpdate_Download" translate="yes" xml:space="preserve">
+          <source>下载</source>
+          <target state="translated">Download</target>
+        </trans-unit>
+        <trans-unit id="GitHubUpdate_Failed" translate="yes" xml:space="preserve">
+          <source>检查更新失败</source>
+          <target state="translated">Failed to check for updates</target>
+        </trans-unit>
+        <trans-unit id="GitHubUpdate_UpToDate" translate="yes" xml:space="preserve">
+          <source>当前已是最新版本</source>
+          <target state="translated">The App is up to date</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">用作标题, 不要标点符号</note>
+        </trans-unit>
+        <trans-unit id="HashTaskAborted_Title" translate="yes" xml:space="preserve">
+          <source>任务中止</source>
+          <target state="translated">Task Aborted</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">任务中止对话框的标题</note>
+        </trans-unit>
+        <trans-unit id="HashTaskAborted_UnauthorizedAccess" translate="yes" xml:space="preserve">
+          <source>未授权的访问，请考虑以管理员身份重试。</source>
+          <target state="translated">Unauthorized access. Please consider retrying as an administrator.</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">提示权限不足的任务中止对话框的内容</note>
         </trans-unit>
       </group>
     </body>

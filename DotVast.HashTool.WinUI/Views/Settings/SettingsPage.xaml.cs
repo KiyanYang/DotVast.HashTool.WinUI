@@ -12,6 +12,7 @@ public sealed partial class SettingsPage : Page
     {
         ViewModel = App.GetService<SettingsViewModel>();
         Resources.TryAdd(() => ViewModel.RestartAppCommand);
+        Resources.TryAdd(() => Localization.Command_RestartApp);
         InitializeComponent();
     }
 }

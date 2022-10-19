@@ -118,10 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppDescription" xml:space="preserve">
-    <value>HashTool（基于 WinUI）</value>
-  </data>
-  <data name="AppDescriptionDev" xml:space="preserve">
-    <value>HashTool Dev（基于 WinUI）</value>
+    <value>用于计算和校验文件、文件夹或文本哈希值的工具！</value>
   </data>
   <data name="AppDisplayName" xml:space="preserve">
     <value>HashTool</value>
@@ -129,41 +126,17 @@
   <data name="AppDisplayNameDev" xml:space="preserve">
     <value>HashTool Dev</value>
   </data>
+  <data name="Command_CheckForUpdates" xml:space="preserve">
+    <value>检查更新</value>
+  </data>
+  <data name="Command_RestartApp" xml:space="preserve">
+    <value>重启应用</value>
+  </data>
   <data name="Command_Save_Tip" xml:space="preserve">
     <value>保存 (Ctrl+S)</value>
     <comment>保存; 快捷键 Ctrl+S</comment>
   </data>
-  <data name="Dialog_Base_Cancel" xml:space="preserve">
-    <value>取消</value>
-  </data>
-  <data name="Dialog_Base_Close" xml:space="preserve">
-    <value>关闭</value>
-  </data>
-  <data name="Dialog_Base_OK" xml:space="preserve">
-    <value>确定</value>
-  </data>
-  <data name="Dialog_GitHubUpdate_CheckNetwork" xml:space="preserve">
-    <value>请检查网络。</value>
-  </data>
-  <data name="Dialog_GitHubUpdate_Download" xml:space="preserve">
-    <value>下载</value>
-  </data>
-  <data name="Dialog_GitHubUpdate_Failed" xml:space="preserve">
-    <value>检查更新失败</value>
-  </data>
-  <data name="Dialog_GitHubUpdate_UpToDate" xml:space="preserve">
-    <value>当前已是最新版本</value>
-    <comment>用作标题, 不要标点符号</comment>
-  </data>
-  <data name="Dialog_HashTaskAborted_Title" xml:space="preserve">
-    <value>任务中止</value>
-    <comment>任务中止对话框的标题</comment>
-  </data>
-  <data name="Dialog_HashTaskAborted_UnauthorizedAccess" xml:space="preserve">
-    <value>未授权的访问，请考虑以管理员身份重试。</value>
-    <comment>提示权限不足的任务中止对话框的内容</comment>
-  </data>
-  <data name="HashOptionSettingsPage_Header" xml:space="preserve">
+  <data name="HashOptionSettings_Title" xml:space="preserve">
     <value>哈希选项</value>
   </data>
   <data name="HashResultType_File" xml:space="preserve">
@@ -196,10 +169,6 @@
   <data name="HashTaskState_Working" xml:space="preserve">
     <value>计算中</value>
   </data>
-  <data name="HomePage_DargToSetPath" xml:space="preserve">
-    <value>设置路径</value>
-    <comment>主页面拖放项目以设置路径的标题</comment>
-  </data>
   <data name="HomePage_VerifyingHashBox.PlaceholderText" xml:space="preserve">
     <value>要对比的哈希值</value>
     <comment>[主页] 哈希对比框的占位符</comment>
@@ -224,44 +193,42 @@
   <data name="Home_Button_Start" xml:space="preserve">
     <value>开始</value>
   </data>
-  <data name="Licenses_Header" xml:space="preserve">
+  <data name="Home_DargToSetPath" xml:space="preserve">
+    <value>设置路径</value>
+    <comment>主页面拖放项目以设置路径的标题</comment>
+  </data>
+  <data name="Licenses_Title" xml:space="preserve">
     <value>许可</value>
   </data>
-  <data name="RestartApp.Content" xml:space="preserve">
-    <value>重启应用</value>
-  </data>
-  <data name="Results_Detail_CreatedDateTime.Text" xml:space="preserve">
+  <data name="ResultsPage_Detail_CreatedDateTime.Text" xml:space="preserve">
     <value>创建时间</value>
   </data>
-  <data name="Results_Detail_Elapsed.Text" xml:space="preserve">
+  <data name="ResultsPage_Detail_Elapsed.Text" xml:space="preserve">
     <value>计算用时</value>
   </data>
-  <data name="Results_Detail_Encoding.Text" xml:space="preserve">
+  <data name="ResultsPage_Detail_Encoding.Text" xml:space="preserve">
     <value>文本编码</value>
   </data>
-  <data name="Results_Detail_State.Text" xml:space="preserve">
+  <data name="ResultsPage_Detail_State.Text" xml:space="preserve">
     <value>状态</value>
   </data>
-  <data name="Results_FilterByContent.PlaceholderText" xml:space="preserve">
+  <data name="ResultsPage_FilterByContent.PlaceholderText" xml:space="preserve">
     <value>筛选</value>
   </data>
-  <data name="Results_Subtitle_TaskDetail.Text" xml:space="preserve">
+  <data name="ResultsPage_Subtitle_TaskDetail.Text" xml:space="preserve">
     <value>任务详情</value>
   </data>
-  <data name="Results_Subtitle_TaskResults.Text" xml:space="preserve">
+  <data name="ResultsPage_Subtitle_TaskResults.Text" xml:space="preserve">
     <value>任务结果</value>
+  </data>
+  <data name="SettingsPage_About.Text" xml:space="preserve">
+    <value>关于</value>
   </data>
   <data name="SettingsPage_AlwaysOnTop.Description" xml:space="preserve">
     <value>设置应用窗口是否总是置顶</value>
   </data>
   <data name="SettingsPage_AlwaysOnTop.Header" xml:space="preserve">
     <value>窗口置顶</value>
-  </data>
-  <data name="SettingsPage_AppDescription" xml:space="preserve">
-    <value>用于计算和校验文件、文件夹或文本哈希值的工具！</value>
-  </data>
-  <data name="SettingsPage_CheckForUpdates" xml:space="preserve">
-    <value>检查更新</value>
   </data>
   <data name="SettingsPage_HashFontFamily.Description" xml:space="preserve">
     <value>设置显示哈希值的字体</value>
@@ -291,6 +258,9 @@
   <data name="SettingsPage_Logs.Content" xml:space="preserve">
     <value>日志</value>
   </data>
+  <data name="SettingsPage_Personalization.Text" xml:space="preserve">
+    <value>个性化</value>
+  </data>
   <data name="SettingsPage_PrivacyTermsLink.Content" xml:space="preserve">
     <value>隐私声明</value>
   </data>
@@ -303,12 +273,6 @@
   <data name="SettingsPage_Theme.Header" xml:space="preserve">
     <value>主题</value>
   </data>
-  <data name="Settings_About.Text" xml:space="preserve">
-    <value>关于</value>
-  </data>
-  <data name="Settings_Personalization.Text" xml:space="preserve">
-    <value>个性化</value>
-  </data>
   <data name="Settings_Theme_Dark" xml:space="preserve">
     <value>深色</value>
   </data>
@@ -318,20 +282,20 @@
   <data name="Settings_Theme_Light" xml:space="preserve">
     <value>浅色</value>
   </data>
-  <data name="Shell_Home.Content" xml:space="preserve">
+  <data name="ShellPage_Home.Content" xml:space="preserve">
     <value>主页</value>
   </data>
-  <data name="Shell_Results.Content" xml:space="preserve">
+  <data name="ShellPage_Results.Content" xml:space="preserve">
     <value>结果</value>
   </data>
-  <data name="Shell_Tasks.Content" xml:space="preserve">
+  <data name="ShellPage_Tasks.Content" xml:space="preserve">
     <value>任务</value>
   </data>
-  <data name="Tasks_ShowResult_Button.Content" xml:space="preserve">
-    <value>查看</value>
-  </data>
-  <data name="Tasks_ShowResult_XamlUICommand.Description" xml:space="preserve">
+  <data name="TasksPage_ShowResult_Button.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>查看结果</value>
+  </data>
+  <data name="TasksPage_ShowResult_Button.Content" xml:space="preserve">
+    <value>查看</value>
   </data>
   <data name="Tip_FileSkipped_FileNotFound" xml:space="preserve">
     <value>文件 “{0}” 未找到，已跳过。</value>

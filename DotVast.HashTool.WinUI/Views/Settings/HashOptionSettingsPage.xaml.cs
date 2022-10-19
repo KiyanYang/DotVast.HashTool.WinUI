@@ -15,7 +15,7 @@ public sealed partial class HashOptionSettingsPage : Page
     {
         ViewModel = App.GetService<HashOptionSettingsViewModel>();
         InitializeComponent();
-        NavigationViewHeaderBehavior.SetHeaderContext(this, Localization.HashOptionSettingsPage_Header);
+        NavigationViewHeaderBehavior.SetHeaderContext(this, Localization.HashOptionSettings_Title);
     }
 
     private void ItemsWrapGrid_SizeChanged(object sender, Microsoft.UI.Xaml.SizeChangedEventArgs e)
