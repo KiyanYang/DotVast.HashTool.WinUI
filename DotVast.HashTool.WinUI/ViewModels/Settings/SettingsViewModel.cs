@@ -13,6 +13,7 @@ public sealed partial class SettingsViewModel : ObservableRecipient
 {
     private readonly INavigationService _navigationService;
     private readonly IAppearanceSettingsService _appearanceSettingsService;
+    private readonly IPreferencesSettingsService _preferencesSettingsService;
     private readonly ICheckUpdateService _checkUpdateService;
     private readonly IDialogService _dialogService;
 
@@ -63,14 +64,26 @@ public sealed partial class SettingsViewModel : ObservableRecipient
 
     #endregion HashFontFamily
 
+    #region IncludePreRelease
+
+    [ObservableProperty]
+    private bool _includePreRelease;
+
+    partial void OnIncludePreReleaseChanged(bool value) =>
+    _preferencesSettingsService.IncludePreRelease = value;
+
+    #endregion IncludePreRelease
+
     public SettingsViewModel(
         INavigationService navigationService,
         IAppearanceSettingsService appearanceSettingsService,
+        IPreferencesSettingsService preferencesSettingsService,
         ICheckUpdateService checkUpdateService,
         IDialogService dialogService)
     {
         _navigationService = navigationService;
         _appearanceSettingsService = appearanceSettingsService;
+        _preferencesSettingsService = preferencesSettingsService;
         _checkUpdateService = checkUpdateService;
         _dialogService = dialogService;
 
@@ -81,6 +94,8 @@ public sealed partial class SettingsViewModel : ObservableRecipient
         _theme = Themes.First(x => x.Theme == _appearanceSettingsService.Theme);
 
         _hashFontFamilyName = _appearanceSettingsService.HashFontFamilyName;
+
+        _includePreRelease = _preferencesSettingsService.IncludePreRelease;
 
 #if DEBUG
         AppVersionHeader = $"{Localization.AppDisplayNameDev} - {RuntimeHelper.AppVersion}";
@@ -128,8 +143,7 @@ public sealed partial class SettingsViewModel : ObservableRecipient
             _isUpdateChecked = true;
         }
 
-        // TODO: 增加“是否检测预览版”设置
-        var release = await _checkUpdateService.GetLatestGitHubReleaseAsync(true);
+        var release = await _checkUpdateService.GetLatestGitHubReleaseAsync(IncludePreRelease);
 
         IsCheckUpdateProgressActive = false;
 

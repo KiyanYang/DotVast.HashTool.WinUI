@@ -11,6 +11,7 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
     public async override Task InitializeAsync()
     {
         await InitializeHashOptions();
+        _includePreRelease = await LoadAsync(nameof(IncludePreRelease), false);
     }
 
     public async override Task StartupAsync()
@@ -18,6 +19,7 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
         await Task.CompletedTask;
     }
 
+    #region HashOptions
     public ObservableCollection<HashOption> HashOptions { get; } = new();
 
     private async Task InitializeHashOptions()
@@ -40,4 +42,14 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
     {
         await SaveAsync(HashOptions, nameof(HashOptions));
     }
+    #endregion HashOptions
+
+    #region IncludePreRelease
+    private bool _includePreRelease;
+    public bool IncludePreRelease
+    {
+        get => _includePreRelease;
+        set => SetAndSave(ref _includePreRelease, value);
+    }
+    #endregion IncludePreRelease
 }

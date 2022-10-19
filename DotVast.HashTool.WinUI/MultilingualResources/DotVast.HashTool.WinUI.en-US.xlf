@@ -294,6 +294,11 @@
           <target state="translated">Expand the input box</target>
           <note from="MultilingualBuild" annotates="source" priority="2">用于展开主页输入文本框的切换按钮的提示</note>
         </trans-unit>
+        <trans-unit id="SettingsPage_IncludePreRelease.Header" translate="yes" xml:space="preserve">
+          <source>包含预发行版本</source>
+          <target state="translated">Include Pre-Release</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">检测更新时是否包含预发行版本</note>
+        </trans-unit>
       </group>
     </body>
   </file>

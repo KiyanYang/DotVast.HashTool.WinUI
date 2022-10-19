@@ -275,6 +275,10 @@
   <data name="SettingsPage_HashOptions.Header" xml:space="preserve">
     <value>哈希选项</value>
   </data>
+  <data name="SettingsPage_IncludePreRelease.Header" xml:space="preserve">
+    <value>包含预发行版本</value>
+    <comment>检测更新时是否包含预发行版本</comment>
+  </data>
   <data name="SettingsPage_Language.Description" xml:space="preserve">
     <value>更改应用中显示的语言</value>
   </data>

@@ -111,16 +111,26 @@
                     Margin="{ThemeResource SmallTopBottomMargin}"
                     Style="{ThemeResource SubtitleTextBlockStyle}" />
 
-                <!-- 关于: 版本 -->
-                <dvhc:SettingItem Description="{x:Bind ViewModel.AppVersionDescription}" Header="{x:Bind ViewModel.AppVersionHeader}">
-                    <dvhc:SettingItem.Icon>
-                        <FontIcon Glyph="&#xE895;" />
-                    </dvhc:SettingItem.Icon>
-                    <StackPanel Orientation="Horizontal" Spacing="16">
-                        <ProgressRing IsActive="{x:Bind ViewModel.IsCheckUpdateProgressActive, Mode=OneWay}" />
-                        <Button Command="{x:Bind ViewModel.CheckUpdateCommand}" Content="{x:Bind i18n:Localization.SettingsPage_CheckForUpdates}" />
-                    </StackPanel>
-                </dvhc:SettingItem>
+                <!-- 检查更新 -->
+                <Expander Style="{StaticResource SettingExpanderStyle}">
+                    <Expander.Header>
+                        <dvhc:SettingItem
+                            Description="{x:Bind ViewModel.AppVersionDescription}"
+                            Header="{x:Bind ViewModel.AppVersionHeader}"
+                            Style="{StaticResource ExpanderHeaderSettingItemStyle}">
+                            <dvhc:SettingItem.Icon>
+                                <FontIcon Glyph="&#xE895;" />
+                            </dvhc:SettingItem.Icon>
+                            <StackPanel Orientation="Horizontal" Spacing="16">
+                                <ProgressRing IsActive="{x:Bind ViewModel.IsCheckUpdateProgressActive, Mode=OneWay}" />
+                                <Button Command="{x:Bind ViewModel.CheckUpdateCommand}" Content="{x:Bind i18n:Localization.SettingsPage_CheckForUpdates}" />
+                            </StackPanel>
+                        </dvhc:SettingItem>
+                    </Expander.Header>
+                    <dvhc:SettingItem x:Uid="SettingsPage_IncludePreRelease" Style="{StaticResource ExpanderContentSettingItemStyle}">
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.IncludePreRelease, Mode=TwoWay}" />
+                    </dvhc:SettingItem>
+                </Expander>
 
                 <StackPanel>
                     <StackPanel.Resources>

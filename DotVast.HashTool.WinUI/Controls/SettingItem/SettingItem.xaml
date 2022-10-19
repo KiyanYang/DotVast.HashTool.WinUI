@@ -23,11 +23,8 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="{TemplateBinding CornerRadius}">
                         <Grid.ColumnDefinitions>
-                            <!-- Icon -->
-                            <ColumnDefinition Width="Auto" />
-                            <!-- Header and Description -->
+                            <ColumnDefinition x:Name="IconColumnDefinition" Width="46" />
                             <ColumnDefinition Width="*" MinWidth="140" />
-                            <!-- Action Control -->
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
@@ -70,6 +67,15 @@
                                 <VisualState x:Name="NoIconState">
                                     <VisualState.Setters>
                                         <Setter Target="IconPresenter.Visibility" Value="Collapsed" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+
+                            <VisualStateGroup x:Name="IconColumnStates">
+                                <VisualState x:Name="IconColumnState" />
+                                <VisualState x:Name="NoIconColumnState">
+                                    <VisualState.Setters>
+                                        <Setter Target="IconColumnDefinition.Width" Value="0" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>

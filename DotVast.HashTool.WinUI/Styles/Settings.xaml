@@ -1,0 +1,41 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dvc="using:DotVast.HashTool.WinUI.Controls">
+
+    <Style x:Key="SettingExpanderStyle" TargetType="Expander">
+        <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+        <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    </Style>
+
+    <Style x:Key="ExpanderHeaderSettingItemStyle" TargetType="dvc:SettingItem">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Margin" Value="0,0,-16,0" />
+        <Setter Property="Padding" Value="0,12" />
+        <Setter Property="MinHeight" Value="66" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+    </Style>
+
+    <Style x:Key="ExpanderContentSettingItemStyle" TargetType="dvc:SettingItem">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius" Value="0" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="16,4,44,4" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="ShowPlaceholderIcon" Value="True" />
+    </Style>
+
+    <Style x:Key="ExpanderContentSeparatorStyle" TargetType="Rectangle">
+        <Setter Property="Height" Value="1" />
+        <Setter Property="Stroke" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+    </Style>
+
+</ResourceDictionary>

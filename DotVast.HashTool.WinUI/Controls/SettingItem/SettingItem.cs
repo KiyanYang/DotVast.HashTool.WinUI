@@ -23,6 +23,12 @@ public sealed class SettingItem : ContentControl
         typeof(SettingItem),
         new PropertyMetadata(null, (d, e) => ((SettingItem)d).UpdateIconState()));
 
+    public static readonly DependencyProperty ShowPlaceholderIconProperty = DependencyProperty.Register(
+        nameof(ShowPlaceholderIcon),
+        typeof(bool),
+        typeof(SettingItem),
+        new PropertyMetadata(false, (d, e) => ((SettingItem)d).UpdateIconColumnState()));
+
     public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register(
        nameof(Header),
        typeof(string),
@@ -35,10 +41,16 @@ public sealed class SettingItem : ContentControl
         typeof(SettingItem),
         new PropertyMetadata(null, (d, e) => ((SettingItem)d).UpdateDescriptionState()));
 
-    public object Icon
+    public object? Icon
     {
         get => GetValue(IconProperty);
         set => SetValue(IconProperty, value);
+    }
+
+    public bool ShowPlaceholderIcon
+    {
+        get => (bool)GetValue(ShowPlaceholderIconProperty);
+        set => SetValue(ShowPlaceholderIconProperty, value);
     }
 
     [Localizable(true)]
@@ -63,6 +75,7 @@ public sealed class SettingItem : ContentControl
         _settingItem = this;
         _contentPresenter = (ContentPresenter)_settingItem.GetTemplateChild("ContentPresenter");
         UpdateIconState();
+        UpdateIconColumnState();
         UpdateDescriptionState();
         SizeChanged += SettingItem_SizeChanged;
         base.OnApplyTemplate();
@@ -70,14 +83,7 @@ public sealed class SettingItem : ContentControl
 
     private void SettingItem_SizeChanged(object sender, SizeChangedEventArgs e)
     {
-        if (App.MainWindow.Width <= 640)
-        {
-            UpdateIconState("NoIconState");
-        }
-        else
-        {
-            UpdateIconState();
-        }
+        UpdateIconColumnState();
 
         if (_settingItem != null && _contentPresenter != null)
         {
@@ -85,15 +91,19 @@ public sealed class SettingItem : ContentControl
         }
     }
 
-    private void UpdateIconState(string? defaultState = null)
+    private void UpdateIconState()
     {
-        if (defaultState != null)
-        {
-            VisualStateManager.GoToState(this, defaultState, true);
-            return;
-        }
-
         var state = Icon == null ? "NoIconState" : "IconState";
+        VisualStateManager.GoToState(this, state, true);
+    }
+
+    private void UpdateIconColumnState()
+    {
+        var state = (Icon, ShowPlaceholderIcon, App.MainWindow.Width) switch
+        {
+            (null, false, _) or (_, _, <= 640) => "NoIconColumnState",
+            _ => "IconColumnState",
+        };
         VisualStateManager.GoToState(this, state, true);
     }
 
