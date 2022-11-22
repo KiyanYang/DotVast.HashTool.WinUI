@@ -28,40 +28,40 @@ public sealed class JsonConverterFactoryForGenericEnumDerived : JsonConverterFac
             typeof(JsonConverterForGenericEnum<,>).MakeGenericType(new[] { enumType, valueType }),
             args: new[] { options })!;
     }
+}
 
-    private sealed class JsonConverterForGenericEnum<TEnum, TValue> : JsonConverter<TEnum>
-        where TEnum : GenericEnum<TValue>
+sealed file class JsonConverterForGenericEnum<TEnum, TValue> : JsonConverter<TEnum>
+    where TEnum : GenericEnum<TValue>
+{
+    private readonly Type _enumType;
+    private readonly Type _valueType;
+    private readonly JsonConverter<TValue> _valueConverter;
+    private readonly IList<TEnum> _enums;
+
+    [SuppressMessage("Style", "IDE1006:命名样式")]
+    private readonly Func<TEnum, TValue> _GetValue;
+
+    public JsonConverterForGenericEnum(JsonSerializerOptions options)
     {
-        private readonly Type _enumType;
-        private readonly Type _valueType;
-        private readonly JsonConverter<TValue> _valueConverter;
-        private readonly IList<TEnum> _enums;
+        _enumType = typeof(TEnum);
+        _valueType = typeof(TValue);
+        _valueConverter = (JsonConverter<TValue>)options.GetConverter(_valueType);
+        _enums = GenericEnum.GetFieldValues<TEnum>();
 
-        [SuppressMessage("Style", "IDE1006:命名样式")]
-        private readonly Func<TEnum, TValue> _GetValue;
+        var valueInfo = _enumType.BaseType!.GetField("_value", BindingFlags.Instance | BindingFlags.NonPublic)!;
+        var parameterExpression = Expression.Parameter(_enumType);
+        var valueBody = Expression.Field(parameterExpression, valueInfo);
+        _GetValue = Expression.Lambda<Func<TEnum, TValue>>(valueBody, parameterExpression).Compile();
+    }
 
-        public JsonConverterForGenericEnum(JsonSerializerOptions options)
-        {
-            _enumType = typeof(TEnum);
-            _valueType = typeof(TValue);
-            _valueConverter = (JsonConverter<TValue>)options.GetConverter(_valueType);
-            _enums = GenericEnum.GetFieldValues<TEnum>();
+    public override TEnum? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        var value = _valueConverter.Read(ref reader, _valueType, options);
+        return _enums.FirstOrDefault(i => EqualityComparer<TValue>.Default.Equals(_GetValue(i), value));
+    }
 
-            var valueInfo = _enumType.BaseType!.GetField("_value", BindingFlags.Instance | BindingFlags.NonPublic)!;
-            var parameterExpression = Expression.Parameter(_enumType);
-            var valueBody = Expression.Field(parameterExpression, valueInfo);
-            _GetValue = Expression.Lambda<Func<TEnum, TValue>>(valueBody, parameterExpression).Compile();
-        }
-
-        public override TEnum? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            var value = _valueConverter.Read(ref reader, _valueType, options);
-            return _enums.FirstOrDefault(i => EqualityComparer<TValue>.Default.Equals(_GetValue(i), value));
-        }
-
-        public override void Write(Utf8JsonWriter writer, TEnum value, JsonSerializerOptions options)
-        {
-            _valueConverter.Write(writer, _GetValue(value), options);
-        }
+    public override void Write(Utf8JsonWriter writer, TEnum value, JsonSerializerOptions options)
+    {
+        _valueConverter.Write(writer, _GetValue(value), options);
     }
 }
