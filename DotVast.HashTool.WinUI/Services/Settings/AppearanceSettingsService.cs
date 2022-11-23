@@ -11,7 +11,7 @@ namespace DotVast.HashTool.WinUI.Services.Settings;
 
 internal sealed partial class AppearanceSettingsService : BaseObservableSettings, IAppearanceSettingsService
 {
-    public async override Task InitializeAsync()
+    public override async Task InitializeAsync()
     {
         _hashFontFamilyName = await LoadAsync(nameof(HashFontFamilyName), "Consolas");
         _isAlwaysOnTop = await LoadAsync(nameof(IsAlwaysOnTop), false);
@@ -21,7 +21,7 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
                             .FirstOrDefault() ?? AppLanguage.ZhHans;
     }
 
-    public async override Task StartupAsync()
+    public override async Task StartupAsync()
     {
         SetIsAlwaysOnTop();
         SetTheme();

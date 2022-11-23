@@ -10,7 +10,7 @@ using Windows.ApplicationModel;
 
 namespace DotVast.HashTool.WinUI.Services;
 
-internal class CheckUpdateService : ICheckUpdateService
+internal partial class CheckUpdateService : ICheckUpdateService
 {
     private readonly HttpClient _client;
     private readonly ILogger<CheckUpdateService> _logger;

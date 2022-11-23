@@ -105,7 +105,7 @@ public sealed partial class SettingsViewModel : ObservableRecipient
     private void NavigateTo(string pageKey) => _navigationService.NavigateTo(pageKey);
 
     [RelayCommand]
-    private async void NavigateToLogsFolder()
+    private static async Task NavigateToLogsFolderAsync()
     {
         var localAppData = PathHelper.AppDataLocalPhysicalPath;
         var logsFilePath = App.GetOptions<LogsOptions>().Value.FilePath!;
@@ -114,7 +114,7 @@ public sealed partial class SettingsViewModel : ObservableRecipient
     }
 
     [RelayCommand]
-    private void RestartApp()
+    private static void RestartApp()
     {
         Microsoft.Windows.AppLifecycle.AppInstance.Restart(string.Empty);
     }

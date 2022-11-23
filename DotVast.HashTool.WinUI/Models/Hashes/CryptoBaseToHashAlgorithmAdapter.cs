@@ -14,20 +14,20 @@ internal sealed class CryptoBaseToHashAlgorithmAdapter : HashAlgorithm
         HashSizeValue = _hash.Length * 8;
     }
 
-    protected override sealed void HashCore(byte[] array, int ibStart, int cbSize) =>
+    protected sealed override void HashCore(byte[] array, int ibStart, int cbSize) =>
         _hash.Update(array.AsSpan().Slice(ibStart, cbSize));
 
-    protected override sealed byte[] HashFinal()
+    protected sealed override byte[] HashFinal()
     {
         var hashValue = new byte[_hash.Length];
         _hash.GetHash(hashValue.AsSpan());
         return hashValue;
     }
 
-    public override sealed void Initialize() =>
+    public sealed override void Initialize() =>
         _hash.Reset();
 
-    protected override sealed void Dispose(bool disposing)
+    protected sealed override void Dispose(bool disposing)
     {
         if (disposing)
         {

@@ -8,13 +8,13 @@ namespace DotVast.HashTool.WinUI.Services.Settings;
 
 internal sealed partial class PreferencesSettingsService : BaseObservableSettings, IPreferencesSettingsService
 {
-    public async override Task InitializeAsync()
+    public override async Task InitializeAsync()
     {
         await InitializeHashOptions();
         _includePreRelease = await LoadAsync(nameof(IncludePreRelease), false);
     }
 
-    public async override Task StartupAsync()
+    public override async Task StartupAsync()
     {
         await Task.CompletedTask;
     }

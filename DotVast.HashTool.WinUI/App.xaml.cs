@@ -128,7 +128,7 @@ public sealed partial class App : Application
         e.Handled = true;
     }
 
-    protected async override void OnLaunched(LaunchActivatedEventArgs args)
+    protected override async void OnLaunched(LaunchActivatedEventArgs args)
     {
 #if DEBUG
         if (Debugger.IsAttached)

@@ -157,7 +157,7 @@ internal sealed class QuickXorHash : System.Security.Cryptography.HashAlgorithm
         return rgb;
     }
 
-    public override sealed void Initialize()
+    public sealed override void Initialize()
     {
         _data = new ulong[(QuickXorHash.WidthInBits - 1) / 64 + 1];
         _shiftSoFar = 0;
