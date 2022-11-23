@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace DotVast.HashTool.WinUI.Models;
 
-public sealed class GitHubRelease
+public sealed partial class GitHubRelease
 {
     /// <summary>
     /// 网址.
@@ -23,7 +23,7 @@ public sealed class GitHubRelease
         set
         {
             _tagName = value;
-            var version = Regex.Match(value, @"^v?([\d\.]+)-?.*$").Groups[1].Value;
+            var version = TagRegex().Match(value).Groups[1].Value;
             Version = new Version(version);
         }
     }
@@ -54,4 +54,7 @@ public sealed class GitHubRelease
     /// </summary>
     [JsonPropertyName("body")]
     public string Description { get; set; } = string.Empty;
+
+    [GeneratedRegex(@"^v?([\d\.]+)-?.*$")]
+    private static partial Regex TagRegex();
 }
