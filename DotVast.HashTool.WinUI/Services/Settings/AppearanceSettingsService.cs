@@ -7,15 +7,17 @@ using Microsoft.UI.Xaml;
 
 using Windows.Globalization;
 
+using static DotVast.HashTool.WinUI.Constants;
+
 namespace DotVast.HashTool.WinUI.Services.Settings;
 
 internal sealed partial class AppearanceSettingsService : BaseObservableSettings, IAppearanceSettingsService
 {
     public override async Task InitializeAsync()
     {
-        _hashFontFamilyName = await LoadAsync(nameof(HashFontFamilyName), "Consolas");
-        _isAlwaysOnTop = await LoadAsync(nameof(IsAlwaysOnTop), false);
-        _theme = await LoadAsync(nameof(Theme), ElementTheme.Default);
+        _hashFontFamilyName = await LoadAsync(nameof(HashFontFamilyName), DefaultAppearanceSettings.HashFontFamilyName);
+        _isAlwaysOnTop = await LoadAsync(nameof(IsAlwaysOnTop), DefaultAppearanceSettings.IsAlwaysOnTop);
+        _theme = await LoadAsync(nameof(Theme), DefaultAppearanceSettings.Theme);
         Languages = GenericEnum.GetFieldValues<AppLanguage>();
         _language = Languages.Where(x => x.Tag == ApplicationLanguages.PrimaryLanguageOverride)
                             .FirstOrDefault() ?? AppLanguage.ZhHans;

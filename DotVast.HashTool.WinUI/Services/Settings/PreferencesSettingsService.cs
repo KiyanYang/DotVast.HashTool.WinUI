@@ -4,6 +4,8 @@ using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Core.Enums;
 using DotVast.HashTool.WinUI.Models;
 
+using static DotVast.HashTool.WinUI.Constants;
+
 namespace DotVast.HashTool.WinUI.Services.Settings;
 
 internal sealed partial class PreferencesSettingsService : BaseObservableSettings, IPreferencesSettingsService
@@ -11,7 +13,7 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
     public override async Task InitializeAsync()
     {
         await InitializeHashOptions();
-        _includePreRelease = await LoadAsync(nameof(IncludePreRelease), false);
+        _includePreRelease = await LoadAsync(nameof(IncludePreRelease), DefaultPreferencesSettings.IncludePreRelease);
     }
 
     public override async Task StartupAsync()

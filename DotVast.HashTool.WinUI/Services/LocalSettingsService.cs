@@ -2,21 +2,16 @@ using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Core.Contracts.Services;
 using DotVast.HashTool.WinUI.Core.Helpers;
 using DotVast.HashTool.WinUI.Helpers;
-using DotVast.HashTool.WinUI.Models;
-
-using Microsoft.Extensions.Options;
 
 using Windows.Storage;
+
+using static DotVast.HashTool.WinUI.Constants;
 
 namespace DotVast.HashTool.WinUI.Services;
 
 public sealed class LocalSettingsService : ILocalSettingsService
 {
-    private const string DefaultApplicationDataFolder = "DotVast.HashTool.WinUI/ApplicationData";
-    private const string DefaultLocalSettingsFile = "LocalSettings.json";
-
     private readonly IFileService _fileService;
-    private readonly LocalSettingsOptions _options;
 
     private readonly string _localApplicationData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
     private readonly string _applicationDataFolder;
@@ -26,13 +21,12 @@ public sealed class LocalSettingsService : ILocalSettingsService
 
     private bool _isInitialized;
 
-    public LocalSettingsService(IFileService fileService, IOptions<LocalSettingsOptions> options)
+    public LocalSettingsService(IFileService fileService)
     {
         _fileService = fileService;
-        _options = options.Value;
 
-        _applicationDataFolder = Path.Combine(_localApplicationData, _options.ApplicationDataFolder ?? DefaultApplicationDataFolder);
-        _localsettingsFile = _options.LocalSettingsFile ?? DefaultLocalSettingsFile;
+        _applicationDataFolder = Path.Combine(_localApplicationData, LocalSettingsOptions.ApplicationDataFolder);
+        _localsettingsFile = LocalSettingsOptions.LocalSettingsFile;
 
         _settings = new Dictionary<string, object>();
     }

@@ -108,7 +108,7 @@ public sealed partial class SettingsViewModel : ObservableRecipient
     private static async Task NavigateToLogsFolderAsync()
     {
         var localAppData = PathHelper.AppDataLocalPhysicalPath;
-        var logsFilePath = App.GetOptions<LogsOptions>().Value.FilePath!;
+        var logsFilePath = Constants.LogsOptions.FilePath;
         var logsFolderPath = Path.GetDirectoryName(Path.Combine(localAppData, logsFilePath));
         await Windows.System.Launcher.LaunchFolderPathAsync(logsFolderPath);
     }

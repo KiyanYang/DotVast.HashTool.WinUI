@@ -6,7 +6,6 @@ using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Core.Contracts.Services;
 using DotVast.HashTool.WinUI.Core.Services;
 using DotVast.HashTool.WinUI.Helpers;
-using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Services;
 using DotVast.HashTool.WinUI.Services.Settings;
 using DotVast.HashTool.WinUI.ViewModels;
@@ -15,7 +14,6 @@ using DotVast.HashTool.WinUI.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.UI.Xaml;
 
 using Serilog;
@@ -45,12 +43,10 @@ public sealed partial class App : Application
 
     public static ILogger<T> GetLogger<T>() where T : class => GetService<ILogger<T>>();
 
-    public static IOptions<T> GetOptions<T>() where T : class => GetService<IOptions<T>>();
-
     public static WindowEx MainWindow { get; } = new MainWindow();
 
     private readonly ILogger<App> _logger;
-    private Stopwatch? _stopwatch;
+    private readonly Stopwatch _stopwatch;
 
     public App()
     {
@@ -103,16 +99,12 @@ public sealed partial class App : Application
             services.AddTransient<SettingsPage>();
             services.AddTransient<ShellPage>();
             services.AddTransient<ShellViewModel>();
-
-            // Configuration
-            services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
-            services.Configure<LogsOptions>(context.Configuration.GetSection(nameof(LogsOptions)));
         }).
         UseSerilog((context, services, loggerConfiguration) =>
         {
-            var filePath = services.GetService<IOptions<LogsOptions>>()!.Value.FullPath;
             loggerConfiguration
-                .WriteTo.File(filePath, shared: true, rollingInterval: RollingInterval.Day);
+                .WriteTo
+                .File(Constants.LogsOptions.FilePath, shared: true, rollingInterval: RollingInterval.Day);
         }).
         Build();
 
@@ -146,8 +138,7 @@ public sealed partial class App : Application
 
         TitleBarContextMenuHelper.SetTitleBarContextMenuAllowDark();
 
-        _stopwatch!.Stop();
+        _stopwatch.Stop();
         _logger.LogInformation("软件已启动, 用时: {LaunchedElapsed} ms.", _stopwatch!.ElapsedMilliseconds);
-        _stopwatch = null;
     }
 }
