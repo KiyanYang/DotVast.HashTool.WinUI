@@ -150,19 +150,18 @@ internal sealed partial class ComputeHashService : IComputeHashService
     {
         #region 初始化, 定义文件流读取参数及变量.
 
-        var streamLength = stream.Length;
         stream.Position = 0;
 
         // 设定缓冲区大小，分为 4 档：
         // Length <  32 KiB => Length
         // Length <   4 MiB => 32 KiB
-        // Length < 256 MiB =>  1 MiB
+        // Length < 512 MiB =>  1 MiB
         // _                =>  4 MiB
-        var bufferSize = streamLength switch
+        var bufferSize = stream.Length switch
         {
-            < 1024 * 32 => (int)streamLength,
+            < 1024 * 32 => (int)stream.Length,
             < 1024 * 1024 * 4 => 1024 * 32,
-            < 1024 * 1024 * 256 => 1024 * 1024,
+            < 1024 * 1024 * 512 => 1024 * 1024,
             _ => 1024 * 1024 * 4,
         };
         var buffer = new byte[bufferSize];
@@ -178,6 +177,12 @@ internal sealed partial class ComputeHashService : IComputeHashService
 
         using Barrier barrier = new(hashs.Count, (b) =>
         {
+            if (ct.IsCancellationRequested)
+            {
+                readLength = 0;
+                return;
+            }
+
             // 实际读取长度. 读取完毕时该值为 0.
             readLength = stream.Read(buffer, 0, bufferSize);
 
@@ -189,7 +194,7 @@ internal sealed partial class ComputeHashService : IComputeHashService
             }
 
             // 报告进度. streamLength 在此处始终大于 0.
-            _atomProgress.Report((double)stream.Position / streamLength);
+            _atomProgress.Report((double)stream.Position / stream.Length);
         });
 
         // 定义本地函数。当读取长度大于 0 时，先屏障同步（包括读取文件、报告进度等），再并行计算。
@@ -197,18 +202,12 @@ internal sealed partial class ComputeHashService : IComputeHashService
         {
             while (readLength > 0)
             {
-                if (ct.IsCancellationRequested)
-                {
-                    barrier.RemoveParticipant();
-                    break;
-                }
                 barrier.SignalAndWait(CancellationToken.None);
                 hash.Algorithm.TransformBlock(buffer, 0, readLength, null, 0);
             }
         }
 
         Parallel.ForEach(hashs, Action);
-
         ThreadPool.SetMinThreads(minWorker, minIOC);
 
         #endregion
