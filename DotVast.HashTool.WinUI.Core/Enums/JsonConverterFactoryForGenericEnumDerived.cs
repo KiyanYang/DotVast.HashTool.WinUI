@@ -16,8 +16,8 @@ namespace DotVast.HashTool.WinUI.Core.Enums;
 public sealed class JsonConverterFactoryForGenericEnumDerived : JsonConverterFactory
 {
     public override bool CanConvert(Type typeToConvert)
-        => typeToConvert.BaseType?.IsGenericType
-        ?? typeToConvert.BaseType?.GetGenericTypeDefinition() == typeof(GenericEnum<>);
+        => typeToConvert.BaseType?.IsGenericType ?? false
+        && typeToConvert.BaseType?.GetGenericTypeDefinition() == typeof(GenericEnum<>);
 
     public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
     {
