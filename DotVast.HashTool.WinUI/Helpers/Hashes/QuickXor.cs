@@ -20,7 +20,7 @@
 // THE SOFTWARE.
 //---------------------------------------------------------------------------------------------
 
-namespace DotVast.HashTool.WinUI.Models.Hashes;
+namespace DotVast.HashTool.WinUI.Helpers.Hashes;
 
 /// <summary>
 /// A quick, simple non-cryptographic hash algorithm that works by XORing the bytes in a circular-shifting fashion.
@@ -81,17 +81,17 @@ internal sealed class QuickXorHash : System.Security.Cryptography.HashAlgorithm
 
             // The position within the bit vector at which we begin xoring
             var vectorOffset = currentShift % 64;
-            var iterations = Math.Min(cbSize, QuickXorHash.WidthInBits);
+            var iterations = Math.Min(cbSize, WidthInBits);
 
             for (var i = 0; i < iterations; i++)
             {
                 var isLastCell = vectorArrayIndex == _data.Length - 1;
-                var bitsInVectorCell = isLastCell ? QuickXorHash.BitsInLastCell : 64;
+                var bitsInVectorCell = isLastCell ? BitsInLastCell : 64;
 
                 // There's at least 2 bitvectors before we reach the end of the array
                 if (vectorOffset <= bitsInVectorCell - 8)
                 {
-                    for (var j = ibStart + i; j < cbSize + ibStart; j += QuickXorHash.WidthInBits)
+                    for (var j = ibStart + i; j < cbSize + ibStart; j += WidthInBits)
                     {
                         _data[vectorArrayIndex] ^= (ulong)array[j] << vectorOffset;
                     }
@@ -99,18 +99,18 @@ internal sealed class QuickXorHash : System.Security.Cryptography.HashAlgorithm
                 else
                 {
                     var index1 = vectorArrayIndex;
-                    var index2 = isLastCell ? 0 : (vectorArrayIndex + 1);
+                    var index2 = isLastCell ? 0 : vectorArrayIndex + 1;
                     var low = (byte)(bitsInVectorCell - vectorOffset);
 
                     byte xoredByte = 0;
-                    for (var j = ibStart + i; j < cbSize + ibStart; j += QuickXorHash.WidthInBits)
+                    for (var j = ibStart + i; j < cbSize + ibStart; j += WidthInBits)
                     {
                         xoredByte ^= array[j];
                     }
                     _data[index1] ^= (ulong)xoredByte << vectorOffset;
                     _data[index2] ^= (ulong)xoredByte >> low;
                 }
-                vectorOffset += QuickXorHash.Shift;
+                vectorOffset += Shift;
                 while (vectorOffset >= bitsInVectorCell)
                 {
                     vectorArrayIndex = isLastCell ? 0 : vectorArrayIndex + 1;
@@ -119,7 +119,7 @@ internal sealed class QuickXorHash : System.Security.Cryptography.HashAlgorithm
             }
 
             // Update the starting position in a circular shift pattern
-            _shiftSoFar = (_shiftSoFar + QuickXorHash.Shift * (cbSize % QuickXorHash.WidthInBits)) % QuickXorHash.WidthInBits;
+            _shiftSoFar = (_shiftSoFar + Shift * (cbSize % WidthInBits)) % WidthInBits;
         }
 
         _lengthSoFar += cbSize;
@@ -151,7 +151,7 @@ internal sealed class QuickXorHash : System.Security.Cryptography.HashAlgorithm
         System.Diagnostics.Debug.Assert(lengthBytes.Length == 8);
         for (var i = 0; i < lengthBytes.Length; i++)
         {
-            rgb[(QuickXorHash.WidthInBits / 8) - lengthBytes.Length + i] ^= lengthBytes[i];
+            rgb[WidthInBits / 8 - lengthBytes.Length + i] ^= lengthBytes[i];
         }
 
         return rgb;
@@ -159,10 +159,10 @@ internal sealed class QuickXorHash : System.Security.Cryptography.HashAlgorithm
 
     public sealed override void Initialize()
     {
-        _data = new ulong[(QuickXorHash.WidthInBits - 1) / 64 + 1];
+        _data = new ulong[(WidthInBits - 1) / 64 + 1];
         _shiftSoFar = 0;
         _lengthSoFar = 0;
     }
 
-    public override int HashSize => QuickXorHash.WidthInBits;
+    public override int HashSize => WidthInBits;
 }

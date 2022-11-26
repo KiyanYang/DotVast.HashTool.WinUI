@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using CryptoBase.Digests.SM3;
 
 using DotVast.HashTool.WinUI.Core.Enums;
-using DotVast.HashTool.WinUI.Models.Hashes;
+using DotVast.HashTool.WinUI.Helpers.Hashes;
 
 using HashLib4CSharp.Checksum;
 

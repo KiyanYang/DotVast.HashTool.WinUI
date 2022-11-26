@@ -23,12 +23,6 @@ internal static class Constants
         public const bool IncludePreRelease = false;
     }
 
-    public static class LocalSettingsOptions
-    {
-        public const string ApplicationDataFolder = "DotVast.HashTool.WinUI/ApplicationData";
-        public const string LocalSettingsFile = "LocalSettings.json";
-    }
-
     public static class LogsOptions
     {
         public const string FilePath = "Logs/app-.log";

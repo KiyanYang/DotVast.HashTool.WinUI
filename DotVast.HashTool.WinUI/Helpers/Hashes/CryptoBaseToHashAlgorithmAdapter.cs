@@ -2,7 +2,7 @@ using System.Security.Cryptography;
 
 using CryptoBase.Abstractions.Digests;
 
-namespace DotVast.HashTool.WinUI.Models.Hashes;
+namespace DotVast.HashTool.WinUI.Helpers.Hashes;
 
 internal sealed class CryptoBaseToHashAlgorithmAdapter : HashAlgorithm
 {

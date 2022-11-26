@@ -1,6 +1,6 @@
 using System.Security.Cryptography;
 
-namespace DotVast.HashTool.WinUI.Models.Hashes;
+namespace DotVast.HashTool.WinUI.Helpers.Hashes;
 
 internal static class CryptoBaseAdapterExtensions
 {
