@@ -6,9 +6,10 @@
     xmlns:dvhc="using:DotVast.HashTool.WinUI.Controls"
     xmlns:enums="using:DotVast.HashTool.WinUI.Enums"
     xmlns:helpers="using:DotVast.HashTool.WinUI.Helpers"
+    xmlns:hdts="using:DotVast.HashTool.WinUI.Helpers.DataTemplateSelectors"
+    xmlns:models="using:DotVast.HashTool.WinUI.Models"
     xmlns:i18n="using:DotVast.HashTool.WinUI.Strings"
     xmlns:local="using:DotVast.HashTool.WinUI.Views"
-    xmlns:models="using:DotVast.HashTool.WinUI.Models"
     AllowDrop="True"
     DragOver="Page_DragOver"
     Drop="Page_Drop"
@@ -29,7 +30,7 @@
                 <TextBlock Text="{x:Bind}" />
             </StackPanel>
         </DataTemplate>
-        <local:ComboBoxIconDataTemplateSelector
+        <hdts:ComboBoxIconDataTemplateSelector
             x:Key="ComboBoxIconDataTemplateSelector"
             DropDown="{StaticResource ComboBoxDropDown}"
             Normal="{StaticResource ComboBoxNormal}" />

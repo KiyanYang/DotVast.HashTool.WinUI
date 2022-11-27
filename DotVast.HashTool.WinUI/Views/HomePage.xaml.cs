@@ -63,18 +63,3 @@ public sealed partial class HomePage : Page
 
     #endregion x:Bind Function
 }
-
-public sealed class ComboBoxIconDataTemplateSelector : DataTemplateSelector
-{
-    public DataTemplate? Normal { get; set; }
-    public DataTemplate? DropDown { get; set; }
-
-    protected override DataTemplate? SelectTemplateCore(object item, DependencyObject container)
-    {
-        return container switch
-        {
-            ContentPresenter => Normal,
-            _ => DropDown,
-        };
-    }
-}
