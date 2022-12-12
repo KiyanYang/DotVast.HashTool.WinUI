@@ -26,7 +26,7 @@ HashTool 支持文件、文件夹或文本的哈希计算。
 
 ## 使用
 
-打开 [系统设置 > 隐私和安全性 > 开发者选项](ms-settings:developers)，启用 `开发人员模式`。
+打开 [系统设置 > 隐私和安全性 > 开发者选项](ms-settings:developers)，启用 `开发人员模式`，并展开下方的 `PowerShell`，启用`更改执行策略，以允许本地 PowerShell 脚本在未签名的情况下运行。远程脚本需要签名。`。
 
 之后打开右侧的 [Release](https://github.com/KiyanYang/DotVast.HashTool.WinUI/releases) 页面，找到最新版本，并选择适用于当前系统的安装包下载。下载完成后，解压压缩包，右击 `Install.ps1` 脚本，选择“使用 PowerShell 运行”，根据提示进行安装。
 
