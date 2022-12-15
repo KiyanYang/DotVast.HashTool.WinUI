@@ -71,9 +71,8 @@
                         <FontIcon Glyph="&#xE8D2;" />
                     </dvhc:SettingItem.Icon>
                     <TextBox
-                        x:Name="HashFontFamilyName"
                         MinWidth="200"
-                        FontFamily="{x:Bind HashFontFamilyName.Text, Mode=OneWay}"
+                        FontFamily="{Binding Path=HashFontFamilyName, Source={StaticResource AppearanceSettingsService}}"
                         IsSpellCheckEnabled="False"
                         MaxLength="160"
                         PlaceholderText="FontFamily"
