@@ -102,9 +102,10 @@ public sealed partial class App : Application
         }).
         UseSerilog((context, services, loggerConfiguration) =>
         {
+            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Constants.LogsOptions.FilePath);
             loggerConfiguration
                 .WriteTo
-                .File(Constants.LogsOptions.FilePath, shared: true, rollingInterval: RollingInterval.Day);
+                .File(path, shared: true, rollingInterval: RollingInterval.Day);
         }).
         Build();
 
