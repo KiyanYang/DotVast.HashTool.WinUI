@@ -12,7 +12,7 @@
     <Identity
       Name="DotVast.HashTool.WinUI"
       Publisher="CN=Kiyan Yang"
-      Version="0.1.0.0" />
+      Version="0.2.0.0" />
 
     <Properties>
         <DisplayName>HashTool</DisplayName>
