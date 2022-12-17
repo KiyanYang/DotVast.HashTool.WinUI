@@ -36,7 +36,7 @@ internal partial class CheckUpdateService : ICheckUpdateService
         // https://docs.github.com/en/rest/overview/media-types
         // https://docs.github.com/en/rest/overview/resources-in-the-rest-api#user-agent-required
         _client.DefaultRequestHeaders.Accept.Add(new("application/vnd.github+json"));
-        _client.DefaultRequestHeaders.UserAgent.Add(new("DotVast.HashTool.WinUI", Package.Current.Id.Version.ToString()));
+        _client.DefaultRequestHeaders.UserAgent.Add(new("DotVast.HashTool.WinUI", RuntimeHelper.AppVersion.ToString()));
     }
 
     public async Task StartupAsync()
