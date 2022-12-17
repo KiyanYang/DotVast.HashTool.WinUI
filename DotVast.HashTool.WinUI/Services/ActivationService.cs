@@ -14,18 +14,21 @@ public sealed class ActivationService : IActivationService
     private readonly IEnumerable<IActivationHandler> _activationHandlers;
     private readonly IAppearanceSettingsService _appearanceSettingsService;
     private readonly IPreferencesSettingsService _preferencesSettingsService;
+    private readonly ICheckUpdateService _checkUpdateService;
     private UIElement? _shell = null;
 
     public ActivationService(
         ActivationHandler<LaunchActivatedEventArgs> defaultHandler,
         IEnumerable<IActivationHandler> activationHandlers,
         IAppearanceSettingsService appearanceSettingsService,
-        IPreferencesSettingsService preferencesSettingsService)
+        IPreferencesSettingsService preferencesSettingsService,
+        ICheckUpdateService checkUpdateService)
     {
         _defaultHandler = defaultHandler;
         _activationHandlers = activationHandlers;
         _appearanceSettingsService = appearanceSettingsService;
         _preferencesSettingsService = preferencesSettingsService;
+        _checkUpdateService = checkUpdateService;
     }
 
     public async Task ActivateAsync(object activationArgs)
@@ -75,5 +78,6 @@ public sealed class ActivationService : IActivationService
     {
         await _appearanceSettingsService.StartupAsync();
         await _preferencesSettingsService.StartupAsync();
+        await _checkUpdateService.StartupAsync();
     }
 }

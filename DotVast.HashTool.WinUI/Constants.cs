@@ -21,6 +21,7 @@ internal static class Constants
     public static class DefaultPreferencesSettings
     {
         public const bool IncludePreRelease = false;
+        public const bool CheckForUpdatesOnStartup = false;
     }
 
     public static class LogsOptions

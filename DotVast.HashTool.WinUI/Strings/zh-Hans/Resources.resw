@@ -303,4 +303,7 @@
   <data name="Tip_FileSkipped_Title" xml:space="preserve">
     <value>已跳过文件</value>
   </data>
+  <data name="SettingsPage_CheckForUpdatesOnStartup.Header" xml:space="preserve">
+    <value>启动时检查更新</value>
+  </data>
 </root>
