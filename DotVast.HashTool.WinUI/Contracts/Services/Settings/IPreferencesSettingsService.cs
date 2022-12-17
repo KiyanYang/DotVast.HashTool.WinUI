@@ -13,5 +13,10 @@ public interface IPreferencesSettingsService : IBaseObservableSettings
     /// </summary>
     bool IncludePreRelease { get; set; }
 
+    /// <summary>
+    /// 是否启动时检查更新.
+    /// </summary>
+    bool CheckForUpdatesOnStartup { get; set; }
+
     Task SaveHashOptionsAsync();
 }

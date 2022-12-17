@@ -126,9 +126,15 @@
                             </StackPanel>
                         </dvhc:SettingItem>
                     </Expander.Header>
-                    <dvhc:SettingItem x:Uid="SettingsPage_IncludePreRelease" Style="{StaticResource ExpanderContentSettingItemStyle}">
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.IncludePreRelease, Mode=TwoWay}" />
-                    </dvhc:SettingItem>
+                    <StackPanel>
+                        <dvhc:SettingItem x:Uid="SettingsPage_CheckForUpdatesOnStartup" Style="{StaticResource ExpanderContentSettingItemStyle}">
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.CheckForUpdatesOnStartup, Mode=TwoWay}" />
+                        </dvhc:SettingItem>
+                        <Rectangle Style="{StaticResource ExpanderContentSeparatorStyle}" />
+                        <dvhc:SettingItem x:Uid="SettingsPage_IncludePreRelease" Style="{StaticResource ExpanderContentSettingItemStyle}">
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.IncludePreRelease, Mode=TwoWay}" />
+                        </dvhc:SettingItem>
+                    </StackPanel>
                 </Expander>
 
                 <StackPanel>

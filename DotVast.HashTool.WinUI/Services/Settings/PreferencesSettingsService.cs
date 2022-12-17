@@ -14,6 +14,7 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
     {
         await InitializeHashOptions();
         _includePreRelease = await LoadAsync(nameof(IncludePreRelease), DefaultPreferencesSettings.IncludePreRelease);
+        _checkForUpdatesOnStartup = await LoadAsync(nameof(CheckForUpdatesOnStartup), DefaultPreferencesSettings.CheckForUpdatesOnStartup);
     }
 
     public override async Task StartupAsync()
@@ -54,4 +55,13 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
         set => SetAndSave(ref _includePreRelease, value);
     }
     #endregion IncludePreRelease
+
+    #region CheckForUpdatesOnStartup
+    private bool _checkForUpdatesOnStartup;
+    public bool CheckForUpdatesOnStartup
+    {
+        get => _checkForUpdatesOnStartup;
+        set => SetAndSave(ref _checkForUpdatesOnStartup, value);
+    }
+    #endregion CheckForUpdatesOnStartup
 }

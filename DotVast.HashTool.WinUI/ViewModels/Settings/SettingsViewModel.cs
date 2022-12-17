@@ -3,7 +3,6 @@ using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Core.Enums;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Helpers;
-using DotVast.HashTool.WinUI.Models;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
@@ -67,9 +66,19 @@ public sealed partial class SettingsViewModel : ObservableRecipient
     private bool _includePreRelease;
 
     partial void OnIncludePreReleaseChanged(bool value) =>
-    _preferencesSettingsService.IncludePreRelease = value;
+        _preferencesSettingsService.IncludePreRelease = value;
 
     #endregion IncludePreRelease
+
+    #region CheckForUpdatesOnStartup
+
+    [ObservableProperty]
+    private bool _checkForUpdatesOnStartup;
+
+    partial void OnCheckForUpdatesOnStartupChanged(bool value) =>
+        _preferencesSettingsService.CheckForUpdatesOnStartup = value;
+
+    #endregion CheckForUpdatesOnStartup
 
     public SettingsViewModel(
         INavigationService navigationService,
@@ -93,6 +102,8 @@ public sealed partial class SettingsViewModel : ObservableRecipient
         _hashFontFamilyName = _appearanceSettingsService.HashFontFamilyName;
 
         _includePreRelease = _preferencesSettingsService.IncludePreRelease;
+
+        _checkForUpdatesOnStartup = _preferencesSettingsService.CheckForUpdatesOnStartup;
 
 #if DEBUG
         AppVersionHeader = $"{Localization.AppDisplayNameDev} - {RuntimeHelper.AppVersion}";

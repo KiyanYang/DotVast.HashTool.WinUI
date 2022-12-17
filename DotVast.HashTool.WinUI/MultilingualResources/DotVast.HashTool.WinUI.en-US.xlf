@@ -252,6 +252,10 @@
           <source>查看结果</source>
           <target state="translated">Show Results</target>
         </trans-unit>
+        <trans-unit id="SettingsPage_CheckForUpdatesOnStartup.Header" translate="yes" xml:space="preserve">
+          <source>启动时检查更新</source>
+          <target state="translated">Check for updates on startup</target>
+        </trans-unit>
       </group>
     </body>
   </file>
