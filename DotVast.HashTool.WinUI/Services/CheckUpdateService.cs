@@ -8,8 +8,6 @@ using DotVast.HashTool.WinUI.Models;
 
 using Microsoft.Extensions.Logging;
 
-using Windows.ApplicationModel;
-
 namespace DotVast.HashTool.WinUI.Services;
 
 internal partial class CheckUpdateService : ICheckUpdateService
