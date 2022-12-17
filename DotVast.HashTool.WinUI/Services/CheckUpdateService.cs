@@ -41,7 +41,7 @@ internal partial class CheckUpdateService : ICheckUpdateService
 
     public async Task StartupAsync()
     {
-        await CheckForUpdateOnStartup();
+        await CheckForUpdateOnStartupAsync();
     }
 
     public async Task<GitHubRelease?> GetLatestGitHubReleaseAsync(bool includePreRelease = false)
@@ -73,7 +73,7 @@ internal partial class CheckUpdateService : ICheckUpdateService
         return _gitHubRelease;
     }
 
-    private async Task CheckForUpdateOnStartup()
+    private async Task CheckForUpdateOnStartupAsync()
     {
         if (!_preferencesSettingsService.CheckForUpdatesOnStartup)
         {
