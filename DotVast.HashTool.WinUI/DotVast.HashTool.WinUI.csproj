@@ -83,8 +83,12 @@
   </Target>
   <ItemGroup>
     <None Remove="MultilingualResources\DotVast.HashTool.WinUI.en-US.xlf" />
-  </ItemGroup>
-  <ItemGroup>
     <XliffResource Include="MultilingualResources\DotVast.HashTool.WinUI.en-US.xlf" />
+  </ItemGroup>
+
+  <ItemGroup Label="ContextMenu">
+    <None Include="..\DotVast.HashTool.ContextMenu\bin\$(Platform)\$(Configuration)\DotVast.HashTool.ContextMenu.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

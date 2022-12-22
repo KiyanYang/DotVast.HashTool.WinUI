@@ -155,6 +155,7 @@ csharp_space_between_square_brackets = false
 
 # C++ Files
 [*.{cpp,h,in}]
+charset = utf-8-bom
 curly_bracket_next_line = true
 indent_brace_style = Allman
 
