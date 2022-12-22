@@ -11,7 +11,7 @@ public sealed class RuntimeHelper
     private static Version GetAppVersion()
     {
         var packageVersion = Package.Current.Id.Version;
-        return new(packageVersion.Major, packageVersion.Minor, packageVersion.Build); // 使用语义化版本
+        return new(packageVersion.Major, packageVersion.Minor, packageVersion.Build); // use Semantic Versioning
     }
 
     #endregion AppVersion

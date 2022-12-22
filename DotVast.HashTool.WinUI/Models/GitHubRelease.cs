@@ -23,8 +23,12 @@ public sealed partial class GitHubRelease
         set
         {
             _tagName = value;
-            var version = TagRegex().Match(value).Groups[1].Value;
-            Version = new Version(version);
+
+            var tagMatch = TagRegex().Match(value);
+            var major = int.Parse(tagMatch.Groups["major"].Value);
+            var minor = int.Parse(tagMatch.Groups["minor"].Value);
+            var patch = int.Parse(tagMatch.Groups["patch"].Value);
+            Version = new Version(major, minor, patch);
         }
     }
 
@@ -55,6 +59,6 @@ public sealed partial class GitHubRelease
     [JsonPropertyName("body")]
     public string Description { get; set; } = string.Empty;
 
-    [GeneratedRegex(@"^v?([\d\.]+)-?.*$")]
+    [GeneratedRegex(@"^v(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)(?:-(?:alpha|beta|rc)(?:\.\d+)?)?$")]
     private static partial Regex TagRegex();
 }
