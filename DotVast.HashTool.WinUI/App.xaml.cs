@@ -135,7 +135,7 @@ public sealed partial class App : Application
         // 该表达式要在 IActivationService.ActivateAsync() 之前.
         App.Current.Resources[nameof(AppearanceSettingsService)] = App.GetService<IAppearanceSettingsService>();
 
-        await App.GetService<IActivationService>().ActivateAsync(args);
+        await App.GetService<IActivationService>().ActivateAsync(Environment.GetCommandLineArgs());
 
         TitleBarContextMenuHelper.SetTitleBarContextMenuAllowDark();
 
