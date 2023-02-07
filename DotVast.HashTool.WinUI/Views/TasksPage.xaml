@@ -12,58 +12,70 @@
         <StackLayout
             x:Key="TaskItemLayout"
             Orientation="Vertical"
-            Spacing="4" />
+            Spacing="8" />
         <DataTemplate x:Key="TaskItemDataTemplate" x:DataType="models:HashTaskCheckable">
-            <Grid
-                Padding="12,12"
-                ColumnSpacing="8"
-                RowSpacing="4"
-                Style="{StaticResource CardGridStyle}">
-                <Grid.Resources>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="VerticalAlignment" Value="Center" />
-                    </Style>
-                </Grid.Resources>
+            <Grid RowSpacing="4">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="24" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="80" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <CheckBox Grid.RowSpan="2" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" />
+                <Grid
+                    Padding="12,8"
+                    ColumnSpacing="8"
+                    RowSpacing="4"
+                    Style="{StaticResource CardGridStyle}">
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <CheckBox Grid.RowSpan="2" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" />
 
-                <TextBlock
-                    Grid.Column="1"
-                    IsTextSelectionEnabled="True"
-                    MaxLines="2"
-                    Text="{x:Bind HashTask.Content}"
-                    TextTrimming="CharacterEllipsis"
-                    ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}" />
-                <TextBlock
-                    Grid.RowSpan="2"
-                    Grid.Column="2"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Text="{x:Bind HashTask.State, Mode=OneWay}" />
-                <Button
-                    x:Uid="TasksPage_ShowResult_Button"
-                    Grid.RowSpan="2"
-                    Grid.Column="3"
-                    VerticalAlignment="Center"
-                    Command="{StaticResource ShowResultCommand}"
-                    CommandParameter="{x:Bind HashTask}" />
+                    <TextBlock
+                        Grid.Column="1"
+                        IsTextSelectionEnabled="True"
+                        MaxLines="2"
+                        Text="{x:Bind HashTask.Content}"
+                        TextTrimming="CharacterEllipsis"
+                        ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}" />
+                    <TextBlock
+                        Grid.RowSpan="2"
+                        Grid.Column="2"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Text="{x:Bind HashTask.State, Mode=OneWay}" />
+                    <Button
+                        x:Uid="TasksPage_ShowResult_Button"
+                        Grid.RowSpan="2"
+                        Grid.Column="3"
+                        VerticalAlignment="Center"
+                        Command="{StaticResource ShowResultCommand}"
+                        CommandParameter="{x:Bind HashTask}" />
 
-                <TextBlock
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        FontSize="12"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Text="{x:Bind views:TasksPage.GetSecondaryInformationText(HashTask)}"
+                        TextTrimming="CharacterEllipsis"
+                        ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}" />
+                </Grid>
+
+                <ProgressBar
                     Grid.Row="1"
-                    Grid.Column="1"
-                    FontSize="12"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Text="{x:Bind views:TasksPage.GetSecondaryInformationText(HashTask)}"
-                    TextTrimming="CharacterEllipsis"
-                    ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}" />
+                    Padding="12,0"
+                    Maximum="{x:Bind HashTask.ProgressMax, Mode=OneWay}"
+                    Value="{x:Bind HashTask.ProgressVal, Mode=OneWay}" />
             </Grid>
         </DataTemplate>
     </Page.Resources>

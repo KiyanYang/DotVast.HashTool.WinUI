@@ -42,6 +42,20 @@ public sealed partial class HashTask : ObservableObject
     [ObservableProperty]
     private ObservableCollection<HashResult>? _results;
 
+    /// <summary>
+    /// 进度当前值.
+    /// </summary>
+    [JsonIgnore]
+    [ObservableProperty]
+    private double _progressVal;
+
+    /// <summary>
+    /// 进度最大值(计算完毕后等于 Results.Count).
+    /// </summary>
+    [JsonIgnore]
+    [ObservableProperty]
+    private double _progressMax;
+
     private sealed class EncodingJsonConverter : JsonConverter<Encoding?>
     {
         public override Encoding? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

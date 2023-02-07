@@ -11,22 +11,6 @@ namespace DotVast.HashTool.WinUI.Services;
 
 internal sealed partial class ComputeHashService : IComputeHashService
 {
-    private readonly IProgress<double> _atomProgress = new Progress<double>();
-
-    private readonly IProgress<(int Val, int Max)> _taskProgress = new Progress<(int, int)>();
-
-    public event EventHandler<double> AtomProgressChanged
-    {
-        add => (_atomProgress as Progress<double>)!.ProgressChanged += value;
-        remove => (_atomProgress as Progress<double>)!.ProgressChanged -= value;
-    }
-
-    public event EventHandler<(int Val, int Max)> TaskProgressChanged
-    {
-        add => (_taskProgress as Progress<(int, int)>)!.ProgressChanged += value;
-        remove => (_taskProgress as Progress<(int, int)>)!.ProgressChanged -= value;
-    }
-
     public event EventHandler<ComputeHashStatus>? StatusChanged;
 
     private ComputeHashStatus _status = ComputeHashStatus.Free;
@@ -64,33 +48,29 @@ internal sealed partial class ComputeHashService : IComputeHashService
     {
         hashTask.Results = new();
         var filesCount = filePaths.Count;
-        _taskProgress.Report((0, filesCount));
-        foreach (var filePath in filePaths)
+        for (var i = 0; i < filePaths.Count; i++)
         {
             // 出现异常情况的频率较低，因此不使用 File.Exists 等涉及 IO 的额外判断操作
             try
             {
-                using var stream = File.Open(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
-                var hashResult = await Task.Run(() => HashStream(hashTask.SelectedHashs, stream, mres, ct));
+                App.MainWindow.DispatcherQueue.TryEnqueue(() => hashTask.ProgressMax = filesCount);
+                using var stream = File.Open(filePaths[i], FileMode.Open, FileAccess.Read, FileShare.Read);
+                var hashResult = await Task.Run(() => HashStream(hashTask, stream, mres, ct, i));
                 if (hashResult != null)
                 {
                     hashResult.Type = HashResultType.File;
-                    hashResult.Content = filePath;
+                    hashResult.Content = filePaths[i];
                     hashTask.Results.Add(hashResult);
                 }
             }
             catch (Exception e) when (e is DirectoryNotFoundException or FileNotFoundException)
             {
-                WeakReferenceMessenger.Default.Send(new FileNotFoundInHashFilesMessage(filePath));
+                WeakReferenceMessenger.Default.Send(new FileNotFoundInHashFilesMessage(filePaths[i]));
                 filesCount--;
             }
             catch (Exception)
             {
                 throw;
-            }
-            finally
-            {
-                _taskProgress.Report((hashTask.Results.Count, filesCount));
             }
         }
     }
@@ -99,16 +79,15 @@ internal sealed partial class ComputeHashService : IComputeHashService
     {
         return await PreAndPostProcessAsync(async () =>
         {
-            _taskProgress.Report((0, 1));
+            App.MainWindow.DispatcherQueue.TryEnqueue(() => hashTask.ProgressMax = 1);
             var contentBytes = hashTask.Encoding!.GetBytes(hashTask.Content);
             using Stream stream = new MemoryStream(contentBytes);
-            var hashResult = await Task.Run(() => HashStream(hashTask.SelectedHashs, stream, mres, ct));
+            var hashResult = await Task.Run(() => HashStream(hashTask, stream, mres, ct, 0));
             if (hashResult != null)
             {
                 hashResult.Type = HashResultType.Text;
                 hashResult.Content = hashTask.Content;
                 hashTask.Results = new() { hashResult };
-                _taskProgress.Report((1, 1));
             }
         }, hashTask, ct);
     }
@@ -124,7 +103,6 @@ internal sealed partial class ComputeHashService : IComputeHashService
             await func();
             if (ct.IsCancellationRequested)
             {
-                _taskProgress.Report((0, 1));
                 hashTask.State = HashTaskState.Canceled;
             }
             else
@@ -146,8 +124,10 @@ internal sealed partial class ComputeHashService : IComputeHashService
         }
     }
 
-    private HashResult? HashStream(IList<Hash> hashs, Stream stream, ManualResetEventSlim mres, CancellationToken ct)
+    private HashResult? HashStream(HashTask hashTask, Stream stream, ManualResetEventSlim mres, CancellationToken ct, double progressOffset)
     {
+        IList<Hash> hashs = hashTask.SelectedHashs;
+
         #region 初始化, 定义文件流读取参数及变量.
 
         stream.Position = 0;
@@ -194,7 +174,10 @@ internal sealed partial class ComputeHashService : IComputeHashService
             }
 
             // 报告进度. streamLength 在此处始终大于 0.
-            _atomProgress.Report((double)stream.Position / stream.Length);
+            App.MainWindow.DispatcherQueue.TryEnqueue(() =>
+            {
+                hashTask.ProgressVal = (double)stream.Position / stream.Length + progressOffset;
+            });
         });
 
         // 定义本地函数。当读取长度大于 0 时，先屏障同步（包括读取文件、报告进度等），再并行计算。
@@ -204,6 +187,7 @@ internal sealed partial class ComputeHashService : IComputeHashService
             {
                 barrier.SignalAndWait(CancellationToken.None);
                 hash.Algorithm.TransformBlock(buffer, 0, readLength, null, 0);
+                Thread.Sleep(100);
             }
         }
 
@@ -214,13 +198,19 @@ internal sealed partial class ComputeHashService : IComputeHashService
 
         if (ct.IsCancellationRequested)
         {
-            _atomProgress.Report(0);
+            App.MainWindow.DispatcherQueue.TryEnqueue(() =>
+            {
+                hashTask.ProgressVal = progressOffset;
+            });
             return null;
         }
         else
         {
             // 确保报告计算完成. 主要用于解决空流(stream.Length == 0)时无法在屏障进行报告的问题.
-            _atomProgress.Report(1);
+            App.MainWindow.DispatcherQueue.TryEnqueue(() =>
+            {
+                hashTask.ProgressVal = progressOffset + 1;
+            });
         }
 
         foreach (var item in hashs)
@@ -236,9 +226,7 @@ internal sealed partial class ComputeHashService : IComputeHashService
 
     private static HashResultItem MakeHashResultItem(Hash hash, byte[] data)
     {
-        var val = hash == Hash.QuickXor
-            ? Convert.ToBase64String(data)
-            : Convert.ToHexString(data);
+        var val = hash == Hash.QuickXor ? Convert.ToBase64String(data) : Convert.ToHexString(data);
         return new HashResultItem(hash.Name, val);
     }
 
