@@ -65,6 +65,7 @@ public sealed partial class App : Application
             services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
 
             // Other Activation Handlers
+            services.AddTransient<IActivationHandler, CommandLineActivationHandler>();
 
             // Services
             services.AddSingleton<IActivationService, ActivationService>();

@@ -77,6 +77,8 @@ public sealed class Hash : GenericEnum<string>
     // QuickXor
     public static readonly Hash QuickXor = new("QuickXor", new QuickXorHash());
 
+    public static Hash[] All => GetFieldValues<Hash>();
+
     private Hash(string name, Crypto.HashAlgorithm hashAlgorithm) : base(name)
     {
         Name = name;

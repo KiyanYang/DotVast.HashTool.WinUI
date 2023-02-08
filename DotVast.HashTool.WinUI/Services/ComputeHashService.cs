@@ -53,7 +53,8 @@ internal sealed partial class ComputeHashService : IComputeHashService
             // 出现异常情况的频率较低，因此不使用 File.Exists 等涉及 IO 的额外判断操作
             try
             {
-                App.MainWindow.DispatcherQueue.TryEnqueue(() => hashTask.ProgressMax = filesCount);
+                //hashTask.ProgressMax = filesCount;
+                hashTask.ProgressMax1?.Report(filesCount);
                 using var stream = File.Open(filePaths[i], FileMode.Open, FileAccess.Read, FileShare.Read);
                 var hashResult = await Task.Run(() => HashStream(hashTask, stream, mres, ct, i));
                 if (hashResult != null)
@@ -79,7 +80,8 @@ internal sealed partial class ComputeHashService : IComputeHashService
     {
         return await PreAndPostProcessAsync(async () =>
         {
-            App.MainWindow.DispatcherQueue.TryEnqueue(() => hashTask.ProgressMax = 1);
+            //hashTask.ProgressMax = 1;
+            hashTask.ProgressMax1?.Report(1);
             var contentBytes = hashTask.Encoding!.GetBytes(hashTask.Content);
             using Stream stream = new MemoryStream(contentBytes);
             var hashResult = await Task.Run(() => HashStream(hashTask, stream, mres, ct, 0));
@@ -174,10 +176,8 @@ internal sealed partial class ComputeHashService : IComputeHashService
             }
 
             // 报告进度. streamLength 在此处始终大于 0.
-            App.MainWindow.DispatcherQueue.TryEnqueue(() =>
-            {
-                hashTask.ProgressVal = (double)stream.Position / stream.Length + progressOffset;
-            });
+            //hashTask.ProgressVal = (double)stream.Position / stream.Length + progressOffset;
+            hashTask.ProgressVal1?.Report((double)stream.Position / stream.Length + progressOffset);
         });
 
         // 定义本地函数。当读取长度大于 0 时，先屏障同步（包括读取文件、报告进度等），再并行计算。
@@ -187,7 +187,9 @@ internal sealed partial class ComputeHashService : IComputeHashService
             {
                 barrier.SignalAndWait(CancellationToken.None);
                 hash.Algorithm.TransformBlock(buffer, 0, readLength, null, 0);
+#if DEBUG
                 Thread.Sleep(100);
+#endif
             }
         }
 
@@ -198,19 +200,15 @@ internal sealed partial class ComputeHashService : IComputeHashService
 
         if (ct.IsCancellationRequested)
         {
-            App.MainWindow.DispatcherQueue.TryEnqueue(() =>
-            {
-                hashTask.ProgressVal = progressOffset;
-            });
+            //hashTask.ProgressVal = progressOffset;
+            hashTask.ProgressVal1?.Report(progressOffset);
             return null;
         }
         else
         {
             // 确保报告计算完成. 主要用于解决空流(stream.Length == 0)时无法在屏障进行报告的问题.
-            App.MainWindow.DispatcherQueue.TryEnqueue(() =>
-            {
-                hashTask.ProgressVal = progressOffset + 1;
-            });
+            //hashTask.ProgressVal = progressOffset + 1;
+            hashTask.ProgressVal1?.Report(progressOffset + 1);
         }
 
         foreach (var item in hashs)

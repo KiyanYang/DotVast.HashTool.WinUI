@@ -3,12 +3,17 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
+using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Enums;
+
+using Microsoft.Extensions.Logging;
 
 namespace DotVast.HashTool.WinUI.Models;
 
 public sealed partial class HashTask : ObservableObject
 {
+    #region Properties
+
     /// <summary>
     /// 任务创建时间.
     /// </summary>
@@ -55,6 +60,79 @@ public sealed partial class HashTask : ObservableObject
     [JsonIgnore]
     [ObservableProperty]
     private double _progressMax;
+
+    #endregion Properties
+
+    #region Manager
+
+    private readonly IComputeHashService _computeHashService = App.GetService<IComputeHashService>();
+    private readonly ILogger<HashTask> _logger = App.GetLogger<HashTask>();
+    private CancellationTokenSource _cts = new();
+    private ManualResetEventSlim _mres = new(true);
+
+    public async Task StartAsync()
+    {
+        ProgressVal1 ??= new Progress<double>(val => ProgressVal = val);
+        ProgressMax1 ??= new Progress<double>(val => ProgressMax = val);
+
+        try
+        {
+            switch (Mode)
+            {
+                case var m when m == HashTaskMode.Text:
+                    await _computeHashService.HashTextAsync(this, _mres, _cts.Token);
+                    break;
+
+                case var m when m == HashTaskMode.File:
+                    await _computeHashService.HashFileAsync(this, _mres, _cts.Token);
+                    break;
+
+                case var m when m == HashTaskMode.Folder:
+                    await _computeHashService.HashFolderAsync(this, _mres, _cts.Token);
+                    break;
+            }
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            //await _dialogService.ShowInfoDialogAsync(
+            //    LocalizationDialog.HashTaskAborted_Title,
+            //    LocalizationDialog.HashTaskAborted_UnauthorizedAccess,
+            //    LocalizationDialog.Base_OK);
+            _logger.LogWarning("计算哈希时出现“未授权访问”异常, 模式: {Mode}, 内容: {Content}\n{Exception}", Mode, Content, ex);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("计算哈希时出现未预料的异常, 哈希任务: {HashTask:j}\n{Exception}", this, ex);
+        }
+        finally
+        {
+            _cts.Dispose();
+        }
+    }
+
+    public void Reset()
+    {
+        if (_mres.IsSet)
+        {
+            _mres.Reset();
+        }
+        else
+        {
+            _mres.Set();
+        }
+    }
+
+    public void Cancel()
+    {
+        _cts.Cancel();
+        _mres.Set();
+    }
+
+
+    public IProgress<double>? ProgressVal1 { get; private set; }
+    public IProgress<double>? ProgressMax1 { get; private set; }
+
+    #endregion Manager
 
     private sealed class EncodingJsonConverter : JsonConverter<Encoding?>
     {
