@@ -3,6 +3,7 @@ using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.ViewModels;
 
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace DotVast.HashTool.WinUI.Views;
@@ -20,6 +21,8 @@ public sealed partial class TasksPage : Page
         InitializeComponent();
     }
 
+    #region  x:Bind Function
+
     public static string GetSecondaryInformationText(HashTask hashTask)
     {
         const string separator = "  |  ";
@@ -33,4 +36,21 @@ public sealed partial class TasksPage : Page
 
         return $"{mode}{dateTime}{encoding}{hashNames}";
     }
+
+    public static Visibility GetHashTaskStateVisibility(HashTaskState state)
+    {
+        return IsProgressRingActive(state) ? Visibility.Collapsed : Visibility.Visible;
+    }
+
+    public static bool IsProgressRingIndeterminate(HashTaskState state)
+    {
+        return state != HashTaskState.Working;
+    }
+
+    public static bool IsProgressRingActive(HashTaskState state)
+    {
+        return state == HashTaskState.Working;
+    }
+
+    #endregion  x:Bind Function
 }

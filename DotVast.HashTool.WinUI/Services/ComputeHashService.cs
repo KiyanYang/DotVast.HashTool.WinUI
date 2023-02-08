@@ -188,8 +188,8 @@ internal sealed partial class ComputeHashService : IComputeHashService
             {
                 barrier.SignalAndWait(CancellationToken.None);
                 hash.TransformBlock(buffer, 0, readLength, null, 0);
-#if DEBUG
-                Thread.Sleep(100);
+#if DEBUG // 睡眠一段时间，以便观察进度条。
+                Thread.Sleep(50);
 #endif
             }
         }
