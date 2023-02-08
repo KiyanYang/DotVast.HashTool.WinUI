@@ -30,7 +30,7 @@ public sealed class CommandLineActivationHandler : ActivationHandler<string[]>
             _hashTaskService.HashTasks.Add(CreateHashTask(hashes, path, mode));
         }
 
-        _navigationService.NavigateTo(typeof(HomeViewModel).FullName!, args);
+        _navigationService.NavigateTo(typeof(TasksViewModel).FullName!, args);
 
         await Task.CompletedTask;
     }

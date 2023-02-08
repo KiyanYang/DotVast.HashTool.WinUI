@@ -78,7 +78,7 @@ public sealed partial class App : Application
             services.AddSingleton<IPreferencesSettingsService, PreferencesSettingsService>();
 
             services.AddSingleton<ICheckUpdateService, CheckUpdateService>();
-            services.AddSingleton<IComputeHashService, ComputeHashService>();
+            services.AddTransient<IComputeHashService, ComputeHashService>();
             services.AddSingleton<IDialogService, DialogService>();
             services.AddSingleton<IHashTaskService, HashTaskService>();
 
@@ -131,7 +131,7 @@ public sealed partial class App : Application
         }
 #endif
         base.OnLaunched(args);
-        
+
         var cmdArgs = Environment.GetCommandLineArgs();
         foreach (var arg in cmdArgs)
         {

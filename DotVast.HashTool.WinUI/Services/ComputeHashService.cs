@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Security.Cryptography;
 
 using CommunityToolkit.Mvvm.Messaging;
 
@@ -128,7 +129,7 @@ internal sealed partial class ComputeHashService : IComputeHashService
 
     private HashResult? HashStream(HashTask hashTask, Stream stream, ManualResetEventSlim mres, CancellationToken ct, double progressOffset)
     {
-        IList<Hash> hashs = hashTask.SelectedHashs;
+        HashAlgorithm[] hashes = hashTask.SelectedHashs.Select(x => Hash.GetHashAlgorithm(x)!).ToArray();
 
         #region 初始化, 定义文件流读取参数及变量.
 
@@ -155,9 +156,9 @@ internal sealed partial class ComputeHashService : IComputeHashService
         #region 使用屏障并行计算哈希值
 
         ThreadPool.GetMinThreads(out var minWorker, out var minIOC);
-        ThreadPool.SetMinThreads(hashs.Count, minIOC);
+        ThreadPool.SetMinThreads(hashes.Length, minIOC);
 
-        using Barrier barrier = new(hashs.Count, (b) =>
+        using Barrier barrier = new(hashes.Length, (b) =>
         {
             if (ct.IsCancellationRequested)
             {
@@ -181,19 +182,19 @@ internal sealed partial class ComputeHashService : IComputeHashService
         });
 
         // 定义本地函数。当读取长度大于 0 时，先屏障同步（包括读取文件、报告进度等），再并行计算。
-        void Action(Hash hash)
+        void Action(HashAlgorithm hash)
         {
             while (readLength > 0)
             {
                 barrier.SignalAndWait(CancellationToken.None);
-                hash.Algorithm.TransformBlock(buffer, 0, readLength, null, 0);
+                hash.TransformBlock(buffer, 0, readLength, null, 0);
 #if DEBUG
                 Thread.Sleep(100);
 #endif
             }
         }
 
-        Parallel.ForEach(hashs, Action);
+        Parallel.ForEach(hashes, Action);
         ThreadPool.SetMinThreads(minWorker, minIOC);
 
         #endregion
@@ -211,21 +212,25 @@ internal sealed partial class ComputeHashService : IComputeHashService
             hashTask.ProgressVal1?.Report(progressOffset + 1);
         }
 
-        foreach (var item in hashs)
+        var hashResultData = new HashResultItem[hashes.Length];
+
+        for (int i = 0; i < hashes.Length; i++)
         {
-            item.Algorithm.TransformFinalBlock(buffer, 0, 0);
+            // 处理最后数据块
+            hashes[i].TransformFinalBlock(buffer, 0, 0);
+
+            // 设置结果
+            var hashBytes = hashes[i].Hash!;
+            var hashString = hashTask.SelectedHashs[i] == Hash.QuickXor
+                ? Convert.ToBase64String(hashBytes)
+                : Convert.ToHexString(hashBytes);
+            hashResultData[i] = new(hashTask.SelectedHashs[i], hashString);
+
+            // 释放非托管资源
+            hashes[i].Dispose();
         }
 
-        return new HashResult()
-        {
-            Data = hashs.Select(h => MakeHashResultItem(h, h.Algorithm.Hash!)).ToArray(),
-        };
-    }
-
-    private static HashResultItem MakeHashResultItem(Hash hash, byte[] data)
-    {
-        var val = hash == Hash.QuickXor ? Convert.ToBase64String(data) : Convert.ToHexString(data);
-        return new HashResultItem(hash.Name, val);
+        return new HashResult() { Data = hashResultData };
     }
 
     private void OnStatusChanged(ComputeHashStatus value)
