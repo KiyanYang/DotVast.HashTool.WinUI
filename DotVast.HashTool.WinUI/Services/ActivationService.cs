@@ -3,13 +3,16 @@ using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Views;
 
+using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.Windows.AppLifecycle;
 
 namespace DotVast.HashTool.WinUI.Services;
 
 public sealed class ActivationService : IActivationService
 {
+    private readonly ILogger<ActivationService> _logger;
     private readonly ActivationHandler<LaunchActivatedEventArgs> _defaultHandler;
     private readonly IEnumerable<IActivationHandler> _activationHandlers;
     private readonly IAppearanceSettingsService _appearanceSettingsService;
@@ -19,6 +22,7 @@ public sealed class ActivationService : IActivationService
     private UIElement? _shell = null;
 
     public ActivationService(
+        ILogger<ActivationService> logger,
         ActivationHandler<LaunchActivatedEventArgs> defaultHandler,
         IEnumerable<IActivationHandler> activationHandlers,
         IAppearanceSettingsService appearanceSettingsService,
@@ -26,6 +30,7 @@ public sealed class ActivationService : IActivationService
         ICheckUpdateService checkUpdateService,
         IHashTaskService hashTaskService)
     {
+        _logger = logger;
         _defaultHandler = defaultHandler;
         _activationHandlers = activationHandlers;
         _appearanceSettingsService = appearanceSettingsService;
@@ -58,13 +63,18 @@ public sealed class ActivationService : IActivationService
 
     private async Task HandleActivationAsync(object activationArgs)
     {
-        var activationHandler = _activationHandlers.FirstOrDefault(h => h.CanHandle(activationArgs));
+        var activatedEventArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
+        _logger.LogInformation("激活类型: {Kind}", activatedEventArgs.Kind);
+
+        // activationHandler 处理 Windows.ApplicationModel.Activation.AppActivationArguments
+        var activationHandler = _activationHandlers.FirstOrDefault(h => h.CanHandle(activatedEventArgs));
 
         if (activationHandler != null)
         {
-            await activationHandler.HandleAsync(activationArgs);
+            await activationHandler.HandleAsync(activatedEventArgs);
         }
 
+        // defaultHandler 处理 Microsoft.UI.Xaml.LaunchActivatedEventArgs
         if (_defaultHandler.CanHandle(activationArgs))
         {
             await _defaultHandler.HandleAsync(activationArgs);

@@ -1,28 +1,49 @@
+using System.Collections.Specialized;
+using System.Runtime.InteropServices;
+
 using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.ViewModels;
 
+using Microsoft.Extensions.Logging;
+using Microsoft.Windows.AppLifecycle;
+
+using Windows.ApplicationModel.Activation;
+
 namespace DotVast.HashTool.WinUI.Activation;
 
-public sealed class CommandLineActivationHandler : ActivationHandler<string[]>
+public sealed partial class CommandLineActivationHandler : ActivationHandler<AppActivationArguments>
 {
+    private readonly ILogger<CommandLineActivationHandler> _logger;
     private readonly INavigationService _navigationService;
     private readonly IHashTaskService _hashTaskService;
 
-    public CommandLineActivationHandler(INavigationService navigationService,
+    public CommandLineActivationHandler(ILogger<CommandLineActivationHandler> logger,
+        INavigationService navigationService,
         IHashTaskService hashTaskService)
     {
+        _logger = logger;
         _navigationService = navigationService;
         _hashTaskService = hashTaskService;
     }
 
-    protected override async Task HandleInternalAsync(string[] args)
+    protected override bool CanHandleInternal(AppActivationArguments args)
     {
-        var parsedArgs = Parse(args);
-        var hashNames = parsedArgs[Constants.CommandLineArgs.Hash];
+        return args.Kind == ExtendedActivationKind.Launch
+            && args.Data is LaunchActivatedEventArgs data
+            && data.Arguments.Length > 0;
+    }
+
+    protected override async Task HandleInternalAsync(AppActivationArguments args)
+    {
+        var data = (LaunchActivatedEventArgs)args.Data;
+        _logger.LogInformation("激活参数: {@Args}", data);
+
+        var parsedArgs = Parse(data.Arguments);
+        var hashNames = parsedArgs.GetValues(Constants.CommandLineArgs.Hash)!;
         var hashes = GetHashesFromNames(hashNames);
-        var paths = parsedArgs[Constants.CommandLineArgs.Path];
+        var paths = parsedArgs.GetValues(Constants.CommandLineArgs.Path)!;
         var pathWithModes = paths.Select(p => (p, GetHashTaskModeFromPath(p)));
 
         foreach (var (path, mode) in pathWithModes)
@@ -35,30 +56,46 @@ public sealed class CommandLineActivationHandler : ActivationHandler<string[]>
         await Task.CompletedTask;
     }
 
-    private static Dictionary<string, string[]> Parse(string[] args)
+    [LibraryImport("shell32.dll", SetLastError = true)]
+    private static partial IntPtr CommandLineToArgvW([MarshalAs(UnmanagedType.LPWStr)] string lpCmdLine, out int pNumArgs);
+
+    private static string[] CommandLineToArgs(string commandLine)
     {
-        var ret = new Dictionary<string, string[]>();
+        var argv = CommandLineToArgvW(commandLine, out var argc);
+        if (argv == IntPtr.Zero)
+            throw new System.ComponentModel.Win32Exception();
+        try
+        {
+            var args = new string[argc];
+            for (var i = 0; i < args.Length; i++)
+            {
+                var p = Marshal.ReadIntPtr(argv, i * IntPtr.Size);
+                args[i] = Marshal.PtrToStringUni(p)!;
+            }
+
+            return args;
+        }
+        finally
+        {
+            Marshal.FreeHGlobal(argv);
+        }
+    }
+
+    private static NameValueCollection Parse(string argString)
+    {
+        var args = CommandLineToArgs(argString);
+        var ret = new NameValueCollection();
         string? key = null;
-        List<string> values = new();
         foreach (var arg in args)
         {
             if (arg.StartsWith("--"))
             {
-                if (key is not null)
-                {
-                    ret.Add(key, values.ToArray());
-                }
                 key = arg;
-                values.Clear();
             }
-            else
+            else if (key is not null)
             {
-                values.Add(arg);
+                ret.Add(key, arg);
             }
-        }
-        if (key is not null)
-        {
-            ret.Add(key, values.ToArray());
         }
         return ret;
     }

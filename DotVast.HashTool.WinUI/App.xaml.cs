@@ -132,17 +132,11 @@ public sealed partial class App : Application
 #endif
         base.OnLaunched(args);
 
-        var cmdArgs = Environment.GetCommandLineArgs();
-        foreach (var arg in cmdArgs)
-        {
-            _logger.LogInformation(arg);
-        }
-
         // TODO: Resources 里的 DataTemplate 不能绑定到 ViewModel, 因此使用静态资源访问.
         // 该表达式要在 IActivationService.ActivateAsync() 之前.
         App.Current.Resources[nameof(AppearanceSettingsService)] = App.GetService<IAppearanceSettingsService>();
 
-        await App.GetService<IActivationService>().ActivateAsync(Environment.GetCommandLineArgs());
+        await App.GetService<IActivationService>().ActivateAsync(args);
 
         TitleBarContextMenuHelper.SetTitleBarContextMenuAllowDark();
 
