@@ -44,7 +44,12 @@ BOOL APIENTRY DllMain(HMODULE hModule,
     return TRUE;
 }
 
-class __declspec(uuid("412FE3A3-833F-4EDE-BE03-D2F510B1AE59")) HashToolContextMenuCommand final : public BaseCommand
+#ifdef _DEBUG
+class __declspec(uuid("C8085C38-E65F-4DA6-BBBA-A47246499B6D"))
+#else
+class __declspec(uuid("412FE3A3-833F-4EDE-BE03-D2F510B1AE59"))
+#endif
+    HashToolContextMenuCommand final : public BaseCommand
 {
 public:
     HashToolContextMenuCommand()

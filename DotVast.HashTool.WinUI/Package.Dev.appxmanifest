@@ -60,20 +60,20 @@
                 <desktop4:Extension Category="windows.fileExplorerContextMenus">
                     <desktop4:FileExplorerContextMenus>
                         <desktop5:ItemType Type="*">
-                            <desktop5:Verb Id="Command" Clsid="412FE3A3-833F-4EDE-BE03-D2F510B1AE59" />
+                            <desktop5:Verb Id="Command" Clsid="C8085C38-E65F-4DA6-BBBA-A47246499B6D" />
                         </desktop5:ItemType>
                         <desktop5:ItemType Type="Directory">
-                            <desktop5:Verb Id="Command" Clsid="412FE3A3-833F-4EDE-BE03-D2F510B1AE59" />
+                            <desktop5:Verb Id="Command" Clsid="C8085C38-E65F-4DA6-BBBA-A47246499B6D" />
                         </desktop5:ItemType>
                         <desktop5:ItemType Type="Directory\Background">
-                            <desktop5:Verb Id="Command" Clsid="412FE3A3-833F-4EDE-BE03-D2F510B1AE59" />
+                            <desktop5:Verb Id="Command" Clsid="C8085C38-E65F-4DA6-BBBA-A47246499B6D" />
                         </desktop5:ItemType>
                     </desktop4:FileExplorerContextMenus>
                 </desktop4:Extension>
                 <com:Extension Category="windows.comServer">
                     <com:ComServer>
                         <com:SurrogateServer DisplayName="Context menu verb handle">
-                            <com:Class Id="412FE3A3-833F-4EDE-BE03-D2F510B1AE59" Path="DotVast.HashTool.ContextMenu.dll" ThreadingModel="STA"/>
+                            <com:Class Id="C8085C38-E65F-4DA6-BBBA-A47246499B6D" Path="DotVast.HashTool.ContextMenu.dll" ThreadingModel="STA"/>
                         </com:SurrogateServer>
                     </com:ComServer>
                 </com:Extension>
