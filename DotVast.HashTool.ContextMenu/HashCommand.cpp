@@ -31,18 +31,18 @@ IFACEMETHODIMP HashCommand::Invoke(IShellItemArray* selection, IBindCtx*) noexce
 
         std::wostringstream args;
 
-        args << "--hash";
-        args << ' ' << '"' << HashName << '"';
-        args << ' ' << "--path";
+        args << L"--hash";
+        args << L" \"" << HashName << L'"';
+        args << L" --path";
 
-        IShellItem* pShellItem = nullptr;
-        PWSTR pPath = nullptr;
         for (DWORD i = 0; i < count; i++)
         {
-            selection->GetItemAt(i, &pShellItem);
-            pShellItem->GetDisplayName(SIGDN_FILESYSPATH, &pPath);
-            pShellItem->Release();
-            args << ' ' << '"' << pPath << '"';
+            IShellItem* shellItem;
+            LPWSTR path;
+            selection->GetItemAt(i, &shellItem);
+            shellItem->GetDisplayName(SIGDN_FILESYSPATH, &path);
+            shellItem->Release();
+            args << L" \"" << path << L" \""; // 在路径后添加空格, 防止出现 `"C:\"`, 使得后一个引号被转义
         }
 
 #ifdef _DEBUG

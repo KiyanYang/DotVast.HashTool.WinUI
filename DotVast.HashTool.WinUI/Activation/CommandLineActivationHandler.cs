@@ -121,7 +121,7 @@ public sealed partial class CommandLineActivationHandler : ActivationHandler<App
         {
             DateTime = DateTime.Now,
             Mode = mode,
-            Content = path,
+            Content = path.Trim(),
             SelectedHashs = hashes,
             State = HashTaskState.Waiting,
         };
