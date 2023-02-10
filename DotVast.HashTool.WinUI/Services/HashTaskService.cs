@@ -14,7 +14,8 @@ internal class HashTaskService : IHashTaskService
     {
         foreach (var item in HashTasks.Where(x => x.State == HashTaskState.Waiting))
         {
-            await item.StartAsync();
+            _ = item.StartAsync();
         }
+        await Task.CompletedTask;
     }
 }
