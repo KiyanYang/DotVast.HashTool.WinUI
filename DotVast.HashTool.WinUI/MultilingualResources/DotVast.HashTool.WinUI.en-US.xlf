@@ -321,6 +321,14 @@
           <source>取消</source>
           <target state="translated">Cancel</target>
         </trans-unit>
+        <trans-unit id="Create" translate="yes" xml:space="preserve">
+          <source>创建</source>
+          <target state="translated">Create</target>
+        </trans-unit>
+        <trans-unit id="Created" translate="yes" xml:space="preserve">
+          <source>已创建</source>
+          <target state="translated">Created</target>
+        </trans-unit>
       </group>
     </body>
   </file>

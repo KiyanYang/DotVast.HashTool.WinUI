@@ -15,14 +15,14 @@ public partial class HomeViewModel
     /// 当前界面输入的哈希任务模式.
     /// </summary>
     [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(StartTaskCommand))]
+    [NotifyCanExecuteChangedFor(nameof(CreateTaskCommand))]
     private HashTaskMode _inputtingMode = HashTaskMode.File;
 
     /// <summary>
     /// 当前界面输入的哈希任务内容.
     /// </summary>
     [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(StartTaskCommand))]
+    [NotifyCanExecuteChangedFor(nameof(CreateTaskCommand))]
     private string _inputtingContent = string.Empty;
 
     /// <summary>
@@ -65,35 +65,9 @@ public partial class HomeViewModel
     public IEnumerable<HashOption> HashOptions => _preferencesSettingsService.HashOptions.Where(i => i.IsEnabled);
 
     /// <summary>
-    /// 当前流计算的进度.
-    /// </summary>
-    public ProgressBarModel AtomProgressBar { get; } = new() { Min = 0, Max = 1, Val = 0 };
-
-    /// <summary>
-    /// 当前任务的进度.
-    /// </summary>
-    public ProgressBarModel TaskProgressBar { get; } = new() { Min = 0, Max = 1, Val = 0 };
-
-    /// <summary>
     /// “开始”按钮.
     /// </summary>
-    public ButtonModel StartButton { get; } = new() { Content = Localization.Home_Button_Start };
-
-    /// <summary>
-    /// “暂停”和“继续”按钮.
-    /// </summary>
-    public ButtonModel ResetButton { get; } = new() { Content = Localization.Home_Button_Pause };
-
-    /// <summary>
-    /// “取消”按钮.
-    /// </summary>
-    public ButtonModel CancelButton { get; } = new() { Content = Localization.Home_Button_Cancel };
-
-    /// <summary>
-    /// 当前界面计算的哈希任务.
-    /// </summary>
-    [ObservableProperty]
-    private HashTask? _currentHashTask;
+    public ButtonModel CreateTaskBtn{ get; } = new() { Content = LocalizationCommon.Create };
 
     #region Verifying Hash
 

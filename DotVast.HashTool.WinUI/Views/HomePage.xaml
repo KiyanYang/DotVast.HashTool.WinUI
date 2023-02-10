@@ -5,11 +5,11 @@
     xmlns:behaviors="using:DotVast.HashTool.WinUI.Behaviors"
     xmlns:dvhc="using:DotVast.HashTool.WinUI.Controls"
     xmlns:enums="using:DotVast.HashTool.WinUI.Enums"
-    xmlns:helpers="using:DotVast.HashTool.WinUI.Helpers"
     xmlns:hdts="using:DotVast.HashTool.WinUI.Helpers.DataTemplateSelectors"
-    xmlns:models="using:DotVast.HashTool.WinUI.Models"
+    xmlns:helpers="using:DotVast.HashTool.WinUI.Helpers"
     xmlns:i18n="using:DotVast.HashTool.WinUI.Strings"
     xmlns:local="using:DotVast.HashTool.WinUI.Views"
+    xmlns:models="using:DotVast.HashTool.WinUI.Models"
     AllowDrop="True"
     DragOver="Page_DragOver"
     Drop="Page_Drop"
@@ -133,39 +133,13 @@
                     </ItemsRepeater>
                 </Border>
 
-                <!-- 进度条 -->
-                <ProgressBar
-                    Maximum="{x:Bind ViewModel.AtomProgressBar.Max, Mode=OneWay}"
-                    Minimum="{x:Bind ViewModel.AtomProgressBar.Min, Mode=OneWay}"
-                    ShowPaused="{x:Bind ViewModel.AtomProgressBar.ShowPaused, Mode=OneWay}"
-                    Value="{x:Bind ViewModel.AtomProgressBar.Val, Mode=OneWay}" />
-                <ProgressBar
-                    Maximum="{x:Bind ViewModel.TaskProgressBar.Max, Mode=OneWay}"
-                    Minimum="{x:Bind ViewModel.TaskProgressBar.Min, Mode=OneWay}"
-                    ShowPaused="{x:Bind ViewModel.TaskProgressBar.ShowPaused, Mode=OneWay}"
-                    Value="{x:Bind ViewModel.TaskProgressBar.Val, Mode=OneWay}" />
-
-                <!-- 操作按钮: 开始, 暂停(继续), 取消 -->
-                <Grid Margin="{ThemeResource SmallTopBottomMargin}" ColumnSpacing="8">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Button
-                        Grid.Column="0"
-                        Command="{x:Bind ViewModel.StartTaskCommand}"
-                        Content="{x:Bind ViewModel.StartButton.Content, Mode=OneWay}"
-                        Style="{ThemeResource AccentButtonStyle}" />
-                    <Button
-                        Grid.Column="1"
-                        Command="{x:Bind ViewModel.ResetTaskCommand}"
-                        Content="{x:Bind ViewModel.ResetButton.Content, Mode=OneWay}" />
-                    <Button
-                        Grid.Column="2"
-                        Command="{x:Bind ViewModel.CancelTaskCommand}"
-                        Content="{x:Bind ViewModel.CancelButton.Content, Mode=OneWay}" />
-                </Grid>
+                <!-- 操作按钮: 创建任务 -->
+                <Button
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Center"
+                    Command="{x:Bind ViewModel.CreateTaskCommand}"
+                    Content="{x:Bind ViewModel.CreateTaskBtn.Content, Mode=OneWay}"
+                    Style="{ThemeResource AccentButtonStyle}" />
 
                 <!-- 对比框 -->
                 <Grid>

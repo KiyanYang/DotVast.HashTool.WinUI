@@ -6,7 +6,6 @@ using CommunityToolkit.WinUI;
 
 using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
-using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Models.Messages;
 
@@ -16,13 +15,14 @@ namespace DotVast.HashTool.WinUI.ViewModels;
 
 public sealed partial class HomeViewModel : ObservableRecipient
 {
+    private const int MillisecondsDelayCreateTask = 1500;
+
     private readonly ILogger<HomeViewModel> _logger;
     private readonly IPreferencesSettingsService _preferencesSettingsService;
     private readonly IComputeHashService _computeHashService;
     private readonly IDialogService _dialogService;
     private readonly IHashTaskService _hashTaskService;
-    private readonly ManualResetEventSlim _mres = new(true);
-    private CancellationTokenSource? _cts;
+    private readonly System.Timers.Timer _timer;
 
     public HomeViewModel(
         ILogger<HomeViewModel> logger,
@@ -37,8 +37,6 @@ public sealed partial class HomeViewModel : ObservableRecipient
         _dialogService = dialogService;
         _hashTaskService = hashTaskService;
 
-        _computeHashService.StatusChanged += (sender, e) => App.MainWindow.DispatcherQueue.TryEnqueue(() => SetButtonsStatus(e));
-
         // 响应哈希选项排序
         _preferencesSettingsService.HashOptions.CollectionChanged += (sender, e) =>
         {
@@ -50,6 +48,9 @@ public sealed partial class HomeViewModel : ObservableRecipient
         };
 
         IsActive = true;
+
+        _timer = new();
+        InitializeCreateTaskTimer();
     }
 
     #region Messenger
@@ -74,7 +75,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
                             Debug.WriteLine($"---------------- {DateTime.Now} -- HomeViewModel.Messenger.PropertyChangedMessage[HashOption.IsChecked]");
                             Debug.WriteLine($"Hash.Name: {hashOption.Hash.Name}");
                             Debug.WriteLine($"IsChecked:{hashOption.IsChecked}");
-                            StartTaskCommand.NotifyCanExecuteChanged();
+                            CreateTaskCommand.NotifyCanExecuteChanged();
                             break;
                         case nameof(HashOption.IsEnabled):
                             Debug.WriteLine($"---------------- {DateTime.Now} -- HomeViewModel.Messenger.PropertyChangedMessage[HashOption.IsEnabled]");
@@ -94,31 +95,23 @@ public sealed partial class HomeViewModel : ObservableRecipient
 
     #endregion Messenger
 
-    private void SetButtonsStatus(ComputeHashStatus status)
+    private void InitializeCreateTaskTimer()
     {
-        StartTaskCommand.NotifyCanExecuteChanged();
-        ResetTaskCommand.NotifyCanExecuteChanged();
-        CancelTaskCommand.NotifyCanExecuteChanged();
-        switch (status)
-        {
-            case ComputeHashStatus.Free:
-                ResetButton.Content = Localization.Home_Button_Pause;
-                AtomProgressBar.ShowPaused = false;
-                TaskProgressBar.ShowPaused = false;
-                break;
-            case ComputeHashStatus.Busy:
-                ResetButton.Content = Localization.Home_Button_Pause;
-                AtomProgressBar.ShowPaused = false;
-                TaskProgressBar.ShowPaused = false;
-                break;
-            case ComputeHashStatus.Pasue:
-                ResetButton.Content = Localization.Home_Button_Resume;
-                AtomProgressBar.ShowPaused = true;
-                TaskProgressBar.ShowPaused = true;
-                break;
-            default:
-                break;
-        }
+        _timer.AutoReset = false;
+        _timer.Enabled = false;
+        _timer.Interval = 10;
+        _timer.Elapsed += (sender, e) => App.MainWindow.DispatcherQueue.TryEnqueue(async () => await DelayCreateTask());
+    }
+
+    private async Task DelayCreateTask()
+    {
+        _isDelayCreateTask = true;
+        CreateTaskCommand.NotifyCanExecuteChanged();
+        CreateTaskBtn.Content = LocalizationCommon.Created;
+        await Task.Delay(MillisecondsDelayCreateTask);
+        CreateTaskBtn.Content = LocalizationCommon.Create;
+        _isDelayCreateTask = false;
+        CreateTaskCommand.NotifyCanExecuteChanged();
     }
 
     private void ShowTipMessage(string title, string subTitle)

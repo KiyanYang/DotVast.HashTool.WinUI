@@ -13,6 +13,8 @@ public partial class HomeViewModel
     private const char FilesSeparator = '|';
     private const int MaxFilesCount = 100;
 
+    private bool _isDelayCreateTask = false;
+
     [RelayCommand]
     private async Task PickAsync()
     {
@@ -53,43 +55,33 @@ public partial class HomeViewModel
         }
     }
 
-    public bool CanExecuteStart => !(_computeHashService.Status != ComputeHashStatus.Free
-                    || HashOptions.All(h => h.IsChecked == false)
-                    || (InputtingMode == HashTaskMode.File && !FilesExists(InputtingContent))
-                    || (InputtingMode == HashTaskMode.Folder && !Directory.Exists(InputtingContent)));
-
-    [RelayCommand(CanExecute = nameof(CanExecuteStart))]
-    private async Task StartTaskAsync()
+    [RelayCommand(CanExecute = nameof(CanCreateTask))]
+    private void CreateTask()
     {
-        _mres.Set();
-        await ComputeHashAsync();
+        var hashTask = CreateHashTask();
+        _hashTaskService.HashTasks.Add(hashTask);
+        _timer.Enabled = true;
     }
 
-    public bool CanExecuteReset => _computeHashService.Status != ComputeHashStatus.Free;
-
-    [RelayCommand(CanExecute = nameof(CanExecuteReset))]
-    private void ResetTask()
+    private bool CanCreateTask()
     {
-        if (_mres.IsSet)
+        if (_isDelayCreateTask)
         {
-            ResetButton.Content = Localization.Home_Button_Resume;
-            _mres.Reset();
+            return false;
         }
-        else
+        if (HashOptions.All(h => h.IsChecked == false))
         {
-            ResetButton.Content = Localization.Home_Button_Pause;
-            _mres.Set();
+            return false;
         }
-    }
-
-    public bool CanExecuteCancel => _computeHashService.Status != ComputeHashStatus.Free;
-
-    [RelayCommand(CanExecute = nameof(CanExecuteCancel))]
-    private void CancelTask()
-    {
-        _cts!.Cancel();
-        ResetButton.Content = Localization.Home_Button_Pause;
-        _mres.Set();
+        if (InputtingMode == HashTaskMode.File)
+        {
+            return FilesExists(InputtingContent);
+        }
+        if (InputtingMode == HashTaskMode.Folder)
+        {
+            return Directory.Exists(InputtingContent);
+        }
+        return true;
     }
 
     /// <summary>
@@ -131,49 +123,6 @@ public partial class HomeViewModel
             SelectedHashs = HashOptions.Where(i => i.IsChecked).Select(i => i.Hash).ToArray(),
             State = HashTaskState.Waiting,
         };
-    }
-
-    private async Task ComputeHashAsync()
-    {
-        _cts = new();
-
-        var hashTask = CreateHashTask();
-        CurrentHashTask = hashTask;
-        _hashTaskService.HashTasks.Add(hashTask);
-
-        try
-        {
-            switch (hashTask.Mode)
-            {
-                case var m when m == HashTaskMode.Text:
-                    await _computeHashService.HashTextAsync(hashTask, _mres, _cts.Token);
-                    break;
-
-                case var m when m == HashTaskMode.File:
-                    await _computeHashService.HashFileAsync(hashTask, _mres, _cts.Token);
-                    break;
-
-                case var m when m == HashTaskMode.Folder:
-                    await _computeHashService.HashFolderAsync(hashTask, _mres, _cts.Token);
-                    break;
-            }
-        }
-        catch (UnauthorizedAccessException ex)
-        {
-            await _dialogService.ShowInfoDialogAsync(
-                LocalizationDialog.HashTaskAborted_Title,
-                LocalizationDialog.HashTaskAborted_UnauthorizedAccess,
-                LocalizationDialog.Base_OK);
-            _logger.LogWarning("计算哈希时出现“未授权访问”异常, 模式: {Mode}, 内容: {Content}\n{Exception}", hashTask.Mode, hashTask.Content, ex);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError("计算哈希时出现未预料的异常, 哈希任务: {HashTask:j}\n{Exception}", hashTask, ex);
-        }
-        finally
-        {
-            _cts.Dispose();
-        }
     }
 
     /// <summary>

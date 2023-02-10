@@ -1,10 +1,10 @@
 {
-    "profiles": {
-      "DotVast.HashTool.WinUI (Package)": {
-        "commandName": "MsixPackage"
-      },
-      "DotVast.HashTool.WinUI (Unpackaged)": {
-        "commandName": "Project"
-      }
+  "profiles": {
+    "DotVast.HashTool.WinUI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "DotVast.HashTool.WinUI (Unpackaged)": {
+      "commandName": "Project"
     }
+  }
 }
