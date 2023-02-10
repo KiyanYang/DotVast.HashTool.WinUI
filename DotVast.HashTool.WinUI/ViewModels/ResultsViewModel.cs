@@ -42,7 +42,7 @@ public sealed partial class ResultsViewModel : ObservableRecipient, INavigationA
     {
         get
         {
-            if (_hashResultsFilterByContentIsEnabled)
+            if (HashResultsFilterByContentIsEnabled)
             {
                 return HashTask?.Results?.Where(i => i.Content.Contains(HashResultsFilterByContent, StringComparison.InvariantCultureIgnoreCase)).ToList();
             }
@@ -88,9 +88,9 @@ public sealed partial class ResultsViewModel : ObservableRecipient, INavigationA
 
     partial void OnHashTaskChanging(HashTask? value)
     {
-        if (_hashTask != null)
+        if (HashTask != null)
         {
-            _hashTask.PropertyChanged -= HashTask_PropertyChanged;
+            HashTask.PropertyChanged -= HashTask_PropertyChanged;
         }
 
         if (value != null)

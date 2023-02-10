@@ -18,62 +18,6 @@
           <source>HashTool Dev</source>
           <target state="translated">HashTool Dev</target>
         </trans-unit>
-        <trans-unit id="HashResultType_File" translate="yes" xml:space="preserve">
-          <source>文件</source>
-          <target state="translated">File</target>
-        </trans-unit>
-        <trans-unit id="HashResultType_Text" translate="yes" xml:space="preserve">
-          <source>文本</source>
-          <target state="translated">Text</target>
-        </trans-unit>
-        <trans-unit id="HashTaskMode_File" translate="yes" xml:space="preserve">
-          <source>文件</source>
-          <target state="translated">File</target>
-        </trans-unit>
-        <trans-unit id="HashTaskMode_Folder" translate="yes" xml:space="preserve">
-          <source>文件夹</source>
-          <target state="translated">Folder</target>
-        </trans-unit>
-        <trans-unit id="HashTaskMode_Text" translate="yes" xml:space="preserve">
-          <source>文本</source>
-          <target state="translated">Text</target>
-        </trans-unit>
-        <trans-unit id="HashTaskState_Aborted" translate="yes" xml:space="preserve">
-          <source>已中止</source>
-          <target state="translated">Aborted</target>
-        </trans-unit>
-        <trans-unit id="HashTaskState_Canceled" translate="yes" xml:space="preserve">
-          <source>已取消</source>
-          <target state="translated">Canceled</target>
-        </trans-unit>
-        <trans-unit id="HashTaskState_Completed" translate="yes" xml:space="preserve">
-          <source>已完成</source>
-          <target state="translated">Completed</target>
-        </trans-unit>
-        <trans-unit id="HashTaskState_Waiting" translate="yes" xml:space="preserve">
-          <source>等待中</source>
-          <target state="translated">Waiting</target>
-        </trans-unit>
-        <trans-unit id="HashTaskState_Working" translate="yes" xml:space="preserve">
-          <source>计算中</source>
-          <target state="translated">Working</target>
-        </trans-unit>
-        <trans-unit id="Home_Button_Cancel" translate="yes" xml:space="preserve">
-          <source>取消</source>
-          <target state="translated">Cancel</target>
-        </trans-unit>
-        <trans-unit id="Home_Button_Pause" translate="yes" xml:space="preserve">
-          <source>暂停</source>
-          <target state="translated">Pause</target>
-        </trans-unit>
-        <trans-unit id="Home_Button_Resume" translate="yes" xml:space="preserve">
-          <source>继续</source>
-          <target state="translated">Resume</target>
-        </trans-unit>
-        <trans-unit id="Home_Button_Start" translate="yes" xml:space="preserve">
-          <source>开始</source>
-          <target state="translated">Start</target>
-        </trans-unit>
         <trans-unit id="SettingsPage_Licenses.Content" translate="yes" xml:space="preserve">
           <source>许可</source>
           <target state="translated">Licenses</target>
@@ -89,18 +33,6 @@
         <trans-unit id="SettingsPage_PrivacyTermsLink.NavigateUri" translate="yes" xml:space="preserve">
           <source>https://github.com/KiyanYang/DotVast.HashTool.WinUI/wiki/隐私声明</source>
           <target state="translated">https://github.com/KiyanYang/DotVast.HashTool.WinUI/wiki/Privacy-Statement</target>
-        </trans-unit>
-        <trans-unit id="Settings_Theme_Dark" translate="yes" xml:space="preserve">
-          <source>深色</source>
-          <target state="translated">Dark</target>
-        </trans-unit>
-        <trans-unit id="Settings_Theme_Default" translate="yes" xml:space="preserve">
-          <source>默认</source>
-          <target state="translated">Default</target>
-        </trans-unit>
-        <trans-unit id="Settings_Theme_Light" translate="yes" xml:space="preserve">
-          <source>浅色</source>
-          <target state="translated">Light</target>
         </trans-unit>
         <trans-unit id="SettingsPage_Language.Header" translate="yes" xml:space="preserve">
           <source>语言 (Language)</source>
@@ -244,14 +176,6 @@
           <source>任务结果</source>
           <target state="translated">Results</target>
         </trans-unit>
-        <trans-unit id="TasksPage_ShowResult_Button.Content" translate="yes" xml:space="preserve">
-          <source>查看</source>
-          <target state="translated">Show</target>
-        </trans-unit>
-        <trans-unit id="TasksPage_ShowResult_Button.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
-          <source>查看结果</source>
-          <target state="translated">Show Results</target>
-        </trans-unit>
         <trans-unit id="SettingsPage_CheckForUpdatesOnStartup.Header" translate="yes" xml:space="preserve">
           <source>启动时检查更新</source>
           <target state="translated">Check for updates on startup</target>
@@ -328,6 +252,79 @@
         <trans-unit id="Created" translate="yes" xml:space="preserve">
           <source>已创建</source>
           <target state="translated">Created</target>
+        </trans-unit>
+        <trans-unit id="Pause" translate="yes" xml:space="preserve">
+          <source>暂停</source>
+          <target state="translated">Pause</target>
+        </trans-unit>
+        <trans-unit id="Resume" translate="yes" xml:space="preserve">
+          <source>继续</source>
+          <target state="translated">Resume</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+  <file datatype="xml" source-language="zh-Hans" target-language="en-US" original="DOTVAST.HASHTOOL.WINUI/STRINGS/ZH-HANS/ENUMS.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="0.0.0.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="DOTVAST.HASHTOOL.WINUI/STRINGS/ZH-HANS/ENUMS.RESW" datatype="resx">
+        <trans-unit id="AppTheme_Dark" translate="yes" xml:space="preserve">
+          <source>深色</source>
+          <target state="translated">Dark</target>
+        </trans-unit>
+        <trans-unit id="AppTheme_Default" translate="yes" xml:space="preserve">
+          <source>默认</source>
+          <target state="translated">Default</target>
+        </trans-unit>
+        <trans-unit id="AppTheme_Light" translate="yes" xml:space="preserve">
+          <source>浅色</source>
+          <target state="translated">Light</target>
+        </trans-unit>
+        <trans-unit id="HashResultType_File" translate="yes" xml:space="preserve">
+          <source>文件</source>
+          <target state="translated">File</target>
+        </trans-unit>
+        <trans-unit id="HashResultType_Text" translate="yes" xml:space="preserve">
+          <source>文本</source>
+          <target state="translated">Text</target>
+        </trans-unit>
+        <trans-unit id="HashTaskMode_File" translate="yes" xml:space="preserve">
+          <source>文件</source>
+          <target state="translated">File</target>
+        </trans-unit>
+        <trans-unit id="HashTaskMode_Folder" translate="yes" xml:space="preserve">
+          <source>文件夹</source>
+          <target state="translated">Folder</target>
+        </trans-unit>
+        <trans-unit id="HashTaskMode_Text" translate="yes" xml:space="preserve">
+          <source>文本</source>
+          <target state="translated">Text</target>
+        </trans-unit>
+        <trans-unit id="HashTaskState_Aborted" translate="yes" xml:space="preserve">
+          <source>已中止</source>
+          <target state="translated">Aborted</target>
+        </trans-unit>
+        <trans-unit id="HashTaskState_Canceled" translate="yes" xml:space="preserve">
+          <source>已取消</source>
+          <target state="translated">Canceled</target>
+        </trans-unit>
+        <trans-unit id="HashTaskState_Completed" translate="yes" xml:space="preserve">
+          <source>已完成</source>
+          <target state="translated">Completed</target>
+        </trans-unit>
+        <trans-unit id="HashTaskState_Paused" translate="yes" xml:space="preserve">
+          <source>已暂停</source>
+          <target state="translated">Paused</target>
+        </trans-unit>
+        <trans-unit id="HashTaskState_Waiting" translate="yes" xml:space="preserve">
+          <source>等待中</source>
+          <target state="translated">Waiting</target>
+        </trans-unit>
+        <trans-unit id="HashTaskState_Working" translate="yes" xml:space="preserve">
+          <source>计算中</source>
+          <target state="translated">Working</target>
         </trans-unit>
       </group>
     </body>

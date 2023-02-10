@@ -117,136 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppDescription" xml:space="preserve">
-    <value>用于计算和校验文件、文件夹或文本哈希值的工具！</value>
+  <data name="AppTheme_Dark" xml:space="preserve">
+    <value>深色</value>
   </data>
-  <data name="AppDisplayName" xml:space="preserve">
-    <value>HashTool</value>
+  <data name="AppTheme_Default" xml:space="preserve">
+    <value>默认</value>
   </data>
-  <data name="AppDisplayNameDev" xml:space="preserve">
-    <value>HashTool Dev</value>
+  <data name="AppTheme_Light" xml:space="preserve">
+    <value>浅色</value>
   </data>
-  <data name="Command_CheckForUpdates" xml:space="preserve">
-    <value>检查更新</value>
+  <data name="HashResultType_File" xml:space="preserve">
+    <value>文件</value>
   </data>
-  <data name="Command_RestartApp" xml:space="preserve">
-    <value>重启应用</value>
+  <data name="HashResultType_Text" xml:space="preserve">
+    <value>文本</value>
   </data>
-  <data name="Command_Save_Tip" xml:space="preserve">
-    <value>保存 (Ctrl+S)</value>
-    <comment>保存; 快捷键 Ctrl+S</comment>
+  <data name="HashTaskMode_File" xml:space="preserve">
+    <value>文件</value>
   </data>
-  <data name="HashOptionSettings_Title" xml:space="preserve">
-    <value>哈希选项</value>
+  <data name="HashTaskMode_Folder" xml:space="preserve">
+    <value>文件夹</value>
   </data>
-  <data name="HomePage_VerifyingHashBox.PlaceholderText" xml:space="preserve">
-    <value>要对比的哈希值</value>
-    <comment>[主页] 哈希对比框的占位符</comment>
+  <data name="HashTaskMode_Text" xml:space="preserve">
+    <value>文本</value>
   </data>
-  <data name="Home_Button_FullContent_Tip" xml:space="preserve">
-    <value>展开输入</value>
-    <comment>用于展开主页输入文本框的切换按钮的提示</comment>
+  <data name="HashTaskState_Aborted" xml:space="preserve">
+    <value>已中止</value>
   </data>
-  <data name="Home_Button_Pick" xml:space="preserve">
-    <value>浏览... (Ctrl+O)</value>
-    <comment>选择文件或文件夹; 快捷键 Ctrl+O</comment>
+  <data name="HashTaskState_Canceled" xml:space="preserve">
+    <value>已取消</value>
   </data>
-  <data name="Home_DargToSetPath" xml:space="preserve">
-    <value>设置路径</value>
-    <comment>主页面拖放项目以设置路径的标题</comment>
+  <data name="HashTaskState_Completed" xml:space="preserve">
+    <value>已完成</value>
   </data>
-  <data name="Licenses_Title" xml:space="preserve">
-    <value>许可</value>
+  <data name="HashTaskState_Paused" xml:space="preserve">
+    <value>已暂停</value>
   </data>
-  <data name="ResultsPage_Detail_CreatedDateTime.Text" xml:space="preserve">
-    <value>创建时间</value>
+  <data name="HashTaskState_Waiting" xml:space="preserve">
+    <value>等待中</value>
   </data>
-  <data name="ResultsPage_Detail_Elapsed.Text" xml:space="preserve">
-    <value>计算用时</value>
-  </data>
-  <data name="ResultsPage_Detail_Encoding.Text" xml:space="preserve">
-    <value>文本编码</value>
-  </data>
-  <data name="ResultsPage_Detail_State.Text" xml:space="preserve">
-    <value>状态</value>
-  </data>
-  <data name="ResultsPage_FilterByContent.PlaceholderText" xml:space="preserve">
-    <value>筛选</value>
-  </data>
-  <data name="ResultsPage_Subtitle_TaskDetail.Text" xml:space="preserve">
-    <value>任务详情</value>
-  </data>
-  <data name="ResultsPage_Subtitle_TaskResults.Text" xml:space="preserve">
-    <value>任务结果</value>
-  </data>
-  <data name="SettingsPage_About.Text" xml:space="preserve">
-    <value>关于</value>
-  </data>
-  <data name="SettingsPage_AlwaysOnTop.Description" xml:space="preserve">
-    <value>设置应用窗口是否总是置顶</value>
-  </data>
-  <data name="SettingsPage_AlwaysOnTop.Header" xml:space="preserve">
-    <value>窗口置顶</value>
-  </data>
-  <data name="SettingsPage_HashFontFamily.Description" xml:space="preserve">
-    <value>设置显示哈希值的字体</value>
-  </data>
-  <data name="SettingsPage_HashFontFamily.Header" xml:space="preserve">
-    <value>哈希字体</value>
-  </data>
-  <data name="SettingsPage_HashOptions.Description" xml:space="preserve">
-    <value>设置首页显示哪些哈希选项</value>
-  </data>
-  <data name="SettingsPage_HashOptions.Header" xml:space="preserve">
-    <value>哈希选项</value>
-  </data>
-  <data name="SettingsPage_IncludePreRelease.Header" xml:space="preserve">
-    <value>包含预发行版本</value>
-    <comment>检测更新时是否包含预发行版本</comment>
-  </data>
-  <data name="SettingsPage_Language.Description" xml:space="preserve">
-    <value>更改应用中显示的语言</value>
-  </data>
-  <data name="SettingsPage_Language.Header" xml:space="preserve">
-    <value>语言 (Language)</value>
-  </data>
-  <data name="SettingsPage_Licenses.Content" xml:space="preserve">
-    <value>许可</value>
-  </data>
-  <data name="SettingsPage_Logs.Content" xml:space="preserve">
-    <value>日志</value>
-  </data>
-  <data name="SettingsPage_Personalization.Text" xml:space="preserve">
-    <value>个性化</value>
-  </data>
-  <data name="SettingsPage_PrivacyTermsLink.Content" xml:space="preserve">
-    <value>隐私声明</value>
-  </data>
-  <data name="SettingsPage_PrivacyTermsLink.NavigateUri" xml:space="preserve">
-    <value>https://github.com/KiyanYang/DotVast.HashTool.WinUI/wiki/隐私声明</value>
-  </data>
-  <data name="SettingsPage_Theme.Description" xml:space="preserve">
-    <value>更改应用中显示的主题</value>
-  </data>
-  <data name="SettingsPage_Theme.Header" xml:space="preserve">
-    <value>主题</value>
-  </data>
-  <data name="ShellPage_Home.Content" xml:space="preserve">
-    <value>主页</value>
-  </data>
-  <data name="ShellPage_Results.Content" xml:space="preserve">
-    <value>结果</value>
-  </data>
-  <data name="ShellPage_Tasks.Content" xml:space="preserve">
-    <value>任务</value>
-  </data>
-  <data name="Tip_FileSkipped_FileNotFound" xml:space="preserve">
-    <value>文件 “{0}” 未找到，已跳过。</value>
-  </data>
-  <data name="Tip_FileSkipped_Title" xml:space="preserve">
-    <value>已跳过文件</value>
-  </data>
-  <data name="SettingsPage_CheckForUpdatesOnStartup.Header" xml:space="preserve">
-    <value>启动时检查更新</value>
+  <data name="HashTaskState_Working" xml:space="preserve">
+    <value>计算中</value>
   </data>
 </root>

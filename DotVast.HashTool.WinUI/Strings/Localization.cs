@@ -19,3 +19,9 @@ internal static partial class LocalizationCommon
 {
 
 }
+
+[StringResource("../zh-Hans/Enums.resw", "GetLocalized(\"Enums\")", "DotVast.HashTool.WinUI.Helpers")]
+internal static partial class LocalizationEnum
+{
+
+}
