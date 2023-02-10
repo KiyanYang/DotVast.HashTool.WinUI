@@ -5,78 +5,28 @@
     xmlns:behaviors="using:DotVast.HashTool.WinUI.Behaviors"
     xmlns:dvhc="using:DotVast.HashTool.WinUI.Controls"
     xmlns:models="using:DotVast.HashTool.WinUI.Models.Views"
-    xmlns:views="using:DotVast.HashTool.WinUI.Views"
+    xmlns:userControls="using:DotVast.HashTool.WinUI.UserControls"
     NavigationCacheMode="Enabled">
 
     <Page.Resources>
-        <StackLayout
-            x:Key="TaskItemLayout"
-            Orientation="Vertical"
-            Spacing="8" />
         <DataTemplate x:Key="TaskItemDataTemplate" x:DataType="models:HashTaskCheckable">
-            <Grid
-                Padding="12,8"
-                ColumnSpacing="8"
-                RowSpacing="4"
-                Style="{StaticResource CardGridStyle}">
-                <Grid.Resources>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="VerticalAlignment" Value="Center" />
-                    </Style>
-                </Grid.Resources>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="24" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="80" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <CheckBox Grid.RowSpan="2" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" />
-
-                <TextBlock
-                    Grid.Column="1"
-                    IsTextSelectionEnabled="True"
-                    MaxLines="2"
-                    Text="{x:Bind HashTask.Content}"
-                    TextTrimming="CharacterEllipsis"
-                    ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}" />
-
-                <TextBlock
-                    Grid.RowSpan="2"
-                    Grid.Column="2"
-                    HorizontalAlignment="Center"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Text="{x:Bind HashTask.State, Mode=OneWay}"
-                    Visibility="{x:Bind views:TasksPage.GetHashTaskStateVisibility(HashTask.State), Mode=OneWay}" />
-                <ProgressRing
-                    Grid.RowSpan="2"
-                    Grid.Column="2"
-                    HorizontalAlignment="Center"
-                    IsActive="{x:Bind views:TasksPage.IsProgressRingActive(HashTask.State), Mode=OneWay}"
-                    IsIndeterminate="{x:Bind views:TasksPage.IsProgressRingIndeterminate(HashTask.State), Mode=OneWay}"
-                    Maximum="{x:Bind HashTask.ProgressMax, Mode=OneWay}"
-                    Value="{x:Bind HashTask.ProgressVal, Mode=OneWay}" />
-
-                <Button
-                    x:Uid="TasksPage_ShowResult_Button"
-                    Grid.RowSpan="2"
-                    Grid.Column="3"
-                    VerticalAlignment="Center"
-                    Command="{StaticResource ShowResultCommand}"
-                    CommandParameter="{x:Bind HashTask}" />
-
-                <TextBlock
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    FontSize="12"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Text="{x:Bind views:TasksPage.GetSecondaryInformationText(HashTask)}"
-                    TextTrimming="CharacterEllipsis"
-                    ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}" />
-            </Grid>
+            <Button
+                Margin="0,0,0,8"
+                Padding="12,6"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                Command="{StaticResource ShowResultCommand}"
+                CommandParameter="{x:Bind HashTask}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24" />
+                        <ColumnDefinition Width="12" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <CheckBox IsChecked="{x:Bind IsChecked, Mode=TwoWay}" />
+                    <userControls:HashTaskGrid Grid.Column="2" HashTask="{x:Bind HashTask}" />
+                </Grid>
+            </Button>
         </DataTemplate>
     </Page.Resources>
 
@@ -109,10 +59,10 @@
 
     <dvhc:NavigationViewBodyScrollViewer>
         <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewBodyContentStyle}">
-            <ItemsRepeater
-                ItemTemplate="{StaticResource TaskItemDataTemplate}"
-                ItemsSource="{x:Bind ViewModel.HashTaskCheckables, Mode=OneWay}"
-                Layout="{StaticResource TaskItemLayout}" />
+            <!-- ItemsRepeater 在进行元素的增删之后, 不会在内容更新时刷新新内容, 而是显示被删除项的旧内容, 下面是相关议题 -->
+            <!-- https://github.com/microsoft/microsoft-ui-xaml/issues/6661 -->
+            <!-- https://github.com/microsoft/microsoft-ui-xaml/issues/6614 -->
+            <ItemsControl ItemTemplate="{StaticResource TaskItemDataTemplate}" ItemsSource="{x:Bind ViewModel.HashTaskCheckables}" />
         </Grid>
     </dvhc:NavigationViewBodyScrollViewer>
 

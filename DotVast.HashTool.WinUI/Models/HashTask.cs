@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DotVast.HashTool.WinUI.Models;
 
-public sealed partial class HashTask : ObservableObject
+public sealed partial class HashTask : ObservableObject, IDisposable
 {
     #region Properties
 
@@ -65,15 +65,16 @@ public sealed partial class HashTask : ObservableObject
 
     #region Manager
 
-    private readonly IComputeHashService _computeHashService = App.GetService<IComputeHashService>();
     private readonly ILogger<HashTask> _logger = App.GetLogger<HashTask>();
-    private CancellationTokenSource _cts = new();
-    private ManualResetEventSlim _mres = new(true);
+    private readonly IComputeHashService _computeHashService = App.GetService<IComputeHashService>();
+    private readonly IDialogService _dialogService = App.GetService<IDialogService>();
+
+    private CancellationTokenSource? _cts;
+    private readonly ManualResetEventSlim _mres = new(true);
 
     public async Task StartAsync()
     {
-        ProgressVal1 ??= new Progress<double>(val => ProgressVal = val);
-        ProgressMax1 ??= new Progress<double>(val => ProgressMax = val);
+        _cts ??= new();
 
         try
         {
@@ -94,10 +95,10 @@ public sealed partial class HashTask : ObservableObject
         }
         catch (UnauthorizedAccessException ex)
         {
-            //await _dialogService.ShowInfoDialogAsync(
-            //    LocalizationDialog.HashTaskAborted_Title,
-            //    LocalizationDialog.HashTaskAborted_UnauthorizedAccess,
-            //    LocalizationDialog.Base_OK);
+            await _dialogService.ShowInfoDialogAsync(
+                LocalizationDialog.HashTaskAborted_Title,
+                LocalizationDialog.HashTaskAborted_UnauthorizedAccess,
+                LocalizationDialog.Base_OK);
             _logger.LogWarning("计算哈希时出现“未授权访问”异常, 模式: {Mode}, 内容: {Content}\n{Exception}", Mode, Content, ex);
         }
         catch (Exception ex)
@@ -107,46 +108,76 @@ public sealed partial class HashTask : ObservableObject
         finally
         {
             _cts.Dispose();
+            _cts = null;
         }
     }
 
-    public void Reset()
+    public bool Reset()
     {
         if (_mres.IsSet)
         {
             _mres.Reset();
+            return true;
         }
         else
         {
             _mres.Set();
+            return false;
         }
     }
 
     public void Cancel()
     {
-        _cts.Cancel();
+        _cts?.Cancel();
         _mres.Set();
     }
 
-
-    public IProgress<double>? ProgressVal1 { get; private set; }
-    public IProgress<double>? ProgressMax1 { get; private set; }
-
     #endregion Manager
 
-    private sealed class EncodingJsonConverter : JsonConverter<Encoding?>
+    #region Finalizer, IDisposable
+
+    private bool _disposed = false;
+
+    ~HashTask() => Dispose(false);
+
+    public void Dispose()
     {
-        public override Encoding? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    private void Dispose(bool disposing)
+    {
+        if (_disposed)
         {
-            var name = reader.GetString();
-            return Encoding.GetEncodings()
-                           .FirstOrDefault(e => string.Equals(name, e.Name, StringComparison.OrdinalIgnoreCase))?
-                           .GetEncoding();
+            return;
         }
 
-        public override void Write(Utf8JsonWriter writer, Encoding? value, JsonSerializerOptions options)
+        Cancel();
+
+        if (disposing)
         {
-            writer.WriteStringValue(value?.WebName);
+            _mres.Dispose();
         }
+
+        _disposed = true;
+    }
+
+    #endregion Finalizer, IDisposable
+}
+
+sealed file class EncodingJsonConverter : JsonConverter<Encoding?>
+{
+    public override Encoding? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        var name = reader.GetString();
+        return Encoding.GetEncodings()
+                       .FirstOrDefault(e => string.Equals(name, e.Name, StringComparison.OrdinalIgnoreCase))?
+                       .GetEncoding();
+    }
+
+    public override void Write(Utf8JsonWriter writer, Encoding? value, JsonSerializerOptions options)
+    {
+        writer.WriteStringValue(value?.WebName);
     }
 }

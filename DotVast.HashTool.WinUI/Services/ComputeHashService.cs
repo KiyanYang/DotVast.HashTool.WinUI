@@ -8,27 +8,12 @@ using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Models.Messages;
 
+using Microsoft.UI.Dispatching;
+
 namespace DotVast.HashTool.WinUI.Services;
 
 internal sealed partial class ComputeHashService : IComputeHashService
 {
-    public event EventHandler<ComputeHashStatus>? StatusChanged;
-
-    private ComputeHashStatus _status = ComputeHashStatus.Free;
-
-    public ComputeHashStatus Status
-    {
-        get => _status;
-        set
-        {
-            if (_status != value)
-            {
-                _status = value;
-                OnStatusChanged(value);
-            }
-        }
-    }
-
     public async Task<HashTask> HashFileAsync(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct)
     {
         return await PreAndPostProcessAsync(async () =>
@@ -54,10 +39,9 @@ internal sealed partial class ComputeHashService : IComputeHashService
             // 出现异常情况的频率较低，因此不使用 File.Exists 等涉及 IO 的额外判断操作
             try
             {
-                //hashTask.ProgressMax = filesCount;
-                hashTask.ProgressMax1?.Report(filesCount);
+                hashTask.ProgressMax = filesCount;
                 using var stream = File.Open(filePaths[i], FileMode.Open, FileAccess.Read, FileShare.Read);
-                var hashResult = await Task.Run(() => HashStream(hashTask, stream, mres, ct, i));
+                var hashResult = await Task.Run(() => HashStream(hashTask, stream, i, mres, ct));
                 if (hashResult != null)
                 {
                     hashResult.Type = HashResultType.File;
@@ -81,11 +65,10 @@ internal sealed partial class ComputeHashService : IComputeHashService
     {
         return await PreAndPostProcessAsync(async () =>
         {
-            //hashTask.ProgressMax = 1;
-            hashTask.ProgressMax1?.Report(1);
+            hashTask.ProgressMax = 1;
             var contentBytes = hashTask.Encoding!.GetBytes(hashTask.Content);
             using Stream stream = new MemoryStream(contentBytes);
-            var hashResult = await Task.Run(() => HashStream(hashTask, stream, mres, ct, 0));
+            var hashResult = await Task.Run(() => HashStream(hashTask, stream, 0, mres, ct));
             if (hashResult != null)
             {
                 hashResult.Type = HashResultType.Text;
@@ -97,7 +80,6 @@ internal sealed partial class ComputeHashService : IComputeHashService
 
     private async Task<HashTask> PreAndPostProcessAsync(Func<Task> func, HashTask hashTask, CancellationToken ct)
     {
-        Status = ComputeHashStatus.Busy;
         var stopWatch = Stopwatch.StartNew();
         hashTask.State = HashTaskState.Working;
 
@@ -123,11 +105,19 @@ internal sealed partial class ComputeHashService : IComputeHashService
         {
             stopWatch.Stop();
             hashTask.Elapsed = stopWatch.Elapsed;
-            Status = ComputeHashStatus.Free;
         }
     }
 
-    private HashResult? HashStream(HashTask hashTask, Stream stream, ManualResetEventSlim mres, CancellationToken ct, double progressOffset)
+    /// <summary>
+    /// 计算流的哈希值.
+    /// </summary>
+    /// <param name="hashTask">哈希任务.</param>
+    /// <param name="stream">要计算的流.</param>
+    /// <param name="progressOffset">进度偏移量, 用于多文件等模式, 该偏移量等于已计算的数量.</param>
+    /// <param name="mres">控制暂停.</param>
+    /// <param name="ct">控制取消.</param>
+    /// <returns>哈希结果.</returns>
+    private HashResult? HashStream(HashTask hashTask, Stream stream, double progressOffset, ManualResetEventSlim mres, CancellationToken ct)
     {
         HashAlgorithm[] hashes = hashTask.SelectedHashs.Select(x => Hash.GetHashAlgorithm(x)!).ToArray();
 
@@ -171,14 +161,13 @@ internal sealed partial class ComputeHashService : IComputeHashService
 
             if (!mres.IsSet)
             {
-                Status = ComputeHashStatus.Pasue;
+                TryEnqueue(() => hashTask.State = HashTaskState.Paused);
                 mres.Wait();
-                Status = ComputeHashStatus.Busy;
+                TryEnqueue(() => hashTask.State = HashTaskState.Working);
             }
 
             // 报告进度. streamLength 在此处始终大于 0.
-            //hashTask.ProgressVal = (double)stream.Position / stream.Length + progressOffset;
-            hashTask.ProgressVal1?.Report((double)stream.Position / stream.Length + progressOffset);
+            TryEnqueue(() => hashTask.ProgressVal = (double)stream.Position / stream.Length + progressOffset);
         });
 
         // 定义本地函数。当读取长度大于 0 时，先屏障同步（包括读取文件、报告进度等），再并行计算。
@@ -201,15 +190,13 @@ internal sealed partial class ComputeHashService : IComputeHashService
 
         if (ct.IsCancellationRequested)
         {
-            //hashTask.ProgressVal = progressOffset;
-            hashTask.ProgressVal1?.Report(progressOffset);
+            TryEnqueue(() => hashTask.ProgressVal = progressOffset);
             return null;
         }
         else
         {
             // 确保报告计算完成. 主要用于解决空流(stream.Length == 0)时无法在屏障进行报告的问题.
-            //hashTask.ProgressVal = progressOffset + 1;
-            hashTask.ProgressVal1?.Report(progressOffset + 1);
+            TryEnqueue(() => hashTask.ProgressVal = progressOffset + 1);
         }
 
         var hashResultData = new HashResultItem[hashes.Length];
@@ -233,9 +220,8 @@ internal sealed partial class ComputeHashService : IComputeHashService
         return new HashResult() { Data = hashResultData };
     }
 
-    private void OnStatusChanged(ComputeHashStatus value)
+    private static void TryEnqueue(DispatcherQueueHandler handler)
     {
-        var statusChanged = StatusChanged;
-        statusChanged?.Invoke(this, value);
+        App.MainWindow.DispatcherQueue.TryEnqueue(handler);
     }
 }

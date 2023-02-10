@@ -307,4 +307,21 @@
       </group>
     </body>
   </file>
+  <file datatype="xml" source-language="zh-Hans" target-language="en-US" original="DOTVAST.HASHTOOL.WINUI/STRINGS/ZH-HANS/COMMON.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="0.0.0.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="DOTVAST.HASHTOOL.WINUI/STRINGS/ZH-HANS/COMMON.RESW" datatype="resx">
+        <trans-unit id="Delete" translate="yes" xml:space="preserve">
+          <source>删除</source>
+          <target state="translated">Delete</target>
+        </trans-unit>
+        <trans-unit id="Cancel" translate="yes" xml:space="preserve">
+          <source>取消</source>
+          <target state="translated">Cancel</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
 </xliff>
