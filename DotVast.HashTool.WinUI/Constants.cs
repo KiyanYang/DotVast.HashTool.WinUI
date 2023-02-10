@@ -4,6 +4,12 @@ namespace DotVast.HashTool.WinUI;
 
 internal static class Constants
 {
+    public static class CommandLineArgs
+    {
+        public const string Hash = "--hash";
+        public const string Path = "--path";
+    }
+
     public static class GitHubRestApi
     {
         public const string BaseUrl = "https://api.github.com/";

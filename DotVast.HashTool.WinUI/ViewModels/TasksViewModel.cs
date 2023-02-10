@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -24,17 +26,46 @@ public sealed partial class TasksViewModel : ObservableRecipient, INavigationAwa
     {
         _hashTaskService = hashTaskService;
         _navigationService = navigationService;
+        InitializeHashTaskCheckables();
+        _hashTaskService.HashTasks.CollectionChanged += HashTasks_CollectionChanged;
     }
 
-    [ObservableProperty]
-    private IList<HashTaskCheckable>? _hashTaskCheckables;
+    public ObservableCollection<HashTaskCheckable> HashTaskCheckables { get; } = new();
+
+    private void InitializeHashTaskCheckables()
+    {
+        foreach (var h in _hashTaskService.HashTasks)
+        {
+            HashTaskCheckables.Add(new(h, false));
+        }
+    }
+
+    private void HashTasks_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        if (e.Action == NotifyCollectionChangedAction.Add && e.NewItems is System.Collections.IList newItems)
+        {
+            foreach (var item in newItems)
+            {
+                if (item is HashTask hashTask)
+                {
+                    HashTaskCheckables.Add(new(hashTask, false));
+                }
+            }
+        }
+        else if (e.Action == NotifyCollectionChangedAction.Remove && e.OldItems is System.Collections.IList oldItems)
+        {
+            for (int i = oldItems.Count - 1; i >= 0; i--)
+            {
+                HashTaskCheckables.RemoveAt(e.OldStartingIndex);
+            }
+        }
+    }
 
     #region INavigationAware
 
     public void OnNavigatedTo(object? parameter)
     {
         IsActive = true;
-        SetupHashTaskCheckables();
     }
 
     public void OnNavigatedFrom()
@@ -106,16 +137,5 @@ public sealed partial class TasksViewModel : ObservableRecipient, INavigationAwa
             var contents = JsonSerializer.Serialize(hashTasks, options);
             await File.WriteAllTextAsync(result.Path, contents);
         }
-    }
-
-    private void SetupHashTaskCheckables()
-    {
-        var hashTaskCheckables = new List<HashTaskCheckable>();
-        foreach (var h in _hashTaskService.HashTasks)
-        {
-            var isChecked = HashTaskCheckables?.FirstOrDefault(c => ReferenceEquals(c.HashTask, h))?.IsChecked ?? false;
-            hashTaskCheckables.Add(new(h, isChecked));
-        }
-        HashTaskCheckables = hashTaskCheckables;
     }
 }

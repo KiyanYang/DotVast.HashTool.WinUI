@@ -8,7 +8,9 @@ using DotVast.HashTool.WinUI.Core.Services;
 using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.Services;
 using DotVast.HashTool.WinUI.Services.Settings;
+using DotVast.HashTool.WinUI.UserControls;
 using DotVast.HashTool.WinUI.ViewModels;
+using DotVast.HashTool.WinUI.ViewModels.UserControls;
 using DotVast.HashTool.WinUI.Views;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -65,6 +67,7 @@ public sealed partial class App : Application
             services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
 
             // Other Activation Handlers
+            services.AddTransient<IActivationHandler, CommandLineActivationHandler>();
 
             // Services
             services.AddSingleton<IActivationService, ActivationService>();
@@ -77,7 +80,7 @@ public sealed partial class App : Application
             services.AddSingleton<IPreferencesSettingsService, PreferencesSettingsService>();
 
             services.AddSingleton<ICheckUpdateService, CheckUpdateService>();
-            services.AddSingleton<IComputeHashService, ComputeHashService>();
+            services.AddTransient<IComputeHashService, ComputeHashService>();
             services.AddSingleton<IDialogService, DialogService>();
             services.AddSingleton<IHashTaskService, HashTaskService>();
 
@@ -99,6 +102,9 @@ public sealed partial class App : Application
             services.AddTransient<SettingsPage>();
             services.AddTransient<ShellPage>();
             services.AddTransient<ShellViewModel>();
+
+            services.AddTransient<HashTaskGrid>();
+            services.AddTransient<HashTaskGridViewModel>();
         }).
         UseSerilog((context, services, loggerConfiguration) =>
         {

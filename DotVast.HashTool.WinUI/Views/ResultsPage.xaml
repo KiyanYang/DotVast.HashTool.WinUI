@@ -21,12 +21,12 @@
                 <TextBlock
                     Grid.Column="0"
                     FontFamily="{Binding Path=HashFontFamilyName, Source={StaticResource AppearanceSettingsService}}"
-                    Text="{x:Bind Name}" />
+                    Text="{x:Bind Hash}" />
                 <TextBlock
                     Grid.Column="1"
                     FontFamily="{Binding Path=HashFontFamilyName, Source={StaticResource AppearanceSettingsService}}"
                     IsTextSelectionEnabled="True"
-                    Text="{x:Bind Hash}"
+                    Text="{x:Bind HashValue}"
                     TextWrapping="Wrap" />
             </Grid>
         </DataTemplate>

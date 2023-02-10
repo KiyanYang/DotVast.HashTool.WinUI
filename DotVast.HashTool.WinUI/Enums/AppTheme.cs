@@ -6,9 +6,9 @@ namespace DotVast.HashTool.WinUI.Enums;
 
 public sealed class AppTheme : GenericEnum<string>
 {
-    public static readonly AppTheme Default = new(Localization.Settings_Theme_Default, ElementTheme.Default);
-    public static readonly AppTheme Light = new(Localization.Settings_Theme_Light, ElementTheme.Light);
-    public static readonly AppTheme Dark = new(Localization.Settings_Theme_Dark, ElementTheme.Dark);
+    public static readonly AppTheme Default = new(LocalizationEnum.AppTheme_Default, ElementTheme.Default);
+    public static readonly AppTheme Light = new(LocalizationEnum.AppTheme_Light, ElementTheme.Light);
+    public static readonly AppTheme Dark = new(LocalizationEnum.AppTheme_Dark, ElementTheme.Dark);
 
     public ElementTheme Theme { get; }
 

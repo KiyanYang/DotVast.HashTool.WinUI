@@ -19,7 +19,7 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
         _isAlwaysOnTop = await LoadAsync(nameof(IsAlwaysOnTop), DefaultAppearanceSettings.IsAlwaysOnTop);
         _theme = await LoadAsync(nameof(Theme), DefaultAppearanceSettings.Theme);
         Languages = GenericEnum.GetFieldValues<AppLanguage>();
-        _language = Languages.Where(x => x.Tag == ApplicationLanguages.PrimaryLanguageOverride)
+        Language = Languages.Where(x => x.Tag == ApplicationLanguages.PrimaryLanguageOverride)
                             .FirstOrDefault() ?? AppLanguage.ZhHans;
     }
 
@@ -86,7 +86,7 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
 
     private void SetLanguage()
     {
-        ApplicationLanguages.PrimaryLanguageOverride = _language.Tag;
+        ApplicationLanguages.PrimaryLanguageOverride = Language.Tag;
     }
     #endregion Language
 }
