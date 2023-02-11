@@ -79,12 +79,21 @@ public sealed partial class HashTaskGrid : UserControl
 
     public static Visibility GetHashTaskStateTextVisibility(HashTaskState state)
     {
-        return IsProgressRingActive(state) ? Visibility.Collapsed : Visibility.Visible;
+        return GetProgressRingVisibility(state) switch
+        {
+            Visibility.Visible => Visibility.Collapsed,
+            _ => Visibility.Visible,
+        };
     }
 
-    public static bool IsProgressRingActive(HashTaskState state)
+    public static Visibility GetProgressRingVisibility(HashTaskState state)
     {
-        return state == HashTaskState.Working || state == HashTaskState.Paused;
+        return state == HashTaskState.Working || state == HashTaskState.Paused ? Visibility.Visible : Visibility.Collapsed;
+    }
+
+    public static bool IsProgressRingIndeterminate(HashTaskState state)
+    {
+        return state == HashTaskState.Paused;
     }
 
     #endregion Visibility
@@ -101,6 +110,11 @@ public sealed partial class HashTaskGrid : UserControl
         var hashNames = $"{separator}{string.Join(", ", hashTask.SelectedHashs.Select(i => i.Name))}";
 
         return $"{mode}{dateTime}{encoding}{hashNames}";
+    }
+
+    public static string GetProgressText(double val, double max)
+    {
+        return $"{val / max * 100:F0}";
     }
 
     #endregion x:Bind Function

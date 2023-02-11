@@ -40,14 +40,18 @@
             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
             Text="{x:Bind HashTask.State, Mode=OneWay}"
             Visibility="{x:Bind local:HashTaskGrid.GetHashTaskStateTextVisibility(HashTask.State), Mode=OneWay}" />
-        <ProgressRing
+        <Grid
             Grid.RowSpan="2"
             Grid.Column="1"
-            HorizontalAlignment="Center"
-            IsActive="{x:Bind local:HashTaskGrid.IsProgressRingActive(HashTask.State), Mode=OneWay}"
-            IsIndeterminate="False"
-            Maximum="{x:Bind HashTask.ProgressMax, Mode=OneWay}"
-            Value="{x:Bind HashTask.ProgressVal, Mode=OneWay}" />
+            Visibility="{x:Bind local:HashTaskGrid.GetProgressRingVisibility(HashTask.State), Mode=OneWay}">
+            <ProgressRing
+                Width="40"
+                Height="40"
+                IsIndeterminate="{x:Bind local:HashTaskGrid.IsProgressRingIndeterminate(HashTask.State), Mode=OneWay}"
+                Maximum="{x:Bind HashTask.ProgressMax, Mode=OneWay}"
+                Value="{x:Bind HashTask.ProgressVal, Mode=OneWay}" />
+            <TextBlock HorizontalAlignment="Center" Text="{x:Bind local:HashTaskGrid.GetProgressText(HashTask.ProgressVal, HashTask.ProgressMax), Mode=OneWay}" />
+        </Grid>
 
         <!-- 命令: 开始, 暂停, 继续, 取消, 删除 -->
         <CommandBar
