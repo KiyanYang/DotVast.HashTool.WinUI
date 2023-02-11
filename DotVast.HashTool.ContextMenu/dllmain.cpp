@@ -52,20 +52,36 @@ class __declspec(uuid("412FE3A3-833F-4EDE-BE03-D2F510B1AE59"))
     HashToolContextMenuCommand final : public BaseCommand
 {
 public:
+    const winrt::hstring HashOptionsKey = L"HashOptions";
+
     HashToolContextMenuCommand()
     {
         m_title = winrt::Windows::ApplicationModel::AppInfo::Current().DisplayInfo().DisplayName();
-        auto a = winrt::Windows::Storage::ApplicationData::Current().LocalSettings().Values().Lookup(L"HashOptions");
-        JsonArray result;
-        if (JsonArray::TryParse(winrt::unbox_value<winrt::hstring>(a), result))
+
+        auto values = winrt::Windows::Storage::ApplicationData::Current().LocalSettings().Values();
+        if (values.HasKey(HashOptionsKey))
         {
-            for (const auto& obj : result)
+            auto hashOptions = winrt::unbox_value<winrt::hstring>(values.Lookup(HashOptionsKey));
+            JsonArray result;
+            if (JsonArray::TryParse(hashOptions, result))
             {
-                auto command = Make<HashCommand>(obj.GetObjectW());
-                if (command.Get()->IsEnabled)
+                for (const auto& obj : result)
                 {
-                    m_commands.push_back(command);
+                    auto command = Make<HashCommand>(obj.GetObjectW());
+                    if (command.Get()->IsEnabled)
+                    {
+                        m_commands.push_back(command);
+                    }
                 }
+            }
+        }
+        if (m_commands.size() == 0)
+        {
+            winrt::hstring defaultHashNames[] = {L"MD5", L"SHA1", L"SHA256", L"SHA384" , L"SHA512" };
+            for (const auto& hashName : defaultHashNames)
+            {
+                auto command = Make<HashCommand>(hashName, true);
+                m_commands.push_back(command);
             }
         }
     }
@@ -73,14 +89,14 @@ public:
     IFACEMETHODIMP GetTitle(_In_opt_ IShellItemArray* items, _Outptr_result_nullonfailure_ PWSTR* name) override
     {
         *name = nullptr;
-        return SHStrDup(m_title.data(), name);
+        return SHStrDup(m_title.c_str(), name);
     }
 
     IFACEMETHODIMP GetIcon(_In_opt_ IShellItemArray*, _Outptr_result_nullonfailure_ PWSTR* icon) override
     {
         *icon = nullptr;
-        std::wstring iconResourcePath = winrt::Windows::ApplicationModel::Package::Current().EffectiveLocation().Path().c_str();
-        iconResourcePath += L"\\Assets\\Icon.ico";
+        auto packagePath = winrt::Windows::ApplicationModel::Package::Current().EffectiveLocation().Path();
+        auto iconResourcePath = packagePath + L"\\Assets\\Icon.ico";
         return SHStrDup(iconResourcePath.c_str(), icon);
     }
 

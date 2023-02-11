@@ -8,6 +8,7 @@ class HashCommand final : public BaseCommand
 {
 public:
     HashCommand(JsonObject hashOption);
+    HashCommand(winrt::hstring hashName, bool isEnabled);
     IFACEMETHODIMP GetTitle(_In_opt_ IShellItemArray* items, _Outptr_result_nullonfailure_ PWSTR* name) override;
     IFACEMETHODIMP Invoke(_In_opt_ IShellItemArray* selection, _In_opt_ IBindCtx*) noexcept override;
 

@@ -8,10 +8,16 @@ HashCommand::HashCommand(JsonObject hashOption)
     IsEnabled = hashOption.GetNamedBoolean(L"IsEnabled", false);
 }
 
+HashCommand::HashCommand(winrt::hstring hashName, bool isEnabled)
+{
+    HashName = hashName;
+    IsEnabled = isEnabled;
+}
+
 IFACEMETHODIMP HashCommand::GetTitle(IShellItemArray* items, PWSTR* name)
 {
     *name = nullptr;
-    return SHStrDup(HashName.data(), name);
+    return SHStrDup(HashName.c_str(), name);
 }
 
 IFACEMETHODIMP HashCommand::Invoke(IShellItemArray* selection, IBindCtx*) noexcept try
@@ -55,7 +61,7 @@ IFACEMETHODIMP HashCommand::Invoke(IShellItemArray* selection, IBindCtx*) noexce
     }
     else
     {
-        MessageBox(parent, L"No selected items.", L"HashTool", MB_OK);
+        MessageBox(parent, L"No selected items.", L"DotVast.HashTool.WinUI", MB_OK);
     }
 
     return S_OK;
