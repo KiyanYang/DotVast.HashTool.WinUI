@@ -1,5 +1,4 @@
 using DotVast.HashTool.WinUI.Contracts.Services;
-using DotVast.HashTool.WinUI.ViewModels;
 
 using Microsoft.UI.Xaml;
 
@@ -22,7 +21,7 @@ public sealed class DefaultActivationHandler : ActivationHandler<LaunchActivated
 
     protected override async Task HandleInternalAsync(LaunchActivatedEventArgs args)
     {
-        _navigationService.NavigateTo(typeof(HomeViewModel).FullName!, args.Arguments);
+        _navigationService.NavigateTo(Constants.PageKeys.HomePage, args.Arguments);
 
         await Task.CompletedTask;
     }

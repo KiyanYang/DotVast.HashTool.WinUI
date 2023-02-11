@@ -107,7 +107,7 @@ public sealed partial class TasksViewModel : ObservableRecipient, INavigationAwa
     [RelayCommand]
     private void ShowResult(HashTask hashTask)
     {
-        _navigationService.NavigateTo(typeof(ResultsViewModel).FullName!, parameter: hashTask);
+        _navigationService.NavigateTo(Constants.PageKeys.ResultsPage, parameter: hashTask);
     }
 
     public bool CanExecuteSave => HashTaskCheckables?.Any(h => h.IsChecked) ?? false;

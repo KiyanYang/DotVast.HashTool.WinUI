@@ -1,3 +1,5 @@
+using DotVast.HashTool.WinUI.ViewModels;
+
 using Microsoft.UI.Xaml;
 
 namespace DotVast.HashTool.WinUI;
@@ -8,6 +10,20 @@ internal static class Constants
     {
         public const string Hash = "--hash";
         public const string Path = "--path";
+    }
+
+    public static class PageKeys
+    {
+        private static readonly Type s_homePageType = typeof(HomeViewModel);
+        private static readonly Type s_taskPageType = typeof(TasksViewModel);
+        private static readonly Type s_resultsPageType = typeof(ResultsViewModel);
+        private static readonly Type s_settingsPageType = typeof(SettingsViewModel);
+        private static readonly Type s_hashOptionSettingsPageType = typeof(HashOptionSettingsViewModel);
+        public static readonly string HomePage = s_homePageType.FullName!;
+        public static readonly string TaskPage = s_taskPageType.FullName!;
+        public static readonly string ResultsPage = s_resultsPageType.FullName!;
+        public static readonly string SettingsPage = s_settingsPageType.FullName!;
+        public static readonly string HashOptionSettingsPageType = s_hashOptionSettingsPageType.FullName!;
     }
 
     public static class GitHubRestApi

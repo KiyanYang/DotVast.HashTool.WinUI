@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 
 using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Helpers;
-using DotVast.HashTool.WinUI.ViewModels;
 
 using Microsoft.UI.Xaml.Controls;
 
@@ -59,7 +58,7 @@ public sealed class NavigationViewService : INavigationViewService
     {
         if (args.IsSettingsInvoked)
         {
-            _navigationService.NavigateTo(typeof(SettingsViewModel).FullName!);
+            _navigationService.NavigateTo(Constants.PageKeys.SettingsPage);
         }
         else
         {

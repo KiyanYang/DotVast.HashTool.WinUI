@@ -26,6 +26,7 @@
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <AppxPackageDir>bin\AppPackages</AppxPackageDir>
     <AppxBundle>Never</AppxBundle>
   </PropertyGroup>
 

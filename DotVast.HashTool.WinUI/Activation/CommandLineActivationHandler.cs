@@ -4,7 +4,6 @@ using System.Runtime.InteropServices;
 using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
-using DotVast.HashTool.WinUI.ViewModels;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Windows.AppLifecycle;
@@ -15,6 +14,7 @@ namespace DotVast.HashTool.WinUI.Activation;
 
 public sealed partial class CommandLineActivationHandler : ActivationHandler<AppActivationArguments>
 {
+    public record struct PathWithMode(string Path, HashTaskMode Mode);
     private readonly ILogger<CommandLineActivationHandler> _logger;
     private readonly INavigationService _navigationService;
     private readonly IHashTaskService _hashTaskService;
@@ -40,18 +40,35 @@ public sealed partial class CommandLineActivationHandler : ActivationHandler<App
         var data = (LaunchActivatedEventArgs)args.Data;
         _logger.LogInformation("激活参数: {@Args}", data);
 
-        var parsedArgs = Parse(data.Arguments);
-        var hashNames = parsedArgs.GetValues(Constants.CommandLineArgs.Hash)!;
-        var hashes = GetHashesFromNames(hashNames);
-        var paths = parsedArgs.GetValues(Constants.CommandLineArgs.Path)!;
-        var pathWithModes = paths.Select(p => (p, GetHashTaskModeFromPath(p)));
-
-        foreach (var (path, mode) in pathWithModes)
+        try
         {
-            _hashTaskService.HashTasks.Add(CreateHashTask(hashes, path, mode));
-        }
+            var parsedArgs = Parse(data.Arguments);
+            var hashNames = parsedArgs.GetValues(Constants.CommandLineArgs.Hash);
+            if (hashNames is null)
+                return;
 
-        _navigationService.NavigateTo(typeof(TasksViewModel).FullName!, args);
+            var hashes = GetHashesFromNames(hashNames);
+            if (hashes.Length <= 0)
+                return;
+
+            var paths = parsedArgs.GetValues(Constants.CommandLineArgs.Path);
+            if (paths is null)
+                return;
+
+            var pathWithModes = paths.Select(CreatePathWithMode).OfType<PathWithMode>().ToArray();
+            if (pathWithModes.Length <= 0)
+                return;
+
+            _navigationService.NavigateTo(Constants.PageKeys.TaskPage, args);
+            foreach (var (path, mode) in pathWithModes)
+            {
+                _hashTaskService.HashTasks.Add(CreateHashTask(hashes, path, mode!));
+            }
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("命令行激活时发生异常\n{Exception}", e);
+        }
 
         await Task.CompletedTask;
     }
@@ -108,11 +125,26 @@ public sealed partial class CommandLineActivationHandler : ActivationHandler<App
             .ToArray()!;
     }
 
-    private static HashTaskMode GetHashTaskModeFromPath(string path)
+    /// <summary>
+    /// 从路径获取 <see cref="HashTaskMode"/> 值.
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns>
+    /// 文件则返回 <see cref="HashTaskMode.File"/>;
+    /// 文件夹则返回 <see cref="HashTaskMode.Folder"/>;
+    /// 无效路径则返回 <see langword="null"/>.
+    /// </returns>
+    private static PathWithMode? CreatePathWithMode(string path)
     {
-        var attributes = File.GetAttributes(path);
-
-        return attributes.HasFlag(FileAttributes.Directory) ? HashTaskMode.Folder : HashTaskMode.File;
+        if (File.Exists(path))
+        {
+            return new(path, HashTaskMode.File);
+        }
+        if (Directory.Exists(path))
+        {
+            return new(path, HashTaskMode.Folder);
+        }
+        return null;
     }
 
     private static HashTask CreateHashTask(Hash[] hashes, string path, HashTaskMode mode)
