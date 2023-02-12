@@ -13,11 +13,11 @@ internal abstract partial class BaseObservableSettings : ObservableObject, IBase
 
     private readonly ILocalSettingsService _localSettingsService = App.GetService<ILocalSettingsService>();
 
-    protected async Task<T?> LoadAsync<T>(string key) =>
-        await _localSettingsService.ReadSettingAsync<T>(key);
-
-    protected async Task<T> LoadAsync<T>(string key, T defaultValue) =>
-        await _localSettingsService.ReadSettingAsync<T>(key) ?? defaultValue;
+    protected async Task<T> LoadAsync<T>(string key, T defaultValue)
+    {
+        var (Has, Val) = await _localSettingsService.ReadSettingAsync<T>(key);
+        return Has ? (Val ?? defaultValue) : defaultValue;
+    }
 
     protected async Task SaveAsync<T>(T value, string key) =>
         await _localSettingsService.SaveSettingAsync(key, value);
