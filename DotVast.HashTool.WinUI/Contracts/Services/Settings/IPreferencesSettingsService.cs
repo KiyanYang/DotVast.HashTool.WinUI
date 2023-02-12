@@ -18,5 +18,10 @@ public interface IPreferencesSettingsService : IBaseObservableSettings
     /// </summary>
     bool CheckForUpdatesOnStartup { get; set; }
 
+    /// <summary>
+    /// 创建任务时是否开始计算.
+    /// </summary>
+    bool StartingWhenCreateHashTask { get; set; }
+
     Task SaveHashOptionsAsync();
 }

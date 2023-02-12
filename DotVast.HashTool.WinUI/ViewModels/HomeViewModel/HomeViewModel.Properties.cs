@@ -67,7 +67,17 @@ public partial class HomeViewModel
     /// <summary>
     /// “开始”按钮.
     /// </summary>
-    public ButtonModel CreateTaskBtn{ get; } = new() { Content = LocalizationCommon.Create };
+    public ButtonModel CreateTaskBtn { get; } = new() { Content = LocalizationCommon.Create };
+
+    #region StartingWhenCreateHashTask
+
+    [ObservableProperty]
+    private bool _startingWhenCreateHashTask;
+
+    partial void OnStartingWhenCreateHashTaskChanged(bool value) =>
+        _preferencesSettingsService.StartingWhenCreateHashTask = value;
+
+    #endregion StartingWhenCreateHashTask
 
     #region Verifying Hash
 

@@ -180,6 +180,11 @@
           <source>启动时检查更新</source>
           <target state="translated">Check for updates on startup</target>
         </trans-unit>
+        <trans-unit id="HomePage_CreateAndStart" translate="yes" xml:space="preserve">
+          <source>创建并开始</source>
+          <target state="translated">Create and start</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">是否创建并开始计算</note>
+        </trans-unit>
       </group>
     </body>
   </file>

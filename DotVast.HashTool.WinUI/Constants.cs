@@ -44,6 +44,7 @@ internal static class Constants
     {
         public const bool IncludePreRelease = false;
         public const bool CheckForUpdatesOnStartup = false;
+        public const bool StartingWhenCreateHashTask = true;
     }
 
     public static class LogsOptions

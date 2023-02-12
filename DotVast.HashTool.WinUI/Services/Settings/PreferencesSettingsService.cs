@@ -15,6 +15,7 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
         await InitializeHashOptions();
         _includePreRelease = await LoadAsync(nameof(IncludePreRelease), DefaultPreferencesSettings.IncludePreRelease);
         _checkForUpdatesOnStartup = await LoadAsync(nameof(CheckForUpdatesOnStartup), DefaultPreferencesSettings.CheckForUpdatesOnStartup);
+        _startingWhenCreateHashTask = await LoadAsync(nameof(StartingWhenCreateHashTask), DefaultPreferencesSettings.StartingWhenCreateHashTask);
     }
 
     public override async Task StartupAsync()
@@ -31,8 +32,8 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
         var allHashOptions = allHashes.Select(i => new HashOption(i));
 
         // 反序列化时, HashOption 的属性 Hash 可能为 null
-        var hashOptions = (await LoadAsync<List<HashOption>>(nameof(HashOptions)) ?? new())
-            .Where(i => i.Hash != null)
+        var hashOptionsSettings = await LoadAsync<List<HashOption>>(nameof(HashOptions), new());
+        var hashOptions = hashOptionsSettings.Where(i => i.Hash != null)
             .UnionBy(allHashOptions, hashOption => hashOption.Hash);
 
         foreach (var hashOption in hashOptions)
@@ -64,4 +65,13 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
         set => SetAndSave(ref _checkForUpdatesOnStartup, value);
     }
     #endregion CheckForUpdatesOnStartup
+
+    #region StartingWhenCreateHashTask
+    private bool _startingWhenCreateHashTask;
+    public bool StartingWhenCreateHashTask
+    {
+        get => _startingWhenCreateHashTask;
+        set => SetAndSave(ref _startingWhenCreateHashTask, value);
+    }
+    #endregion
 }

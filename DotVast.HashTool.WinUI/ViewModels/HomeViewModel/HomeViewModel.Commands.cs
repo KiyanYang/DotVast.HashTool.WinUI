@@ -59,6 +59,10 @@ public partial class HomeViewModel
     private void CreateTask()
     {
         var hashTask = CreateHashTask();
+        if (StartingWhenCreateHashTask)
+        {
+            _ = hashTask.StartAsync();
+        }
         _hashTaskService.HashTasks.Add(hashTask);
         _timer.Enabled = true;
     }

@@ -47,6 +47,8 @@ public sealed partial class HomeViewModel : ObservableRecipient
             }
         };
 
+        _startingWhenCreateHashTask = _preferencesSettingsService.StartingWhenCreateHashTask;
+
         IsActive = true;
 
         _timer = new();

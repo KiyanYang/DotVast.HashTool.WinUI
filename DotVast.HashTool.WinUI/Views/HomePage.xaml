@@ -134,12 +134,33 @@
                 </Border>
 
                 <!-- 操作按钮: 创建任务 -->
-                <Button
-                    HorizontalAlignment="Stretch"
-                    HorizontalContentAlignment="Center"
-                    Command="{x:Bind ViewModel.CreateTaskCommand}"
-                    Content="{x:Bind ViewModel.CreateTaskBtn.Content, Mode=OneWay}"
-                    Style="{ThemeResource AccentButtonStyle}" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        Command="{x:Bind ViewModel.CreateTaskCommand}"
+                        Content="{x:Bind ViewModel.CreateTaskBtn.Content, Mode=OneWay}"
+                        CornerRadius="4,0,0,4"
+                        Style="{ThemeResource AccentButtonStyle}" />
+                    <DropDownButton
+                        Grid.Column="1"
+                        Padding="0,0,8,0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        CornerRadius="0,4,4,0">
+                        <DropDownButton.Flyout>
+                            <MenuFlyout Placement="TopEdgeAlignedRight">
+                                <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.StartingWhenCreateHashTask, Mode=TwoWay}" Text="{x:Bind i18n:Localization.HomePage_CreateAndStart}" />
+                            </MenuFlyout>
+                        </DropDownButton.Flyout>
+                    </DropDownButton>
+                </Grid>
 
                 <!-- 对比框 -->
                 <Grid>

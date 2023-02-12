@@ -35,7 +35,7 @@ public sealed partial class HashTaskGridViewModel : ObservableObject
 
     private void HashTask_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
-        if (sender is not HashTask hashTask)
+        if (sender is not HashTask _)
         {
             return;
         }

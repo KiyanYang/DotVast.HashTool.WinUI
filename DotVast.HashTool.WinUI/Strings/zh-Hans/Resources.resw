@@ -249,4 +249,8 @@
   <data name="SettingsPage_CheckForUpdatesOnStartup.Header" xml:space="preserve">
     <value>启动时检查更新</value>
   </data>
+  <data name="HomePage_CreateAndStart" xml:space="preserve">
+    <value>创建并开始</value>
+    <comment>是否创建并开始计算</comment>
+  </data>
 </root>
