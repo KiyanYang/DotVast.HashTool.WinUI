@@ -1,6 +1,7 @@
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Core.Enums;
 using DotVast.HashTool.WinUI.Enums;
+using DotVast.HashTool.WinUI.Helpers;
 
 using Microsoft.UI.Xaml;
 
@@ -63,12 +64,12 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
     private void SetTheme()
     {
         //TODO: 等待 Application.Current.RequestedTheme 的动态更改功能, https://github.com/microsoft/microsoft-ui-xaml/issues/4474
-
         if (App.MainWindow.Content is FrameworkElement rootElement)
         {
             rootElement.RequestedTheme = Theme;
-            //TitleBarContextMenuHelper.UpdateTitleBarContextMenu(Theme);
         }
+
+        TitleBarContextMenuHelper.UpdateTitleBarContextMenu(Theme);
     }
     #endregion Theme
 

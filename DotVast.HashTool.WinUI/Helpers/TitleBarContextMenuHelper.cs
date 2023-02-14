@@ -4,7 +4,7 @@ using Microsoft.UI.Xaml;
 
 namespace DotVast.HashTool.WinUI.Helpers;
 
-internal sealed class TitleBarContextMenuHelper
+internal sealed partial class TitleBarContextMenuHelper
 {
     private enum PreferredAppMode
     {
@@ -15,25 +15,25 @@ internal sealed class TitleBarContextMenuHelper
         Max
     };
 
-    [DllImport("uxtheme.dll", EntryPoint = "#135", SetLastError = true, CharSet = CharSet.Unicode)]
-    private static extern IntPtr SetPreferredAppMode(PreferredAppMode preferredAppMode);
+    [LibraryImport("uxtheme.dll", EntryPoint = "#135", SetLastError = true)]
+    private static partial IntPtr SetPreferredAppMode(PreferredAppMode preferredAppMode);
+
+    [LibraryImport("uxtheme.dll", EntryPoint = "#136", SetLastError = true)]
+    private static partial IntPtr FlushMenuThemes();
 
     /// <summary>
-    /// 设置标题栏上下文菜单主题为"允许深色".
+    /// 更新标题栏上下文菜单主题.
     /// </summary>
-    /// <returns></returns>
-    public static IntPtr SetTitleBarContextMenuAllowDark() =>
-        SetPreferredAppMode(PreferredAppMode.AllowDark);
-
-    // TODO: SetPreferredAppMode 方法仅首次调用有效.
-    //private static IntPtr UpdateTitleBarContextMenu(ElementTheme theme)
-    //{
-    //    var mode = theme switch
-    //    {
-    //        ElementTheme.Light => PreferredAppMode.ForceLight,
-    //        ElementTheme.Dark => PreferredAppMode.ForceDark,
-    //        _ => PreferredAppMode.AllowDark,
-    //    };
-    //    return SetPreferredAppMode(mode);
-    //}
+    /// <param name="theme">元素主题.</param>
+    public static void UpdateTitleBarContextMenu(ElementTheme theme)
+    {
+        var mode = theme switch
+        {
+            ElementTheme.Light => PreferredAppMode.ForceLight,
+            ElementTheme.Dark => PreferredAppMode.ForceDark,
+            _ => PreferredAppMode.AllowDark,
+        };
+        SetPreferredAppMode(mode);
+        FlushMenuThemes();
+    }
 }

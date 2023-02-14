@@ -143,8 +143,6 @@ public sealed partial class App : Application
 
         await App.GetService<IActivationService>().ActivateAsync(args);
 
-        TitleBarContextMenuHelper.SetTitleBarContextMenuAllowDark();
-
         _stopwatch.Stop();
         _logger.LogInformation("软件已启动, 用时: {LaunchedElapsed} ms.", _stopwatch!.ElapsedMilliseconds);
     }
