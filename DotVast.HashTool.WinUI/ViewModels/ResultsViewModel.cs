@@ -44,7 +44,10 @@ public sealed partial class ResultsViewModel : ObservableRecipient, INavigationA
         {
             if (HashResultsFilterByContentIsEnabled)
             {
-                return HashTask?.Results?.Where(i => i.Content.Contains(HashResultsFilterByContent, StringComparison.InvariantCultureIgnoreCase)).ToList();
+                var filter = HashResultsFilterByContent;
+                return HashTask?.Results?.Where(h =>
+                    IgnoreCaseContains(h.Content, filter) || (h.Data?.Any(d => IgnoreCaseContains(d.HashValue, filter)) ?? false)
+                ).ToList();
             }
             return _hashResultsFiltered;
         }
@@ -134,4 +137,7 @@ public sealed partial class ResultsViewModel : ObservableRecipient, INavigationA
                 break;
         }
     }
+
+    private static bool IgnoreCaseContains(string str1, string str2) =>
+        str1.Contains(str2, StringComparison.OrdinalIgnoreCase);
 }
