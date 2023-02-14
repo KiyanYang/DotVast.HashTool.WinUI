@@ -65,9 +65,6 @@
                         <desktop5:ItemType Type="Directory">
                             <desktop5:Verb Id="Command" Clsid="C8085C38-E65F-4DA6-BBBA-A47246499B6D" />
                         </desktop5:ItemType>
-                        <desktop5:ItemType Type="Directory\Background">
-                            <desktop5:Verb Id="Command" Clsid="C8085C38-E65F-4DA6-BBBA-A47246499B6D" />
-                        </desktop5:ItemType>
                     </desktop4:FileExplorerContextMenus>
                 </desktop4:Extension>
                 <com:Extension Category="windows.comServer">
