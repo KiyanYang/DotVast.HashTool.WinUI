@@ -1,5 +1,4 @@
 using DotVast.HashTool.WinUI.Contracts.Services;
-using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.ViewModels;
 
 using Microsoft.UI.Xaml;
@@ -37,8 +36,6 @@ public sealed partial class ShellPage : Page
 
     private void OnLoaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
     {
-        TitleBarHelper.UpdateTitleBar(RequestedTheme);
-
         KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu));
         KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.GoBack));
     }

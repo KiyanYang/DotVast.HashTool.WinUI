@@ -1,7 +1,6 @@
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Core.Enums;
 using DotVast.HashTool.WinUI.Enums;
-using DotVast.HashTool.WinUI.Helpers;
 
 using Microsoft.UI.Xaml;
 
@@ -68,8 +67,6 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
         if (App.MainWindow.Content is FrameworkElement rootElement)
         {
             rootElement.RequestedTheme = Theme;
-
-            TitleBarHelper.UpdateTitleBar(Theme);
             //TitleBarContextMenuHelper.UpdateTitleBarContextMenu(Theme);
         }
     }
