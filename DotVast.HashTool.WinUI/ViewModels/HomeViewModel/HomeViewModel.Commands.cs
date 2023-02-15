@@ -1,3 +1,5 @@
+using CommunityToolkit.Mvvm.Input;
+
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 

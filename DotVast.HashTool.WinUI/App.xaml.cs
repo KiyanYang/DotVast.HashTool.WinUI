@@ -45,7 +45,7 @@ public sealed partial class App : Application
 
     public static ILogger<T> GetLogger<T>() where T : class => GetService<ILogger<T>>();
 
-    public static WindowEx MainWindow { get; } = new MainWindow();
+    public static WinUIEx.WindowEx MainWindow { get; } = new MainWindow();
 
     private readonly ILogger<App> _logger;
     private readonly Stopwatch _stopwatch;

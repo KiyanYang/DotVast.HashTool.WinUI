@@ -1,3 +1,5 @@
+using WinUIEx;
+
 namespace DotVast.HashTool.WinUI;
 
 public sealed partial class MainWindow : WindowEx
