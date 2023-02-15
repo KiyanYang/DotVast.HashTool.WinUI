@@ -10,7 +10,8 @@
             <Grid Style="{StaticResource CardGridStyle}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" MinWidth="120" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock
                     Grid.Column="0"
@@ -20,8 +21,14 @@
                 <HyperlinkButton
                     Grid.Column="1"
                     HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
                     Content="{x:Bind License}"
                     NavigateUri="{x:Bind Url}" />
+                <HyperlinkButton
+                    Grid.Column="2"
+                    VerticalAlignment="Center"
+                    Content="Source"
+                    NavigateUri="{x:Bind SourceLink}" />
             </Grid>
         </DataTemplate>
     </Page.Resources>

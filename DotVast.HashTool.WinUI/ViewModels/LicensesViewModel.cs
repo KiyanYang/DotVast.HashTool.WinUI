@@ -1,28 +1,45 @@
-using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
 public sealed partial class LicensesViewModel : ObservableRecipient
 {
-    public LicenseInfo[] Licenses
+    public LicenseInfo[] Licenses { get; } = new LicenseInfo[]
     {
-        get;
-    } = new LicenseInfo[]
-    {
-        new("CommunityToolkit.MVVM", LicenseType.MIT, "https://licenses.nuget.org/MIT"),
-        new("CommunityToolkit.WinUI.UI", LicenseType.MIT, "https://licenses.nuget.org/MIT"),
-        new("CommunityToolkit.WinUI.UI.Behaviors", LicenseType.MIT, "https://licenses.nuget.org/MIT"),
-        new("CommunityToolkit.WinUI.UI.Controls.Markdown",LicenseType.MIT, "https://licenses.nuget.org/MIT"),
-        new("CryptoBase", LicenseType.MIT, "https://github.com/HMBSbige/CryptoBase/blob/1.7.2/LICENSE"),
-        new("DotVast.Toolkit.StringResource", LicenseType.MIT, "https://github.com/KiyanYang/DotVast.Toolkit.StringResource/blob/main/LICENSE.txt"),
-        new("HashLib4CSharp", LicenseType.MIT, "https://www.nuget.org/packages/HashLib4CSharp/1.5.0/license"),
-        new("Microsoft.Extensions.Hosting", LicenseType.MIT, "https://licenses.nuget.org/MIT"),
-        new("Microsoft.Extensions.Http", LicenseType.MIT, "https://licenses.nuget.org/MIT"),
-        new("Microsoft.WindowsAppSDK", LicenseType.Unknown, "https://www.nuget.org/packages/Microsoft.WindowsAppSDK/1.1.5/license"),
-        new("Serilog.Extensions.Hosting", LicenseType.Apache_2_0, "https://licenses.nuget.org/Apache-2.0"),
-        new("Serilog.Sinks.File", LicenseType.Apache_2_0, "https://licenses.nuget.org/Apache-2.0"),
-        new("WinUIEx", LicenseType.Apache_2_0, "https://licenses.nuget.org/Apache-2.0"),
-        new("QuickXorHash.cs", LicenseType.MIT, "https://gist.github.com/rgregg/c07a91964300315c6c3e77f7b5b861e4"),
+        new("CommunityToolkit.Mvvm", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/CommunityToolkit.Mvvm"),
+        new("CommunityToolkit.WinUI.UI", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/CommunityToolkit.WinUI.UI"),
+        new("CommunityToolkit.WinUI.UI.Behaviors", License.MIT, NugetLicenseUrl.MIT,"https://www.nuget.org/packages/CommunityToolkit.WinUI.UI.Behaviors"),
+        new("CommunityToolkit.WinUI.UI.Controls.Markdown",License.MIT, NugetLicenseUrl.MIT,"https://www.nuget.org/packages/CommunityToolkit.WinUI.UI.Controls.Markdown"),
+
+        new("CryptoBase", License.MIT, NugetLicenseUrl.MIT,"https://www.nuget.org/packages/CryptoBase"),
+
+        new("DotVast.Toolkit.StringResource", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/DotVast.Toolkit.StringResource"),
+
+        new("HashLib4CSharp", License.MIT, "https://www.nuget.org/packages/HashLib4CSharp/1.5.0/License","https://www.nuget.org/packages/HashLib4CSharp"),
+
+        new("Microsoft.Extensions.Hosting", License.MIT, NugetLicenseUrl.MIT,"https://www.nuget.org/packages/Microsoft.Extensions.Hosting"),
+        new("Microsoft.Extensions.Http", License.MIT, NugetLicenseUrl.MIT,"https://www.nuget.org/packages/Microsoft.Extensions.Http"),
+        new("Microsoft.WindowsAppSDK", License.Unknown, "https://www.nuget.org/packages/Microsoft.WindowsAppSDK/1.2.230118.102/License","https://www.nuget.org/packages/Microsoft.WindowsAppSDK"),
+
+        new("Serilog", License.Apache_2_0, NugetLicenseUrl.Apache_2_0,"https://www.nuget.org/packages/Serilog"),
+        new("Serilog.Extensions.Hosting", License.Apache_2_0, NugetLicenseUrl.Apache_2_0,"https://www.nuget.org/packages/Serilog.Extensions.Hosting"),
+        new("Serilog.Sinks.File", License.Apache_2_0, NugetLicenseUrl.Apache_2_0,"https://www.nuget.org/packages/Serilog.Sinks.File"),
+
+        new("WinUIEx", License.Apache_2_0, NugetLicenseUrl.Apache_2_0,"https://www.nuget.org/packages/WinUIEx"),
+
+        new("QuickXorHash.cs", License.MIT, "https://gist.github.com/rgregg/c07a91964300315c6c3e77f7b5b861e4","https://gist.github.com/rgregg/c07a91964300315c6c3e77f7b5b861e4"),
     };
+}
+
+static file class License
+{
+    public static readonly string Unknown = "License";
+    public static readonly string Apache_2_0 = "Apache License 2.0";
+    public static readonly string MIT = "MIT License";
+}
+
+static file class NugetLicenseUrl
+{
+    public static readonly string Apache_2_0 = "https://licenses.nuget.org/Apache-2.0";
+    public static readonly string MIT = "https://licenses.nuget.org/MIT";
 }
