@@ -3,16 +3,19 @@ using DotVast.HashTool.WinUI.Contracts.ViewModels;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 
+using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
 public sealed partial class ResultsViewModel : ObservableRecipient, INavigationAware
 {
+    private readonly ILogger<ResultsViewModel> _logger;
     private readonly IAppearanceSettingsService _appearanceSettingsService;
 
-    public ResultsViewModel(IAppearanceSettingsService appearanceSettingsService)
+    public ResultsViewModel(ILogger<ResultsViewModel> logger, IAppearanceSettingsService appearanceSettingsService)
     {
+        _logger = logger;
         _appearanceSettingsService = appearanceSettingsService;
 
         _hashFontFamilyName = _appearanceSettingsService.HashFontFamilyName;
@@ -67,7 +70,8 @@ public sealed partial class ResultsViewModel : ObservableRecipient, INavigationA
         }
         else if (parameter != null)
         {
-            throw new ArgumentException("导航事件参数传递的变量类型不是 HashTask");
+            _logger.LogError("导航事件参数传递的参数类型不是 HashTask. 参数: {Parameter}", parameter);
+            throw new ArgumentException("导航事件参数传递的参数类型不是 HashTask");
         }
     }
 

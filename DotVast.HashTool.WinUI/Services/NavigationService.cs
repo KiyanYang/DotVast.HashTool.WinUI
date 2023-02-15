@@ -4,6 +4,7 @@ using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Contracts.ViewModels;
 using DotVast.HashTool.WinUI.Helpers;
 
+using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 
@@ -13,6 +14,7 @@ namespace DotVast.HashTool.WinUI.Services;
 // https://github.com/microsoft/TemplateStudio/blob/main/docs/WinUI/navigation.md
 public sealed class NavigationService : INavigationService
 {
+    private readonly ILogger<NavigationService> _logger;
     private readonly IPageService _pageService;
     private object? _lastParameterUsed;
     private Frame? _frame;
@@ -43,8 +45,9 @@ public sealed class NavigationService : INavigationService
     [MemberNotNullWhen(true, nameof(Frame), nameof(_frame))]
     public bool CanGoBack => Frame != null && Frame.CanGoBack;
 
-    public NavigationService(IPageService pageService)
+    public NavigationService(ILogger<NavigationService> logger, IPageService pageService)
     {
+        _logger = logger;
         _pageService = pageService;
     }
 
@@ -70,6 +73,7 @@ public sealed class NavigationService : INavigationService
         {
             var vmBeforeNavigation = _frame.GetPageViewModel();
             _frame.GoBack();
+            _logger.GoBackTo(_frame.CurrentSourcePageType.FullName);
             if (vmBeforeNavigation is INavigationAware navigationAware)
             {
                 navigationAware.OnNavigatedFrom();
@@ -92,6 +96,7 @@ public sealed class NavigationService : INavigationService
             var navigated = _frame.Navigate(pageType, parameter);
             if (navigated)
             {
+                _logger.NavigatedTo(pageType?.FullName, parameter);
                 _lastParameterUsed = parameter;
                 if (vmBeforeNavigation is INavigationAware navigationAware)
                 {

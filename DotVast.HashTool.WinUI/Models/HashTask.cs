@@ -134,6 +134,9 @@ public sealed partial class HashTask : ObservableObject, IDisposable
 
     #endregion Manager
 
+    public override string ToString() =>
+        $"{{ Content: `{Content}`, Mode: `{Mode}`, SelectedHashes: `{JsonSerializer.Serialize(SelectedHashs)}` }}";
+
     #region Finalizer, IDisposable
 
     private bool _disposed = false;
