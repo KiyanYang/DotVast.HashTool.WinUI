@@ -48,7 +48,7 @@ public sealed partial class App : Application
     public static WinUIEx.WindowEx MainWindow { get; } = new MainWindow();
 
     private readonly ILogger<App> _logger;
-    private readonly Stopwatch _stopwatch;
+    private Stopwatch? _stopwatch;
 
     public App()
     {
@@ -143,7 +143,8 @@ public sealed partial class App : Application
 
         await App.GetService<IActivationService>().ActivateAsync(args);
 
-        _stopwatch.Stop();
+        _stopwatch!.Stop();
         _logger.AppLaunchedElapsedTime(_stopwatch.ElapsedMilliseconds);
+        _stopwatch = null;
     }
 }

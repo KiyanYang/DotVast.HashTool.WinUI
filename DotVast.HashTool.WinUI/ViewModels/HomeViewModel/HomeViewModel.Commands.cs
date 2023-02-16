@@ -125,7 +125,7 @@ public partial class HomeViewModel
                 var m when m == HashTaskMode.File => string.Join(FilesSeparator, InputtingContent.Split(FilesSeparator).Select(i => PathTrim(i))),
                 _ => InputtingContent,
             },
-            Encoding = InputtingMode == HashTaskMode.Text ? InputtingTextEncoding.Encoding : null,
+            Encoding = InputtingMode == HashTaskMode.Text ? InputtingTextEncoding.Encoding.Value : null,
             SelectedHashs = HashOptions.Where(i => i.IsChecked).Select(i => i.Hash).ToArray(),
             State = HashTaskState.Waiting,
         };
