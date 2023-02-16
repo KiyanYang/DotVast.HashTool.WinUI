@@ -15,7 +15,7 @@ namespace DotVast.HashTool.WinUI.ViewModels;
 
 public sealed partial class HomeViewModel : ObservableRecipient
 {
-    private const int MillisecondsDelayCreateTask = 1500;
+    private const int MillisecondsDelayCreateTask = 1000;
 
     private readonly ILogger<HomeViewModel> _logger;
     private readonly IPreferencesSettingsService _preferencesSettingsService;
