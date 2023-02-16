@@ -63,76 +63,16 @@ public sealed partial class HashTask : ObservableObject, IDisposable
 
     #endregion Properties
 
-    #region Manager
+    private readonly HashTaskManager _manager;
 
-    private readonly ILogger<HashTask> _logger = App.GetLogger<HashTask>();
-    private readonly IComputeHashService _computeHashService = App.GetService<IComputeHashService>();
-    private readonly IDialogService _dialogService = App.GetService<IDialogService>();
-
-    private CancellationTokenSource? _cts;
-    private readonly ManualResetEventSlim _mres = new(true);
-
-    public async Task StartAsync()
+    public HashTask()
     {
-        _cts ??= new();
-
-        try
-        {
-            switch (Mode)
-            {
-                case var m when m == HashTaskMode.Text:
-                    await _computeHashService.HashTextAsync(this, _mres, _cts.Token);
-                    break;
-
-                case var m when m == HashTaskMode.File:
-                    await _computeHashService.HashFileAsync(this, _mres, _cts.Token);
-                    break;
-
-                case var m when m == HashTaskMode.Folder:
-                    await _computeHashService.HashFolderAsync(this, _mres, _cts.Token);
-                    break;
-            }
-        }
-        catch (UnauthorizedAccessException ex)
-        {
-            await _dialogService.ShowInfoDialogAsync(
-                LocalizationDialog.HashTaskAborted_Title,
-                LocalizationDialog.HashTaskAborted_UnauthorizedAccess,
-                LocalizationDialog.Base_OK);
-            _logger.LogWarning("计算哈希时出现“未授权访问”异常, 模式: {Mode}, 内容: {Content}\n{Exception}", Mode, Content, ex);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError("计算哈希时出现未预料的异常, 哈希任务: {HashTask:j}\n{Exception}", this, ex);
-        }
-        finally
-        {
-            _cts.Dispose();
-            _cts = null;
-        }
+        _manager = new(this);
     }
 
-    public bool Reset()
-    {
-        if (_mres.IsSet)
-        {
-            _mres.Reset();
-            return true;
-        }
-        else
-        {
-            _mres.Set();
-            return false;
-        }
-    }
-
-    public void Cancel()
-    {
-        _cts?.Cancel();
-        _mres.Set();
-    }
-
-    #endregion Manager
+    public Task StartAsync() => _manager.StartAsync();
+    public bool Reset() => _manager.Reset();
+    public void Cancel() => _manager.Cancel();
 
     public override string ToString() =>
         $"{{ Content: `{Content}`, Mode: `{Mode}`, SelectedHashes: `{JsonSerializer.Serialize(SelectedHashs)}` }}";
@@ -156,17 +96,133 @@ public sealed partial class HashTask : ObservableObject, IDisposable
             return;
         }
 
-        Cancel();
-
         if (disposing)
         {
-            _mres.Dispose();
+            _manager.Dispose();
         }
 
         _disposed = true;
     }
 
     #endregion Finalizer, IDisposable
+
+    private sealed class HashTaskManager : IDisposable
+    {
+        private readonly ILogger<HashTaskManager> _logger = App.GetLogger<HashTaskManager>();
+        private readonly IComputeHashService _computeHashService = App.GetService<IComputeHashService>();
+        private readonly IDialogService _dialogService = App.GetService<IDialogService>();
+
+        private readonly HashTask _hashTask;
+        private readonly ManualResetEventSlim _mres = new(true);
+        private CancellationTokenSource? _cts;
+
+        public HashTaskManager(HashTask hashTask)
+        {
+            _hashTask = hashTask;
+        }
+
+        /// <summary>
+        /// 开始计算.
+        /// </summary>
+        /// <returns></returns>
+        public async Task StartAsync()
+        {
+            _cts ??= new();
+
+            try
+            {
+                switch (_hashTask.Mode)
+                {
+                    case var m when m == HashTaskMode.Text:
+                        await _computeHashService.HashTextAsync(_hashTask, _mres, _cts.Token);
+                        break;
+
+                    case var m when m == HashTaskMode.File:
+                        await _computeHashService.HashFileAsync(_hashTask, _mres, _cts.Token);
+                        break;
+
+                    case var m when m == HashTaskMode.Folder:
+                        await _computeHashService.HashFolderAsync(_hashTask, _mres, _cts.Token);
+                        break;
+                }
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                await _dialogService.ShowInfoDialogAsync(
+                    LocalizationDialog.HashTaskAborted_Title,
+                    LocalizationDialog.HashTaskAborted_UnauthorizedAccess,
+                    LocalizationDialog.Base_OK);
+                _logger.LogWarning("计算哈希时出现“未授权访问”异常, 模式: {Mode}, 内容: {Content}\n{Exception}", _hashTask.Mode, _hashTask.Content, ex);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("计算哈希时出现未预料的异常, 哈希任务: {HashTask:j}\n{Exception}", this, ex);
+            }
+            finally
+            {
+                _cts.Dispose();
+                _cts = null;
+            }
+        }
+
+        /// <summary>
+        /// 暂停或恢复计算.
+        /// </summary>
+        /// <returns>当计算暂停后, 返回 <see langword="true"/>, 否则返回 <see langword="false"/>.</returns>
+        public bool Reset()
+        {
+            if (_mres.IsSet)
+            {
+                _mres.Reset();
+                return true;
+            }
+            else
+            {
+                _mres.Set();
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 取消计算.
+        /// </summary>
+        public void Cancel()
+        {
+            _cts?.Cancel();
+            _mres.Set();
+        }
+
+        #region Finalizer, IDisposable
+
+        private bool _disposed = false;
+
+        ~HashTaskManager() => Dispose(false);
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            Cancel();
+
+            if (disposing)
+            {
+                _mres.Dispose();
+            }
+
+            _disposed = true;
+        }
+
+        #endregion Finalizer, IDisposable
+    }
 }
 
 sealed file class EncodingJsonConverter : JsonConverter<Encoding?>
