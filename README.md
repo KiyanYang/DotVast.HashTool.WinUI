@@ -38,7 +38,7 @@
 
 ## 界面
 
-![主页](./Assets/HomePage.png)
+![主页](./Assets/HomePage-0.3.0.webp)
 
 ## 贡献
 
