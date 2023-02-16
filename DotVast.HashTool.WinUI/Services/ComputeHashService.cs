@@ -82,6 +82,8 @@ internal sealed partial class ComputeHashService : IComputeHashService
     {
         var stopWatch = Stopwatch.StartNew();
         hashTask.State = HashTaskState.Working;
+        hashTask.Elapsed = default;
+        hashTask.Results = default;
 
         try
         {
