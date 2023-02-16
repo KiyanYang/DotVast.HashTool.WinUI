@@ -29,10 +29,9 @@ public partial class HashOptionSettingsViewModel : ObservableRecipient, INavigat
         {
             if (m.Sender is HashOption hashOption && m.PropertyName == nameof(HashOption.IsEnabled))
             {
-                Debug.WriteLine($"---------------- {DateTime.Now} -- HashOptionSettingsViewModel.Messenger.PropertyChangedMessage[HashOption.IsEnabled]");
+                Debug.WriteLine($"[{DateTime.Now}] HashOptionSettingsViewModel.Messenger > PropertyChangedMessage[HashOption.IsEnabled]");
                 Debug.WriteLine($"Hash.Name: {hashOption.Hash.Name}");
-                Debug.WriteLine($"IsEnabled:{hashOption.IsEnabled}");
-
+                Debug.WriteLine($"IsEnabled: {hashOption.IsEnabled}");
                 await _preferencesSettingsService.SaveHashOptionsAsync();
             }
         });

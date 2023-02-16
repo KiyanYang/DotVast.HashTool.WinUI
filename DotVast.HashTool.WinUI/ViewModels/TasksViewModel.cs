@@ -87,9 +87,9 @@ public sealed partial class TasksViewModel : ObservableRecipient, INavigationAwa
                     switch (m.PropertyName)
                     {
                         case nameof(HashTaskCheckable.IsChecked):
-                            Debug.WriteLine($"---------------- {DateTime.Now} -- TasksViewModel.Messenger.PropertyChangedMessage[HashTaskCheckable.IsChecked]");
+                            Debug.WriteLine($"[{DateTime.Now}] TasksViewModel.Messenger > PropertyChangedMessage[HashTaskCheckable.IsChecked]");
                             Debug.WriteLine($"HashTask.Content: {hashTaskCheckable.HashTask.Content}");
-                            Debug.WriteLine($"IsChecked:{hashTaskCheckable.IsChecked}");
+                            Debug.WriteLine($"IsChecked:        {hashTaskCheckable.IsChecked}");
                             SaveCommand.NotifyCanExecuteChanged();
                             break;
                         default:

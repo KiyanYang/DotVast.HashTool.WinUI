@@ -61,6 +61,8 @@ public sealed partial class HomeViewModel : ObservableRecipient
     {
         Messenger.Register<HomeViewModel, FileNotFoundInHashFilesMessage>(this, async (r, m) =>
         {
+            Debug.WriteLine($"[{DateTime.Now}] HomeViewModel.Messenger > FileNotFoundInHashFilesMessage");
+            Debug.WriteLine($"FilePath: {m.Value}");
             await App.MainWindow.DispatcherQueue.EnqueueAsync(() => ShowTipMessage(
                     Localization.Tip_FileSkipped_Title,
                     string.Format(Localization.Tip_FileSkipped_FileNotFound, m.Value)));
@@ -74,15 +76,15 @@ public sealed partial class HomeViewModel : ObservableRecipient
                     switch (m.PropertyName)
                     {
                         case nameof(HashOption.IsChecked):
-                            Debug.WriteLine($"---------------- {DateTime.Now} -- HomeViewModel.Messenger.PropertyChangedMessage[HashOption.IsChecked]");
+                            Debug.WriteLine($"[{DateTime.Now}] HomeViewModel.Messenger > PropertyChangedMessage[HashOption.IsChecked]");
                             Debug.WriteLine($"Hash.Name: {hashOption.Hash.Name}");
-                            Debug.WriteLine($"IsChecked:{hashOption.IsChecked}");
+                            Debug.WriteLine($"IsChecked: {hashOption.IsChecked}");
                             CreateTaskCommand.NotifyCanExecuteChanged();
                             break;
                         case nameof(HashOption.IsEnabled):
-                            Debug.WriteLine($"---------------- {DateTime.Now} -- HomeViewModel.Messenger.PropertyChangedMessage[HashOption.IsEnabled]");
+                            Debug.WriteLine($"[{DateTime.Now}] HomeViewModel.Messenger > PropertyChangedMessage[HashOption.IsEnabled]");
                             Debug.WriteLine($"Hash.Name: {hashOption.Hash.Name}");
-                            Debug.WriteLine($"IsEnabled:{hashOption.IsEnabled}");
+                            Debug.WriteLine($"IsEnabled: {hashOption.IsEnabled}");
                             OnPropertyChanged(nameof(HashOptions));
                             break;
                         default:
