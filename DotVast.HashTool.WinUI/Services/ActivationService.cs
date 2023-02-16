@@ -45,7 +45,7 @@ public sealed class ActivationService : IActivationService
         await InitializeAsync();
 
         // Set the MainWindow Content.
-        if (App.MainWindow.Content == null)
+        if (App.MainWindow.Content is null)
         {
             _shell = App.GetService<ShellPage>();
             App.MainWindow.Content = _shell ?? new Frame();

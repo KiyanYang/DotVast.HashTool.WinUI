@@ -93,7 +93,7 @@ public sealed class SettingItem : ContentControl
 
     private void UpdateIconState()
     {
-        var state = Icon == null ? "NoIconState" : "IconState";
+        var state = Icon is null ? "NoIconState" : "IconState";
         VisualStateManager.GoToState(this, state, true);
     }
 

@@ -23,7 +23,7 @@ public sealed partial class GithubUpdateDialog : ContentDialog
 
     private void SetData(GitHubRelease? release)
     {
-        if (release == null)
+        if (release is null)
         {
             return;
         }
@@ -36,7 +36,7 @@ public sealed partial class GithubUpdateDialog : ContentDialog
 
     private async void GithubUpdateDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
     {
-        if (_release == null)
+        if (_release is null)
         {
             return;
         }

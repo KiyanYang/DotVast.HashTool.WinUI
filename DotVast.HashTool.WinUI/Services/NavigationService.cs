@@ -25,7 +25,7 @@ public sealed class NavigationService : INavigationService
     {
         get
         {
-            if (_frame == null)
+            if (_frame is null)
             {
                 _frame = App.MainWindow.Content as Frame;
                 RegisterFrameEvents();

@@ -156,7 +156,7 @@ public sealed partial class SettingsViewModel : ObservableRecipient
 
         IsCheckUpdateProgressActive = false;
 
-        if (release == null)
+        if (release is null)
         {
             await _dialogService.ShowInfoDialogAsync(
                 LocalizationDialog.GitHubUpdate_Failed,

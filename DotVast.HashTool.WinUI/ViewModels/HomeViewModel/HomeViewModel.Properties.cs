@@ -47,7 +47,7 @@ public partial class HomeViewModel
     {
         get
         {
-            if (_textEncodings == null)
+            if (_textEncodings is null)
             {
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
                 _textEncodings = Encoding.GetEncodings()
