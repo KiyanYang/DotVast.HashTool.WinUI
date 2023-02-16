@@ -1,9 +1,13 @@
+using Microsoft.Extensions.Logging;
+
 using WinUIEx;
 
 namespace DotVast.HashTool.WinUI;
 
 public sealed partial class MainWindow : WindowEx
 {
+    private readonly ILogger<MainWindow> _logger = App.GetLogger<MainWindow>();
+
     public MainWindow()
     {
         InitializeComponent();
@@ -15,5 +19,7 @@ public sealed partial class MainWindow : WindowEx
 #else
         Title = Localization.AppDisplayName;
 #endif
+
+        Closed += (_, _) => _logger.WindowClosed(typeof(MainWindow).FullName);
     }
 }

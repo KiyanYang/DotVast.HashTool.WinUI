@@ -123,7 +123,7 @@ public sealed partial class App : Application
     private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
     {
         // https://docs.microsoft.com/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.application.unhandledexception.
-        _logger.LogCritical("未处理的异常: {Message}\n{Exception}", e.Message, e.Exception);
+        _logger.AppUnhandledException(e.Exception);
         e.Handled = true;
     }
 

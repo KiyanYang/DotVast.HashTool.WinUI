@@ -64,19 +64,20 @@ public sealed class ActivationService : IActivationService
     private async Task HandleActivationAsync(object activationArgs)
     {
         var activatedEventArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
-        _logger.LogInformation("激活类型: {Kind}", activatedEventArgs.Kind);
 
-        // activationHandler 处理 Windows.ApplicationModel.Activation.AppActivationArguments
+        // activationHandler 处理 Microsoft.Windows.AppLifecycle.AppActivationArguments
         var activationHandler = _activationHandlers.FirstOrDefault(h => h.CanHandle(activatedEventArgs));
 
         if (activationHandler != null)
         {
+            _logger.HandleLaunchActivation(activatedEventArgs.Kind);
             await activationHandler.HandleAsync(activatedEventArgs);
         }
 
         // defaultHandler 处理 Microsoft.UI.Xaml.LaunchActivatedEventArgs
         if (_defaultHandler.CanHandle(activationArgs))
         {
+            _logger.HandleDefaultLaunchActivation(((LaunchActivatedEventArgs)activationArgs).Arguments);
             await _defaultHandler.HandleAsync(activationArgs);
         }
     }

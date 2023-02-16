@@ -38,7 +38,7 @@ public sealed partial class CommandLineActivationHandler : ActivationHandler<App
     protected override async Task HandleInternalAsync(AppActivationArguments args)
     {
         var data = (LaunchActivatedEventArgs)args.Data;
-        _logger.LogInformation("激活参数: {@Args}", data);
+        _logger.LaunchActivated(data.GetType(), data.Kind, data.Arguments);
 
         try
         {
@@ -59,15 +59,16 @@ public sealed partial class CommandLineActivationHandler : ActivationHandler<App
             if (pathWithModes.Length <= 0)
                 return;
 
-            _navigationService.NavigateTo(Constants.PageKeys.TaskPage, args);
             foreach (var (path, mode) in pathWithModes)
             {
                 _hashTaskService.HashTasks.Add(CreateHashTask(hashes, path, mode!));
             }
+
+            _navigationService.NavigateTo(Constants.PageKeys.TaskPage);
         }
         catch (Exception e)
         {
-            _logger.LogError("命令行激活时发生异常\n{Exception}", e);
+            _logger.LaunchActivatedException(e);
         }
 
         await Task.CompletedTask;
