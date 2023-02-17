@@ -6,9 +6,9 @@
 
 # HashTool
 
-#### 用于计算和校验文件、文件夹或文本哈希值的工具！
+**用于计算和校验文件、文件夹或文本哈希值的工具！**
 
-#### A Tool for Calculating and Verifying the Hash Value of Any File, Folder, or Text!
+**A Tool for Calculating and Verifying the Hash Value of Any File, Folder, or Text!**
 
 [![MIT License](https://img.shields.io/github/license/KiyanYang/DotVast.HashTool.WinUI)](https://github.com/KiyanYang/DotVast.HashTool.WinUI/blob/main/LICENSE.txt)
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/KiyanYang/DotVast.HashTool.WinUI?include_prereleases)](https://github.com/KiyanYang/DotVast.HashTool.WinUI/releases)
@@ -42,7 +42,7 @@
 
 ## 贡献
 
-欢迎参与 DotVast.HashTool.WinUI 项目，一起完善它。您可以在 [Discussions](https://github.com/KiyanYang/DotVast.HashTool.WinUI/discussions) 进行讨论， 如果您有任何反馈，请提交 [Issue](https://github.com/KiyanYang/DotVast.HashTool.WinUI/issues/new/choose) 或 PR。
+欢迎参与 DotVast.HashTool.WinUI 项目，您可以在 [Discussions](https://github.com/KiyanYang/DotVast.HashTool.WinUI/discussions) 进行讨论， 如果您有任何反馈，请提交 [Issue](https://github.com/KiyanYang/DotVast.HashTool.WinUI/issues/new/choose) 或 PR。
 
 ## 感谢
 
