@@ -4,7 +4,7 @@ using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 
-namespace DotVast.HashTool.WinUI.ViewModels.UserControls;
+namespace DotVast.HashTool.WinUI.ViewModels.Controls;
 
 public sealed partial class HashTaskGridViewModel : ObservableObject
 {

@@ -2,7 +2,7 @@ using DotVast.HashTool.WinUI.Models;
 
 using Microsoft.UI.Xaml.Controls;
 
-namespace DotVast.HashTool.WinUI.UserControls.Dialogs;
+namespace DotVast.HashTool.WinUI.Controls.Dialogs;
 
 public sealed partial class GithubUpdateDialog : ContentDialog
 {

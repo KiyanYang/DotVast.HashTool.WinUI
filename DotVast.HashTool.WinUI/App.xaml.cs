@@ -8,9 +8,9 @@ using DotVast.HashTool.WinUI.Core.Services;
 using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.Services;
 using DotVast.HashTool.WinUI.Services.Settings;
-using DotVast.HashTool.WinUI.UserControls;
+using DotVast.HashTool.WinUI.Controls;
 using DotVast.HashTool.WinUI.ViewModels;
-using DotVast.HashTool.WinUI.ViewModels.UserControls;
+using DotVast.HashTool.WinUI.ViewModels.Controls;
 using DotVast.HashTool.WinUI.Views;
 
 using Microsoft.Extensions.DependencyInjection;

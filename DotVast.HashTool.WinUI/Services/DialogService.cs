@@ -2,7 +2,7 @@ using DotVast.HashTool.WinUI.Behaviors;
 using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Models;
-using DotVast.HashTool.WinUI.UserControls.Dialogs;
+using DotVast.HashTool.WinUI.Controls.Dialogs;
 
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Xaml.Interactivity;

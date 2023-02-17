@@ -1,21 +1,15 @@
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
-using DotVast.HashTool.WinUI.ViewModels.UserControls;
+using DotVast.HashTool.WinUI.ViewModels.Controls;
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
-namespace DotVast.HashTool.WinUI.UserControls;
+namespace DotVast.HashTool.WinUI.Controls;
 
 public sealed partial class HashTaskGrid : UserControl
 {
     #region Dependency Properties
-
-    public static readonly DependencyProperty HashTaskProperty = DependencyProperty.Register(
-       nameof(HashTask),
-       typeof(HashTask),
-       typeof(HashTaskGrid),
-       new PropertyMetadata(null));
 
     public HashTask HashTask
     {
@@ -26,6 +20,12 @@ public sealed partial class HashTaskGrid : UserControl
             ViewModel.HashTask = value;
         }
     }
+
+    public static readonly DependencyProperty HashTaskProperty = DependencyProperty.Register(
+       nameof(HashTask),
+       typeof(HashTask),
+       typeof(HashTaskGrid),
+       new PropertyMetadata(null));
 
     #endregion Dependency Properties
 

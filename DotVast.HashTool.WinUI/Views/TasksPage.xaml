@@ -3,9 +3,9 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:DotVast.HashTool.WinUI.Behaviors"
+    xmlns:controls="using:DotVast.HashTool.WinUI.Controls"
     xmlns:dvhc="using:DotVast.HashTool.WinUI.Controls"
     xmlns:models="using:DotVast.HashTool.WinUI.Models.Views"
-    xmlns:userControls="using:DotVast.HashTool.WinUI.UserControls"
     NavigationCacheMode="Enabled">
 
     <Page.Resources>
@@ -24,7 +24,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <CheckBox IsChecked="{x:Bind IsChecked, Mode=TwoWay}" />
-                    <userControls:HashTaskGrid Grid.Column="2" HashTask="{x:Bind HashTask}" />
+                    <controls:HashTaskGrid Grid.Column="2" HashTask="{x:Bind HashTask}" />
                 </Grid>
             </Button>
         </DataTemplate>
