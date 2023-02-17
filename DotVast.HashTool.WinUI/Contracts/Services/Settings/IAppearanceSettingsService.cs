@@ -21,7 +21,6 @@ public interface IAppearanceSettingsService : IBaseObservableSettings
     /// </summary>
     ElementTheme Theme { get; set; }
 
-
     /// <summary>
     /// 语言.
     /// </summary>

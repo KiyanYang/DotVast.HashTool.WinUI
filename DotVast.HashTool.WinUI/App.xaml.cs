@@ -3,12 +3,12 @@ using System.Diagnostics;
 using DotVast.HashTool.WinUI.Activation;
 using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
+using DotVast.HashTool.WinUI.Controls;
 using DotVast.HashTool.WinUI.Core.Contracts.Services;
 using DotVast.HashTool.WinUI.Core.Services;
 using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.Services;
 using DotVast.HashTool.WinUI.Services.Settings;
-using DotVast.HashTool.WinUI.Controls;
 using DotVast.HashTool.WinUI.ViewModels;
 using DotVast.HashTool.WinUI.ViewModels.Controls;
 using DotVast.HashTool.WinUI.Views;
@@ -135,7 +135,6 @@ public sealed partial class App : Application
             //DebugSettings.IsTextPerformanceVisualizationEnabled = true;
         }
 #endif
-        base.OnLaunched(args);
 
         // TODO: Resources 里的 DataTemplate 不能绑定到 ViewModel, 因此使用静态资源访问.
         // 该表达式要在 IActivationService.ActivateAsync() 之前.

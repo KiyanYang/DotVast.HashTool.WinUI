@@ -89,8 +89,6 @@
   </ItemGroup>
 
   <ItemGroup Label="ContextMenu">
-    <None Include="..\DotVast.HashTool.ContextMenu\bin\$(Platform)\$(Configuration)\DotVast.HashTool.ContextMenu.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="..\DotVast.HashTool.ContextMenu\bin\$(Platform)\$(Configuration)\DotVast.HashTool.ContextMenu.dll" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>
