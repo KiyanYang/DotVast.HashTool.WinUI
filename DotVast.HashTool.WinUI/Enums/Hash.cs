@@ -77,7 +77,8 @@ public sealed class Hash : GenericEnum<string>
     public static readonly Hash XxHash32 = new("xxHash32");
     public static readonly Hash XxHash64 = new("xxHash64");
 
-    // QuickXor
+    // Others
+    public static readonly Hash Ed2k = new("eD2k");
     public static readonly Hash QuickXor = new("QuickXor");
 
     public static Hash[] All => GetFieldValues<Hash>();
@@ -124,6 +125,7 @@ public sealed class Hash : GenericEnum<string>
             var h when h == Keccak_512 => CreateKeccak_512().ToHashAlgorithm(),
             var h when h == XxHash32 => new System.IO.Hashing.XxHash32().ToHashAlgorithm(),
             var h when h == XxHash64 => new System.IO.Hashing.XxHash64().ToHashAlgorithm(),
+            var h when h == Ed2k => new Ed2k(),
             var h when h == QuickXor => new QuickXorHash(),
             _ => null,
         };
