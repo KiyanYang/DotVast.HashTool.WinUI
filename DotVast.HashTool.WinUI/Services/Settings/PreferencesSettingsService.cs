@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Core.Enums;
+using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 
 using static DotVast.HashTool.WinUI.Constants;

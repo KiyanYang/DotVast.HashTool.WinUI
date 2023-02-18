@@ -13,7 +13,7 @@ using static HashLib4CSharp.Base.HashFactory.Crypto;
 
 using Crypto = System.Security.Cryptography;
 
-namespace DotVast.HashTool.WinUI.Models;
+namespace DotVast.HashTool.WinUI.Enums;
 
 [JsonConverter(typeof(JsonConverterFactoryForGenericEnumDerived))]
 public sealed class Hash : GenericEnum<string>
@@ -73,6 +73,10 @@ public sealed class Hash : GenericEnum<string>
     public static readonly Hash Keccak_384 = new("Keccak-384");
     public static readonly Hash Keccak_512 = new("Keccak-512");
 
+    // xxHash
+    public static readonly Hash XxHash32 = new("xxHash32");
+    public static readonly Hash XxHash64 = new("xxHash64");
+
     // QuickXor
     public static readonly Hash QuickXor = new("QuickXor");
 
@@ -87,38 +91,40 @@ public sealed class Hash : GenericEnum<string>
     {
         return hash switch
         {
-            var h when h == Hash.CRC32 => CreateCRC(CRCModel.CRC32).ToHashAlgorithm(),
-            var h when h == Hash.MD4 => CreateMD4().ToHashAlgorithm(),
-            var h when h == Hash.MD5 => Crypto.MD5.Create(),
-            var h when h == Hash.SHA1 => Crypto.SHA1.Create(),
-            var h when h == Hash.SHA224 => CreateSHA2_224().ToHashAlgorithm(),
-            var h when h == Hash.SHA256 => Crypto.SHA256.Create(),
-            var h when h == Hash.SHA384 => Crypto.SHA384.Create(),
-            var h when h == Hash.SHA512 => Crypto.SHA512.Create(),
-            var h when h == Hash.SHA3_224 => CreateSHA3_224().ToHashAlgorithm(),
-            var h when h == Hash.SHA3_256 => CreateSHA3_256().ToHashAlgorithm(),
-            var h when h == Hash.SHA3_384 => CreateSHA3_384().ToHashAlgorithm(),
-            var h when h == Hash.SHA3_512 => CreateSHA3_512().ToHashAlgorithm(),
-            var h when h == Hash.SM3 => new SM3Digest().ToHashAlgorithm(),
-            var h when h == Hash.Blake2B_160 => CreateBlake2B_160().ToHashAlgorithm(),
-            var h when h == Hash.Blake2B_256 => CreateBlake2B_256().ToHashAlgorithm(),
-            var h when h == Hash.Blake2B_384 => CreateBlake2B_384().ToHashAlgorithm(),
-            var h when h == Hash.Blake2B_512 => CreateBlake2B_512().ToHashAlgorithm(),
-            var h when h == Hash.Blake2S_128 => CreateBlake2S_128().ToHashAlgorithm(),
-            var h when h == Hash.Blake2S_160 => CreateBlake2S_160().ToHashAlgorithm(),
-            var h when h == Hash.Blake2S_224 => CreateBlake2S_224().ToHashAlgorithm(),
-            var h when h == Hash.Blake2S_256 => CreateBlake2S_256().ToHashAlgorithm(),
-            var h when h == Hash.Blake3 => CreateBlake3_256().ToHashAlgorithm(),
-            var h when h == Hash.RIPEMD128 => CreateRIPEMD128().ToHashAlgorithm(),
-            var h when h == Hash.RIPEMD160 => CreateRIPEMD160().ToHashAlgorithm(),
-            var h when h == Hash.RIPEMD256 => CreateRIPEMD256().ToHashAlgorithm(),
-            var h when h == Hash.RIPEMD320 => CreateRIPEMD320().ToHashAlgorithm(),
-            var h when h == Hash.Keccak_224 => CreateKeccak_224().ToHashAlgorithm(),
-            var h when h == Hash.Keccak_256 => CreateKeccak_256().ToHashAlgorithm(),
-            var h when h == Hash.Keccak_288 => CreateKeccak_288().ToHashAlgorithm(),
-            var h when h == Hash.Keccak_384 => CreateKeccak_384().ToHashAlgorithm(),
-            var h when h == Hash.Keccak_512 => CreateKeccak_512().ToHashAlgorithm(),
-            var h when h == Hash.QuickXor => new QuickXorHash(),
+            var h when h == CRC32 => CreateCRC(CRCModel.CRC32).ToHashAlgorithm(),
+            var h when h == MD4 => CreateMD4().ToHashAlgorithm(),
+            var h when h == MD5 => Crypto.MD5.Create(),
+            var h when h == SHA1 => Crypto.SHA1.Create(),
+            var h when h == SHA224 => CreateSHA2_224().ToHashAlgorithm(),
+            var h when h == SHA256 => Crypto.SHA256.Create(),
+            var h when h == SHA384 => Crypto.SHA384.Create(),
+            var h when h == SHA512 => Crypto.SHA512.Create(),
+            var h when h == SHA3_224 => CreateSHA3_224().ToHashAlgorithm(),
+            var h when h == SHA3_256 => CreateSHA3_256().ToHashAlgorithm(),
+            var h when h == SHA3_384 => CreateSHA3_384().ToHashAlgorithm(),
+            var h when h == SHA3_512 => CreateSHA3_512().ToHashAlgorithm(),
+            var h when h == SM3 => new SM3Digest().ToHashAlgorithm(),
+            var h when h == Blake2B_160 => CreateBlake2B_160().ToHashAlgorithm(),
+            var h when h == Blake2B_256 => CreateBlake2B_256().ToHashAlgorithm(),
+            var h when h == Blake2B_384 => CreateBlake2B_384().ToHashAlgorithm(),
+            var h when h == Blake2B_512 => CreateBlake2B_512().ToHashAlgorithm(),
+            var h when h == Blake2S_128 => CreateBlake2S_128().ToHashAlgorithm(),
+            var h when h == Blake2S_160 => CreateBlake2S_160().ToHashAlgorithm(),
+            var h when h == Blake2S_224 => CreateBlake2S_224().ToHashAlgorithm(),
+            var h when h == Blake2S_256 => CreateBlake2S_256().ToHashAlgorithm(),
+            var h when h == Blake3 => CreateBlake3_256().ToHashAlgorithm(),
+            var h when h == RIPEMD128 => CreateRIPEMD128().ToHashAlgorithm(),
+            var h when h == RIPEMD160 => CreateRIPEMD160().ToHashAlgorithm(),
+            var h when h == RIPEMD256 => CreateRIPEMD256().ToHashAlgorithm(),
+            var h when h == RIPEMD320 => CreateRIPEMD320().ToHashAlgorithm(),
+            var h when h == Keccak_224 => CreateKeccak_224().ToHashAlgorithm(),
+            var h when h == Keccak_256 => CreateKeccak_256().ToHashAlgorithm(),
+            var h when h == Keccak_288 => CreateKeccak_288().ToHashAlgorithm(),
+            var h when h == Keccak_384 => CreateKeccak_384().ToHashAlgorithm(),
+            var h when h == Keccak_512 => CreateKeccak_512().ToHashAlgorithm(),
+            var h when h == XxHash32 => new System.IO.Hashing.XxHash32().ToHashAlgorithm(),
+            var h when h == XxHash64 => new System.IO.Hashing.XxHash64().ToHashAlgorithm(),
+            var h when h == QuickXor => new QuickXorHash(),
             _ => null,
         };
     }

@@ -1,3 +1,5 @@
+using DotVast.HashTool.WinUI.Enums;
+
 namespace DotVast.HashTool.WinUI.Models;
 
 public sealed partial class HashOption : ObservableRecipient
