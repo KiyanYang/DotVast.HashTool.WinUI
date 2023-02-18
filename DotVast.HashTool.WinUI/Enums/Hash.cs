@@ -61,10 +61,10 @@ public sealed class Hash : GenericEnum<string>
     public static readonly Hash Blake3 = new("Blake3");
 
     // RIPEMD
-    public static readonly Hash RIPEMD128 = new("RIPEMD128");
-    public static readonly Hash RIPEMD160 = new("RIPEMD160");
-    public static readonly Hash RIPEMD256 = new("RIPEMD256");
-    public static readonly Hash RIPEMD320 = new("RIPEMD320");
+    public static readonly Hash RIPEMD_128 = new("RIPEMD-128");
+    public static readonly Hash RIPEMD_160 = new("RIPEMD-160");
+    public static readonly Hash RIPEMD_256 = new("RIPEMD-256");
+    public static readonly Hash RIPEMD_320 = new("RIPEMD-320");
 
     // Keccak
     public static readonly Hash Keccak_224 = new("Keccak-224");
@@ -114,10 +114,10 @@ public sealed class Hash : GenericEnum<string>
             var h when h == Blake2S_224 => CreateBlake2S_224().ToHashAlgorithm(),
             var h when h == Blake2S_256 => CreateBlake2S_256().ToHashAlgorithm(),
             var h when h == Blake3 => CreateBlake3_256().ToHashAlgorithm(),
-            var h when h == RIPEMD128 => CreateRIPEMD128().ToHashAlgorithm(),
-            var h when h == RIPEMD160 => CreateRIPEMD160().ToHashAlgorithm(),
-            var h when h == RIPEMD256 => CreateRIPEMD256().ToHashAlgorithm(),
-            var h when h == RIPEMD320 => CreateRIPEMD320().ToHashAlgorithm(),
+            var h when h == RIPEMD_128 => CreateRIPEMD128().ToHashAlgorithm(),
+            var h when h == RIPEMD_160 => CreateRIPEMD160().ToHashAlgorithm(),
+            var h when h == RIPEMD_256 => CreateRIPEMD256().ToHashAlgorithm(),
+            var h when h == RIPEMD_320 => CreateRIPEMD320().ToHashAlgorithm(),
             var h when h == Keccak_224 => CreateKeccak_224().ToHashAlgorithm(),
             var h when h == Keccak_256 => CreateKeccak_256().ToHashAlgorithm(),
             var h when h == Keccak_288 => CreateKeccak_288().ToHashAlgorithm(),
