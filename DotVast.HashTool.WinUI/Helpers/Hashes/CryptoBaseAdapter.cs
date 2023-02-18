@@ -4,18 +4,24 @@ using CryptoBase.Abstractions.Digests;
 
 namespace DotVast.HashTool.WinUI.Helpers.Hashes;
 
-internal sealed class CryptoBaseToHashAlgorithmAdapter : HashAlgorithm
+internal static class CryptoBaseAdapterExtensions
+{
+    public static HashAlgorithm ToHashAlgorithm(this IHash hash) =>
+        new CryptoBaseAdapter(hash);
+}
+
+sealed file class CryptoBaseAdapter : HashAlgorithm
 {
     private readonly IHash _hash;
 
-    internal CryptoBaseToHashAlgorithmAdapter(IHash hash)
+    internal CryptoBaseAdapter(IHash hash)
     {
         _hash = hash;
         HashSizeValue = _hash.Length * 8;
     }
 
     protected sealed override void HashCore(byte[] array, int ibStart, int cbSize) =>
-        _hash.Update(array.AsSpan().Slice(ibStart, cbSize));
+        _hash.Update(array.AsSpan(ibStart, cbSize));
 
     protected sealed override byte[] HashFinal()
     {
