@@ -9,16 +9,15 @@ namespace DotVast.HashTool.WinUI.Helpers;
 
 public static class ResourceExtensions
 {
-    private static readonly ResourceManager s_resourceManager;
     private static readonly ResourceContext s_resourceContext;
     private static readonly ResourceMap s_resourceMap;
 
     static ResourceExtensions()
     {
-        s_resourceManager = new();
-        s_resourceContext = s_resourceManager.CreateResourceContext();
+        var resourceManager = new ResourceManager();
+        s_resourceContext = resourceManager.CreateResourceContext();
         s_resourceContext.QualifierValues["Language"] = ApplicationLanguages.PrimaryLanguageOverride;
-        s_resourceMap = s_resourceManager.MainResourceMap;
+        s_resourceMap = resourceManager.MainResourceMap;
     }
 
     public static string GetLocalized(this string resourceKey, string subtree = "Resources") =>
