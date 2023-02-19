@@ -110,8 +110,7 @@ public sealed partial class App : Application
         {
             var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Constants.LogsOptions.FilePath);
             loggerConfiguration
-                .WriteTo
-                .File(path, shared: true, rollingInterval: RollingInterval.Day);
+                .WriteTo.File(path, shared: true, rollingInterval: RollingInterval.Day, retainedFileCountLimit: 3);
         }).
         Build();
 
