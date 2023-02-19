@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Core.Enums;
 using DotVast.HashTool.WinUI.Enums;
@@ -21,13 +23,18 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
         Languages = GenericEnum.GetFieldValues<AppLanguage>();
         Language = Languages.Where(x => x.Tag == ApplicationLanguages.PrimaryLanguageOverride)
                             .FirstOrDefault() ?? AppLanguage.ZhHans;
+
+        // 外观相关的设置, 在初始化时就进行设置
+        SetTheme();
+        SetIsAlwaysOnTop();
+        SetLanguage();
     }
 
     public override async Task StartupAsync()
     {
-        SetIsAlwaysOnTop();
-        SetTheme();
-        SetLanguage();
+        Debug.Assert((App.MainWindow.Content as FrameworkElement)?.RequestedTheme == Theme);
+        Debug.Assert(App.MainWindow.IsAlwaysOnTop == IsAlwaysOnTop);
+        Debug.Assert(ApplicationLanguages.PrimaryLanguageOverride == Language.Tag);
         await Task.CompletedTask;
     }
 

@@ -41,15 +41,15 @@ public sealed class ActivationService : IActivationService
 
     public async Task ActivateAsync(object activationArgs)
     {
-        // Execute tasks before activation.
-        await InitializeAsync();
-
         // Set the MainWindow Content.
         if (App.MainWindow.Content is null)
         {
             _shell = App.GetService<ShellPage>();
             App.MainWindow.Content = _shell ?? new Frame();
         }
+
+        // Execute tasks before activation.
+        await InitializeAsync();
 
         // Handle activation via ActivationHandlers.
         await HandleActivationAsync(activationArgs);
