@@ -31,18 +31,18 @@ public sealed partial class CommandLineActivationHandler : ActivationHandler<App
     protected override bool CanHandleInternal(AppActivationArguments args)
     {
         return args.Kind == ExtendedActivationKind.Launch
-            && args.Data is LaunchActivatedEventArgs data
-            && data.Arguments.Length > 0;
+            && args.Data is ILaunchActivatedEventArgs launchArgs
+            && launchArgs.Arguments.Length > 0;
     }
 
     protected override async Task HandleInternalAsync(AppActivationArguments args)
     {
-        var data = (LaunchActivatedEventArgs)args.Data;
-        _logger.LaunchActivated(data.GetType(), data.Kind, data.Arguments);
+        var launchArgs = (ILaunchActivatedEventArgs)args.Data;
+        _logger.LaunchActivated(launchArgs.GetType(), launchArgs.Kind, launchArgs.Arguments);
 
         try
         {
-            var parsedArgs = Parse(data.Arguments);
+            var parsedArgs = Parse(launchArgs.Arguments);
             var hashNames = parsedArgs.GetValues(Constants.CommandLineArgs.Hash);
             if (hashNames is null)
                 return;
