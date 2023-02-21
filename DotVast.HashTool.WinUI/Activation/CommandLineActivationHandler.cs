@@ -61,7 +61,7 @@ public sealed partial class CommandLineActivationHandler : ActivationHandler<App
 
             foreach (var (path, mode) in pathWithModes)
             {
-                _hashTaskService.HashTasks.Add(CreateHashTask(hashes, path, mode!));
+                _hashTaskService.HashTasks.Add(CreateHashTask(hashes, path, mode));
             }
 
             _navigationService.NavigateTo(Constants.PageKeys.TaskPage);

@@ -128,7 +128,7 @@ public sealed partial class TasksViewModel : ObservableRecipient, INavigationAwa
         var result = await picker.PickSaveFileAsync();
         if (result != null)
         {
-            var hashTasks = HashTaskCheckables!.Where(h => h.IsChecked).Select(h => h.HashTask);
+            var hashTasks = HashTaskCheckables.Where(h => h.IsChecked).Select(h => h.HashTask);
             var options = new JsonSerializerOptions
             {
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),

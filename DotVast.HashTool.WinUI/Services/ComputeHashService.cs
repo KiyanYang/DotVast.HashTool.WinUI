@@ -65,8 +65,10 @@ internal sealed partial class ComputeHashService : IComputeHashService
     {
         return await PreAndPostProcessAsync(async () =>
         {
+            ArgumentNullException.ThrowIfNull(hashTask.Encoding);
+
             hashTask.ProgressMax = 1;
-            var contentBytes = hashTask.Encoding!.GetBytes(hashTask.Content);
+            var contentBytes = hashTask.Encoding.GetBytes(hashTask.Content);
             using Stream stream = new MemoryStream(contentBytes);
             var hashResult = await Task.Run(() => HashStream(hashTask, stream, 0, mres, ct));
             if (hashResult != null)
@@ -121,7 +123,7 @@ internal sealed partial class ComputeHashService : IComputeHashService
     /// <returns>哈希结果.</returns>
     private HashResult? HashStream(HashTask hashTask, Stream stream, double progressOffset, ManualResetEventSlim mres, CancellationToken ct)
     {
-        HashAlgorithm[] hashes = hashTask.SelectedHashs.Select(x => Hash.GetHashAlgorithm(x)!).ToArray();
+        var hashes = hashTask.SelectedHashs.Select(Hash.GetHashAlgorithm).OfType<HashAlgorithm>().ToArray();
 
         #region 初始化, 定义文件流读取参数及变量.
 
@@ -168,7 +170,7 @@ internal sealed partial class ComputeHashService : IComputeHashService
                 TryEnqueue(() => hashTask.State = HashTaskState.Working);
             }
 
-            // 报告进度. streamLength 在此处始终大于 0.
+            // 报告进度. stream.Length 在此处始终大于 0.
             TryEnqueue(() => hashTask.ProgressVal = (double)stream.Position / stream.Length + progressOffset);
         });
 
