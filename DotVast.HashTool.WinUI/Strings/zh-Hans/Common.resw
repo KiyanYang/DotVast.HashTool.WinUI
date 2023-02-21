@@ -132,6 +132,14 @@
   <data name="Pause" xml:space="preserve">
     <value>暂停</value>
   </data>
+  <data name="Result" xml:space="preserve">
+    <value>结果</value>
+    <comment>单数</comment>
+  </data>
+  <data name="Results" xml:space="preserve">
+    <value>结果</value>
+    <comment>复数</comment>
+  </data>
   <data name="Resume" xml:space="preserve">
     <value>继续</value>
   </data>

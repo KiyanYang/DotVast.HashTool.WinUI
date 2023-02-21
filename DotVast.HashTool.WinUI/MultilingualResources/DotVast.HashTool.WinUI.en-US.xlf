@@ -266,6 +266,16 @@
           <source>继续</source>
           <target state="translated">Resume</target>
         </trans-unit>
+        <trans-unit id="Result" translate="yes" xml:space="preserve">
+          <source>结果</source>
+          <target state="translated">Result</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">单数</note>
+        </trans-unit>
+        <trans-unit id="Results" translate="yes" xml:space="preserve">
+          <source>结果</source>
+          <target state="translated">Results</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">复数</note>
+        </trans-unit>
       </group>
     </body>
   </file>

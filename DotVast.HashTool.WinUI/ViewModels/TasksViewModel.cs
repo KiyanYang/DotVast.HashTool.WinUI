@@ -117,7 +117,7 @@ public sealed partial class TasksViewModel : ObservableRecipient, INavigationAwa
     {
         FileSavePicker picker = new()
         {
-            SuggestedFileName = "Results",
+            SuggestedFileName = LocalizationCommon.Result,
             SuggestedStartLocation = PickerLocationId.Desktop,
         };
         picker.FileTypeChoices.Add("JSON", new[] { ".json" });
