@@ -122,7 +122,7 @@ public sealed partial class TasksViewModel : ObservableRecipient, INavigationAwa
         };
         picker.FileTypeChoices.Add("JSON", new[] { ".json" });
 
-        var hwnd = HwndExtensions.GetActiveWindow();
+        var hwnd = WinUIEx.HwndExtensions.GetActiveWindow();
         WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
 
         var result = await picker.PickSaveFileAsync();

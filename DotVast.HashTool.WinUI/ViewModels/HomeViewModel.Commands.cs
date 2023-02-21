@@ -27,7 +27,7 @@ public partial class HomeViewModel
                 FileOpenPicker picker = new();
                 picker.FileTypeFilter.Add("*");
 
-                var hwnd = HwndExtensions.GetActiveWindow();
+                var hwnd = WinUIEx.HwndExtensions.GetActiveWindow();
                 WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
 
                 var result = await picker.PickMultipleFilesAsync();
@@ -41,7 +41,7 @@ public partial class HomeViewModel
                 FolderPicker picker = new();
                 picker.FileTypeFilter.Add("*");
 
-                var hwnd = HwndExtensions.GetActiveWindow();
+                var hwnd = WinUIEx.HwndExtensions.GetActiveWindow();
                 WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
 
                 var result = await picker.PickSingleFolderAsync();
