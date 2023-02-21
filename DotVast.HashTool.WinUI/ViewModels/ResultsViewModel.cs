@@ -4,7 +4,6 @@ using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 
 using Microsoft.Extensions.Logging;
-using Microsoft.UI.Xaml;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
@@ -29,9 +28,6 @@ public sealed partial class ResultsViewModel : ObservableRecipient, INavigationA
     private HashTask? _hashTask;
 
     [ObservableProperty]
-    private Visibility _hashResultsVisibility;
-
-    [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HashResultsFiltered))]
     private string _hashResultsFilterByContent = string.Empty;
 
@@ -45,12 +41,16 @@ public sealed partial class ResultsViewModel : ObservableRecipient, INavigationA
     {
         get
         {
-            if (HashResultsFilterByContentIsEnabled)
+            var filter = HashResultsFilterByContent;
+            if (string.IsNullOrEmpty(filter))
             {
-                var filter = HashResultsFilterByContent;
-                return HashTask?.Results?.Where(h =>
+                _hashResultsFiltered = HashTask?.Results;
+            }
+            else if (HashResultsFilterByContentIsEnabled)
+            {
+                _hashResultsFiltered = HashTask?.Results?.Where(h =>
                     IgnoreCaseContains(h.Content, filter) || (h.Data?.Any(d => IgnoreCaseContains(d.HashValue, filter)) ?? false)
-                ).ToList();
+                ).ToArray();
             }
             return _hashResultsFiltered;
         }
@@ -93,7 +93,7 @@ public sealed partial class ResultsViewModel : ObservableRecipient, INavigationA
         }
     }
 
-    partial void OnHashTaskChanging(HashTask? value)
+    partial void OnHashTaskChanged(HashTask? value)
     {
         if (HashTask != null)
         {
@@ -105,8 +105,6 @@ public sealed partial class ResultsViewModel : ObservableRecipient, INavigationA
             value.PropertyChanged += HashTask_PropertyChanged;
             HashResultsFilterByContent = string.Empty;
             HashResultsFilterByContentIsEnabled = value.State != HashTaskState.Waiting && value.State != HashTaskState.Working;
-            HashResultsVisibility = value.Results != null ? Visibility.Visible : Visibility.Collapsed;
-            HashResultsFiltered = value.Results;
         }
     }
 
@@ -121,20 +119,11 @@ public sealed partial class ResultsViewModel : ObservableRecipient, INavigationA
         {
             case nameof(HashTask.State):
                 // 当任务处于进行状态时, 禁用搜索
-                HashResultsFilterByContentIsEnabled = hashTask.State != HashTaskState.Waiting
-                    && hashTask.State != HashTaskState.Working;
+                HashResultsFilterByContentIsEnabled = hashTask.State != HashTaskState.Waiting && hashTask.State != HashTaskState.Working;
                 break;
 
             case nameof(HashTask.Results):
-                if (hashTask.Results != null)
-                {
-                    HashResultsVisibility = Visibility.Visible;
-                    HashResultsFiltered = hashTask.Results;
-                }
-                else
-                {
-                    HashResultsVisibility = Visibility.Collapsed;
-                }
+                HashResultsFiltered = hashTask.Results;
                 break;
 
             default:

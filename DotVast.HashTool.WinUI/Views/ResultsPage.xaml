@@ -142,10 +142,7 @@
                         Text="{x:Bind ViewModel.HashTask.State}" />
                 </Grid>
 
-                <Grid
-                    Margin="0,16,0,0"
-                    ColumnSpacing="32"
-                    Visibility="{x:Bind ViewModel.HashResultsVisibility, Mode=OneWay}">
+                <Grid Margin="0,16,0,0" ColumnSpacing="32">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
@@ -166,10 +163,7 @@
                         Text="{x:Bind ViewModel.HashResultsFilterByContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
 
-                <ItemsRepeater
-                    ItemTemplate="{StaticResource HashResultDataTemplate}"
-                    ItemsSource="{x:Bind ViewModel.HashResultsFiltered, Mode=OneWay}"
-                    Visibility="{x:Bind ViewModel.HashResultsVisibility, Mode=OneWay}">
+                <ItemsRepeater ItemTemplate="{StaticResource HashResultDataTemplate}" ItemsSource="{x:Bind ViewModel.HashResultsFiltered, Mode=OneWay}">
                     <ItemsRepeater.Layout>
                         <StackLayout Orientation="Vertical" Spacing="{ThemeResource MediumSpacing}" />
                     </ItemsRepeater.Layout>
