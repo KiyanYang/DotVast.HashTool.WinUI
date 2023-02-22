@@ -68,11 +68,13 @@
         <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewBodyContentStyle}">
             <StackPanel Orientation="Vertical" Spacing="12">
 
+                <!-- 标题: 任务详情 -->
                 <TextBlock
                     x:Uid="ResultsPage_Subtitle_TaskDetail"
                     FontSize="{ThemeResource SubtitleTextBlockFontSize}"
                     FontWeight="Bold" />
 
+                <!-- 任务详情 -->
                 <Grid Padding="16,8,16,0" Style="{StaticResource CardGridStyle}">
                     <Grid.Resources>
                         <Style TargetType="TextBlock">
@@ -142,6 +144,7 @@
                         Text="{x:Bind ViewModel.HashTask.State}" />
                 </Grid>
 
+                <!-- 标题: 任务结果; 筛选文本框 -->
                 <Grid Margin="0,16,0,0" ColumnSpacing="32">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -163,6 +166,7 @@
                         Text="{x:Bind ViewModel.HashResultsFilterByContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
 
+                <!-- 任务结果 -->
                 <ItemsRepeater ItemTemplate="{StaticResource HashResultDataTemplate}" ItemsSource="{x:Bind ViewModel.HashResultsFiltered, Mode=OneWay}">
                     <ItemsRepeater.Layout>
                         <StackLayout Orientation="Vertical" Spacing="{ThemeResource MediumSpacing}" />

@@ -1,4 +1,3 @@
-using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.ViewModels;
 
 using Microsoft.UI.Xaml.Controls;
@@ -12,9 +11,9 @@ public sealed partial class TasksPage : Page
     public TasksPage()
     {
         ViewModel = App.GetService<TasksViewModel>();
-        Resources.TryAdd(() => ViewModel.SaveCommand);
-        Resources.TryAdd(() => ViewModel.ShowResultCommand);
-        Resources.TryAdd(() => Localization.Command_Save_Tip);
+        Resources.AddExpression(() => ViewModel.SaveCommand);
+        Resources.AddExpression(() => ViewModel.ShowResultCommand);
+        Resources.AddExpression(() => Localization.Command_Save_Tip);
         InitializeComponent();
     }
 }
