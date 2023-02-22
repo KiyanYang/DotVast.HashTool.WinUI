@@ -1,4 +1,4 @@
-namespace DotVast.HashTool.WinUI.Models.Views;
+namespace DotVast.HashTool.WinUI.Models;
 
 public sealed partial class HashTaskCheckable : ObservableRecipient
 {

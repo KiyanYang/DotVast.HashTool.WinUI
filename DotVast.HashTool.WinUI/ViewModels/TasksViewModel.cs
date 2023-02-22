@@ -11,7 +11,6 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Contracts.ViewModels;
 using DotVast.HashTool.WinUI.Models;
-using DotVast.HashTool.WinUI.Models.Views;
 
 using Windows.Storage.Pickers;
 

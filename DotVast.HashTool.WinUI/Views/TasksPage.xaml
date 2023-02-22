@@ -5,7 +5,7 @@
     xmlns:behaviors="using:DotVast.HashTool.WinUI.Behaviors"
     xmlns:controls="using:DotVast.HashTool.WinUI.Controls"
     xmlns:dvhc="using:DotVast.HashTool.WinUI.Controls"
-    xmlns:models="using:DotVast.HashTool.WinUI.Models.Views"
+    xmlns:models="using:DotVast.HashTool.WinUI.Models"
     NavigationCacheMode="Enabled">
 
     <Page.Resources>
