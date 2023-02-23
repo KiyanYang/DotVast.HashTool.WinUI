@@ -10,23 +10,27 @@
 
     <Page.Resources>
         <DataTemplate x:Key="TaskItemDataTemplate" x:DataType="models:HashTaskCheckable">
-            <Button
-                Margin="0,0,0,8"
-                Padding="12,6"
-                HorizontalAlignment="Stretch"
-                HorizontalContentAlignment="Stretch"
-                Command="{StaticResource ShowResultCommand}"
-                CommandParameter="{x:Bind HashTask}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="24" />
-                        <ColumnDefinition Width="12" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <CheckBox IsChecked="{x:Bind IsChecked, Mode=TwoWay}" />
-                    <controls:HashTaskGrid Grid.Column="2" HashTask="{x:Bind HashTask}" />
-                </Grid>
-            </Button>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Padding="16,6,8,6"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch"
+                    Command="{StaticResource ShowResultCommand}"
+                    CommandParameter="{x:Bind HashTask}">
+                    <controls:HashTaskGrid HashTask="{x:Bind HashTask}" />
+                </Button>
+                <CheckBox
+                    Grid.Column="1"
+                    Width="24"
+                    MinWidth="0"
+                    Margin="12,0,0,0"
+                    IsChecked="{x:Bind IsChecked, Mode=TwoWay}"
+                    Visibility="{Binding IsSelectEnabled, Source={StaticResource Auxiliary}, Converter={StaticResource BoolToVisibilityConverter}}" />
+            </Grid>
         </DataTemplate>
     </Page.Resources>
 
@@ -42,8 +46,18 @@
                         VerticalAlignment="Center"
                         Style="{ThemeResource TitleTextBlockStyle}"
                         Text="{Binding}" />
-                    <CommandBar Grid.Column="1" DefaultLabelPosition="Collapsed">
-                        <AppBarButton Command="{StaticResource SaveCommand}" ToolTipService.ToolTip="{StaticResource Command_Save_Tip}">
+                    <CommandBar
+                        Grid.Column="1"
+                        Margin="0,0,-8,0"
+                        DefaultLabelPosition="Collapsed">
+                        <CommandBar.Resources>
+                            <Style BasedOn="{StaticResource CollapsedAppBarButtonStyle}" TargetType="AppBarButton" />
+                            <Style BasedOn="{StaticResource CollapsedAppBarToggleButtonStyle}" TargetType="AppBarToggleButton" />
+                        </CommandBar.Resources>
+                        <AppBarButton
+                            Command="{StaticResource SaveCommand}"
+                            ToolTipService.ToolTip="{StaticResource Command_Save_Tip}"
+                            Visibility="{Binding IsSelectEnabled, Source={StaticResource Auxiliary}, Converter={StaticResource BoolToVisibilityConverter}}">
                             <AppBarButton.Icon>
                                 <FontIcon Glyph="&#xE74E;" />
                             </AppBarButton.Icon>
@@ -51,6 +65,11 @@
                                 <KeyboardAccelerator Key="S" Modifiers="Control" />
                             </AppBarButton.KeyboardAccelerators>
                         </AppBarButton>
+                        <AppBarToggleButton Margin="8,0,0,0" IsChecked="{Binding IsSelectEnabled, Source={StaticResource Auxiliary}, Mode=TwoWay}">
+                            <AppBarToggleButton.Icon>
+                                <FontIcon Glyph="&#xE762;" />
+                            </AppBarToggleButton.Icon>
+                        </AppBarToggleButton>
                     </CommandBar>
                 </Grid>
             </dvhc:NavigationViewHeader>
@@ -62,7 +81,13 @@
             <!-- ItemsRepeater 在进行元素的增删之后, 不会在内容更新时刷新新内容, 而是显示被删除项的旧内容, 下面是相关议题 -->
             <!-- https://github.com/microsoft/microsoft-ui-xaml/issues/6661 -->
             <!-- https://github.com/microsoft/microsoft-ui-xaml/issues/6614 -->
-            <ItemsControl ItemTemplate="{StaticResource TaskItemDataTemplate}" ItemsSource="{x:Bind ViewModel.HashTaskCheckables}" />
+            <ItemsControl ItemTemplate="{StaticResource TaskItemDataTemplate}" ItemsSource="{x:Bind ViewModel.HashTaskCheckables}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Spacing="8" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
         </Grid>
     </dvhc:NavigationViewBodyScrollViewer>
 
