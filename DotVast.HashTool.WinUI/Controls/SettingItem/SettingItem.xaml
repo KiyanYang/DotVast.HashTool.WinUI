@@ -1,9 +1,9 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:dvhc="using:DotVast.HashTool.WinUI.Controls">
+    xmlns:local="using:DotVast.HashTool.WinUI.Controls">
 
-    <Style TargetType="dvhc:SettingItem">
+    <Style TargetType="local:SettingItem">
         <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
         <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -15,7 +15,7 @@
         <Setter Property="Margin" Value="0,0,0,0" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="dvhc:SettingItem">
+                <ControlTemplate TargetType="local:SettingItem">
                     <Grid
                         Padding="{TemplateBinding Padding}"
                         Background="{TemplateBinding Background}"

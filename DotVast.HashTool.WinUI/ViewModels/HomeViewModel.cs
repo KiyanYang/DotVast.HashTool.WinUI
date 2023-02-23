@@ -114,12 +114,10 @@ public sealed partial class HomeViewModel : ObservableRecipient
 
     private async Task DelayCreateTask()
     {
-        _isDelayCreateTask = true;
+        IsDelayCreateTask = true;
         CreateTaskCommand.NotifyCanExecuteChanged();
-        CreateTaskBtn.Content = LocalizationCommon.Created;
         await Task.Delay(MillisecondsDelayCreateTask);
-        CreateTaskBtn.Content = LocalizationCommon.Create;
-        _isDelayCreateTask = false;
+        IsDelayCreateTask = false;
         CreateTaskCommand.NotifyCanExecuteChanged();
     }
 

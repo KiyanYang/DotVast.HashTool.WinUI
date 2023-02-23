@@ -27,7 +27,16 @@ public sealed partial class HomePage : Page
 
     private async void Page_Drop(object sender, Microsoft.UI.Xaml.DragEventArgs e)
     {
-        await ViewModel.SetHashTaskContenFromDrag(e.DataView);
+        if (!e.DataView.Contains(StandardDataFormats.StorageItems))
+        {
+            return;
+        }
+
+        var items = await e.DataView.GetStorageItemsAsync();
+        if (items.Count > 0)
+        {
+            ViewModel.SetHashTaskContenFromPaths(items.Select(i => i.Path));
+        }
     }
 
     private void InputtingContentFull_Loaded(object sender, RoutedEventArgs e)
@@ -44,9 +53,9 @@ public sealed partial class HomePage : Page
     {
         return mode switch
         {
-            var m when m == HashTaskMode.File => "\xE7C3",
-            var m when m == HashTaskMode.Folder => "\xE8B7",
-            var m when m == HashTaskMode.Text => "\xE8C1",
+            var m when m == HashTaskMode.File => "\uE7C3",
+            var m when m == HashTaskMode.Folder => "\uE8B7",
+            var m when m == HashTaskMode.Text => "\uE8C1",
             _ => null,
         };
     }
@@ -55,8 +64,8 @@ public sealed partial class HomePage : Page
     {
         return mode switch
         {
-            var m when m == HashTaskMode.File => "\xE8E5",
-            var m when m == HashTaskMode.Folder => "\xE8DA",
+            var m when m == HashTaskMode.File => "\uE8E5",
+            var m when m == HashTaskMode.Folder => "\uE8DA",
             _ => null,
         };
     }

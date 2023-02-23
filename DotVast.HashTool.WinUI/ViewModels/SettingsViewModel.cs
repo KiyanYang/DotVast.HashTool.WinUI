@@ -133,28 +133,28 @@ public sealed partial class SettingsViewModel : ObservableRecipient
     }
 
     [ObservableProperty]
-    private bool _isCheckUpdateProgressActive;
+    private bool _isCheckingUpdate;
 
-    private bool _isUpdateChecked = false;
+    private bool _isCheckedUpdate = false;
 
     [RelayCommand]
     private async Task CheckUpdateAsync()
     {
-        IsCheckUpdateProgressActive = true;
+        IsCheckingUpdate = true;
 
         // 首次请求需要预热, 用时 1s 左右, 后续用时 100ms - 500ms(网络状况差时), 因此增加一个延时
-        if (_isUpdateChecked)
+        if (_isCheckedUpdate)
         {
             await Task.Delay(500);
         }
         else
         {
-            _isUpdateChecked = true;
+            _isCheckedUpdate = true;
         }
 
         var release = await _checkUpdateService.GetLatestGitHubReleaseAsync(IncludePreRelease);
 
-        IsCheckUpdateProgressActive = false;
+        IsCheckingUpdate = false;
 
         if (release is null)
         {

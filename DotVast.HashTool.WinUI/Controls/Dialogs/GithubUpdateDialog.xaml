@@ -2,7 +2,7 @@
     x:Class="DotVast.HashTool.WinUI.Controls.Dialogs.GithubUpdateDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:ctControls="using:CommunityToolkit.WinUI.UI.Controls"
     Style="{StaticResource DefaultContentDialogStyle}">
 
     <ContentDialog.Title>
@@ -20,7 +20,7 @@
         MaxHeight="320"
         HorizontalScrollMode="Disabled"
         VerticalScrollBarVisibility="Hidden">
-        <controls:MarkdownTextBlock
+        <ctControls:MarkdownTextBlock
             x:Name="MarkdownText"
             Background="Transparent"
             FontSize="14"

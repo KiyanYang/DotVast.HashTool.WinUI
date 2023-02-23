@@ -4,8 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:DotVast.HashTool.WinUI.Behaviors"
     xmlns:controls="using:DotVast.HashTool.WinUI.Controls"
+    xmlns:dataTemplateSelectors="using:DotVast.HashTool.WinUI.Helpers.DataTemplateSelectors"
     xmlns:enums="using:DotVast.HashTool.WinUI.Enums"
-    xmlns:hdts="using:DotVast.HashTool.WinUI.Helpers.DataTemplateSelectors"
     xmlns:helpers="using:DotVast.HashTool.WinUI.Helpers"
     xmlns:i18n="using:DotVast.HashTool.WinUI.Strings"
     xmlns:local="using:DotVast.HashTool.WinUI.Views"
@@ -31,7 +31,7 @@
                 <TextBlock Text="{x:Bind}" />
             </StackPanel>
         </DataTemplate>
-        <hdts:ComboBoxIconDataTemplateSelector
+        <dataTemplateSelectors:ComboBoxIconDataTemplateSelector
             x:Key="ComboBoxIconDataTemplateSelector"
             DropDown="{StaticResource ComboBoxDropDown}"
             Normal="{StaticResource ComboBoxNormal}" />
@@ -145,7 +145,7 @@
                         VerticalAlignment="Stretch"
                         HorizontalContentAlignment="Center"
                         Command="{x:Bind ViewModel.CreateTaskCommand}"
-                        Content="{x:Bind ViewModel.CreateTaskBtn.Content, Mode=OneWay}"
+                        Content="{x:Bind helpers:XamlFunc.TrueValueIfTrue(ViewModel.IsDelayCreateTask, i18n:LocalizationCommon.Created, i18n:LocalizationCommon.Create), Mode=OneWay}"
                         CornerRadius="4,0,0,4"
                         Style="{ThemeResource AccentButtonStyle}" />
                     <DropDownButton

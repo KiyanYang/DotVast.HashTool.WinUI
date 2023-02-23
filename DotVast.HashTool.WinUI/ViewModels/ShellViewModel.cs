@@ -5,32 +5,17 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
-public sealed class ShellViewModel : ObservableRecipient
+public sealed partial class ShellViewModel : ObservableObject
 {
+    public INavigationService NavigationService { get; }
+
+    public INavigationViewService NavigationViewService { get; }
+
+    [ObservableProperty]
     private bool _isBackEnabled;
+
+    [ObservableProperty]
     private object? _selected;
-
-    public INavigationService NavigationService
-    {
-        get;
-    }
-
-    public INavigationViewService NavigationViewService
-    {
-        get;
-    }
-
-    public bool IsBackEnabled
-    {
-        get => _isBackEnabled;
-        set => SetProperty(ref _isBackEnabled, value);
-    }
-
-    public object? Selected
-    {
-        get => _selected;
-        set => SetProperty(ref _selected, value);
-    }
 
     public ShellViewModel(INavigationService navigationService, INavigationViewService navigationViewService)
     {

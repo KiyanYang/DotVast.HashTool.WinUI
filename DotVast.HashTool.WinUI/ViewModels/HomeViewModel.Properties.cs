@@ -33,8 +33,6 @@ public partial class HomeViewModel
 
     #endregion Inputting
 
-    public HashTask? LastHashTask => _hashTaskService.HashTasks.LastOrDefault();
-
     /// <summary>
     /// 哈希任务模式. 文件, 文件夹, 文本.
     /// </summary>
@@ -66,9 +64,15 @@ public partial class HomeViewModel
     public IEnumerable<HashOption> HashOptions => _preferencesSettingsService.HashOptions.Where(i => i.IsEnabled);
 
     /// <summary>
-    /// “开始”按钮.
+    /// 是否处于任务延迟创建状态. 若处于延迟状态, 则当前无法创建任务.
     /// </summary>
-    public ButtonModel CreateTaskBtn { get; } = new() { Content = LocalizationCommon.Create };
+    [ObservableProperty]
+    private bool _isDelayCreateTask = false;
+
+    /// <summary>
+    /// 最近一次任务.
+    /// </summary>
+    public HashTask? LastHashTask => _hashTaskService.HashTasks.LastOrDefault();
 
     #region StartingWhenCreateHashTask
 

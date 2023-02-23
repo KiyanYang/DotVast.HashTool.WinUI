@@ -44,18 +44,18 @@ public partial class HashOptionSettingsViewModel : ObservableRecipient, INavigat
     public void OnNavigatedTo(object? parameter)
     {
         IsActive = true;
-        HashOptions.CollectionChanged += HashOptions_CollectionChanged_Reorder;
+        HashOptions.CollectionChanged += HashOptions_CollectionChanged;
     }
 
     public void OnNavigatedFrom()
     {
         IsActive = false;
-        HashOptions.CollectionChanged -= HashOptions_CollectionChanged_Reorder;
+        HashOptions.CollectionChanged -= HashOptions_CollectionChanged;
     }
 
     #endregion INavigationAware
 
-    private void HashOptions_CollectionChanged_Reorder(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    private void HashOptions_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
         if (sender is ObservableCollection<HashOption>
             && e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)

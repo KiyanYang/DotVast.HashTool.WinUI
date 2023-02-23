@@ -5,7 +5,6 @@ using DotVast.HashTool.WinUI.Models;
 
 using Microsoft.Extensions.Logging;
 
-using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage.Pickers;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
@@ -14,8 +13,6 @@ public partial class HomeViewModel
 {
     private const char FilesSeparator = '|';
     private const int MaxFilesCount = 100;
-
-    private bool _isDelayCreateTask = false;
 
     [RelayCommand]
     private async Task PickAsync()
@@ -71,7 +68,7 @@ public partial class HomeViewModel
 
     private bool CanCreateTask()
     {
-        if (_isDelayCreateTask)
+        if (IsDelayCreateTask)
         {
             return false;
         }
@@ -97,18 +94,9 @@ public partial class HomeViewModel
     private async Task SaveHashOptionAsync() =>
         await _preferencesSettingsService.SaveHashOptionsAsync();
 
-    public async Task SetHashTaskContenFromDrag(DataPackageView view)
+    public void SetHashTaskContenFromPaths(IEnumerable<string> paths)
     {
-        if (!view.Contains(StandardDataFormats.StorageItems))
-        {
-            return;
-        }
-
-        var items = await view.GetStorageItemsAsync();
-        if (items.Count > 0)
-        {
-            InputtingContent = string.Join(FilesSeparator, items.Take(MaxFilesCount).Select(i => i.Path));
-        }
+        InputtingContent = string.Join(FilesSeparator, paths.Take(MaxFilesCount));
     }
 
     [RelayCommand]
@@ -153,9 +141,7 @@ public partial class HomeViewModel
     /// <returns>文件均存在为 <see langword="true"/>, 否则为 <see langword="false"/>.</returns>
     private static bool FilesExists(string paths)
     {
-        return paths.Split(FilesSeparator)
-                    .Select(p => PathTrim(p))
-                    .All(p => File.Exists(p));
+        return paths.Split(FilesSeparator).Select(PathTrim).All(File.Exists);
     }
 
     #endregion Helper

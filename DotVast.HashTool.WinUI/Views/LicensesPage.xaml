@@ -2,7 +2,7 @@
     x:Class="DotVast.HashTool.WinUI.Views.LicensesPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:dvhc="using:DotVast.HashTool.WinUI.Controls"
+    xmlns:controls="using:DotVast.HashTool.WinUI.Controls"
     xmlns:models="using:DotVast.HashTool.WinUI.Models">
 
     <Page.Resources>
@@ -33,7 +33,7 @@
         </DataTemplate>
     </Page.Resources>
 
-    <dvhc:NavigationViewBodyScrollViewer>
+    <controls:NavigationViewBodyScrollViewer>
         <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewBodyContentStyle}">
             <ItemsRepeater ItemTemplate="{StaticResource LicenseDataTemplate}" ItemsSource="{x:Bind ViewModel.Licenses}">
                 <ItemsRepeater.Layout>
@@ -41,6 +41,6 @@
                 </ItemsRepeater.Layout>
             </ItemsRepeater>
         </Grid>
-    </dvhc:NavigationViewBodyScrollViewer>
+    </controls:NavigationViewBodyScrollViewer>
 
 </Page>
