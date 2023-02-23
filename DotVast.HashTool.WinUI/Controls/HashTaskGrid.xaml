@@ -4,6 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:behaviors="using:DotVast.HashTool.WinUI.Behaviors"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:i18n="using:DotVast.HashTool.WinUI.Strings"
     xmlns:local="using:DotVast.HashTool.WinUI.Controls"
     mc:Ignorable="d">
@@ -61,21 +63,27 @@
             <CommandBar.Resources>
                 <Style BasedOn="{StaticResource CollapsedAppBarButtonStyle}" TargetType="AppBarButton" />
             </CommandBar.Resources>
-            <AppBarButton Command="{x:Bind ViewModel.StartTaskCommand}" Visibility="{x:Bind local:HashTaskGrid.GetStartBtnVisibility(ViewModel, HashTask.State), Mode=OneWay}">
+            <AppBarButton Command="{x:Bind ViewModel.StartTaskCommand}">
+                <i:Interaction.Behaviors>
+                    <behaviors:ControlIsEnabledToVisibilityBehavior />
+                </i:Interaction.Behaviors>
                 <AppBarButton.Icon>
                     <FontIcon Glyph="{x:Bind local:HashTaskGrid.GetStartBtnIcon()}" />
                 </AppBarButton.Icon>
             </AppBarButton>
-            <AppBarButton Command="{x:Bind ViewModel.ResetTaskCommand}" Visibility="{x:Bind local:HashTaskGrid.GetResetBtnVisibility(ViewModel, HashTask.State), Mode=OneWay}">
+            <AppBarButton Command="{x:Bind ViewModel.ResetTaskCommand}">
+                <i:Interaction.Behaviors>
+                    <behaviors:ControlIsEnabledToVisibilityBehavior />
+                </i:Interaction.Behaviors>
                 <AppBarButton.Icon>
                     <FontIcon Glyph="{x:Bind local:HashTaskGrid.GetResetBtnIcon(HashTask.State), Mode=OneWay}" />
                 </AppBarButton.Icon>
             </AppBarButton>
             <CommandBar.SecondaryCommands>
-                <AppBarButton
-                    Command="{x:Bind ViewModel.CancelTaskCommand}"
-                    Label="{x:Bind i18n:LocalizationCommon.Cancel}"
-                    Visibility="{x:Bind local:HashTaskGrid.GetCancelBtnVisibility(ViewModel, HashTask.State), Mode=OneWay}">
+                <AppBarButton Command="{x:Bind ViewModel.CancelTaskCommand}" Label="{x:Bind i18n:LocalizationCommon.Cancel}">
+                    <i:Interaction.Behaviors>
+                        <behaviors:ControlIsEnabledToVisibilityBehavior />
+                    </i:Interaction.Behaviors>
                     <AppBarButton.Icon>
                         <FontIcon Glyph="{x:Bind local:HashTaskGrid.GetCancelBtnIcon()}" />
                     </AppBarButton.Icon>

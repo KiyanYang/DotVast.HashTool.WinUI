@@ -62,21 +62,6 @@ public sealed partial class HashTaskGrid : UserControl
 
     #region Visibility
 
-    public static Visibility GetStartBtnVisibility(HashTaskGridViewModel vm, HashTaskState state)
-    {
-        return vm.CanStartTask() ? Visibility.Visible : Visibility.Collapsed;
-    }
-
-    public static Visibility GetResetBtnVisibility(HashTaskGridViewModel vm, HashTaskState state)
-    {
-        return vm.CanResetTask() ? Visibility.Visible : Visibility.Collapsed;
-    }
-
-    public static Visibility GetCancelBtnVisibility(HashTaskGridViewModel vm, HashTaskState state)
-    {
-        return vm.CanCancelTask() ? Visibility.Visible : Visibility.Collapsed;
-    }
-
     public static Visibility GetHashTaskStateTextVisibility(HashTaskState state)
     {
         return GetProgressRingVisibility(state) switch
