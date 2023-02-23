@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:DotVast.HashTool.WinUI.Behaviors"
     xmlns:controls="using:DotVast.HashTool.WinUI.Controls"
-    xmlns:dvhc="using:DotVast.HashTool.WinUI.Controls"
     xmlns:models="using:DotVast.HashTool.WinUI.Models"
     NavigationCacheMode="Enabled">
 
@@ -36,7 +35,7 @@
 
     <behaviors:NavigationViewHeaderBehavior.HeaderTemplate>
         <DataTemplate>
-            <dvhc:NavigationViewHeader>
+            <controls:NavigationViewHeader>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -72,23 +71,22 @@
                         </AppBarToggleButton>
                     </CommandBar>
                 </Grid>
-            </dvhc:NavigationViewHeader>
+            </controls:NavigationViewHeader>
         </DataTemplate>
     </behaviors:NavigationViewHeaderBehavior.HeaderTemplate>
 
-    <dvhc:NavigationViewBodyScrollViewer>
+    <controls:NavigationViewBodyScrollViewer>
         <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewBodyContentStyle}">
+            <!-- ItemsRepeater 里面的内容使用 OneWay 绑定可以避免下面的问题 -->
             <!-- ItemsRepeater 在进行元素的增删之后, 不会在内容更新时刷新新内容, 而是显示被删除项的旧内容, 下面是相关议题 -->
             <!-- https://github.com/microsoft/microsoft-ui-xaml/issues/6661 -->
             <!-- https://github.com/microsoft/microsoft-ui-xaml/issues/6614 -->
-            <ItemsControl ItemTemplate="{StaticResource TaskItemDataTemplate}" ItemsSource="{x:Bind ViewModel.HashTaskCheckables}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Spacing="8" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-            </ItemsControl>
+            <ItemsRepeater ItemTemplate="{StaticResource TaskItemDataTemplate}" ItemsSource="{x:Bind ViewModel.HashTaskCheckables}">
+                <ItemsRepeater.Layout>
+                    <StackLayout Spacing="8" />
+                </ItemsRepeater.Layout>
+            </ItemsRepeater>
         </Grid>
-    </dvhc:NavigationViewBodyScrollViewer>
+    </controls:NavigationViewBodyScrollViewer>
 
 </Page>

@@ -30,9 +30,9 @@
         <TextBlock
             HorizontalAlignment="Left"
             IsTextSelectionEnabled="True"
-            Text="{x:Bind HashTask.Content}"
+            Text="{x:Bind HashTask.Content, Mode=OneWay}"
             TextTrimming="CharacterEllipsis"
-            ToolTipService.ToolTip="{x:Bind HashTask.Content}" />
+            ToolTipService.ToolTip="{x:Bind HashTask.Content, Mode=OneWay}" />
 
         <!-- 状态: 文本状态, 环形进度条 -->
         <TextBlock
@@ -101,7 +101,7 @@
             Grid.Row="1"
             FontSize="12"
             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-            Text="{x:Bind local:HashTaskGrid.GetSecondaryInformationText(HashTask)}"
+            Text="{x:Bind local:HashTaskGrid.GetSecondaryInformationText(HashTask), Mode=OneWay}"
             TextTrimming="CharacterEllipsis"
             ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}" />
     </Grid>
