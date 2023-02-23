@@ -42,7 +42,7 @@ public sealed partial class HashTaskGrid : UserControl
     #region Icon
 
     private const string IconStart = "\uF5B0";
-    private const string IconResume = "\xE768";
+    private const string IconResume = "\uE768";
     private const string IconPause = "\uE769";
     private const string IconCancel = "\uE711";
     private const string IconDelete = "\uE74D";

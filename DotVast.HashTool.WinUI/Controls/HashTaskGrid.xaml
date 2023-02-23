@@ -26,8 +26,8 @@
 
         <!-- 计算内容 -->
         <TextBlock
+            HorizontalAlignment="Left"
             IsTextSelectionEnabled="True"
-            MaxLines="2"
             Text="{x:Bind HashTask.Content}"
             TextTrimming="CharacterEllipsis"
             ToolTipService.ToolTip="{x:Bind HashTask.Content}" />
@@ -59,9 +59,7 @@
             Grid.Column="2"
             DefaultLabelPosition="Collapsed">
             <CommandBar.Resources>
-                <Style BasedOn="{StaticResource DefaultAppBarButtonStyle}" TargetType="AppBarButton">
-                    <Setter Property="Width" Value="48" />
-                </Style>
+                <Style BasedOn="{StaticResource CollapsedAppBarButtonStyle}" TargetType="AppBarButton" />
             </CommandBar.Resources>
             <AppBarButton Command="{x:Bind ViewModel.StartTaskCommand}" Visibility="{x:Bind local:HashTaskGrid.GetStartBtnVisibility(ViewModel, HashTask.State), Mode=OneWay}">
                 <AppBarButton.Icon>

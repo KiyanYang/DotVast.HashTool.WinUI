@@ -11,6 +11,7 @@
                 <ResourceDictionary Source="/Styles/Thickness.xaml" />
 
                 <ResourceDictionary Source="/Styles/Card.xaml" />
+                <ResourceDictionary Source="/Styles/Meun.xaml" />
                 <ResourceDictionary Source="/Styles/NavigationView.xaml" />
                 <ResourceDictionary Source="/Styles/TextBlock.xaml" />
                 <ResourceDictionary Source="/Styles/Settings.xaml" />
