@@ -111,6 +111,12 @@ public partial class HomeViewModel
         }
     }
 
+    [RelayCommand]
+    private void ShowResult(HashTask hashTask)
+    {
+        _navigationService.NavigateTo(Constants.PageKeys.ResultsPage, parameter: hashTask);
+    }
+
     #region Helper
 
     private HashTask CreateHashTask()

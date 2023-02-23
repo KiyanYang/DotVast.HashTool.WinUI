@@ -15,30 +15,23 @@ public sealed partial class HashTaskGridViewModel : ObservableObject
         _hashTaskService = hashTaskService;
     }
 
+    [ObservableProperty]
     private HashTask? _hashTask;
-    public HashTask? HashTask
+
+    partial void OnHashTaskChanging(HashTask? value)
     {
-        private get => _hashTask;
-        set
+        if (HashTask != null)
         {
-            if (_hashTask != null)
-            {
-                _hashTask.PropertyChanged -= HashTask_PropertyChanged;
-            }
-            _hashTask = value;
-            if (_hashTask != null)
-            {
-                _hashTask.PropertyChanged += HashTask_PropertyChanged;
-            }
+            HashTask.PropertyChanged -= HashTask_PropertyChanged;
+        }
+        if (value != null)
+        {
+            value.PropertyChanged += HashTask_PropertyChanged;
         }
     }
 
     private void HashTask_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
-        if (sender is not HashTask _)
-        {
-            return;
-        }
         StartTaskCommand.NotifyCanExecuteChanged();
         ResetTaskCommand.NotifyCanExecuteChanged();
         CancelTaskCommand.NotifyCanExecuteChanged();

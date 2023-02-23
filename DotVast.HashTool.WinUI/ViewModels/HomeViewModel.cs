@@ -22,6 +22,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
     private readonly IComputeHashService _computeHashService;
     private readonly IDialogService _dialogService;
     private readonly IHashTaskService _hashTaskService;
+    private readonly INavigationService _navigationService;
     private readonly System.Timers.Timer _timer;
 
     public HomeViewModel(
@@ -29,13 +30,15 @@ public sealed partial class HomeViewModel : ObservableRecipient
         IPreferencesSettingsService preferencesSettingsService,
         IComputeHashService computeHashService,
         IDialogService dialogService,
-        IHashTaskService hashTaskService)
+        IHashTaskService hashTaskService,
+        INavigationService navigationService)
     {
         _logger = logger;
         _preferencesSettingsService = preferencesSettingsService;
         _computeHashService = computeHashService;
         _dialogService = dialogService;
         _hashTaskService = hashTaskService;
+        _navigationService = navigationService;
 
         // 响应哈希选项排序
         _preferencesSettingsService.HashOptions.CollectionChanged += (sender, e) =>
@@ -46,6 +49,8 @@ public sealed partial class HomeViewModel : ObservableRecipient
                 OnPropertyChanged(nameof(HashOptions));
             }
         };
+
+        _hashTaskService.HashTasks.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(LastHashTask));
 
         _startingWhenCreateHashTask = _preferencesSettingsService.StartingWhenCreateHashTask;
 

@@ -4,9 +4,9 @@ using Microsoft.UI.Xaml;
 
 namespace DotVast.HashTool.WinUI.Helpers;
 
-public static class XamlFunctionHelper
+public static class XamlFunc
 {
-    public static bool TrueIfTrue(object? obj) =>
+    public static bool TrueIfTrue(object obj) =>
         (obj as bool?) == true;
 
     public static Visibility VisibleIfText(HashTaskMode mode) =>

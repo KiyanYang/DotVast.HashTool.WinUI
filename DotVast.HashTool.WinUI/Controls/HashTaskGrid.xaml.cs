@@ -14,18 +14,24 @@ public sealed partial class HashTaskGrid : UserControl
     public HashTask HashTask
     {
         get => (HashTask)GetValue(HashTaskProperty);
-        set
-        {
-            SetValue(HashTaskProperty, value);
-            ViewModel.HashTask = value;
-        }
+        set => SetValue(HashTaskProperty, value);
     }
 
     public static readonly DependencyProperty HashTaskProperty = DependencyProperty.Register(
        nameof(HashTask),
        typeof(HashTask),
        typeof(HashTaskGrid),
-       new PropertyMetadata(null));
+       new PropertyMetadata(null, OnHashTaskChanged));
+
+    private static void OnHashTaskChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is not HashTaskGrid hashTaskGrid)
+        {
+            return;
+        }
+
+        hashTaskGrid.ViewModel.HashTask = e.NewValue as HashTask;
+    }
 
     #endregion Dependency Properties
 
@@ -83,8 +89,13 @@ public sealed partial class HashTaskGrid : UserControl
 
     #endregion Visibility
 
-    public static string GetSecondaryInformationText(HashTask hashTask)
+    public static string GetSecondaryInformationText(HashTask? hashTask)
     {
+        if (hashTask is null)
+        {
+            return string.Empty;
+        }
+
         const string separator = "  |  ";
 
         var mode = hashTask.Mode.ToString();

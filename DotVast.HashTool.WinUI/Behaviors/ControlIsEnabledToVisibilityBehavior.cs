@@ -13,6 +13,8 @@ internal sealed class ControlIsEnabledToVisibilityBehavior : Behavior<Control>
         base.OnAttached();
 
         _isEnabledToken = AssociatedObject.RegisterPropertyChangedCallback(Control.IsEnabledProperty, OnIsEnabledChanged);
+
+        UpdateVisibility(AssociatedObject);
     }
 
     protected override void OnDetaching()

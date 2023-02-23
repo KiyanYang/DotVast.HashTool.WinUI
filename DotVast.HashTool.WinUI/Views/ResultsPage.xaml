@@ -127,12 +127,12 @@
                         x:Uid="ResultsPage_Detail_Encoding"
                         Grid.Row="4"
                         Grid.Column="0"
-                        Visibility="{x:Bind helpers:XamlFunctionHelper.VisibleIfText(ViewModel.HashTask.Mode)}" />
+                        Visibility="{x:Bind helpers:XamlFunc.VisibleIfText(ViewModel.HashTask.Mode), Mode=OneWay}" />
                     <TextBlock
                         Grid.Row="4"
                         Grid.Column="1"
                         Text="{x:Bind ViewModel.HashTask.Encoding.WebName.ToUpper()}"
-                        Visibility="{x:Bind helpers:XamlFunctionHelper.VisibleIfText(ViewModel.HashTask.Mode)}" />
+                        Visibility="{x:Bind helpers:XamlFunc.VisibleIfText(ViewModel.HashTask.Mode), Mode=OneWay}" />
 
                     <TextBlock
                         x:Uid="ResultsPage_Detail_State"

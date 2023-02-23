@@ -33,12 +33,12 @@ public partial class HomeViewModel
 
     #endregion Inputting
 
+    public HashTask? LastHashTask => _hashTaskService.HashTasks.LastOrDefault();
+
     /// <summary>
     /// 哈希任务模式. 文件, 文件夹, 文本.
     /// </summary>
     public HashTaskMode[] HashTaskModes { get; } = GenericEnum.GetFieldValues<HashTaskMode>();
-
-    private IList<TextEncoding>? _textEncodings;
 
     /// <summary>
     /// 文本编码.
@@ -58,6 +58,7 @@ public partial class HomeViewModel
             return _textEncodings;
         }
     }
+    private IList<TextEncoding>? _textEncodings;
 
     /// <summary>
     /// Hash 选项.
