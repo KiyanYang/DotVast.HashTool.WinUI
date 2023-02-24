@@ -80,7 +80,7 @@ internal sealed partial class ComputeHashService : IComputeHashService
         }, hashTask, ct);
     }
 
-    private async Task<HashTask> PreAndPostProcessAsync(Func<Task> func, HashTask hashTask, CancellationToken ct)
+    private static async Task<HashTask> PreAndPostProcessAsync(Func<Task> func, HashTask hashTask, CancellationToken ct)
     {
         var stopWatch = Stopwatch.StartNew();
         hashTask.State = HashTaskState.Working;
@@ -156,19 +156,26 @@ internal sealed partial class ComputeHashService : IComputeHashService
         {
             if (ct.IsCancellationRequested)
             {
+                // 使用 readLength = 0 而不是在 void Action(HashAlgorithm hash) 内的 while 循环进行 IsCancellationRequested 判断, 以防止死锁.
                 readLength = 0;
                 return;
             }
-
-            // 实际读取长度. 读取完毕时该值为 0.
-            readLength = stream.Read(buffer, 0, bufferSize);
 
             if (!mres.IsSet)
             {
                 TryEnqueue(() => hashTask.State = HashTaskState.Paused);
                 mres.Wait();
+                // 在下方 State 刷新前, 再进行一次判断, 以避免 UI 状态的错误改变.
+                if (ct.IsCancellationRequested)
+                {
+                    readLength = 0;
+                    return;
+                }
                 TryEnqueue(() => hashTask.State = HashTaskState.Working);
             }
+
+            // 实际读取长度. 读取完毕时该值为 0.
+            readLength = stream.Read(buffer, 0, bufferSize);
 
             // 报告进度. stream.Length 在此处始终大于 0.
             TryEnqueue(() => hashTask.ProgressVal = (double)stream.Position / stream.Length + progressOffset);
