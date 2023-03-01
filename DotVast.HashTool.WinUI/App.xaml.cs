@@ -61,7 +61,7 @@ public sealed partial class App : Application
         UseContentRoot(AppContext.BaseDirectory).
         ConfigureServices((context, services) =>
         {
-            services.AddHttpClient();
+            ConfigureHttpClient(services);
 
             // Default Activation Handler
             services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
@@ -144,5 +144,19 @@ public sealed partial class App : Application
         _stopwatch!.Stop();
         _logger.AppLaunchedElapsedTime(_stopwatch.ElapsedMilliseconds);
         _stopwatch = null;
+    }
+
+    private static void ConfigureHttpClient(IServiceCollection services)
+    {
+        services.AddHttpClient(Constants.HttpClient.GitHubRestApi, client =>
+        {
+            client.BaseAddress = new(Constants.GitHubRestApi.BaseUrl);
+            client.Timeout = TimeSpan.FromSeconds(5);
+
+            // https://docs.github.com/en/rest/overview/media-types
+            // https://docs.github.com/en/rest/overview/resources-in-the-rest-api#user-agent-required
+            client.DefaultRequestHeaders.Accept.Add(new("application/vnd.github+json"));
+            client.DefaultRequestHeaders.UserAgent.Add(new("DotVast.HashTool.WinUI", RuntimeHelper.AppVersion.ToString()));
+        });
     }
 }

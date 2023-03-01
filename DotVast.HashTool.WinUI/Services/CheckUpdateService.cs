@@ -12,7 +12,7 @@ namespace DotVast.HashTool.WinUI.Services;
 
 internal partial class CheckUpdateService : ICheckUpdateService
 {
-    private readonly HttpClient _client;
+    private readonly IHttpClientFactory _httpClientFactory;
     private readonly ILogger<CheckUpdateService> _logger;
     private readonly IDialogService _dialogService;
     private readonly IPreferencesSettingsService _preferencesSettingsService;
@@ -23,18 +23,10 @@ internal partial class CheckUpdateService : ICheckUpdateService
         IDialogService dialogService,
         IPreferencesSettingsService preferencesSettingsService)
     {
-        _client = httpClientFactory.CreateClient();
+        _httpClientFactory = httpClientFactory;
         _logger = logger;
         _dialogService = dialogService;
         _preferencesSettingsService = preferencesSettingsService;
-
-        _client.BaseAddress = new(Constants.GitHubRestApi.BaseUrl);
-        _client.Timeout = TimeSpan.FromSeconds(5);
-
-        // https://docs.github.com/en/rest/overview/media-types
-        // https://docs.github.com/en/rest/overview/resources-in-the-rest-api#user-agent-required
-        _client.DefaultRequestHeaders.Accept.Add(new("application/vnd.github+json"));
-        _client.DefaultRequestHeaders.UserAgent.Add(new("DotVast.HashTool.WinUI", RuntimeHelper.AppVersion.ToString()));
     }
 
     public async Task StartupAsync()
@@ -45,16 +37,18 @@ internal partial class CheckUpdateService : ICheckUpdateService
     public async Task<GitHubRelease?> GetLatestGitHubReleaseAsync(bool includePreRelease = false)
     {
         GitHubRelease? _gitHubRelease = null;
+        using var client = _httpClientFactory.CreateClient(Constants.HttpClient.GitHubRestApi);
+
         try
         {
             if (includePreRelease)
             {
-                var releases = await _client.GetFromJsonAsync<GitHubRelease[]>(Constants.GitHubRestApi.ReleasesUrl);
+                var releases = await client.GetFromJsonAsync<GitHubRelease[]>(Constants.GitHubRestApi.ReleasesUrl);
                 _gitHubRelease = releases?.FirstOrDefault();
             }
             else
             {
-                _gitHubRelease = await _client.GetFromJsonAsync<GitHubRelease>(Constants.GitHubRestApi.LatestReleaseUrl);
+                _gitHubRelease = await client.GetFromJsonAsync<GitHubRelease>(Constants.GitHubRestApi.LatestReleaseUrl);
             }
         }
         catch (Exception ex)

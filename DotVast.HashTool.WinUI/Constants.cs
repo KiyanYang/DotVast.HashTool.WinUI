@@ -51,4 +51,9 @@ internal static class Constants
     {
         public const string FilePath = "Logs/app-.log";
     }
+
+    public static class HttpClient
+    {
+        public const string GitHubRestApi = nameof(GitHubRestApi);
+    }
 }
