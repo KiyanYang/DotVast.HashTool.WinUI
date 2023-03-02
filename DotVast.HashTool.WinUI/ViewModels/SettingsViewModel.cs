@@ -158,7 +158,7 @@ public sealed partial class SettingsViewModel : ObservableRecipient
 
         if (release is null)
         {
-            await _dialogService.ShowInfoDialogAsync(
+            await _dialogService.ShowDialogAsync(
                 LocalizationDialog.GitHubUpdate_Failed,
                 LocalizationDialog.GitHubUpdate_CheckNetwork,
                 LocalizationDialog.Base_Close);
@@ -171,8 +171,9 @@ public sealed partial class SettingsViewModel : ObservableRecipient
         }
         else
         {
-            await _dialogService.ShowInfoDialogAsync(
+            await _dialogService.ShowDialogAsync(
                 LocalizationDialog.GitHubUpdate_UpToDate,
+                string.Empty,
                 LocalizationDialog.Base_Close);
         }
     }

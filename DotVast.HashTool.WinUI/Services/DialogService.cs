@@ -18,25 +18,19 @@ internal class DialogService : IDialogService
         _appearanceSettingsService = appearanceSettingsService;
     }
 
-    public async Task<ContentDialogResult> ShowInfoDialogAsync(string title, string closeButtonText)
-    {
-        var dialog = new ContentDialog
-        {
-            Title = title,
-            CloseButtonText = closeButtonText,
-        };
-
-        SetupDialog(dialog);
-
-        return await dialog.ShowAsync();
-    }
-
-    public async Task<ContentDialogResult> ShowInfoDialogAsync(string title, string content, string closeButtonText)
+    public async Task<ContentDialogResult> ShowDialogAsync(
+        string title,
+        string content,
+        string closeButtonText,
+        string primaryButtonText = "",
+        string secondaryButtonText = "")
     {
         var dialog = new ContentDialog
         {
             Title = title,
             Content = content,
+            PrimaryButtonText = primaryButtonText,
+            SecondaryButtonText = secondaryButtonText,
             CloseButtonText = closeButtonText,
         };
 

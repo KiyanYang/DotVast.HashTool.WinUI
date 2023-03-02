@@ -6,9 +6,7 @@ namespace DotVast.HashTool.WinUI.Contracts.Services;
 
 public interface IDialogService
 {
-    Task<ContentDialogResult> ShowInfoDialogAsync(string title, string closeButtonText);
-
-    Task<ContentDialogResult> ShowInfoDialogAsync(string title, string content, string closeButtonText);
+    Task<ContentDialogResult> ShowDialogAsync(string title, string content, string closeButtonText, string primaryButtonText = "", string secondaryButtonText = "");
 
     Task<ContentDialogResult> ShowGithubUpdateDialogAsync(GitHubRelease release);
 }

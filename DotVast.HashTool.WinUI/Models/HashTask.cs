@@ -148,7 +148,7 @@ public sealed partial class HashTask : ObservableObject, IDisposable
             }
             catch (UnauthorizedAccessException ex)
             {
-                await _dialogService.ShowInfoDialogAsync(
+                await _dialogService.ShowDialogAsync(
                     LocalizationDialog.HashTaskAborted_Title,
                     LocalizationDialog.HashTaskAborted_UnauthorizedAccess,
                     LocalizationDialog.Base_OK);
