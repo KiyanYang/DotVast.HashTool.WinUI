@@ -6,14 +6,18 @@ using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Models.Messages;
 
+using Microsoft.UI.Xaml.Controls;
+
 namespace DotVast.HashTool.WinUI.ViewModels.Controls;
 
 public sealed partial class HashTaskGridViewModel : ObservableObject
 {
+    private readonly IDialogService _dialogService;
     private readonly IHashTaskService _hashTaskService;
 
-    public HashTaskGridViewModel(IHashTaskService hashTaskService)
+    public HashTaskGridViewModel(IDialogService dialogService, IHashTaskService hashTaskService)
     {
+        _dialogService = dialogService;
         _hashTaskService = hashTaskService;
     }
 
@@ -72,8 +76,19 @@ public sealed partial class HashTaskGridViewModel : ObservableObject
         || HashTask?.State == HashTaskState.Working;
 
     [RelayCommand(CanExecute = nameof(CanDeleteTask))]
-    private void DeleteTask()
+    private async Task DeleteTaskAsync()
     {
+        var dialogResult = await _dialogService.ShowDialogAsync(
+            LocalizationDialog.DeleteHashTask_Title_DeleteTask,
+            LocalizationDialog.DeleteHashTask_Content_WantToDeleteThisTask,
+            LocalizationCommon.No,
+            primaryButtonText: LocalizationCommon.Yes);
+
+        if (dialogResult != ContentDialogResult.Primary)
+        {
+            return;
+        }
+
         HashTask!.Cancel();
         HashTask.Dispose();
         _hashTaskService.HashTasks.Remove(HashTask);

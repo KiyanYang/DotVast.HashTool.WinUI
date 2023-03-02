@@ -32,6 +32,7 @@ internal class DialogService : IDialogService
             PrimaryButtonText = primaryButtonText,
             SecondaryButtonText = secondaryButtonText,
             CloseButtonText = closeButtonText,
+            DefaultButton = ContentDialogButton.Primary
         };
 
         SetupDialog(dialog);
@@ -44,8 +45,8 @@ internal class DialogService : IDialogService
         var dialog = new GithubUpdateDialog
         {
             Release = release,
-            PrimaryButtonText = LocalizationDialog.GitHubUpdate_Download,
-            CloseButtonText = LocalizationDialog.Base_Close,
+            PrimaryButtonText = LocalizationDialog.GitHubUpdate_Button_Download,
+            CloseButtonText = LocalizationCommon.Close,
         };
 
         SetupDialog(dialog);

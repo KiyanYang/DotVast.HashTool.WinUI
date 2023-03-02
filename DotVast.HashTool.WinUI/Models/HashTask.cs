@@ -149,9 +149,9 @@ public sealed partial class HashTask : ObservableObject, IDisposable
             catch (UnauthorizedAccessException ex)
             {
                 await _dialogService.ShowDialogAsync(
-                    LocalizationDialog.HashTaskAborted_Title,
-                    LocalizationDialog.HashTaskAborted_UnauthorizedAccess,
-                    LocalizationDialog.Base_OK);
+                    LocalizationDialog.HashTaskAborted_Title_HashTaskAborted,
+                    LocalizationDialog.HashTaskAborted_Content_UnauthorizedAccess,
+                    LocalizationCommon.OK);
                 _logger.LogWarning("计算哈希时出现“未授权访问”异常, 模式: {Mode}, 内容: {Content}\n{Exception}", _hashTask.Mode, _hashTask.Content, ex);
             }
             catch (Exception ex)

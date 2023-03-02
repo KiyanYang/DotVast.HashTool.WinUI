@@ -159,9 +159,9 @@ public sealed partial class SettingsViewModel : ObservableRecipient
         if (release is null)
         {
             await _dialogService.ShowDialogAsync(
-                LocalizationDialog.GitHubUpdate_Failed,
-                LocalizationDialog.GitHubUpdate_CheckNetwork,
-                LocalizationDialog.Base_Close);
+                LocalizationDialog.GitHubUpdate_Title_Failed,
+                LocalizationDialog.GitHubUpdate_Content_CheckNetwork,
+                LocalizationCommon.Close);
             return;
         }
 
@@ -172,9 +172,9 @@ public sealed partial class SettingsViewModel : ObservableRecipient
         else
         {
             await _dialogService.ShowDialogAsync(
-                LocalizationDialog.GitHubUpdate_UpToDate,
+                LocalizationDialog.GitHubUpdate_Title_UpToDate,
                 string.Empty,
-                LocalizationDialog.Base_Close);
+                LocalizationCommon.Close);
         }
     }
 }

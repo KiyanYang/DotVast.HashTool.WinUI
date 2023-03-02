@@ -117,34 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Base_Cancel" xml:space="preserve">
-    <value>取消</value>
+  <data name="DeleteHashTask_Content_WantToDeleteThisTask" xml:space="preserve">
+    <value>确定要删除该任务吗？</value>
   </data>
-  <data name="Base_Close" xml:space="preserve">
-    <value>关闭</value>
+  <data name="DeleteHashTask_Title_DeleteTask" xml:space="preserve">
+    <value>删除任务</value>
   </data>
-  <data name="Base_OK" xml:space="preserve">
-    <value>确定</value>
-  </data>
-  <data name="GitHubUpdate_CheckNetwork" xml:space="preserve">
-    <value>请检查网络。</value>
-  </data>
-  <data name="GitHubUpdate_Download" xml:space="preserve">
+  <data name="GitHubUpdate_Button_Download" xml:space="preserve">
     <value>下载</value>
   </data>
-  <data name="GitHubUpdate_Failed" xml:space="preserve">
+  <data name="GitHubUpdate_Content_CheckNetwork" xml:space="preserve">
+    <value>请检查网络。</value>
+  </data>
+  <data name="GitHubUpdate_Title_Failed" xml:space="preserve">
     <value>检查更新失败</value>
   </data>
-  <data name="GitHubUpdate_UpToDate" xml:space="preserve">
+  <data name="GitHubUpdate_Title_UpToDate" xml:space="preserve">
     <value>当前已是最新版本</value>
     <comment>用作标题, 不要标点符号</comment>
   </data>
-  <data name="HashTaskAborted_Title" xml:space="preserve">
-    <value>任务中止</value>
-    <comment>任务中止对话框的标题</comment>
-  </data>
-  <data name="HashTaskAborted_UnauthorizedAccess" xml:space="preserve">
+  <data name="HashTaskAborted_Content_UnauthorizedAccess" xml:space="preserve">
     <value>未授权的访问，请考虑以管理员身份重试。</value>
     <comment>提示权限不足的任务中止对话框的内容</comment>
+  </data>
+  <data name="HashTaskAborted_Title_HashTaskAborted" xml:space="preserve">
+    <value>任务中止</value>
+    <comment>任务中止对话框的标题</comment>
   </data>
 </root>

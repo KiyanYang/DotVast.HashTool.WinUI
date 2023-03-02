@@ -120,6 +120,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
+  <data name="Close" xml:space="preserve">
+    <value>关闭</value>
+  </data>
   <data name="Create" xml:space="preserve">
     <value>创建</value>
   </data>
@@ -131,6 +134,12 @@
   </data>
   <data name="Edit" xml:space="preserve">
     <value>编辑</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>否</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>确定</value>
   </data>
   <data name="Pause" xml:space="preserve">
     <value>暂停</value>
@@ -145,5 +154,8 @@
   </data>
   <data name="Resume" xml:space="preserve">
     <value>继续</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>是</value>
   </data>
 </root>
