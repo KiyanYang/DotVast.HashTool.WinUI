@@ -1,8 +1,10 @@
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
+using DotVast.HashTool.WinUI.Models.Messages;
 
 namespace DotVast.HashTool.WinUI.ViewModels.Controls;
 
@@ -46,7 +48,7 @@ public sealed partial class HashTaskGridViewModel : ObservableObject
         await HashTask.StartAsync();
     }
 
-    public bool CanStartTask() => HashTask?.State == HashTaskState.Waiting
+    private bool CanStartTask() => HashTask?.State == HashTaskState.Waiting
         || HashTask?.State == HashTaskState.Completed
         || HashTask?.State == HashTaskState.Canceled
         || HashTask?.State == HashTaskState.Aborted;
@@ -57,7 +59,7 @@ public sealed partial class HashTaskGridViewModel : ObservableObject
         HashTask?.Reset();
     }
 
-    public bool CanResetTask() => HashTask?.State == HashTaskState.Paused
+    private bool CanResetTask() => HashTask?.State == HashTaskState.Paused
         || HashTask?.State == HashTaskState.Working;
 
     [RelayCommand(CanExecute = nameof(CanCancelTask))]
@@ -66,19 +68,24 @@ public sealed partial class HashTaskGridViewModel : ObservableObject
         HashTask?.Cancel();
     }
 
-    public bool CanCancelTask() => HashTask?.State == HashTaskState.Paused
+    private bool CanCancelTask() => HashTask?.State == HashTaskState.Paused
         || HashTask?.State == HashTaskState.Working;
 
-    [RelayCommand]
-    public void DeleteTask()
+    [RelayCommand(CanExecute = nameof(CanDeleteTask))]
+    private void DeleteTask()
     {
-        if (HashTask is null)
-        {
-            return;
-        }
-
-        HashTask.Cancel();
+        HashTask!.Cancel();
         HashTask.Dispose();
         _hashTaskService.HashTasks.Remove(HashTask);
     }
+
+    private bool CanDeleteTask() => HashTask is not null;
+
+    [RelayCommand(CanExecute = nameof(CanEditTask))]
+    private void EditTask()
+    {
+        WeakReferenceMessenger.Default.Send<EditTaskMessage>(new(HashTask!));
+    }
+
+    private bool CanEditTask() => HashTask is not null;
 }

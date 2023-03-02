@@ -51,6 +51,7 @@ public sealed partial class HashTaskGrid : UserControl
     private const string IconResume = "\uE768";
     private const string IconPause = "\uE769";
     private const string IconCancel = "\uE711";
+    private const string IconEdit = "\uE70F";
     private const string IconDelete = "\uE74D";
 
     public static string GetStartBtnIcon() => IconStart;
@@ -61,6 +62,8 @@ public sealed partial class HashTaskGrid : UserControl
     }
 
     public static string GetCancelBtnIcon() => IconCancel;
+
+    public static string GetEditBtnIcon() => IconEdit;
 
     public static string GetDeleteBtnIcon() => IconDelete;
 

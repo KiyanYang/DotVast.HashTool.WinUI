@@ -276,6 +276,10 @@
           <target state="translated">Results</target>
           <note from="MultilingualBuild" annotates="source" priority="2">复数</note>
         </trans-unit>
+        <trans-unit id="Edit" translate="yes" xml:space="preserve">
+          <source>编辑</source>
+          <target state="translated">Edit</target>
+        </trans-unit>
       </group>
     </body>
   </file>

@@ -6,6 +6,7 @@ using CommunityToolkit.WinUI;
 
 using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
+using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Models.Messages;
 
@@ -71,6 +72,23 @@ public sealed partial class HomeViewModel : ObservableRecipient
             await App.MainWindow.DispatcherQueue.EnqueueAsync(() => ShowTipMessage(
                     Localization.Tip_FileSkipped_Title,
                     string.Format(Localization.Tip_FileSkipped_FileNotFound, m.Value)));
+        });
+
+        Messenger.Register<HomeViewModel, EditTaskMessage>(this, (r, m) =>
+        {
+            InputtingContent = m.Value.Content;
+            InputtingMode = m.Value.Mode;
+            if (m.Value.Mode == HashTaskMode.Text && m.Value.Encoding is System.Text.Encoding encoding)
+            {
+                InputtingTextEncoding = TextEncodings.FirstOrDefault(
+                    t => t.Name.Equals(encoding.WebName, StringComparison.OrdinalIgnoreCase),
+                    TextEncoding.UTF8);
+            }
+            foreach (var hashOption in HashOptions)
+            {
+                hashOption.IsChecked = m.Value.SelectedHashs.Any(h => h == hashOption.Hash);
+            }
+            _navigationService.NavigateTo(Constants.PageKeys.HomePage);
         });
 
         Messenger.Register<HomeViewModel, PropertyChangedMessage<bool>>(this, (r, m) =>
