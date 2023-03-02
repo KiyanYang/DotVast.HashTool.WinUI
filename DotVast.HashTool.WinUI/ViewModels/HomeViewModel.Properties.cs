@@ -29,7 +29,7 @@ public partial class HomeViewModel
     /// 当前界面输入的哈希任务文本编码.
     /// </summary>
     [ObservableProperty]
-    private TextEncoding _inputtingTextEncoding = new(Encoding.UTF8.WebName.ToUpper(), new(() => Encoding.UTF8));
+    private TextEncoding _inputtingTextEncoding = TextEncoding.UTF8;
 
     #endregion Inputting
 
