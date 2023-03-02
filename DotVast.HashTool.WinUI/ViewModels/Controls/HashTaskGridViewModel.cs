@@ -36,6 +36,12 @@ public sealed partial class HashTaskGridViewModel : ObservableObject
         }
     }
 
+    partial void OnHashTaskChanged(HashTask? value)
+    {
+        EditTaskCommand.NotifyCanExecuteChanged();
+        DeleteTaskCommand.NotifyCanExecuteChanged();
+    }
+
     private void HashTask_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
         StartTaskCommand.NotifyCanExecuteChanged();
