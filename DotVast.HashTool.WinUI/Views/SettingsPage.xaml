@@ -23,7 +23,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="{Binding}" />
+                    <TextBlock Style="{StaticResource PageTitleStyle}" Text="{Binding}" />
                     <Button
                         Grid.Column="1"
                         Command="{StaticResource RestartAppCommand}"

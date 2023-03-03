@@ -41,10 +41,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Style="{ThemeResource TitleTextBlockStyle}"
-                        Text="{Binding}" />
+                    <TextBlock Style="{StaticResource PageTitleStyle}" Text="{Binding}" />
                     <CommandBar
                         Grid.Column="1"
                         Margin="0,0,-8,0"

@@ -43,10 +43,7 @@
                 AllowDrop="True"
                 DragOver="Page_DragOver"
                 Drop="Page_Drop">
-                <TextBlock
-                    VerticalAlignment="Center"
-                    Style="{ThemeResource TitleTextBlockStyle}"
-                    Text="{Binding}" />
+                <TextBlock Style="{StaticResource PageTitleStyle}" Text="{Binding}" />
             </controls:NavigationViewHeader>
         </DataTemplate>
     </behaviors:NavigationViewHeaderBehavior.HeaderTemplate>
