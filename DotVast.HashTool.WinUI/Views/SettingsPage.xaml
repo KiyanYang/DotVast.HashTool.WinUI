@@ -8,9 +8,12 @@
     xmlns:i18n="using:DotVast.HashTool.WinUI.Strings">
 
     <Page.Resources>
+        <Style x:Key="GroupTitleTextBlockStyle" BasedOn="{StaticResource SubtitleTextBlockStyle}" TargetType="TextBlock">
+            <Setter Property="Margin" Value="4,4,0,8" />
+        </Style>
         <Style BasedOn="{StaticResource NormalSettingItemStyle}" TargetType="controls:SettingItem" />
         <Style x:Key="CardButtonSettingItemWithMargin" BasedOn="{StaticResource CardButtonSettingItem}" TargetType="Button">
-            <Setter Property="Margin" Value="{ThemeResource XXSmallTopBottomMargin}" />
+            <Setter Property="Margin" Value="{ThemeResource XSmallBottomMargin}" />
         </Style>
         <Style BasedOn="{StaticResource LeftContentToggleSwitchStyle}" TargetType="ToggleSwitch" />
     </Page.Resources>
@@ -59,10 +62,7 @@
                 </controls:SettingItem>
 
                 <!-- 副标题: 个性化 -->
-                <TextBlock
-                    x:Uid="SettingsPage_Personalization"
-                    Margin="{ThemeResource SmallTopBottomMargin}"
-                    Style="{ThemeResource SubtitleTextBlockStyle}" />
+                <TextBlock x:Uid="SettingsPage_Personalization" Style="{StaticResource GroupTitleTextBlockStyle}" />
 
                 <!-- 设置: 哈希字体 -->
                 <controls:SettingItem x:Uid="SettingsPage_HashFontFamily">
@@ -104,10 +104,7 @@
                 </controls:SettingItem>
 
                 <!-- 副标题: 关于 -->
-                <TextBlock
-                    x:Uid="SettingsPage_About"
-                    Margin="{ThemeResource SmallTopBottomMargin}"
-                    Style="{ThemeResource SubtitleTextBlockStyle}" />
+                <TextBlock x:Uid="SettingsPage_About" Style="{StaticResource GroupTitleTextBlockStyle}" />
 
                 <!-- 关于: 版本, 描述, 检查更新及其设置 -->
                 <Expander Style="{StaticResource SettingExpanderStyle}">
@@ -139,7 +136,7 @@
                     </StackPanel>
                 </Expander>
 
-                <ctControls:WrapPanel Margin="0,8,0,0">
+                <ctControls:WrapPanel>
                     <ctControls:WrapPanel.Resources>
                         <Style BasedOn="{StaticResource DefaultHyperlinkButtonStyle}" TargetType="HyperlinkButton">
                             <Setter Property="FontWeight" Value="Medium" />

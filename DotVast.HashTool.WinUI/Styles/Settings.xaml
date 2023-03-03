@@ -4,13 +4,14 @@
     xmlns:controls="using:DotVast.HashTool.WinUI.Controls">
 
     <Style x:Key="NormalSettingItemStyle" BasedOn="{StaticResource CardSettingItem}" TargetType="controls:SettingItem">
-        <Setter Property="Margin" Value="{ThemeResource XXSmallTopBottomMargin}" />
+        <Setter Property="Margin" Value="{ThemeResource XSmallBottomMargin}" />
     </Style>
 
     <Style x:Key="SettingExpanderStyle" TargetType="Expander">
         <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
         <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Margin" Value="{ThemeResource XSmallBottomMargin}" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
