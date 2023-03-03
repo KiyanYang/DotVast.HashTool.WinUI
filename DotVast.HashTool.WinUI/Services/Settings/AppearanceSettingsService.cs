@@ -24,17 +24,18 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
         Language = Languages.Where(x => x.Tag == ApplicationLanguages.PrimaryLanguageOverride)
                             .FirstOrDefault() ?? AppLanguage.ZhHans;
 
-        // 外观相关的设置, 在初始化时就进行设置
-        SetTheme();
-        SetIsAlwaysOnTop();
-        SetLanguage();
+        SetTheme(); // 在初始化时就设置主题
     }
 
     public override async Task StartupAsync()
     {
+        SetIsAlwaysOnTop();
+        SetLanguage();
+
         Debug.Assert((App.MainWindow.Content as FrameworkElement)?.RequestedTheme == Theme);
         Debug.Assert(App.MainWindow.IsAlwaysOnTop == IsAlwaysOnTop);
         Debug.Assert(ApplicationLanguages.PrimaryLanguageOverride == Language.Tag);
+
         await Task.CompletedTask;
     }
 
