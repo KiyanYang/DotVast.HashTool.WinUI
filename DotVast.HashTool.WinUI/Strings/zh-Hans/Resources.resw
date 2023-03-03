@@ -122,9 +122,11 @@
   </data>
   <data name="AppDisplayName" xml:space="preserve">
     <value>HashTool</value>
+    <comment>Please don't translate this item</comment>
   </data>
   <data name="AppDisplayNameDev" xml:space="preserve">
     <value>HashTool Dev</value>
+    <comment>Please don't translate this item</comment>
   </data>
   <data name="Command_CheckForUpdates" xml:space="preserve">
     <value>检查更新</value>
@@ -252,5 +254,12 @@
   <data name="HomePage_CreateAndStart" xml:space="preserve">
     <value>创建并开始</value>
     <comment>是否创建并开始计算</comment>
+  </data>
+  <data name="SettingsPage_Repository.Content" xml:space="preserve">
+    <value>GitHub 仓库</value>
+  </data>
+  <data name="SettingsPage_Repository.NavigateUri" xml:space="preserve">
+    <value>https://github.com/KiyanYang/DotVast.HashTool.WinUI</value>
+    <comment>Please don't translate this item</comment>
   </data>
 </root>

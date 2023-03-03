@@ -4,12 +4,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:DotVast.HashTool.WinUI.Behaviors"
     xmlns:controls="using:DotVast.HashTool.WinUI.Controls"
+    xmlns:ctControls="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:i18n="using:DotVast.HashTool.WinUI.Strings">
 
     <Page.Resources>
-        <Style BasedOn="{StaticResource CardSettingItem}" TargetType="controls:SettingItem">
-            <Setter Property="Margin" Value="{ThemeResource XXSmallTopBottomMargin}" />
-        </Style>
+        <Style BasedOn="{StaticResource NormalSettingItemStyle}" TargetType="controls:SettingItem" />
         <Style x:Key="CardButtonSettingItemWithMargin" BasedOn="{StaticResource CardButtonSettingItem}" TargetType="Button">
             <Setter Property="Margin" Value="{ThemeResource XXSmallTopBottomMargin}" />
         </Style>
@@ -110,7 +109,7 @@
                     Margin="{ThemeResource SmallTopBottomMargin}"
                     Style="{ThemeResource SubtitleTextBlockStyle}" />
 
-                <!-- 检查更新 -->
+                <!-- 关于: 版本, 描述, 检查更新及其设置 -->
                 <Expander Style="{StaticResource SettingExpanderStyle}">
                     <Expander.Header>
                         <controls:SettingItem
@@ -120,6 +119,7 @@
                             <controls:SettingItem.Icon>
                                 <FontIcon Glyph="&#xE895;" />
                             </controls:SettingItem.Icon>
+                            <!-- 检查更新 -->
                             <StackPanel Orientation="Horizontal" Spacing="16">
                                 <ProgressRing IsActive="{x:Bind ViewModel.IsCheckingUpdate, Mode=OneWay}" />
                                 <Button Command="{x:Bind ViewModel.CheckUpdateCommand}" Content="{x:Bind i18n:Localization.Command_CheckForUpdates}" />
@@ -127,32 +127,33 @@
                         </controls:SettingItem>
                     </Expander.Header>
                     <StackPanel>
+                        <!-- 启动时检查更新 -->
                         <controls:SettingItem x:Uid="SettingsPage_CheckForUpdatesOnStartup" Style="{StaticResource ExpanderContentSettingItemStyle}">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.CheckForUpdatesOnStartup, Mode=TwoWay}" />
                         </controls:SettingItem>
                         <Rectangle Style="{StaticResource ExpanderContentSeparatorStyle}" />
+                        <!-- 包含预发行版本 -->
                         <controls:SettingItem x:Uid="SettingsPage_IncludePreRelease" Style="{StaticResource ExpanderContentSettingItemStyle}">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.IncludePreRelease, Mode=TwoWay}" />
                         </controls:SettingItem>
                     </StackPanel>
                 </Expander>
 
-                <StackPanel>
-                    <StackPanel.Resources>
+                <ctControls:WrapPanel Margin="0,8,0,0">
+                    <ctControls:WrapPanel.Resources>
                         <Style BasedOn="{StaticResource DefaultHyperlinkButtonStyle}" TargetType="HyperlinkButton">
-                            <Setter Property="Margin" Value="0,8,0,0" />
-                            <Setter Property="Padding" Value="0,2" />
-                            <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
+                            <Setter Property="FontWeight" Value="Medium" />
                         </Style>
-                    </StackPanel.Resources>
+                    </ctControls:WrapPanel.Resources>
 
+                    <HyperlinkButton x:Uid="SettingsPage_Repository" />
                     <HyperlinkButton x:Uid="SettingsPage_PrivacyTermsLink" />
                     <HyperlinkButton
                         x:Uid="SettingsPage_Licenses"
                         Command="{x:Bind ViewModel.NavigateToCommand}"
                         CommandParameter="DotVast.HashTool.WinUI.ViewModels.LicensesViewModel" />
                     <HyperlinkButton x:Uid="SettingsPage_Logs" Command="{x:Bind ViewModel.NavigateToLogsFolderCommand}" />
-                </StackPanel>
+                </ctControls:WrapPanel>
             </StackPanel>
         </Grid>
     </controls:NavigationViewBodyScrollViewer>

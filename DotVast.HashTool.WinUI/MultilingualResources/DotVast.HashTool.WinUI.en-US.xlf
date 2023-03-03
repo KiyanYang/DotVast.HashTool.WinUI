@@ -13,10 +13,12 @@
         <trans-unit id="AppDisplayName" translate="yes" xml:space="preserve">
           <source>HashTool</source>
           <target state="translated">HashTool</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Please don't translate this item</note>
         </trans-unit>
         <trans-unit id="AppDisplayNameDev" translate="yes" xml:space="preserve">
           <source>HashTool Dev</source>
           <target state="translated">HashTool Dev</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Please don't translate this item</note>
         </trans-unit>
         <trans-unit id="SettingsPage_Licenses.Content" translate="yes" xml:space="preserve">
           <source>许可</source>
@@ -28,7 +30,7 @@
         </trans-unit>
         <trans-unit id="SettingsPage_PrivacyTermsLink.Content" translate="yes" xml:space="preserve">
           <source>隐私声明</source>
-          <target state="translated">Privacy Statement</target>
+          <target state="translated">Privacy statement</target>
         </trans-unit>
         <trans-unit id="SettingsPage_PrivacyTermsLink.NavigateUri" translate="yes" xml:space="preserve">
           <source>https://github.com/KiyanYang/DotVast.HashTool.WinUI/wiki/隐私声明</source>
@@ -184,6 +186,15 @@
           <source>创建并开始</source>
           <target state="translated">Create and start</target>
           <note from="MultilingualBuild" annotates="source" priority="2">是否创建并开始计算</note>
+        </trans-unit>
+        <trans-unit id="SettingsPage_Repository.Content" translate="yes" xml:space="preserve">
+          <source>GitHub 仓库</source>
+          <target state="translated">GitHub repository</target>
+        </trans-unit>
+        <trans-unit id="SettingsPage_Repository.NavigateUri" translate="yes" xml:space="preserve">
+          <source>https://github.com/KiyanYang/DotVast.HashTool.WinUI</source>
+          <target state="translated">https://github.com/KiyanYang/DotVast.HashTool.WinUI</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Please don't translate this item</note>
         </trans-unit>
       </group>
     </body>

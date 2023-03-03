@@ -1,7 +1,11 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:dvc="using:DotVast.HashTool.WinUI.Controls">
+    xmlns:controls="using:DotVast.HashTool.WinUI.Controls">
+
+    <Style x:Key="NormalSettingItemStyle" BasedOn="{StaticResource CardSettingItem}" TargetType="controls:SettingItem">
+        <Setter Property="Margin" Value="{ThemeResource XXSmallTopBottomMargin}" />
+    </Style>
 
     <Style x:Key="SettingExpanderStyle" TargetType="Expander">
         <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
@@ -12,7 +16,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
     </Style>
 
-    <Style x:Key="ExpanderHeaderSettingItemStyle" TargetType="dvc:SettingItem">
+    <Style x:Key="ExpanderHeaderSettingItemStyle" TargetType="controls:SettingItem">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
@@ -22,7 +26,7 @@
         <Setter Property="HorizontalAlignment" Value="Stretch" />
     </Style>
 
-    <Style x:Key="ExpanderContentSettingItemStyle" TargetType="dvc:SettingItem">
+    <Style x:Key="ExpanderContentSettingItemStyle" TargetType="controls:SettingItem">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
         <Setter Property="BorderThickness" Value="0" />
