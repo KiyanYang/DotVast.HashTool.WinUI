@@ -42,6 +42,7 @@ internal static class Constants
 
     public static class DefaultPreferencesSettings
     {
+        public const bool FileExplorerContextMenusEnabled = true;
         public const bool IncludePreRelease = false;
         public const bool CheckForUpdatesOnStartup = false;
         public const bool StartingWhenCreateHashTask = true;

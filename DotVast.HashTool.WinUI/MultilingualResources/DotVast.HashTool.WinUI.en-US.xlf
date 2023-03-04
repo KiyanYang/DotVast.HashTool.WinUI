@@ -196,6 +196,14 @@
           <target state="translated">https://github.com/KiyanYang/DotVast.HashTool.WinUI</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Please don't translate this item</note>
         </trans-unit>
+        <trans-unit id="SettingsPage_FileExplorerContextMenusEnabled.Description" translate="yes" xml:space="preserve">
+          <source>是否启用资源管理器注册的上下文菜单</source>
+          <target state="translated">Whether to enable the context menus in file explorer</target>
+        </trans-unit>
+        <trans-unit id="SettingsPage_FileExplorerContextMenusEnabled.Header" translate="yes" xml:space="preserve">
+          <source>上下文菜单</source>
+          <target state="translated">Context Menus</target>
+        </trans-unit>
       </group>
     </body>
   </file>

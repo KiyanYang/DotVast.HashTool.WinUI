@@ -9,6 +9,11 @@ public interface IPreferencesSettingsService : IBaseObservableSettings
     ObservableCollection<HashOption> HashOptions { get; }
 
     /// <summary>
+    /// 是否启用资源管理器注册的上下文菜单.
+    /// </summary>
+    bool FileExplorerContextMenusEnabled { get; set; }
+
+    /// <summary>
     /// 检查更新时是否包括预发行版本.
     /// </summary>
     bool IncludePreRelease { get; set; }

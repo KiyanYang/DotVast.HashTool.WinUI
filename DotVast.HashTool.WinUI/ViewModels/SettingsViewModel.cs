@@ -62,6 +62,16 @@ public sealed partial class SettingsViewModel : ObservableRecipient
 
     #endregion HashFontFamily
 
+    #region FileExplorerContextMenusEnabled
+
+    [ObservableProperty]
+    private bool _fileExplorerContextMenusEnabled;
+
+    partial void OnFileExplorerContextMenusEnabledChanged(bool value) =>
+        _preferencesSettingsService.FileExplorerContextMenusEnabled = value;
+
+    #endregion FileExplorerContextMenusEnabled
+
     #region IncludePreRelease
 
     [ObservableProperty]
@@ -102,6 +112,8 @@ public sealed partial class SettingsViewModel : ObservableRecipient
         _theme = Themes.First(x => x.Theme == _appearanceSettingsService.Theme);
 
         _hashFontFamilyName = _appearanceSettingsService.HashFontFamilyName;
+
+        _fileExplorerContextMenusEnabled = _preferencesSettingsService.FileExplorerContextMenusEnabled;
 
         _includePreRelease = _preferencesSettingsService.IncludePreRelease;
 
