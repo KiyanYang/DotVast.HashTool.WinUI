@@ -14,6 +14,7 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
     public override async Task InitializeAsync()
     {
         await InitializeHashOptions();
+        _fileExplorerContextMenusEnabled = await LoadAsync(nameof(FileExplorerContextMenusEnabled), DefaultPreferencesSettings.FileExplorerContextMenusEnabled);
         _includePreRelease = await LoadAsync(nameof(IncludePreRelease), DefaultPreferencesSettings.IncludePreRelease);
         _checkForUpdatesOnStartup = await LoadAsync(nameof(CheckForUpdatesOnStartup), DefaultPreferencesSettings.CheckForUpdatesOnStartup);
         _startingWhenCreateHashTask = await LoadAsync(nameof(StartingWhenCreateHashTask), DefaultPreferencesSettings.StartingWhenCreateHashTask);
@@ -48,6 +49,15 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
         await SaveAsync(HashOptions, nameof(HashOptions));
     }
     #endregion HashOptions
+
+    #region FileExplorerContextMenusEnabled
+    private bool _fileExplorerContextMenusEnabled;
+    public bool FileExplorerContextMenusEnabled
+    {
+        get => _fileExplorerContextMenusEnabled;
+        set => SetAndSave(ref _fileExplorerContextMenusEnabled, value);
+    }
+    #endregion FileExplorerContextMenusEnabled
 
     #region IncludePreRelease
     private bool _includePreRelease;

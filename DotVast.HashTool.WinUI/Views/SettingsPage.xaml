@@ -61,6 +61,14 @@
                     <ToggleSwitch IsOn="{x:Bind ViewModel.IsAlwaysOnTop, Mode=TwoWay}" />
                 </controls:SettingItem>
 
+                <!-- 设置: 资源管理器菜单 -->
+                <controls:SettingItem x:Uid="SettingsPage_FileExplorerContextMenusEnabled">
+                    <controls:SettingItem.Icon>
+                        <FontIcon Glyph="&#xEC50;" />
+                    </controls:SettingItem.Icon>
+                    <ToggleSwitch IsOn="{x:Bind ViewModel.FileExplorerContextMenusEnabled, Mode=TwoWay}" />
+                </controls:SettingItem>
+
                 <!-- 副标题: 个性化 -->
                 <TextBlock x:Uid="SettingsPage_Personalization" Style="{StaticResource GroupTitleTextBlockStyle}" />
 

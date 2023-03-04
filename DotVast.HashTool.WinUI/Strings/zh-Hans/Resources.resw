@@ -262,4 +262,10 @@
     <value>https://github.com/KiyanYang/DotVast.HashTool.WinUI</value>
     <comment>Please don't translate this item</comment>
   </data>
+  <data name="SettingsPage_FileExplorerContextMenusEnabled.Description" xml:space="preserve">
+    <value>是否启用资源管理器注册的上下文菜单</value>
+  </data>
+  <data name="SettingsPage_FileExplorerContextMenusEnabled.Header" xml:space="preserve">
+    <value>上下文菜单</value>
+  </data>
 </root>

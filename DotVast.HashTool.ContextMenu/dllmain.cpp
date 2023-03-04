@@ -52,6 +52,8 @@ class __declspec(uuid("412FE3A3-833F-4EDE-BE03-D2F510B1AE59"))
     HashToolContextMenuCommand final : public BaseCommand
 {
 public:
+    const bool DefaultContextMenusEnabled = true;
+    const winrt::hstring ContextMenusEnabledKey = L"FileExplorerContextMenusEnabled";
     const winrt::hstring HashOptionsKey = L"HashOptions";
 
     HashToolContextMenuCommand()
@@ -59,6 +61,18 @@ public:
         m_title = winrt::Windows::ApplicationModel::AppInfo::Current().DisplayInfo().DisplayName();
 
         auto values = winrt::Windows::Storage::ApplicationData::Current().LocalSettings().Values();
+
+        m_enabled = DefaultContextMenusEnabled;
+        if (values.HasKey(ContextMenusEnabledKey))
+        {
+            auto contextMenusEnabled = winrt::unbox_value<winrt::hstring>(values.Lookup(ContextMenusEnabledKey));
+            JsonValue enabled = JsonValue::CreateNullValue();
+            if (JsonValue::TryParse(contextMenusEnabled,enabled) && enabled.ValueType() == JsonValueType::Boolean)
+            {
+                m_enabled = enabled.GetBoolean();
+            }
+        }
+
         if (values.HasKey(HashOptionsKey))
         {
             auto hashOptions = winrt::unbox_value<winrt::hstring>(values.Lookup(HashOptionsKey));
@@ -75,9 +89,10 @@ public:
                 }
             }
         }
+
         if (m_commands.size() == 0)
         {
-            winrt::hstring defaultHashNames[] = {L"MD5", L"SHA1", L"SHA256", L"SHA384" , L"SHA512" };
+            winrt::hstring defaultHashNames[] = {L"MD5", L"SHA1", L"SHA256", L"SHA384" , L"SHA512"};
             for (const auto& hashName : defaultHashNames)
             {
                 auto command = Make<HashCommand>(hashName, true);
@@ -100,6 +115,12 @@ public:
         return SHStrDup(iconResourcePath.c_str(), icon);
     }
 
+    IFACEMETHODIMP GetState(_In_opt_ IShellItemArray* selection, _In_ BOOL okToBeSlow, _Out_ EXPCMDSTATE* cmdState) override
+    {
+        *cmdState = m_enabled ? ECS_ENABLED : ECS_HIDDEN;
+        return S_OK;
+    }
+
     IFACEMETHODIMP GetFlags(_Out_ EXPCMDFLAGS* flags) override
     {
         *flags = ECF_HASSUBCOMMANDS;
@@ -114,6 +135,7 @@ public:
     }
 
 private:
+    bool m_enabled;
     winrt::hstring m_title;
     std::vector<ComPtr<IExplorerCommand>> m_commands;
 };
