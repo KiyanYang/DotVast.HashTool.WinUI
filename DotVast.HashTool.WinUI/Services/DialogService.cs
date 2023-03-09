@@ -18,7 +18,7 @@ internal class DialogService : IDialogService
         _appearanceSettingsService = appearanceSettingsService;
     }
 
-    public async Task<ContentDialogResult> ShowDialogAsync(
+    public Task<ContentDialogResult> ShowDialogAsync(
         string title,
         string content,
         string closeButtonText,
@@ -37,10 +37,10 @@ internal class DialogService : IDialogService
 
         SetupDialog(dialog);
 
-        return await dialog.ShowAsync();
+        return dialog.ShowAsync().AsTask();
     }
 
-    public async Task<ContentDialogResult> ShowGithubUpdateDialogAsync(GitHubRelease release)
+    public Task<ContentDialogResult> ShowGithubUpdateDialogAsync(GitHubRelease release)
     {
         var dialog = new GithubUpdateDialog
         {
@@ -51,7 +51,7 @@ internal class DialogService : IDialogService
 
         SetupDialog(dialog);
 
-        return await dialog.ShowAsync();
+        return dialog.ShowAsync().AsTask();
     }
 
     private void SetupDialog(ContentDialog dialog)
