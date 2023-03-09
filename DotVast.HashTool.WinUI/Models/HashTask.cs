@@ -146,6 +146,10 @@ public sealed partial class HashTask : ObservableObject, IDisposable
                         break;
                 }
             }
+            catch (OperationCanceledException)
+            {
+                _logger.LogInformation("计算哈希时操作被取消.");
+            }
             catch (UnauthorizedAccessException ex)
             {
                 await _dialogService.ShowDialogAsync(

@@ -125,110 +125,100 @@ internal sealed partial class ComputeHashService : IComputeHashService
     {
         var hashes = hashTask.SelectedHashs.Select(Hash.GetHashAlgorithm).OfType<HashAlgorithm>().ToArray();
 
-        #region 初始化, 定义文件流读取参数及变量.
-
-        stream.Position = 0;
-
-        // 设定缓冲区大小，分为 4 档：
-        // Length <  32 KiB => Length
-        // Length <   4 MiB => 32 KiB
-        // Length < 512 MiB =>  1 MiB
-        // _                =>  4 MiB
-        var bufferSize = stream.Length switch
+        try
         {
-            < 1024 * 32 => (int)stream.Length,
-            < 1024 * 1024 * 4 => 1024 * 32,
-            < 1024 * 1024 * 512 => 1024 * 1024,
-            _ => 1024 * 1024 * 4,
-        };
-        var buffer = new byte[bufferSize];
-        // 每次读取长度。此初值仅用于开启初次计算，真正的首次赋值在屏障内完成。
-        var readLength = bufferSize;
+            #region 初始化, 定义文件流读取参数及变量.
 
-        #endregion
+            stream.Position = 0;
 
-        #region 使用屏障并行计算哈希值
-
-        ThreadPool.GetMinThreads(out var minWorker, out var minIOC);
-        ThreadPool.SetMinThreads(hashes.Length, minIOC);
-
-        using Barrier barrier = new(hashes.Length, (b) =>
-        {
-            if (ct.IsCancellationRequested)
+            // 设定缓冲区大小，分为 4 档：
+            // Length <  32 KiB => Length
+            // Length <   4 MiB => 32 KiB
+            // Length < 512 MiB =>  1 MiB
+            // _                =>  4 MiB
+            var bufferSize = stream.Length switch
             {
-                // 使用 readLength = 0 而不是在 void Action(HashAlgorithm hash) 内的 while 循环进行 IsCancellationRequested 判断, 以防止死锁.
-                readLength = 0;
-                return;
-            }
+                < 1024 * 32 => (int)stream.Length,
+                < 1024 * 1024 * 4 => 1024 * 32,
+                < 1024 * 1024 * 512 => 1024 * 1024,
+                _ => 1024 * 1024 * 4,
+            };
+            var buffer = new byte[bufferSize];
+            // 每次读取长度。此初值仅用于开启初次计算，真正的首次赋值在屏障内完成。
+            var readLength = bufferSize;
 
-            if (!mres.IsSet)
+            #endregion
+
+            #region 使用屏障并行计算哈希值
+
+            ThreadPool.GetMinThreads(out var minWorker, out var minIOC);
+            ThreadPool.SetMinThreads(hashes.Length, minIOC);
+
+            using Barrier barrier = new(hashes.Length, (b) =>
             {
-                TryEnqueue(() => hashTask.State = HashTaskState.Paused);
-                mres.Wait();
-                // 在下方 State 刷新前, 再进行一次判断, 以避免 UI 状态的错误改变.
-                if (ct.IsCancellationRequested)
+                if (!mres.IsSet)
                 {
-                    readLength = 0;
-                    return;
+                    TryEnqueue(() => hashTask.State = HashTaskState.Paused);
+                    mres.Wait();
+                    // 在下方 State 刷新前, 进行一次判断, 以避免 UI 状态的错误改变.
+                    if (ct.IsCancellationRequested)
+                    {
+                        return;
+                    }
+                    TryEnqueue(() => hashTask.State = HashTaskState.Working);
                 }
-                TryEnqueue(() => hashTask.State = HashTaskState.Working);
-            }
 
-            // 实际读取长度. 读取完毕时该值为 0.
-            readLength = stream.Read(buffer, 0, bufferSize);
+                // 实际读取长度. 读取完毕时该值为 0.
+                readLength = stream.Read(buffer, 0, bufferSize);
 
-            // 报告进度. stream.Length 在此处始终大于 0.
-            TryEnqueue(() => hashTask.ProgressVal = (double)stream.Position / stream.Length + progressOffset);
-        });
+                // 报告进度. stream.Length 在此处始终大于 0.
+                TryEnqueue(() => hashTask.ProgressVal = (double)stream.Position / stream.Length + progressOffset);
+            });
 
-        // 定义本地函数。当读取长度大于 0 时，先屏障同步（包括读取文件、报告进度等），再并行计算。
-        void Action(HashAlgorithm hash)
-        {
-            while (readLength > 0)
+            // 定义本地函数。当读取长度大于 0 时，先屏障同步（包括读取文件、报告进度等），再并行计算。
+            void Action(HashAlgorithm hash)
             {
-                barrier.SignalAndWait(CancellationToken.None);
-                hash.TransformBlock(buffer, 0, readLength, null, 0);
+                while (readLength > 0)
+                {
+                    barrier.SignalAndWait(ct);
+                    hash.TransformBlock(buffer, 0, readLength, null, 0);
 #if DEBUG // 睡眠一段时间，以便观察进度条。
-                Thread.Sleep(50);
+                    Thread.Sleep(50);
 #endif
+                }
             }
-        }
 
-        Parallel.ForEach(hashes, Action);
-        ThreadPool.SetMinThreads(minWorker, minIOC);
+            Parallel.ForEach(hashes, new() { CancellationToken = ct }, Action);
+            ThreadPool.SetMinThreads(minWorker, minIOC);
 
-        #endregion
+            #endregion
 
-        if (ct.IsCancellationRequested)
-        {
-            TryEnqueue(() => hashTask.ProgressVal = progressOffset);
-            return null;
-        }
-        else
-        {
             // 确保报告计算完成. 主要用于解决空流(stream.Length == 0)时无法在屏障进行报告的问题.
             TryEnqueue(() => hashTask.ProgressVal = progressOffset + 1);
+
+            var hashResultData = new HashResultItem[hashes.Length];
+
+            for (int i = 0; i < hashes.Length; i++)
+            {
+                hashes[i].TransformFinalBlock(buffer, 0, 0);
+
+                // 设置结果
+                var hashBytes = hashes[i].Hash!;
+                var hashString = hashTask.SelectedHashs[i] == Hash.QuickXor
+                    ? Convert.ToBase64String(hashBytes)
+                    : Convert.ToHexString(hashBytes);
+                hashResultData[i] = new(hashTask.SelectedHashs[i], hashString);
+            }
+
+            return new HashResult() { Data = hashResultData };
         }
-
-        var hashResultData = new HashResultItem[hashes.Length];
-
-        for (int i = 0; i < hashes.Length; i++)
+        finally
         {
-            // 处理最后数据块
-            hashes[i].TransformFinalBlock(buffer, 0, 0);
-
-            // 设置结果
-            var hashBytes = hashes[i].Hash!;
-            var hashString = hashTask.SelectedHashs[i] == Hash.QuickXor
-                ? Convert.ToBase64String(hashBytes)
-                : Convert.ToHexString(hashBytes);
-            hashResultData[i] = new(hashTask.SelectedHashs[i], hashString);
-
-            // 释放非托管资源
-            hashes[i].Dispose();
+            foreach (var hash in hashes)
+            {
+                hash.Dispose();
+            }
         }
-
-        return new HashResult() { Data = hashResultData };
     }
 
     private static void TryEnqueue(DispatcherQueueHandler handler)
