@@ -35,7 +35,7 @@ public sealed partial class App : Application
     public static T GetService<T>()
         where T : class
     {
-        if ((App.Current as App)!.Host.Services.GetService(typeof(T)) is not T service)
+        if (Current.Host.Services.GetService(typeof(T)) is not T service)
         {
             throw new ArgumentException($"{typeof(T)} needs to be registered in ConfigureServices within App.xaml.cs.");
         }
@@ -44,6 +44,8 @@ public sealed partial class App : Application
     }
 
     public static ILogger<T> GetLogger<T>() where T : class => GetService<ILogger<T>>();
+
+    public static new App Current => (App)Application.Current;
 
     public static WinUIEx.WindowEx MainWindow { get; } = new MainWindow();
 
@@ -137,9 +139,9 @@ public sealed partial class App : Application
 
         // TODO: Resources 里的 DataTemplate 不能绑定到 ViewModel, 因此使用静态资源访问.
         // 该表达式要在 IActivationService.ActivateAsync() 之前.
-        App.Current.Resources[nameof(AppearanceSettingsService)] = App.GetService<IAppearanceSettingsService>();
+        Current.Resources[nameof(AppearanceSettingsService)] = GetService<IAppearanceSettingsService>();
 
-        await App.GetService<IActivationService>().ActivateAsync(args);
+        await GetService<IActivationService>().ActivateAsync(args);
 
         _stopwatch!.Stop();
         _logger.AppLaunchedElapsedTime(_stopwatch.ElapsedMilliseconds);

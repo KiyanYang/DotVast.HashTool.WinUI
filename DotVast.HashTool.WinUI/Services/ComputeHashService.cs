@@ -196,13 +196,14 @@ internal sealed partial class ComputeHashService : IComputeHashService
             // 确保报告计算完成. 主要用于解决空流(stream.Length == 0)时无法在屏障进行报告的问题.
             TryEnqueue(() => hashTask.ProgressVal = progressOffset + 1);
 
+            #region 创建结果并返回
+
             var hashResultData = new HashResultItem[hashes.Length];
 
             for (int i = 0; i < hashes.Length; i++)
             {
                 hashes[i].TransformFinalBlock(buffer, 0, 0);
 
-                // 设置结果
                 var hashBytes = hashes[i].Hash!;
                 var hashString = hashTask.SelectedHashs[i] == Hash.QuickXor
                     ? Convert.ToBase64String(hashBytes)
@@ -211,6 +212,8 @@ internal sealed partial class ComputeHashService : IComputeHashService
             }
 
             return new HashResult() { Data = hashResultData };
+
+            #endregion 创建结果并返回
         }
         finally
         {
