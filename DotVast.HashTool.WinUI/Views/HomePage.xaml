@@ -51,6 +51,11 @@
     <controls:NavigationViewBodyScrollViewer>
         <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewBodyContentStyle}">
             <StackPanel Orientation="Vertical" Spacing="8">
+                <StackPanel.ChildrenTransitions>
+                    <TransitionCollection>
+                        <RepositionThemeTransition IsStaggeringEnabled="False" />
+                    </TransitionCollection>
+                </StackPanel.ChildrenTransitions>
 
                 <!-- 任务模式选择, 输入, 浏览按钮, 文本编码选择 -->
                 <Grid ColumnSpacing="4">

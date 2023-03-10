@@ -14,6 +14,11 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
+                <Grid.Transitions>
+                    <TransitionCollection>
+                        <RepositionThemeTransition IsStaggeringEnabled="False" />
+                    </TransitionCollection>
+                </Grid.Transitions>
                 <Button
                     Padding="16,6,8,6"
                     HorizontalAlignment="Stretch"

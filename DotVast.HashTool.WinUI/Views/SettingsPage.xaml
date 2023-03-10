@@ -40,6 +40,12 @@
     <controls:NavigationViewBodyScrollViewer>
         <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewBodyContentStyle}">
             <StackPanel>
+                <StackPanel.ChildrenTransitions>
+                    <TransitionCollection>
+                        <RepositionThemeTransition IsStaggeringEnabled="False" />
+                    </TransitionCollection>
+                </StackPanel.ChildrenTransitions>
+
                 <!-- 跳转设置: 哈希选项 -->
                 <Button
                     Command="{x:Bind ViewModel.NavigateToCommand}"

@@ -42,6 +42,11 @@
                         <ItemsWrapGrid Orientation="Horizontal" SizeChanged="ItemsWrapGrid_SizeChanged" />
                     </ItemsPanelTemplate>
                 </GridView.ItemsPanel>
+                <GridView.ItemContainerTransitions>
+                    <TransitionCollection>
+                        <RepositionThemeTransition IsStaggeringEnabled="False" />
+                    </TransitionCollection>
+                </GridView.ItemContainerTransitions>
             </GridView>
         </Grid>
     </controls:NavigationViewBodyScrollViewer>
