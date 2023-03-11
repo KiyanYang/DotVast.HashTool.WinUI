@@ -50,12 +50,14 @@ public sealed class Hash : GenericEnum<string>
     public static readonly Hash Blake2B_256 = new("Blake2B-256");
     public static readonly Hash Blake2B_384 = new("Blake2B-384");
     public static readonly Hash Blake2B_512 = new("Blake2B-512");
+    public static readonly Hash Blake2BP = new("Blake2BP");
 
     // Blake2S
     public static readonly Hash Blake2S_128 = new("Blake2S-128");
     public static readonly Hash Blake2S_160 = new("Blake2S-160");
     public static readonly Hash Blake2S_224 = new("Blake2S-224");
     public static readonly Hash Blake2S_256 = new("Blake2S-256");
+    public static readonly Hash Blake2SP = new("Blake2SP");
 
     // Blake3
     public static readonly Hash Blake3 = new("Blake3");
@@ -78,8 +80,9 @@ public sealed class Hash : GenericEnum<string>
     public static readonly Hash XxHash64 = new("xxHash64");
 
     // Others
-    public static readonly Hash Ed2k = new("eD2k");
     public static readonly Hash QuickXor = new("QuickXor");
+    public static readonly Hash Ed2k = new("eD2k");
+    public static readonly Hash Has160 = new("HAS-160");
 
     public static Hash[] All => GetFieldValues<Hash>();
 
@@ -109,10 +112,12 @@ public sealed class Hash : GenericEnum<string>
             var h when h == Blake2B_256 => CreateBlake2B_256().ToHashAlgorithm(),
             var h when h == Blake2B_384 => CreateBlake2B_384().ToHashAlgorithm(),
             var h when h == Blake2B_512 => CreateBlake2B_512().ToHashAlgorithm(),
+            var h when h == Blake2BP => CreateBlake2BP(64, Array.Empty<byte>()).ToHashAlgorithm(),
             var h when h == Blake2S_128 => CreateBlake2S_128().ToHashAlgorithm(),
             var h when h == Blake2S_160 => CreateBlake2S_160().ToHashAlgorithm(),
             var h when h == Blake2S_224 => CreateBlake2S_224().ToHashAlgorithm(),
             var h when h == Blake2S_256 => CreateBlake2S_256().ToHashAlgorithm(),
+            var h when h == Blake2SP => CreateBlake2SP(32, Array.Empty<byte>()).ToHashAlgorithm(),
             var h when h == Blake3 => CreateBlake3_256().ToHashAlgorithm(),
             var h when h == RIPEMD_128 => CreateRIPEMD128().ToHashAlgorithm(),
             var h when h == RIPEMD_160 => CreateRIPEMD160().ToHashAlgorithm(),
@@ -125,8 +130,9 @@ public sealed class Hash : GenericEnum<string>
             var h when h == Keccak_512 => CreateKeccak_512().ToHashAlgorithm(),
             var h when h == XxHash32 => new System.IO.Hashing.XxHash32().ToHashAlgorithm(),
             var h when h == XxHash64 => new System.IO.Hashing.XxHash64().ToHashAlgorithm(),
-            var h when h == Ed2k => new Ed2k(),
             var h when h == QuickXor => new QuickXorHash(),
+            var h when h == Ed2k => new Ed2k(),
+            var h when h == Has160 => CreateHAS160().ToHashAlgorithm(),
             _ => null,
         };
     }
