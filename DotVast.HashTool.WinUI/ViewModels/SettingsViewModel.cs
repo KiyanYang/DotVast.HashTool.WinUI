@@ -134,7 +134,7 @@ public sealed partial class SettingsViewModel : ObservableRecipient
     {
         var localAppData = PathHelper.AppDataLocalPhysicalPath;
         var logsFilePath = Constants.LogsOptions.FilePath;
-        var logsFolderPath = Path.GetDirectoryName(Path.Combine(localAppData, logsFilePath));
+        var logsFolderPath = Path.Combine(localAppData, Path.GetDirectoryName(logsFilePath) ?? string.Empty);
         await Windows.System.Launcher.LaunchFolderPathAsync(logsFolderPath);
     }
 
