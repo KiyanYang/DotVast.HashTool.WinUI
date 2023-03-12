@@ -53,6 +53,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+		RESX_SortFileContentOnSave = True
+		RESX_NeutralResourcesLanguage = zh-Hans
 		SolutionGuid = {7024CAF8-2CB7-426A-A024-C8D236FCDBBE}
 	EndGlobalSection
 EndGlobal

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -17,110 +17,39 @@
   </data>
   <data name="AppDisplayName" xml:space="preserve">
     <value>HashTool</value>
-    <comment>Please don't translate this item</comment>
   </data>
   <data name="AppDisplayNameDev" xml:space="preserve">
     <value>HashTool Dev</value>
-    <comment>Please don't translate this item</comment>
-  </data>
-  <data name="SettingsPage_Licenses.Content" xml:space="preserve">
-    <value>Licenses</value>
-  </data>
-  <data name="SettingsPage_Logs.Content" xml:space="preserve">
-    <value>Logs</value>
-  </data>
-  <data name="SettingsPage_PrivacyTermsLink.Content" xml:space="preserve">
-    <value>Privacy statement</value>
-  </data>
-  <data name="SettingsPage_PrivacyTermsLink.NavigateUri" xml:space="preserve">
-    <value>https://github.com/KiyanYang/DotVast.HashTool.WinUI/wiki/Privacy-Statement</value>
-  </data>
-  <data name="SettingsPage_Language.Header" xml:space="preserve">
-    <value>Language</value>
-  </data>
-  <data name="SettingsPage_Theme.Description" xml:space="preserve">
-    <value>Change the language displayed in the APP</value>
-  </data>
-  <data name="SettingsPage_Theme.Header" xml:space="preserve">
-    <value>Theme</value>
-  </data>
-  <data name="SettingsPage_Language.Description" xml:space="preserve">
-    <value>Change the theme displayed in the APP</value>
-  </data>
-  <data name="SettingsPage_AlwaysOnTop.Description" xml:space="preserve">
-    <value>Set the APP window always on top</value>
-  </data>
-  <data name="SettingsPage_AlwaysOnTop.Header" xml:space="preserve">
-    <value>Always On Top</value>
-  </data>
-  <data name="Tip_FileSkipped_FileNotFound" xml:space="preserve">
-    <value>File "{0}" not found, which skipped.</value>
-  </data>
-  <data name="Tip_FileSkipped_Title" xml:space="preserve">
-    <value>File Skipped</value>
-  </data>
-  <data name="SettingsPage_HashOptions.Description" xml:space="preserve">
-    <value>Set hash options which are displayed on the Home</value>
-  </data>
-  <data name="SettingsPage_HashOptions.Header" xml:space="preserve">
-    <value>Hash Option</value>
-  </data>
-  <data name="HomePage_VerifyingHashBox.PlaceholderText" xml:space="preserve">
-    <value>Hash to be compared</value>
-    <comment>[主页] 哈希对比框的占位符</comment>
-  </data>
-  <data name="SettingsPage_HashFontFamily.Description" xml:space="preserve">
-    <value>Set the font family to display the hash</value>
-  </data>
-  <data name="SettingsPage_HashFontFamily.Header" xml:space="preserve">
-    <value>Hash FontFamily</value>
-  </data>
-  <data name="Home_Button_Pick" xml:space="preserve">
-    <value>Pick... (Ctrl+O)</value>
-    <comment>选择文件或文件夹; 快捷键 Ctrl+O</comment>
-  </data>
-  <data name="Command_Save_Tip" xml:space="preserve">
-    <value>Save (Ctrl+S)</value>
-    <comment>保存; 快捷键 Ctrl+S</comment>
-  </data>
-  <data name="Home_Button_FullContent_Tip" xml:space="preserve">
-    <value>Expand the input box</value>
-    <comment>用于展开主页输入文本框的切换按钮的提示</comment>
-  </data>
-  <data name="SettingsPage_IncludePreRelease.Header" xml:space="preserve">
-    <value>Include Pre-Release</value>
-    <comment>检测更新时是否包含预发行版本</comment>
-  </data>
-  <data name="HashOptionSettings_Title" xml:space="preserve">
-    <value>Hash Options</value>
-  </data>
-  <data name="Home_DargToSetPath" xml:space="preserve">
-    <value>Set Path</value>
-    <comment>主页面拖放项目以设置路径的标题</comment>
-  </data>
-  <data name="Licenses_Title" xml:space="preserve">
-    <value>Licenses</value>
-  </data>
-  <data name="Command_RestartApp" xml:space="preserve">
-    <value>Restart App</value>
-  </data>
-  <data name="SettingsPage_Personalization.Text" xml:space="preserve">
-    <value>Personalization</value>
   </data>
   <data name="Command_CheckForUpdates" xml:space="preserve">
     <value>Check for updates</value>
   </data>
-  <data name="SettingsPage_About.Text" xml:space="preserve">
-    <value>About</value>
+  <data name="Command_RestartApp" xml:space="preserve">
+    <value>Restart App</value>
   </data>
-  <data name="ShellPage_Home.Content" xml:space="preserve">
-    <value>Home</value>
+  <data name="Command_Save_Tip" xml:space="preserve">
+    <value>Save (Ctrl+S)</value>
   </data>
-  <data name="ShellPage_Results.Content" xml:space="preserve">
-    <value>Results</value>
+  <data name="HashOptionSettings_Title" xml:space="preserve">
+    <value>Hash Options</value>
   </data>
-  <data name="ShellPage_Tasks.Content" xml:space="preserve">
-    <value>Tasks</value>
+  <data name="HomePage_CreateAndStart" xml:space="preserve">
+    <value>Create and start</value>
+  </data>
+  <data name="HomePage_VerifyingHashBox.PlaceholderText" xml:space="preserve">
+    <value>Hash to be compared</value>
+  </data>
+  <data name="Home_Button_FullContent_Tip" xml:space="preserve">
+    <value>Expand the input box</value>
+  </data>
+  <data name="Home_Button_Pick" xml:space="preserve">
+    <value>Pick... (Ctrl+O)</value>
+  </data>
+  <data name="Home_DargToSetPath" xml:space="preserve">
+    <value>Set Path</value>
+  </data>
+  <data name="Licenses_Title" xml:space="preserve">
+    <value>Licenses</value>
   </data>
   <data name="ResultsPage_Detail_CreatedDateTime.Text" xml:space="preserve">
     <value>Created</value>
@@ -143,24 +72,85 @@
   <data name="ResultsPage_Subtitle_TaskResults.Text" xml:space="preserve">
     <value>Results</value>
   </data>
+  <data name="SettingsPage_About.Text" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="SettingsPage_AlwaysOnTop.Description" xml:space="preserve">
+    <value>Set the APP window always on top</value>
+  </data>
+  <data name="SettingsPage_AlwaysOnTop.Header" xml:space="preserve">
+    <value>Always On Top</value>
+  </data>
   <data name="SettingsPage_CheckForUpdatesOnStartup.Header" xml:space="preserve">
     <value>Check for updates on startup</value>
-  </data>
-  <data name="HomePage_CreateAndStart" xml:space="preserve">
-    <value>Create and start</value>
-    <comment>是否创建并开始计算</comment>
-  </data>
-  <data name="SettingsPage_Repository.Content" xml:space="preserve">
-    <value>GitHub repository</value>
-  </data>
-  <data name="SettingsPage_Repository.NavigateUri" xml:space="preserve">
-    <value>https://github.com/KiyanYang/DotVast.HashTool.WinUI</value>
-    <comment>Please don't translate this item</comment>
   </data>
   <data name="SettingsPage_FileExplorerContextMenusEnabled.Description" xml:space="preserve">
     <value>Whether to enable the context menus in file explorer</value>
   </data>
   <data name="SettingsPage_FileExplorerContextMenusEnabled.Header" xml:space="preserve">
     <value>Context Menus</value>
+  </data>
+  <data name="SettingsPage_HashFontFamily.Description" xml:space="preserve">
+    <value>Set the font family to display the hash</value>
+  </data>
+  <data name="SettingsPage_HashFontFamily.Header" xml:space="preserve">
+    <value>Hash FontFamily</value>
+  </data>
+  <data name="SettingsPage_HashOptions.Description" xml:space="preserve">
+    <value>Set hash options which are displayed on the Home</value>
+  </data>
+  <data name="SettingsPage_HashOptions.Header" xml:space="preserve">
+    <value>Hash Option</value>
+  </data>
+  <data name="SettingsPage_IncludePreRelease.Header" xml:space="preserve">
+    <value>Include Pre-Release</value>
+  </data>
+  <data name="SettingsPage_Language.Description" xml:space="preserve">
+    <value>Change the theme displayed in the APP</value>
+  </data>
+  <data name="SettingsPage_Language.Header" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="SettingsPage_Licenses.Content" xml:space="preserve">
+    <value>Licenses</value>
+  </data>
+  <data name="SettingsPage_Logs.Content" xml:space="preserve">
+    <value>Logs</value>
+  </data>
+  <data name="SettingsPage_Personalization.Text" xml:space="preserve">
+    <value>Personalization</value>
+  </data>
+  <data name="SettingsPage_PrivacyTermsLink.Content" xml:space="preserve">
+    <value>Privacy statement</value>
+  </data>
+  <data name="SettingsPage_PrivacyTermsLink.NavigateUri" xml:space="preserve">
+    <value>https://github.com/KiyanYang/DotVast.HashTool.WinUI/wiki/Privacy-Statement</value>
+  </data>
+  <data name="SettingsPage_Repository.Content" xml:space="preserve">
+    <value>GitHub repository</value>
+  </data>
+  <data name="SettingsPage_Repository.NavigateUri" xml:space="preserve">
+    <value>https://github.com/KiyanYang/DotVast.HashTool.WinUI</value>
+  </data>
+  <data name="SettingsPage_Theme.Description" xml:space="preserve">
+    <value>Change the language displayed in the APP</value>
+  </data>
+  <data name="SettingsPage_Theme.Header" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="ShellPage_Home.Content" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="ShellPage_Results.Content" xml:space="preserve">
+    <value>Results</value>
+  </data>
+  <data name="ShellPage_Tasks.Content" xml:space="preserve">
+    <value>Tasks</value>
+  </data>
+  <data name="Tip_FileSkipped_FileNotFound" xml:space="preserve">
+    <value>File "{0}" not found, which skipped.</value>
+  </data>
+  <data name="Tip_FileSkipped_Title" xml:space="preserve">
+    <value>File Skipped</value>
   </data>
 </root>

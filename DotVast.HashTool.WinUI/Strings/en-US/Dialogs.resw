@@ -29,14 +29,11 @@
   </data>
   <data name="GitHubUpdate_Title_UpToDate" xml:space="preserve">
     <value>The App is up to date</value>
-    <comment>用作标题, 不要标点符号</comment>
   </data>
   <data name="HashTaskAborted_Content_UnauthorizedAccess" xml:space="preserve">
     <value>Unauthorized access. Please consider retrying as an administrator.</value>
-    <comment>提示权限不足的任务中止对话框的内容</comment>
   </data>
   <data name="HashTaskAborted_Title_HashTaskAborted" xml:space="preserve">
     <value>Task Aborted</value>
-    <comment>任务中止对话框的标题</comment>
   </data>
 </root>
