@@ -36,8 +36,8 @@ jobs:
       - name: Setup MSBuild.exe
         uses: microsoft/setup-msbuild@v1
 
-      # Decode the base 64 encoded pfx and import
-      - name: Decode and import the pfx
+      # Import the base 64 encoded pfx
+      - name: Import the pfx
         run: |
           $pfxCertBytes = [System.Convert]::FromBase64String('${{ secrets.BASE64_ENCODED_PFX }}')
           Set-Content -Path $env:DotVast_PfxName -Value $pfxCertBytes -AsByteStream

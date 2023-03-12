@@ -3,10 +3,6 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
-# Resw
-*.resw
-!DotVast.HashTool.WinUI/Strings/zh-Hans/*
-
 # User-specific files
 *.rsuser
 *.suo
