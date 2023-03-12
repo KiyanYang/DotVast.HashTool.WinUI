@@ -1,61 +1,63 @@
 ﻿#include "pch.h"
 #include "BaseCommand.h"
 
-IFACEMETHODIMP BaseCommand::GetTitle(_In_opt_ IShellItemArray* items, _Outptr_result_nullonfailure_ PWSTR* name)
+STDMETHODIMP BaseCommand::EnumSubCommands(
+    _Outptr_ IEnumExplorerCommand** ppEnum)
 {
-    *name = nullptr;
+    *ppEnum = nullptr;
     return E_NOTIMPL;
 }
 
-IFACEMETHODIMP BaseCommand::GetIcon(_In_opt_ IShellItemArray* items, _Outptr_result_nullonfailure_ PWSTR* icon)
+STDMETHODIMP BaseCommand::GetCanonicalName(
+    _Out_ GUID* pguidCommandName)
 {
-    *icon = nullptr;
+    *pguidCommandName = GUID_NULL;
+    return S_OK;
+}
+
+STDMETHODIMP BaseCommand::GetFlags(
+    _Out_ EXPCMDFLAGS* pFlags)
+{
+    *pFlags = ECF_DEFAULT;
+    return S_OK;
+}
+
+STDMETHODIMP BaseCommand::GetIcon(
+    _In_opt_ IShellItemArray* psiItemArray,
+    _Outptr_ LPWSTR* ppszIcon)
+{
+    *ppszIcon = nullptr;
     return E_NOTIMPL;
 }
 
-IFACEMETHODIMP BaseCommand::GetToolTip(_In_opt_ IShellItemArray*, _Outptr_result_nullonfailure_ PWSTR* infoTip)
+STDMETHODIMP BaseCommand::GetState(
+    _In_opt_ IShellItemArray* psiItemArray,
+    _In_ BOOL fOkToBeSlow,
+    _Outptr_ EXPCMDSTATE* pCmdState)
 {
-    *infoTip = nullptr;
+    *pCmdState = ECS_ENABLED;
+    return S_OK;
+}
+
+STDMETHODIMP BaseCommand::GetTitle(
+    _In_opt_ IShellItemArray* psiItemArray,
+    _Outptr_ LPWSTR* ppszName)
+{
+    *ppszName = nullptr;
     return E_NOTIMPL;
 }
 
-IFACEMETHODIMP BaseCommand::GetCanonicalName(_Out_ GUID* guidCommandName)
+STDMETHODIMP BaseCommand::GetToolTip(
+    _In_opt_ IShellItemArray* psiItemArray,
+    _Outptr_ LPWSTR* ppszInfotip)
 {
-    *guidCommandName = GUID_NULL;
-    return S_OK;
-}
-
-IFACEMETHODIMP BaseCommand::GetState(_In_opt_ IShellItemArray* selection, _In_ BOOL okToBeSlow, _Out_ EXPCMDSTATE* cmdState)
-{
-    *cmdState = ECS_ENABLED;
-    return S_OK;
-}
-
-IFACEMETHODIMP BaseCommand::Invoke(_In_opt_ IShellItemArray* selection, _In_opt_ IBindCtx*) noexcept try
-{
-    return S_OK;
-} CATCH_RETURN();
-
-IFACEMETHODIMP BaseCommand::GetFlags(_Out_ EXPCMDFLAGS* flags)
-{
-    *flags = ECF_DEFAULT;
-    return S_OK;
-}
-
-IFACEMETHODIMP BaseCommand::EnumSubCommands(IEnumExplorerCommand** enumCommands)
-{
-    *enumCommands = nullptr;
+    *ppszInfotip = nullptr;
     return E_NOTIMPL;
 }
 
-IFACEMETHODIMP BaseCommand::SetSite(_In_ IUnknown* site) noexcept
+STDMETHODIMP BaseCommand::Invoke(
+    _In_opt_ IShellItemArray* psiItemArray,
+    _In_opt_ IBindCtx* pbc)
 {
-    m_site = site;
-    return S_OK;
-}
-
-IFACEMETHODIMP BaseCommand::GetSite(_In_ REFIID riid, _COM_Outptr_ void** site) noexcept
-{
-    RETURN_IF_FAILED(m_site.CopyTo(riid, site));
     return S_OK;
 }

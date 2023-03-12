@@ -1,35 +1,15 @@
-﻿// dllmain.cpp : 定义 DLL 应用程序的入口点。
-#include "pch.h"
-#include <wrl/module.h>
-#include <wrl/implements.h>
-#include <wrl/client.h>
-#include <shobjidl_core.h>
-#include <wil/resource.h>
-#include <string>
-#include <vector>
-#include <sstream>
-#include <wil/filesystem.h>
+﻿#include "pch.h"
 
-#include <winrt/base.h>
 #include <winrt/Windows.Storage.h>
-#include <winrt/Windows.Data.Json.h>
-#include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.ApplicationModel.h>
-#include <filesystem>
-#include <shlwapi.h>
 
 #include "BaseCommand.h"
 #include "EnumCommand.h"
 #include "HashCommand.h"
 
-using namespace Microsoft::WRL;
-
-using namespace winrt::Windows::ApplicationModel;
-using namespace winrt::Windows::Data::Json;
-
 BOOL APIENTRY DllMain(HMODULE hModule,
-    DWORD  ul_reason_for_call,
+    DWORD ul_reason_for_call,
     LPVOID lpReserved
 )
 {
@@ -44,19 +24,14 @@ BOOL APIENTRY DllMain(HMODULE hModule,
     return TRUE;
 }
 
-#ifdef _DEBUG
-class __declspec(uuid("C8085C38-E65F-4DA6-BBBA-A47246499B6D"))
-#else
-class __declspec(uuid("412FE3A3-833F-4EDE-BE03-D2F510B1AE59"))
-#endif
-    HashToolContextMenuCommand final : public BaseCommand
+struct ContextMenuCommand : public BaseCommand
 {
 public:
     const bool DefaultContextMenusEnabled = true;
     const winrt::hstring ContextMenusEnabledKey = L"FileExplorerContextMenusEnabled";
     const winrt::hstring HashOptionsKey = L"HashOptions";
 
-    HashToolContextMenuCommand()
+    ContextMenuCommand()
     {
         m_title = winrt::Windows::ApplicationModel::AppInfo::Current().DisplayInfo().DisplayName();
 
@@ -67,7 +42,7 @@ public:
         {
             auto contextMenusEnabled = winrt::unbox_value<winrt::hstring>(values.Lookup(ContextMenusEnabledKey));
             JsonValue enabled = JsonValue::CreateNullValue();
-            if (JsonValue::TryParse(contextMenusEnabled,enabled) && enabled.ValueType() == JsonValueType::Boolean)
+            if (JsonValue::TryParse(contextMenusEnabled, enabled) && enabled.ValueType() == JsonValueType::Boolean)
             {
                 m_enabled = enabled.GetBoolean();
             }
@@ -81,8 +56,8 @@ public:
             {
                 for (const auto& obj : result)
                 {
-                    auto command = Make<HashCommand>(obj.GetObjectW());
-                    if (command.Get()->IsEnabled)
+                    auto command = winrt::make_self<HashCommand>(obj.GetObjectW());
+                    if (command.get()->IsEnabled)
                     {
                         m_commands.push_back(command);
                     }
@@ -92,69 +67,126 @@ public:
 
         if (m_commands.size() == 0)
         {
-            winrt::hstring defaultHashNames[] = {L"MD5", L"SHA1", L"SHA256", L"SHA384" , L"SHA512"};
-            for (const auto& hashName : defaultHashNames)
+            const winrt::hstring DefaultHashNames[] = { L"MD5", L"SHA1", L"SHA256", L"SHA384" , L"SHA512" };
+            for (const auto& hashName : DefaultHashNames)
             {
-                auto command = Make<HashCommand>(hashName, true);
+                auto command = winrt::make_self<HashCommand>(hashName, true);
                 m_commands.push_back(command);
             }
         }
     }
 
-    IFACEMETHODIMP GetTitle(_In_opt_ IShellItemArray* items, _Outptr_result_nullonfailure_ PWSTR* name) override
+    STDMETHODIMP GetTitle(
+        _In_opt_ IShellItemArray* psiItemArray,
+        _Outptr_ LPWSTR* ppszName) override
     {
-        *name = nullptr;
-        return SHStrDup(m_title.c_str(), name);
+        *ppszName = nullptr;
+        return SHStrDup(m_title.c_str(), ppszName);
     }
 
-    IFACEMETHODIMP GetIcon(_In_opt_ IShellItemArray*, _Outptr_result_nullonfailure_ PWSTR* icon) override
+    STDMETHODIMP GetIcon(
+        _In_opt_ IShellItemArray* psiItemArray,
+        _Outptr_ LPWSTR* ppszIcon) override
     {
-        *icon = nullptr;
-        auto packagePath = winrt::Windows::ApplicationModel::Package::Current().EffectiveLocation().Path();
+        *ppszIcon = nullptr;
+        auto packagePath = winrt::Windows::ApplicationModel::Package::Current().EffectivePath();
         auto iconResourcePath = packagePath + L"\\Assets\\Icon.ico";
-        return SHStrDup(iconResourcePath.c_str(), icon);
+        return SHStrDup(iconResourcePath.c_str(), ppszIcon);
     }
 
-    IFACEMETHODIMP GetState(_In_opt_ IShellItemArray* selection, _In_ BOOL okToBeSlow, _Out_ EXPCMDSTATE* cmdState) override
+    STDMETHODIMP GetState(
+        _In_opt_ IShellItemArray* psiItemArray,
+        _In_ BOOL fOkToBeSlow,
+        _Outptr_ EXPCMDSTATE* pCmdState) override
     {
-        *cmdState = m_enabled ? ECS_ENABLED : ECS_HIDDEN;
+        *pCmdState = m_enabled ? ECS_ENABLED : ECS_HIDDEN;
         return S_OK;
     }
 
-    IFACEMETHODIMP GetFlags(_Out_ EXPCMDFLAGS* flags) override
+    STDMETHODIMP GetFlags(
+        _Out_ EXPCMDFLAGS* pFlags) override
     {
-        *flags = ECF_HASSUBCOMMANDS;
+        *pFlags = ECF_HASSUBCOMMANDS;
         return S_OK;
     }
 
-    IFACEMETHODIMP EnumSubCommands(_COM_Outptr_ IEnumExplorerCommand** enumCommands) override
+    STDMETHODIMP EnumSubCommands(
+        _Outptr_ IEnumExplorerCommand** ppEnum) override
     {
-        *enumCommands = nullptr;
-        auto e = Make<EnumCommand>(m_commands);
-        return e->QueryInterface(IID_PPV_ARGS(enumCommands));
+        *ppEnum = nullptr;
+        auto e = winrt::make<EnumCommand>(m_commands);
+        return e->QueryInterface(IID_PPV_ARGS(ppEnum));
     }
 
 private:
     bool m_enabled;
     winrt::hstring m_title;
-    std::vector<ComPtr<IExplorerCommand>> m_commands;
+    IExplorerCommandList m_commands;
 };
 
-
-CoCreatableClass(HashToolContextMenuCommand)
-CoCreatableClassWrlCreatorMapInclude(HashToolContextMenuCommand)
-
-STDAPI DllGetActivationFactory(_In_ HSTRING activatableClassId, _COM_Outptr_ IActivationFactory** factory)
+#ifdef _DEBUG
+struct DECLSPEC_UUID("C8085C38-E65F-4DA6-BBBA-A47246499B6D")
+#else
+struct DECLSPEC_UUID("412FE3A3-833F-4EDE-BE03-D2F510B1AE59")
+#endif // _DEBUG
+ContextMenuCommandFactory: winrt::implements<ContextMenuCommandFactory, IClassFactory>
 {
-    return Module<ModuleType::InProc>::GetModule().GetActivationFactory(activatableClassId, factory);
+    STDMETHODIMP CreateInstance(
+        _In_opt_ IUnknown * pUnkOuter,
+        _In_ REFIID riid,
+        _COM_Outptr_ void** ppvObject) noexcept override
+    {
+        try
+        {
+            return winrt::make<ContextMenuCommand>()->QueryInterface(riid, ppvObject);
+        }
+        catch (...)
+        {
+            return winrt::to_hresult();
+        }
+    }
+
+    STDMETHODIMP LockServer(
+        _In_ BOOL fLock) noexcept override
+    {
+       if (fLock)
+       {
+           ++winrt::get_module_lock();
+       }
+       else
+       {
+           --winrt::get_module_lock();
+       }
+        return S_OK;
+    }
+};
+
+STDAPI DllCanUnloadNow(void)
+{
+    if (winrt::get_module_lock())
+    {
+        return S_FALSE;
+    }
+
+    winrt::clear_factory_cache();
+    return S_OK;
 }
 
-STDAPI DllCanUnloadNow()
+STDAPI DllGetClassObject(_In_ REFCLSID rclsid, _In_ REFIID riid, _Outptr_ LPVOID FAR* ppv)
 {
-    return Module<InProc>::GetModule().GetObjectCount() == 0 ? S_OK : S_FALSE;
-}
+    try
+    {
+        *ppv = nullptr;
 
-STDAPI DllGetClassObject(_In_ REFCLSID rclsid, _In_ REFIID riid, _COM_Outptr_ void** instance)
-{
-    return Module<InProc>::GetModule().GetClassObject(rclsid, riid, instance);
+        if (rclsid == __uuidof(ContextMenuCommandFactory))
+        {
+            return winrt::make<ContextMenuCommandFactory>()->QueryInterface(riid, ppv);
+        }
+
+        return winrt::hresult_class_not_available().to_abi();
+    }
+    catch (...)
+    {
+        return winrt::to_hresult();
+    }
 }

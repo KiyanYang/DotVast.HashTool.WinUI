@@ -1,18 +1,21 @@
 ﻿#pragma once
-#include "BaseCommand.h"
 #include <winrt/Windows.Data.Json.h>
+#include "BaseCommand.h"
 
 using namespace winrt::Windows::Data::Json;
 
-class HashCommand final : public BaseCommand
+struct HashCommand : public BaseCommand
 {
 public:
     HashCommand(JsonObject hashOption);
     HashCommand(winrt::hstring hashName, bool isEnabled);
-    IFACEMETHODIMP GetTitle(_In_opt_ IShellItemArray* items, _Outptr_result_nullonfailure_ PWSTR* name) override;
-    IFACEMETHODIMP Invoke(_In_opt_ IShellItemArray* selection, _In_opt_ IBindCtx*) noexcept override;
+    STDMETHODIMP GetTitle(
+        _In_opt_ IShellItemArray* psiItemArray,
+        _Outptr_ LPWSTR* ppszName) override;
+    STDMETHODIMP Invoke(
+        _In_opt_ IShellItemArray* psiItemArray,
+        _In_opt_ IBindCtx* pbc) override;
 
-public:
     winrt::hstring HashName;
     bool IsEnabled;
 };

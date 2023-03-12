@@ -14,26 +14,27 @@ HashCommand::HashCommand(winrt::hstring hashName, bool isEnabled)
     IsEnabled = isEnabled;
 }
 
-IFACEMETHODIMP HashCommand::GetTitle(IShellItemArray* items, PWSTR* name)
+STDMETHODIMP HashCommand::GetTitle(
+    _In_opt_ IShellItemArray* psiItemArray,
+    _Outptr_ LPWSTR* ppszName)
 {
-    *name = nullptr;
-    return SHStrDup(HashName.c_str(), name);
+    *ppszName = nullptr;
+    return SHStrDup(HashName.c_str(), ppszName);
 }
 
-IFACEMETHODIMP HashCommand::Invoke(IShellItemArray* selection, IBindCtx*) noexcept try
+STDMETHODIMP HashCommand::Invoke(
+    _In_opt_ IShellItemArray* psiItemArray,
+    _In_opt_ IBindCtx* pbc)
 {
     HWND parent = nullptr;
-    if (m_site)
-    {
-        ComPtr<IOleWindow> oleWindow;
-        RETURN_IF_FAILED(m_site.As(&oleWindow));
-        RETURN_IF_FAILED(oleWindow->GetWindow(&parent));
-    }
 
-    if (selection)
+    if (psiItemArray)
     {
         DWORD count;
-        RETURN_IF_FAILED(selection->GetCount(&count));
+        if (FAILED(psiItemArray->GetCount(&count)))
+        {
+            return S_FALSE;
+        }
 
         std::wostringstream args;
 
@@ -41,28 +42,24 @@ IFACEMETHODIMP HashCommand::Invoke(IShellItemArray* selection, IBindCtx*) noexce
         args << L" \"" << HashName << L'"';
         args << L" --path";
 
-        for (DWORD i = 0; i < count; i++)
+        for (DWORD i = 0; i < count; ++i)
         {
-            IShellItem* shellItem;
-            LPWSTR path;
-            selection->GetItemAt(i, &shellItem);
-            shellItem->GetDisplayName(SIGDN_FILESYSPATH, &path);
-            shellItem->Release();
-            args << L" \"" << path << L" \""; // 在路径后添加空格, 防止出现 `"C:\"`, 使得后一个引号被转义
+            winrt::com_ptr<IShellItem> shellItem;
+            LPWSTR displayName;
+            psiItemArray->GetItemAt(i, shellItem.put());
+            shellItem->GetDisplayName(SIGDN_FILESYSPATH, &displayName);
+            args << L" \"" << displayName << L" \""; // 在路径后添加空格, 防止出现 `"C:\"`, 使得后一个引号被转义
+            ::CoTaskMemFree(displayName);
         }
 
 #ifdef _DEBUG
-        auto appPath = L"shell:AppsFolder\\DotVast.HashTool.WinUI.Dev_5xsw0t1dxcp4g!App";
+        const auto AppPath = L"shell:AppsFolder\\DotVast.HashTool.WinUI.Dev_5xsw0t1dxcp4g!App";
 #else
-        auto appPath = L"shell:AppsFolder\\DotVast.HashTool.WinUI_5xsw0t1dxcp4g!App";
+        const auto AppPath = L"shell:AppsFolder\\DotVast.HashTool.WinUI_5xsw0t1dxcp4g!App";
 #endif // _DEBUG
 
-        ShellExecute(NULL, L"open", appPath, args.str().c_str(), NULL, 0);
-    }
-    else
-    {
-        MessageBox(parent, L"No selected items.", L"DotVast.HashTool.WinUI", MB_OK);
+        ShellExecute(NULL, L"open", AppPath, args.str().c_str(), NULL, 0);
     }
 
     return S_OK;
-} CATCH_RETURN();
+}
