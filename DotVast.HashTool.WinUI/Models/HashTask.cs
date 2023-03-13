@@ -75,7 +75,7 @@ public sealed partial class HashTask : ObservableObject, IDisposable
     public void Cancel() => _manager.Cancel();
 
     public override string ToString() =>
-        $"{{ Content: `{Content}`, Mode: `{Mode}`, SelectedHashes: `{JsonSerializer.Serialize(SelectedHashs)}` }}";
+        $"{{ Content: `{Content}`, Mode: `{Mode}`, SelectedHashes: `{JsonSerializer.Serialize(SelectedHashs, JsonContext.Default.IListHash)}` }}";
 
     #region Finalizer, IDisposable
 

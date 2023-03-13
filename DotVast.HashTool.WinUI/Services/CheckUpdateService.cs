@@ -43,12 +43,12 @@ internal partial class CheckUpdateService : ICheckUpdateService
         {
             if (includePreRelease)
             {
-                var releases = await client.GetFromJsonAsync<GitHubRelease[]>(Constants.GitHubRestApi.ReleasesUrl);
+                var releases = await client.GetFromJsonAsync(Constants.GitHubRestApi.ReleasesUrl, JsonContext.Default.GitHubReleaseArray);
                 _gitHubRelease = releases?.FirstOrDefault();
             }
             else
             {
-                _gitHubRelease = await client.GetFromJsonAsync<GitHubRelease>(Constants.GitHubRestApi.LatestReleaseUrl);
+                _gitHubRelease = await client.GetFromJsonAsync(Constants.GitHubRestApi.LatestReleaseUrl, JsonContext.Default.GitHubRelease);
             }
         }
         catch (Exception ex)
