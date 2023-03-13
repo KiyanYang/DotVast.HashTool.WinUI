@@ -2,6 +2,19 @@
 #include "HashCommand.h"
 #include <shellapi.h>
 
+static std::wstring QuoteAndReplaceSlash(const std::wstring_view& str)
+{
+    std::wstring out;
+    out.reserve(str.size() + 2);
+    out.push_back('"');
+    for (auto const& c : str)
+    {
+        out.push_back(c == '\\' ? '/' : c);
+    }
+    out.push_back('"');
+    return out;
+}
+
 HashCommand::HashCommand(JsonObject hashOption)
 {
     HashName = hashOption.GetNamedString(L"Hash", L"");
@@ -38,18 +51,18 @@ STDMETHODIMP HashCommand::Invoke(
 
         std::wostringstream args;
 
-        args << L"--hash";
-        args << L" \"" << HashName << L'"';
-        args << L" --path";
+        args << L"--hash " << QuoteAndReplaceSlash(HashName) << L" --path";
 
         for (DWORD i = 0; i < count; ++i)
         {
             winrt::com_ptr<IShellItem> shellItem;
             LPWSTR displayName;
             psiItemArray->GetItemAt(i, shellItem.put());
-            shellItem->GetDisplayName(SIGDN_FILESYSPATH, &displayName);
-            args << L" \"" << displayName << L" \""; // 在路径后添加空格, 防止出现 `"C:\"`, 使得后一个引号被转义
-            ::CoTaskMemFree(displayName);
+            if (SUCCEEDED(shellItem->GetDisplayName(SIGDN_FILESYSPATH, &displayName)))
+            {
+                args << L" " << QuoteAndReplaceSlash(displayName);
+                ::CoTaskMemFree(displayName);
+            }
         }
 
 #ifdef _DEBUG
