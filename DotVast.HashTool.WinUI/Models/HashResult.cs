@@ -20,4 +20,4 @@ public sealed class HashResult
     public IReadOnlyList<HashResultItem>? Data { get; set; }
 }
 
-public readonly record struct HashResultItem(Hash Hash, string HashValue);
+public readonly record struct HashResultItem(Hash Name, string Value);
