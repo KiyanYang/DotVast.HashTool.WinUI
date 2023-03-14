@@ -75,8 +75,14 @@ jobs:
       - name: Remove unnecessary dependencies and set MSIX package name
         run: |
           $msixFolder = (Get-ChildItem "$env:DotVast_SolutionName/Packages/${{ matrix.platform }}")[0]
-          "DotVast_PackageName=$($msixFolder.Name)-$(git rev-parse --short HEAD)" >> $env:GITHUB_ENV
-          Get-ChildItem "$($msixFolder.FullName)/Dependencies" | Where-Object Name -NotLike ${{ matrix.platform }} | Remove-Item -Recurse
+          $msixFullName = $msixFolder.FullName
+          $msixName = $msixFolder.Name
+          Get-ChildItem "$msixFullName/Dependencies" | Where-Object Name -NotLike ${{ matrix.platform }} | Remove-Item -Recurse
+          $gitDatetime = Get-Date -Date (git show -s --format=%cI HEAD) -Format 'yyMMdd_HHmm'
+          $gitShortHash = git show -s --format=%h HEAD
+          $newMsixName = "$msixName-$gitDatetime-$gitShortHash"
+          "DotVast_PackageName=$newMsixName" >> $env:GITHUB_ENV
+          Rename-Item -Path $msixFullName -NewName $newMsixName
 
       # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
       - name: Upload MSIX package
