@@ -11,8 +11,6 @@ public sealed partial class GitHubRelease
     [JsonPropertyName("html_url")]
     public string Url { get; set; } = string.Empty;
 
-    private string _tagName = string.Empty;
-
     /// <summary>
     /// 标签.
     /// </summary>
@@ -31,6 +29,7 @@ public sealed partial class GitHubRelease
             Version = new Version(major, minor, patch);
         }
     }
+    private string _tagName = string.Empty;
 
     /// <summary>
     /// 是否为预发布版本.
