@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 
 using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Enums;
+using DotVast.HashTool.WinUI.Helpers.JsonConverters;
 
 using Microsoft.Extensions.Logging;
 
@@ -39,7 +40,7 @@ public sealed partial class HashTask : ObservableObject, IDisposable
     [JsonConverter(typeof(EncodingJsonConverter))]
     public Encoding? Encoding { get; set; }
 
-    public IList<Hash> SelectedHashs { get; init; } = Array.Empty<Hash>();
+    public IList<Hash> SelectedHashs { get; internal set; } = Array.Empty<Hash>();
 
     /// <summary>
     /// 结果.
@@ -226,21 +227,5 @@ public sealed partial class HashTask : ObservableObject, IDisposable
         }
 
         #endregion Finalizer, IDisposable
-    }
-}
-
-sealed file class EncodingJsonConverter : JsonConverter<Encoding?>
-{
-    public override Encoding? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-    {
-        var name = reader.GetString();
-        return Encoding.GetEncodings()
-                       .FirstOrDefault(e => string.Equals(name, e.Name, StringComparison.OrdinalIgnoreCase))?
-                       .GetEncoding();
-    }
-
-    public override void Write(Utf8JsonWriter writer, Encoding? value, JsonSerializerOptions options)
-    {
-        writer.WriteStringValue(value?.WebName);
     }
 }

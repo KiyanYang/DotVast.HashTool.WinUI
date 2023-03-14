@@ -7,6 +7,7 @@ using DotVast.HashTool.WinUI.Controls;
 using DotVast.HashTool.WinUI.Core.Contracts.Services;
 using DotVast.HashTool.WinUI.Core.Services;
 using DotVast.HashTool.WinUI.Helpers;
+using DotVast.HashTool.WinUI.Helpers.JsonConverters;
 using DotVast.HashTool.WinUI.Services;
 using DotVast.HashTool.WinUI.Services.Settings;
 using DotVast.HashTool.WinUI.ViewModels;
@@ -64,6 +65,7 @@ public sealed partial class App : Application
         ConfigureServices((context, services) =>
         {
             ConfigureHttpClient(services);
+            ConfigureSingletonAsDefault(services);
 
             // Default Activation Handler
             services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
@@ -160,5 +162,14 @@ public sealed partial class App : Application
             client.DefaultRequestHeaders.Accept.Add(new("application/vnd.github+json"));
             client.DefaultRequestHeaders.UserAgent.Add(new("DotVast.HashTool.WinUI", RuntimeHelper.AppVersion.ToString()));
         });
+    }
+
+    /// <summary>
+    /// 配置单例并作为类的默认值使用.
+    /// </summary>
+    /// <param name="services">Specifies the contract for a collection of service descriptors.</param>
+    private static void ConfigureSingletonAsDefault(IServiceCollection services)
+    {
+        services.AddSingleton<EncodingJsonConverter>();
     }
 }

@@ -8,3 +8,4 @@ global using static DotVast.HashTool.WinUI.Helpers.ResourceDictionaryExtensions;
 global using static DotVast.HashTool.WinUI.Helpers.ResourceExtensions;
 
 global using JsonContext = DotVast.HashTool.WinUI.Helpers.JsonContext;
+global using JsonContext2 = DotVast.HashTool.WinUI.Helpers.JsonContext2;
