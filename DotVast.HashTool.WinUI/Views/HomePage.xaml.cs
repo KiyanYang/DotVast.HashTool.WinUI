@@ -53,9 +53,9 @@ public sealed partial class HomePage : Page
     {
         return mode switch
         {
-            var m when m == HashTaskMode.File => "\uE7C3",
-            var m when m == HashTaskMode.Folder => "\uE8B7",
-            var m when m == HashTaskMode.Text => "\uE8C1",
+            _ when mode == HashTaskMode.File => "\uE7C3",
+            _ when mode == HashTaskMode.Folder => "\uE8B7",
+            _ when mode == HashTaskMode.Text => "\uE8C1",
             _ => null,
         };
     }
@@ -64,8 +64,8 @@ public sealed partial class HomePage : Page
     {
         return mode switch
         {
-            var m when m == HashTaskMode.File => "\uE8E5",
-            var m when m == HashTaskMode.Folder => "\uE8DA",
+            _ when mode == HashTaskMode.File => "\uE8E5",
+            _ when mode == HashTaskMode.Folder => "\uE8DA",
             _ => null,
         };
     }

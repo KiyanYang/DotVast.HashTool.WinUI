@@ -1,6 +1,5 @@
 using System.Collections.ObjectModel;
 using System.Text;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 using DotVast.HashTool.WinUI.Contracts.Services;
@@ -75,8 +74,22 @@ public sealed partial class HashTask : ObservableObject, IDisposable
     public bool Reset() => _manager.Reset();
     public void Cancel() => _manager.Cancel();
 
-    public override string ToString() =>
-        $"{{ Content: `{Content}`, Mode: `{Mode}`, SelectedHashes: `{JsonSerializer.Serialize(SelectedHashs, JsonContext.Default.IListHash)}` }}";
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        sb.Append($"{nameof(HashTask)} {{ ");
+        sb.Append($"{nameof(Content)} = {Content}");
+        sb.Append($", {nameof(Mode)} = {Mode}");
+        if (Mode == HashTaskMode.Text && Encoding is not null)
+        {
+            sb.Append($", {nameof(Encoding)} = {Encoding.WebName}");
+        }
+        sb.Append($", SelectedHashes = [ ");
+        sb.Append(string.Join(", ", SelectedHashs));
+        sb.Append(" ]");
+        sb.Append(" }");
+        return sb.ToString();
+    }
 
     #region Finalizer, IDisposable
 
@@ -161,7 +174,7 @@ public sealed partial class HashTask : ObservableObject, IDisposable
             }
             catch (Exception ex)
             {
-                _logger.LogError("计算哈希时出现未预料的异常, 哈希任务: {HashTask:j}\n{Exception}", this, ex);
+                _logger.LogError("计算哈希时出现未预料的异常, 哈希任务: {HashTask}\n{Exception}", _hashTask, ex);
             }
             finally
             {
