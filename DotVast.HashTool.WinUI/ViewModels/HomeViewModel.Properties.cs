@@ -41,22 +41,7 @@ public partial class HomeViewModel
     /// <summary>
     /// 文本编码.
     /// </summary>
-    public IList<TextEncoding> TextEncodings
-    {
-        get
-        {
-            if (_textEncodings is null)
-            {
-                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-                _textEncodings = Encoding.GetEncodings()
-                    .Select(e => new TextEncoding(e.Name.ToUpper(), new(() => e.GetEncoding())))
-                    .OrderBy(t => t.Name)
-                    .ToList();
-            }
-            return _textEncodings;
-        }
-    }
-    private IList<TextEncoding>? _textEncodings;
+    public IList<TextEncoding> TextEncodings => TextEncoding.All;
 
     /// <summary>
     /// Hash 选项.

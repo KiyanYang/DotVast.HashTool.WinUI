@@ -133,7 +133,7 @@ public sealed partial class TasksViewModel : ObservableRecipient, INavigationAwa
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
                 WriteIndented = true,
             };
-            var contents = JsonSerializer.Serialize(hashTasks, options);
+            var contents = JsonSerializer.Serialize(hashTasks, new JsonContext2(options).IEnumerableHashTask);
             await File.WriteAllTextAsync(result.Path, contents);
         }
     }
