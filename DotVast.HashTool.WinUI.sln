@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotVast.HashTool.WinUI", "DotVast.HashTool.WinUI\DotVast.HashTool.WinUI.csproj", "{6565662E-7355-423B-8C81-073CF1A74350}"
-	ProjectSection(ProjectDependencies) = postProject
-		{4A87C523-9E50-4DDA-85E2-ABBDFB75A3A4} = {4A87C523-9E50-4DDA-85E2-ABBDFB75A3A4}
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotVast.HashTool.WinUI.Core", "DotVast.HashTool.WinUI.Core\DotVast.HashTool.WinUI.Core.csproj", "{9595E053-0B9C-4A69-9653-C4C5F975AAA8}"
 EndProject
@@ -53,8 +50,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_SortFileContentOnSave = True
-		RESX_NeutralResourcesLanguage = zh-Hans
 		SolutionGuid = {7024CAF8-2CB7-426A-A024-C8D236FCDBBE}
+		RESX_NeutralResourcesLanguage = zh-Hans
+		RESX_SortFileContentOnSave = True
 	EndGlobalSection
 EndGlobal
