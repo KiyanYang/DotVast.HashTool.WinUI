@@ -20,21 +20,6 @@
         <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
             <Setter Property="IsSpellCheckEnabled" Value="False" />
         </Style>
-        <DataTemplate x:Key="ComboBoxNormal" x:DataType="enums:HashTaskMode">
-            <StackPanel Orientation="Horizontal" Spacing="8">
-                <FontIcon Glyph="{x:Bind local:HomePage.GetHashTaskModeFontIconGlyph((enums:HashTaskMode))}" />
-            </StackPanel>
-        </DataTemplate>
-        <DataTemplate x:Key="ComboBoxDropDown" x:DataType="enums:HashTaskMode">
-            <StackPanel Orientation="Horizontal" Spacing="8">
-                <FontIcon Glyph="{x:Bind local:HomePage.GetHashTaskModeFontIconGlyph((enums:HashTaskMode))}" />
-                <TextBlock Text="{x:Bind}" />
-            </StackPanel>
-        </DataTemplate>
-        <dataTemplateSelectors:ComboBoxIconDataTemplateSelector
-            x:Key="ComboBoxIconDataTemplateSelector"
-            DropDown="{StaticResource ComboBoxDropDown}"
-            Normal="{StaticResource ComboBoxNormal}" />
     </Page.Resources>
 
     <behaviors:NavigationViewHeaderBehavior.HeaderTemplate>
@@ -66,12 +51,28 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <ComboBox
-                        x:Name="InputtingModeComboBox"
                         Grid.Column="0"
-                        ItemTemplateSelector="{StaticResource ComboBoxIconDataTemplateSelector}"
                         ItemsSource="{x:Bind ViewModel.HashTaskModes}"
                         SelectedItem="{x:Bind ViewModel.InputtingMode, Mode=TwoWay}"
-                        ToolTipService.ToolTip="{x:Bind InputtingModeComboBox.SelectedItem, Mode=OneWay}" />
+                        ToolTipService.ToolTip="{x:Bind ViewModel.InputtingMode, Mode=OneWay}">
+                        <ComboBox.ItemTemplateSelector>
+                            <dataTemplateSelectors:ComboBoxIconDataTemplateSelector>
+                                <dataTemplateSelectors:ComboBoxIconDataTemplateSelector.Normal>
+                                    <DataTemplate x:DataType="enums:HashTaskMode">
+                                        <FontIcon Glyph="{x:Bind local:HomePage.GetHashTaskModeFontIconGlyph((enums:HashTaskMode))}" />
+                                    </DataTemplate>
+                                </dataTemplateSelectors:ComboBoxIconDataTemplateSelector.Normal>
+                                <dataTemplateSelectors:ComboBoxIconDataTemplateSelector.DropDown>
+                                    <DataTemplate x:DataType="enums:HashTaskMode">
+                                        <StackPanel Orientation="Horizontal" Spacing="8">
+                                            <FontIcon Glyph="{x:Bind local:HomePage.GetHashTaskModeFontIconGlyph((enums:HashTaskMode))}" />
+                                            <TextBlock Text="{x:Bind}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dataTemplateSelectors:ComboBoxIconDataTemplateSelector.DropDown>
+                            </dataTemplateSelectors:ComboBoxIconDataTemplateSelector>
+                        </ComboBox.ItemTemplateSelector>
+                    </ComboBox>
                     <TextBox
                         x:Name="InputtingContent"
                         Grid.Column="1"
