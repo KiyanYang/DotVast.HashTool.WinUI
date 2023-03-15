@@ -3,7 +3,6 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="ms-appx:///Controls/NavigationViewBodyScrollViewer/NavigationViewBodyScrollViewer.xaml" />
         <ResourceDictionary Source="ms-appx:///Controls/NavigationViewHeader/NavigationViewHeader.xaml" />
-        <ResourceDictionary Source="ms-appx:///Controls/SettingItem/SettingItem.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

@@ -17,4 +17,7 @@ public static class XamlFunc
 
     public static Visibility VisibleIfNotText(HashTaskMode mode) =>
         mode != HashTaskMode.Text ? Visibility.Visible : Visibility.Collapsed;
+
+    public static Visibility VisibleIfTrue(bool? b) =>
+        b == true ? Visibility.Visible : Visibility.Collapsed;
 }

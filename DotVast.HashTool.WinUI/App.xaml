@@ -16,7 +16,6 @@
                 <ResourceDictionary Source="/Styles/Meun.xaml" />
                 <ResourceDictionary Source="/Styles/NavigationView.xaml" />
                 <ResourceDictionary Source="/Styles/TextBlock.xaml" />
-                <ResourceDictionary Source="/Styles/Settings.xaml" />
 
                 <ResourceDictionary Source="/Styles/TextBox.xaml" />
                 <ResourceDictionary Source="/Styles/ToggleSwitch.xaml" />
