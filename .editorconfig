@@ -9,9 +9,9 @@ root = true
 # Use 4 spaces as indentation
 [*]
 charset = utf-8
-insert_final_newline = true
 indent_style = space
 indent_size = 4
+insert_final_newline = true
 trim_trailing_whitespace = true
 
 # Generated code
@@ -128,6 +128,7 @@ csharp_style_conditional_delegate_call = true:suggestion
 csharp_style_prefer_index_operator = false:none
 csharp_style_prefer_range_operator = false:none
 csharp_style_pattern_local_over_anonymous_function = false:none
+csharp_style_namespace_declarations = file_scoped:silent
 
 # Space preferences
 csharp_space_after_cast = false
@@ -185,9 +186,3 @@ indent_size = 2
 # YAML config files
 [*.{yml,yaml}]
 indent_size = 2
-
-# Shell scripts
-[*.sh]
-end_of_line = lf
-[*.{cmd,bat}]
-end_of_line = crlf
