@@ -84,7 +84,8 @@ public sealed class Hash : GenericEnum<string>
     public static readonly Hash Ed2k = new("eD2k");
     public static readonly Hash Has160 = new("HAS-160");
 
-    public static Hash[] All => GetFieldValues<Hash>();
+    public static Hash[] All => s_all ??= GetFieldValues<Hash>();
+    private static Hash[]? s_all;
 
     private Hash(string name) : base(name)
     {

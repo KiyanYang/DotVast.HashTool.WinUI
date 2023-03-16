@@ -120,8 +120,7 @@ public sealed partial class CommandLineActivationHandler : ActivationHandler<App
 
     private static Hash[] GetHashesFromNames(string[] names)
     {
-        var allHashes = Hash.All;
-        return names.Select(x => allHashes.FirstOrDefault(i => i.Name.Equals(x, StringComparison.OrdinalIgnoreCase))).OfType<Hash>().ToArray();
+        return Hash.All.IntersectBy(names, h => h.Name, StringComparer.OrdinalIgnoreCase).ToArray();
     }
 
     /// <summary>
