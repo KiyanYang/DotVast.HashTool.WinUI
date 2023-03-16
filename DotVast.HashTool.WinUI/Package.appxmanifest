@@ -4,6 +4,7 @@
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
   xmlns:genTemplate="http://schemas.microsoft.com/appx/developer/templatestudio"
   xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
@@ -48,6 +49,12 @@
                 <uap:SplashScreen Image="Assets\AppImages\SplashScreen.png" />
             </uap:VisualElements>
             <Extensions>
+                <uap5:Extension Category="windows.appExecutionAlias" EntryPoint="Windows.FullTrustApplication">
+                    <uap5:AppExecutionAlias>
+                        <uap5:ExecutionAlias Alias="DotVast.HashTool.exe" />
+                    </uap5:AppExecutionAlias>
+                </uap5:Extension>
+                
                 <desktop:Extension Category="windows.toastNotificationActivation">
                     <desktop:ToastNotificationActivation ToastActivatorCLSID="1CD27543-E62D-471C-B2BE-3927D9D55328" />
                 </desktop:Extension>
