@@ -7,7 +7,10 @@ public static partial class Log
     [LoggerMessage(EventId = 10, Level = LogLevel.Information, Message = "软件已启动, 用时: {Elapsed} ms.")]
     public static partial void AppLaunchedElapsedTime(this ILogger logger, long elapsed);
 
-    [LoggerMessage(EventId = 20, Level = LogLevel.Information, Message = "窗口 {Location} 已关闭.\n##############################")]
+    [LoggerMessage(EventId = 100, Level = LogLevel.Information, Message = "AppWindow '{Location}' Destroying.\n##############################")]
+    public static partial void AppWindowDestroying(this ILogger logger, string? location);
+
+    [LoggerMessage(EventId = 200, Level = LogLevel.Information, Message = "Window '{Location}' Closed.")]
     public static partial void WindowClosed(this ILogger logger, string? location);
 
     #region Navigation

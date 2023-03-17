@@ -20,6 +20,14 @@ public sealed partial class MainWindow : WindowEx
         Title = Localization.AppDisplayName;
 #endif
 
-        Closed += (_, _) => _logger.WindowClosed(typeof(MainWindow).FullName);
+        Closed += (_, _) =>
+        {
+            _logger.WindowClosed(typeof(MainWindow).FullName);
+        };
+
+        AppWindow.Destroying += (_, _) =>
+        {
+            _logger.AppWindowDestroying(typeof(MainWindow).FullName);
+        };
     }
 }
