@@ -3,17 +3,20 @@ namespace DotVast.HashTool.WinUI.Core.Enums;
 /// <summary>
 /// 泛型枚举.
 /// </summary>
-/// <typeparam name="T">与枚举绑定的值.</typeparam>
+/// <typeparam name="T">与泛型枚举绑定的键类型.</typeparam>
 public class GenericEnum<T> : GenericEnum
 {
-    // Field Name BindingTo GetField's Parameter Name which in JsonConverterForGenericEnum<,>.ctor
-    private readonly T _value;
+    protected internal readonly T _key;
 
-    protected GenericEnum(T value)
+    /// <summary>
+    /// 构造函数.
+    /// </summary>
+    /// <param name="key">标识枚举的键.</param>
+    protected GenericEnum(T key)
     {
-        _value = value;
+        _key = key;
     }
 
     public override string? ToString() =>
-        _value?.ToString();
+        _key?.ToString();
 }
