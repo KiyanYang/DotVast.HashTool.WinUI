@@ -14,6 +14,11 @@
     <NoWarn>$(NoWarn);SYSLIB1037</NoWarn>
   </PropertyGroup>
 
+  <PropertyGroup Condition="$(Configuration) == Debug">
+    <!-- DOTVAST_SLOWCPU: 模拟慢速 CPU -->
+    <DefineConstants>DOTVAST_SLOWCPU</DefineConstants>
+  </PropertyGroup>
+  
   <PropertyGroup>
     <UseWinUI>true</UseWinUI>
     <ApplicationIcon>Assets/Icon.ico</ApplicationIcon>

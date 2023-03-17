@@ -182,7 +182,7 @@ internal sealed partial class ComputeHashService : IComputeHashService
                 {
                     barrier.SignalAndWait(ct);
                     hash.TransformBlock(buffer, 0, readLength, null, 0);
-#if DEBUG // 睡眠一段时间，以便观察进度条。
+#if DOTVAST_SLOWCPU // 睡眠一段时间，以便观察进度条。
                     Thread.Sleep(50);
 #endif
                 }
