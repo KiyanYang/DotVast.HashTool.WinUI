@@ -168,7 +168,7 @@
                                                 <TextBlock
                                                     Grid.Column="0"
                                                     FontFamily="{Binding Path=HashFontFamilyName, Source={StaticResource AppearanceSettingsService}}"
-                                                    Text="{x:Bind Name}" />
+                                                    Text="{x:Bind Hash.Name}" />
                                                 <TextBlock
                                                     Grid.Column="1"
                                                     FontFamily="{Binding Path=HashFontFamilyName, Source={StaticResource AppearanceSettingsService}}"
