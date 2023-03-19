@@ -19,6 +19,7 @@ namespace DotVast.HashTool.WinUI.Enums;
 public sealed class Hash : GenericEnum<string>
 {
     public string Name { get; }
+    public HashFormat Format { get; }
 
     // CRC
     public static readonly Hash CRC32 = new("crc32", "CRC32");
@@ -78,16 +79,17 @@ public sealed class Hash : GenericEnum<string>
     public static readonly Hash XxHash64 = new("xxhash64", "xxHash64");
 
     // Others
-    public static readonly Hash QuickXor = new("quickxor", "QuickXor");
+    public static readonly Hash QuickXor = new("quickxor", "QuickXor", HashFormat.Base64);
     public static readonly Hash Ed2k = new("ed2k", "eD2k");
     public static readonly Hash Has160 = new("has-160", "HAS-160");
 
     public static Hash[] All => s_all ??= GetFieldValues<Hash>();
     private static Hash[]? s_all;
 
-    private Hash(string key, string name) : base(key)
+    private Hash(string key, string name, HashFormat format = HashFormat.Base16) : base(key)
     {
         Name = name;
+        Format = format;
     }
 
     public static HashAlgorithm? GetHashAlgorithm(Hash hash)

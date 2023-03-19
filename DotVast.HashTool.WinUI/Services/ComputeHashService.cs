@@ -205,9 +205,12 @@ internal sealed partial class ComputeHashService : IComputeHashService
                 hashes[i].TransformFinalBlock(buffer, 0, 0);
 
                 var hashBytes = hashes[i].Hash!;
-                var hashString = hashTask.SelectedHashs[i] == Hash.QuickXor
-                    ? Convert.ToBase64String(hashBytes)
-                    : Convert.ToHexString(hashBytes);
+                var hashString = hashTask.SelectedHashs[i].Format switch
+                {
+                    HashFormat.Base16 => Convert.ToHexString(hashBytes),
+                    HashFormat.Base64 => Convert.ToBase64String(hashBytes),
+                    var format => throw new ArgumentOutOfRangeException(nameof(hashTask), $"The hashTask.SelectedHashs[{i}].Format {format} is out of range and cannot be processed."),
+                };
                 hashResultData[i] = new(hashTask.SelectedHashs[i], hashString);
             }
 
