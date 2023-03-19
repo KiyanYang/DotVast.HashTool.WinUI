@@ -208,12 +208,6 @@
                     <controls:HashTaskGrid HashTask="{x:Bind ViewModel.LastHashTask, Mode=OneWay}" />
                 </Button>
 
-                <TeachingTip
-                    x:DefaultBindMode="OneWay"
-                    Title="{x:Bind ViewModel.TipMessage.Title}"
-                    IsOpen="{x:Bind ViewModel.TipMessage.IsOpen}"
-                    Subtitle="{x:Bind ViewModel.TipMessage.Subtitle}" />
-
             </StackPanel>
         </Grid>
     </controls:NavigationViewBodyScrollViewer>

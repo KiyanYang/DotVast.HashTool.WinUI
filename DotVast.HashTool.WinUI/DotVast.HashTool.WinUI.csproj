@@ -51,6 +51,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Labs.WinUI.SettingsControls" Version="0.0.17" />
+    <PackageReference Include="CommunityToolkit.Labs.WinUI.StackedNotificationsBehavior" Version="0.0.2" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
     <PackageReference Include="CommunityToolkit.WinUI.UI" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Behaviors" Version="7.1.2" />

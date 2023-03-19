@@ -6,7 +6,7 @@ public sealed class LicensesViewModel : ObservableObject
 {
     public LicenseInfo[] Licenses { get; } = new LicenseInfo[]
     {
-        new("CommunityToolkit.Labs.WinUI.SettingsControls", License.MIT, "https://github.com/CommunityToolkit/Labs-Windows/blob/main/License.md", "https://github.com/CommunityToolkit/Labs-Windows"),
+        new("CommunityToolkit.Labs.WinUI", License.MIT, "https://github.com/CommunityToolkit/Labs-Windows/blob/main/License.md", "https://github.com/CommunityToolkit/Labs-Windows"),
         new("CommunityToolkit.Mvvm", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/CommunityToolkit.Mvvm"),
         new("CommunityToolkit.WinUI.UI", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/CommunityToolkit.WinUI.UI"),
         new("CommunityToolkit.WinUI.UI.Behaviors", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/CommunityToolkit.WinUI.UI.Behaviors"),

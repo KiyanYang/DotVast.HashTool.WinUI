@@ -6,6 +6,7 @@
     xmlns:controls="using:DotVast.HashTool.WinUI.Controls"
     xmlns:helpers="using:DotVast.HashTool.WinUI.Helpers"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:labs="using:CommunityToolkit.Labs.WinUI"
     Loaded="OnLoaded">
     <Grid>
         <Grid
@@ -65,5 +66,14 @@
             </i:Interaction.Behaviors>
             <Frame x:Name="NavigationFrame" />
         </NavigationView>
+        <InfoBar
+            Margin="24"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}">
+            <i:Interaction.Behaviors>
+                <labs:StackedNotificationsBehavior x:Name="NotificationQueue" />
+            </i:Interaction.Behaviors>
+        </InfoBar>
     </Grid>
 </Page>

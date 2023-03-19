@@ -2,7 +2,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 using CommunityToolkit.Mvvm.Messaging.Messages;
-using CommunityToolkit.WinUI;
 
 using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
@@ -24,6 +23,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
     private readonly IDialogService _dialogService;
     private readonly IHashTaskService _hashTaskService;
     private readonly INavigationService _navigationService;
+    private readonly INotificationService _notificationService;
     private readonly System.Timers.Timer _timer;
 
     public HomeViewModel(
@@ -32,7 +32,8 @@ public sealed partial class HomeViewModel : ObservableRecipient
         IComputeHashService computeHashService,
         IDialogService dialogService,
         IHashTaskService hashTaskService,
-        INavigationService navigationService)
+        INavigationService navigationService,
+        INotificationService notificationService)
     {
         _logger = logger;
         _preferencesSettingsService = preferencesSettingsService;
@@ -40,6 +41,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
         _dialogService = dialogService;
         _hashTaskService = hashTaskService;
         _navigationService = navigationService;
+        _notificationService = notificationService;
 
         // 响应哈希选项排序
         _preferencesSettingsService.HashOptions.CollectionChanged += (sender, e) =>
@@ -65,13 +67,15 @@ public sealed partial class HomeViewModel : ObservableRecipient
 
     protected override void OnActivated()
     {
-        Messenger.Register<HomeViewModel, FileNotFoundInHashFilesMessage>(this, async (r, m) =>
+        Messenger.Register<HomeViewModel, FileNotFoundInHashFilesMessage>(this, (r, m) =>
         {
             Debug.WriteLine($"[{DateTime.Now}] HomeViewModel.Messenger > FileNotFoundInHashFilesMessage");
             Debug.WriteLine($"FilePath: {m.Value}");
-            await App.MainWindow.DispatcherQueue.EnqueueAsync(() => ShowTipMessage(
-                    Localization.Tip_FileSkipped_Title,
-                    string.Format(Localization.Tip_FileSkipped_FileNotFound, m.Value)));
+            _notificationService.Show(new()
+            {
+                Title = Localization.Tip_FileSkipped_Title,
+                Message = string.Format(Localization.Tip_FileSkipped_FileNotFound, m.Value),
+            });
         });
 
         Messenger.Register<HomeViewModel, EditTaskMessage>(this, (r, m) =>
@@ -137,12 +141,5 @@ public sealed partial class HomeViewModel : ObservableRecipient
         await Task.Delay(MillisecondsDelayCreateTask);
         IsDelayCreateTask = false;
         CreateTaskCommand.NotifyCanExecuteChanged();
-    }
-
-    private void ShowTipMessage(string title, string subTitle)
-    {
-        TipMessage.Title = title;
-        TipMessage.Subtitle = subTitle;
-        TipMessage.IsOpen = true;
     }
 }

@@ -1,9 +1,6 @@
-using System.Text;
-
 using DotVast.HashTool.WinUI.Core.Enums;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
-using DotVast.HashTool.WinUI.Models.Controls;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
@@ -124,6 +121,4 @@ public partial class HomeViewModel
     }
 
     #endregion Verifying Hash
-
-    public TeachingTipModel TipMessage { get; } = new();
 }

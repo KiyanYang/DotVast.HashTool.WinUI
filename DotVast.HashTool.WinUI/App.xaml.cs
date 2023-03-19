@@ -78,6 +78,7 @@ public sealed partial class App : Application
             services.AddSingleton<IPageService, PageService>();
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddTransient<INavigationViewService, NavigationViewService>();
+            services.AddSingleton<INotificationService, NotificationService>();
 
             services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
             services.AddSingleton<IAppearanceSettingsService, AppearanceSettingsService>();

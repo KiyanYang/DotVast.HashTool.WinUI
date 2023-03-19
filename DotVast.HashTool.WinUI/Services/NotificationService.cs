@@ -1,0 +1,23 @@
+using System.Diagnostics.CodeAnalysis;
+
+using CommunityToolkit.Labs.WinUI;
+
+using DotVast.HashTool.WinUI.Contracts.Services;
+
+namespace DotVast.HashTool.WinUI.Services;
+
+public class NotificationService : INotificationService
+{
+    private StackedNotificationsBehavior? _notificationQueue { get; set; }
+
+    [MemberNotNull(nameof(_notificationQueue))]
+    public void Initialize(StackedNotificationsBehavior notificationQueue)
+    {
+        _notificationQueue = notificationQueue;
+    }
+
+    public void Show(Notification notification)
+    {
+        _notificationQueue?.Show(notification);
+    }
+}
