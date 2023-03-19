@@ -73,8 +73,10 @@ public sealed partial class HomeViewModel : ObservableRecipient
             Debug.WriteLine($"FilePath: {m.Value}");
             _notificationService.Show(new()
             {
+                Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Warning,
                 Title = Localization.Tip_FileSkipped_Title,
                 Message = string.Format(Localization.Tip_FileSkipped_FileNotFound, m.Value),
+                Duration = TimeSpan.FromMilliseconds(5000),
             });
         });
 
