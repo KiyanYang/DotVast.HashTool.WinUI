@@ -2,6 +2,9 @@ using DotVast.HashTool.WinUI.Models;
 
 namespace DotVast.HashTool.WinUI.Contracts.Services;
 
+/// <summary>
+/// Defines an interface for a check update service.
+/// </summary>
 public interface ICheckUpdateService
 {
     /// <summary>
@@ -11,9 +14,9 @@ public interface ICheckUpdateService
     Task StartupAsync();
 
     /// <summary>
-    /// 获取最新 GitHub 发布信息.
+    /// Gets the latest release information from GitHub.
     /// </summary>
-    /// <param name="includePreRelease">包括预发布版本.</param>
-    /// <returns></returns>
+    /// <param name="includePreRelease">Whether to include pre-release versions.</param>
+    /// <returns>A <see cref="GitHubRelease"/> object or null.</returns>
     Task<GitHubRelease?> GetLatestGitHubReleaseAsync(bool includePreRelease = false);
 }

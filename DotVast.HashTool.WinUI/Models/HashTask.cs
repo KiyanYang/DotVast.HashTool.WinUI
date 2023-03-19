@@ -145,20 +145,7 @@ public sealed partial class HashTask : ObservableObject, IDisposable
 
             try
             {
-                switch (_hashTask.Mode)
-                {
-                    case var m when m == HashTaskMode.Text:
-                        await _computeHashService.HashTextAsync(_hashTask, _mres, _cts.Token);
-                        break;
-
-                    case var m when m == HashTaskMode.File:
-                        await _computeHashService.HashFileAsync(_hashTask, _mres, _cts.Token);
-                        break;
-
-                    case var m when m == HashTaskMode.Folder:
-                        await _computeHashService.HashFolderAsync(_hashTask, _mres, _cts.Token);
-                        break;
-                }
+                await _computeHashService.ComputeHashAsync(_hashTask, _mres, _cts.Token);
             }
             catch (OperationCanceledException)
             {

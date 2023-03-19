@@ -48,7 +48,7 @@ public sealed partial class App : Application
 
     public static new App Current => (App)Application.Current;
 
-    public static WinUIEx.WindowEx MainWindow { get; } = new MainWindow();
+    public static MainWindow MainWindow { get; } = new();
 
     private readonly ILogger<App> _logger;
     private Stopwatch? _stopwatch;
