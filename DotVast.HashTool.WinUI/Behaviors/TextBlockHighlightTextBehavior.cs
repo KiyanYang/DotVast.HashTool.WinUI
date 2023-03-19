@@ -10,9 +10,9 @@ namespace DotVast.HashTool.WinUI.Behaviors;
 
 public class TextBlockHighlightTextBehavior : Behavior<TextBlock>
 {
-    private long? _textPropertyToken;
     private static readonly Brush s_highlightBrush = new SolidColorBrush((Color)App.Current.Resources["SystemAccentColorLight3"]);
-    private TextHighlighter? _highlighter;
+    private readonly TextHighlighter _highlighter = new() { Background = s_highlightBrush };
+    private long? _textPropertyToken;
 
     #region HighlightText
 
@@ -64,7 +64,6 @@ public class TextBlockHighlightTextBehavior : Behavior<TextBlock>
             return;
         }
 
-        _highlighter ??= new() { Background = s_highlightBrush };
         _highlighter.Ranges.Clear();
         AssociatedObject.TextHighlighters.Clear();
 
