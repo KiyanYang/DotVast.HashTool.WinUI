@@ -36,7 +36,7 @@ internal sealed partial class ComputeHashService : IComputeHashService
             hashTask.State = HashTaskState.Completed;
         }
         catch (AggregateException ex)
-            {
+        {
             if (ex.InnerExceptions.All(e => e is OperationCanceledException))
             {
                 App.MainWindow.TryEnqueue(() => hashTask.State = HashTaskState.Canceled);
@@ -63,15 +63,16 @@ internal sealed partial class ComputeHashService : IComputeHashService
     private async Task InternalHashFilesAsync(HashTask hashTask, IList<string> filePaths, ManualResetEventSlim mres, CancellationToken ct)
     {
         hashTask.Results = new();
+        var failedFilesCount = 0;
         var filesCount = filePaths.Count;
         for (var i = 0; i < filePaths.Count; i++)
         {
             // 出现异常情况的频率较低，因此不使用 File.Exists 等涉及 IO 的额外判断操作
             try
             {
-                hashTask.ProgressMax = filesCount;
+                hashTask.ProgressMax = filesCount - failedFilesCount;
                 using var stream = File.Open(filePaths[i], FileMode.Open, FileAccess.Read, FileShare.Read);
-                var hashResult = await Task.Run(() => HashStream(hashTask, stream, i, mres, ct));
+                var hashResult = await Task.Run(() => HashStream(hashTask, stream, i - failedFilesCount, mres, ct));
                 if (hashResult != null)
                 {
                     hashResult.Type = HashResultType.File;
@@ -82,7 +83,7 @@ internal sealed partial class ComputeHashService : IComputeHashService
             catch (Exception e) when (e is DirectoryNotFoundException or FileNotFoundException)
             {
                 WeakReferenceMessenger.Default.Send(new FileNotFoundInHashFilesMessage(filePaths[i]));
-                filesCount--;
+                failedFilesCount++;
             }
             catch (Exception)
             {
