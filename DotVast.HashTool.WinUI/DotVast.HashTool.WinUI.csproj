@@ -71,11 +71,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DotVast.HashTool.WinUI.Core\DotVast.HashTool.WinUI.Core.csproj" />
-    <ProjectReference Include="..\DotVast.HashTool.ContextMenu\DotVast.HashTool.ContextMenu.vcxproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <OutputItemType>Content</OutputItemType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </ProjectReference>
+    <ProjectReference Include="..\DotVast.HashTool.ContextMenu\DotVast.HashTool.ContextMenu.vcxproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">

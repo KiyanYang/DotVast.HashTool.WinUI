@@ -183,6 +183,12 @@
     <None Include="packages.config" />
     <None Include="Source.def" />
   </ItemGroup>
+  <ItemGroup Label="CopyOutputItemToOutputDirectory"> <!-- https://github.com/dotnet/msbuild/issues/2823 -->
+    <Content Include="$(TargetPath)" >
+      <Link>%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.230225.1\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.230225.1\build\native\Microsoft.Windows.CppWinRT.targets')" />
