@@ -15,8 +15,8 @@ internal abstract partial class BaseObservableSettings : ObservableObject, IBase
 
     protected async Task<T> LoadAsync<T>(string key, T defaultValue)
     {
-        var (Has, Val) = await _localSettingsService.ReadSettingAsync<T>(key);
-        return Has ? (Val ?? defaultValue) : defaultValue;
+        var (hasValue, value) = await _localSettingsService.ReadSettingAsync<T>(key);
+        return hasValue ? (value ?? defaultValue) : defaultValue;
     }
 
     protected async Task SaveAsync<T>(T value, string key) =>

@@ -149,7 +149,7 @@ public sealed partial class HashTask : ObservableObject, IDisposable
             }
             catch (OperationCanceledException)
             {
-                _logger.LogInformation("计算哈希时操作被取消.");
+                _logger.LogDebug("计算哈希时操作被取消.");
             }
             catch (UnauthorizedAccessException ex)
             {

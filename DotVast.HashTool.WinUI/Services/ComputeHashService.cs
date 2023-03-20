@@ -10,7 +10,7 @@ using DotVast.HashTool.WinUI.Models.Messages;
 
 namespace DotVast.HashTool.WinUI.Services;
 
-internal sealed partial class ComputeHashService : IComputeHashService
+internal sealed class ComputeHashService : IComputeHashService
 {
     public async Task ComputeHashAsync(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct)
     {
@@ -92,7 +92,7 @@ internal sealed partial class ComputeHashService : IComputeHashService
         }
     }
 
-    public async Task InternalHashTextAsync(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct)
+    private async Task InternalHashTextAsync(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct)
     {
         ArgumentNullException.ThrowIfNull(hashTask.Encoding);
 
@@ -140,7 +140,7 @@ internal sealed partial class ComputeHashService : IComputeHashService
                 _ => 1024 * 1024 * 4,
             };
             var buffer = new byte[bufferSize];
-            // 每次读取长度。此初值仅用于开启初次计算，真正的首次赋值在屏障内完成。
+            // 每次读取长度。使用 bufferSize 是为了当 stream.Length == 0 时，不能进入 barrier.postPhaseAction，即保证其内 stream.Length > 0。
             var readLength = bufferSize;
 
             #endregion
@@ -189,7 +189,7 @@ internal sealed partial class ComputeHashService : IComputeHashService
 
             #endregion
 
-            // 确保报告计算完成. 主要用于解决空流(stream.Length == 0)时无法在屏障进行报告的问题.
+            // 确保报告计算完成. 主要用于当 stream.Length == 0 时没有在 barrier.postPhaseAction 进行报告的情况.
             App.MainWindow.TryEnqueue(() => hashTask.ProgressVal = progressOffset + 1);
 
             #region 创建结果并返回

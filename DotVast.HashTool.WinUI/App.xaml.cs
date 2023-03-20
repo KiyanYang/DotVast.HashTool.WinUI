@@ -114,8 +114,10 @@ public sealed partial class App : Application
         UseSerilog((context, services, loggerConfiguration) =>
         {
             var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Constants.LogsOptions.FilePath);
-            loggerConfiguration
-                .WriteTo.File(path, shared: true, rollingInterval: RollingInterval.Day, retainedFileCountLimit: 3);
+            loggerConfiguration.WriteTo.File(path, shared: true, rollingInterval: RollingInterval.Day, retainedFileCountLimit: 3);
+#if DEBUG
+            loggerConfiguration.MinimumLevel.Debug();
+#endif
         }).
         Build();
 
