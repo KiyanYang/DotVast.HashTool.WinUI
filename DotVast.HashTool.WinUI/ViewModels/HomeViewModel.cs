@@ -15,7 +15,7 @@ namespace DotVast.HashTool.WinUI.ViewModels;
 
 public sealed partial class HomeViewModel : ObservableRecipient
 {
-    private const int MillisecondsDelayCreateTask = 1000;
+    private const int MillisecondsDelayCreateTask = 750;
 
     private readonly ILogger<HomeViewModel> _logger;
     private readonly IPreferencesSettingsService _preferencesSettingsService;
@@ -76,7 +76,7 @@ public sealed partial class HomeViewModel : ObservableRecipient
                 Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Warning,
                 Title = Localization.Tip_FileSkipped_Title,
                 Message = string.Format(Localization.Tip_FileSkipped_FileNotFound, m.Value),
-                Duration = TimeSpan.FromMilliseconds(5000),
+                Duration = TimeSpan.FromMilliseconds(3500),
             });
         });
 
