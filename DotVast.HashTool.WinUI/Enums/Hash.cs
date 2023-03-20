@@ -5,6 +5,7 @@ using CryptoBase.Digests.SM3;
 
 using DotVast.HashTool.WinUI.Core.Enums;
 using DotVast.HashTool.WinUI.Helpers.Hashes;
+using DotVast.HashTool.WinUI.Helpers.JsonConverters;
 
 using HashLib4CSharp.Checksum;
 
@@ -15,78 +16,78 @@ using Crypto = System.Security.Cryptography;
 
 namespace DotVast.HashTool.WinUI.Enums;
 
-[JsonConverter(typeof(JsonConverterFactoryForGenericEnumDerived))]
+[JsonConverter(typeof(HashJsonConverter))]
 public sealed class Hash : GenericEnum<string>
 {
     public string Name { get; }
     public HashFormat Format { get; }
 
     // CRC
-    public static readonly Hash CRC32 = new("crc32", "CRC32");
+    public static readonly Hash CRC32 = new("CRC32");
 
     // MD
-    public static readonly Hash MD4 = new("md4", "MD4");
-    public static readonly Hash MD5 = new("md5", "MD5");
+    public static readonly Hash MD4 = new("MD4");
+    public static readonly Hash MD5 = new("MD5");
 
     // SHA1
-    public static readonly Hash SHA1 = new("sha1", "SHA1");
+    public static readonly Hash SHA1 = new("SHA1");
 
     // SHA2
-    public static readonly Hash SHA224 = new("sha2-224", "SHA-224");
-    public static readonly Hash SHA256 = new("sha2-256", "SHA-256");
-    public static readonly Hash SHA384 = new("sha2-384", "SHA-384");
-    public static readonly Hash SHA512 = new("sha2-512", "SHA-512");
+    public static readonly Hash SHA224 = new("SHA-224");
+    public static readonly Hash SHA256 = new("SHA-256");
+    public static readonly Hash SHA384 = new("SHA-384");
+    public static readonly Hash SHA512 = new("SHA-512");
 
     // SHA3
-    public static readonly Hash SHA3_224 = new("sha3-224", "SHA3-224");
-    public static readonly Hash SHA3_256 = new("sha3-256", "SHA3-256");
-    public static readonly Hash SHA3_384 = new("sha3-384", "SHA3-384");
-    public static readonly Hash SHA3_512 = new("sha3-512", "SHA3-512");
+    public static readonly Hash SHA3_224 = new("SHA3-224");
+    public static readonly Hash SHA3_256 = new("SHA3-256");
+    public static readonly Hash SHA3_384 = new("SHA3-384");
+    public static readonly Hash SHA3_512 = new("SHA3-512");
 
     // SM
-    public static readonly Hash SM3 = new("sm3", "SM3");
+    public static readonly Hash SM3 = new("SM3");
 
     // Blake2
-    public static readonly Hash BLAKE2b_160 = new("blake2b-160", "BLAKE2b-160");
-    public static readonly Hash BLAKE2b_256 = new("blake2b-256", "BLAKE2b-256");
-    public static readonly Hash BLAKE2b_384 = new("blake2b-384", "BLAKE2b-384");
-    public static readonly Hash BLAKE2b_512 = new("blake2b-512", "BLAKE2b-512");
-    public static readonly Hash BLAKE2s_128 = new("blake2s-128", "BLAKE2s-128");
-    public static readonly Hash BLAKE2s_160 = new("blake2s-160", "BLAKE2s-160");
-    public static readonly Hash BLAKE2s_224 = new("blake2s-224", "BLAKE2s-224");
-    public static readonly Hash BLAKE2s_256 = new("blake2s-256", "BLAKE2s-256");
-    public static readonly Hash BLAKE2bp = new("blake2bp", "BLAKE2bp");
-    public static readonly Hash BLAKE2sp = new("blake2sp", "BLAKE2sp");
+    public static readonly Hash BLAKE2b_160 = new("BLAKE2b-160");
+    public static readonly Hash BLAKE2b_256 = new("BLAKE2b-256");
+    public static readonly Hash BLAKE2b_384 = new("BLAKE2b-384");
+    public static readonly Hash BLAKE2b_512 = new("BLAKE2b-512");
+    public static readonly Hash BLAKE2s_128 = new("BLAKE2s-128");
+    public static readonly Hash BLAKE2s_160 = new("BLAKE2s-160");
+    public static readonly Hash BLAKE2s_224 = new("BLAKE2s-224");
+    public static readonly Hash BLAKE2s_256 = new("BLAKE2s-256");
+    public static readonly Hash BLAKE2bp = new("BLAKE2bp");
+    public static readonly Hash BLAKE2sp = new("BLAKE2sp");
 
     // Blake3
-    public static readonly Hash BLAKE3 = new("blake3", "BLAKE3");
+    public static readonly Hash BLAKE3 = new("BLAKE3");
 
     // RIPEMD
-    public static readonly Hash RIPEMD_128 = new("ripemd-128", "RIPEMD-128");
-    public static readonly Hash RIPEMD_160 = new("ripemd-160", "RIPEMD-160");
-    public static readonly Hash RIPEMD_256 = new("ripemd-256", "RIPEMD-256");
-    public static readonly Hash RIPEMD_320 = new("ripemd-320", "RIPEMD-320");
+    public static readonly Hash RIPEMD_128 = new("RIPEMD-128");
+    public static readonly Hash RIPEMD_160 = new("RIPEMD-160");
+    public static readonly Hash RIPEMD_256 = new("RIPEMD-256");
+    public static readonly Hash RIPEMD_320 = new("RIPEMD-320");
 
     // Keccak
-    public static readonly Hash Keccak_224 = new("keccak-224", "Keccak-224");
-    public static readonly Hash Keccak_256 = new("keccak-256", "Keccak-256");
-    public static readonly Hash Keccak_288 = new("keccak-288", "Keccak-288");
-    public static readonly Hash Keccak_384 = new("keccak-384", "Keccak-384");
-    public static readonly Hash Keccak_512 = new("keccak-512", "Keccak-512");
+    public static readonly Hash Keccak_224 = new("Keccak-224");
+    public static readonly Hash Keccak_256 = new("Keccak-256");
+    public static readonly Hash Keccak_288 = new("Keccak-288");
+    public static readonly Hash Keccak_384 = new("Keccak-384");
+    public static readonly Hash Keccak_512 = new("Keccak-512");
 
     // xxHash
-    public static readonly Hash XxHash32 = new("xxhash32", "xxHash32");
-    public static readonly Hash XxHash64 = new("xxhash64", "xxHash64");
+    public static readonly Hash XxHash32 = new("xxHash32");
+    public static readonly Hash XxHash64 = new("xxHash64");
 
     // Others
-    public static readonly Hash QuickXor = new("quickxor", "QuickXor", HashFormat.Base64);
-    public static readonly Hash Ed2k = new("ed2k", "eD2k");
-    public static readonly Hash Has160 = new("has-160", "HAS-160");
+    public static readonly Hash QuickXor = new("QuickXor", HashFormat.Base64);
+    public static readonly Hash Ed2k = new("eD2k");
+    public static readonly Hash Has160 = new("HAS-160");
 
     public static Hash[] All => s_all ??= GetFieldValues<Hash>();
     private static Hash[]? s_all;
 
-    private Hash(string key, string name, HashFormat format = HashFormat.Base16) : base(key)
+    private Hash(string name, HashFormat format = HashFormat.Base16) : base(name)
     {
         Name = name;
         Format = format;

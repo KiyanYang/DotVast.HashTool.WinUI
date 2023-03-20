@@ -27,24 +27,28 @@ public sealed class JsonConverterFactoryForGenericEnumDerived : JsonConverterFac
     }
 }
 
-sealed file class JsonConverterForGenericEnum<TEnum, TKey> : JsonConverter<TEnum>
+public class JsonConverterForGenericEnum<TEnum, TKey> : JsonConverter<TEnum>
     where TEnum : GenericEnum<TKey>
 {
     private readonly TEnum[] _enums;
     private readonly Type _keyType;
     private readonly JsonConverter<TKey> _keyConverter;
+    private readonly IEqualityComparer<TKey> _comparer;
 
-    public JsonConverterForGenericEnum(JsonSerializerOptions options)
+    public JsonConverterForGenericEnum(JsonSerializerOptions options) : this(options, null) { }
+
+    public JsonConverterForGenericEnum(JsonSerializerOptions options, IEqualityComparer<TKey>? comparer)
     {
         _enums = GenericEnum.GetFieldValues<TEnum>();
         _keyType = typeof(TKey);
         _keyConverter = (JsonConverter<TKey>)options.GetConverter(_keyType);
+        _comparer = comparer ?? EqualityComparer<TKey>.Default;
     }
 
     public override TEnum? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         var key = _keyConverter.Read(ref reader, _keyType, options);
-        return _enums.FirstOrDefault(i => EqualityComparer<TKey>.Default.Equals(i._key, key));
+        return _enums.FirstOrDefault(i => _comparer.Equals(i._key, key));
     }
 
     public override void Write(Utf8JsonWriter writer, TEnum value, JsonSerializerOptions options)
