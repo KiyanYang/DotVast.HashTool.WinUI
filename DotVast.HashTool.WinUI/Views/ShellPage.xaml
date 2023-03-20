@@ -69,8 +69,10 @@
         <InfoBar
             Margin="24"
             HorizontalAlignment="Center"
-            VerticalAlignment="Bottom"
-            Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}">
+            VerticalAlignment="Bottom">
+            <InfoBar.Resources>
+                <StaticResource x:Key="InfoBarInformationalSeverityBackgroundBrush" ResourceKey="AcrylicBackgroundFillColorBaseBrush" />
+            </InfoBar.Resources>
             <i:Interaction.Behaviors>
                 <labs:StackedNotificationsBehavior x:Name="NotificationQueue" />
             </i:Interaction.Behaviors>
