@@ -1,10 +1,12 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style x:Key="CollapsedAppBarButtonStyle" BasedOn="{StaticResource DefaultAppBarButtonStyle}" TargetType="AppBarButton">
-        <Setter Property="Width" Value="40" />
+    <x:Double x:Key="AppBarThemeCompactWidth">44</x:Double>
+
+    <Style x:Key="CompactAppBarButtonStyle" BasedOn="{StaticResource DefaultAppBarButtonStyle}" TargetType="AppBarButton">
+        <Setter Property="Width" Value="{ThemeResource AppBarThemeCompactWidth}" />
     </Style>
-    <Style x:Key="CollapsedAppBarToggleButtonStyle" BasedOn="{StaticResource DefaultAppBarToggleButtonStyle}" TargetType="AppBarToggleButton">
-        <Setter Property="Width" Value="40" />
+    <Style x:Key="CompactAppBarToggleButtonStyle" BasedOn="{StaticResource DefaultAppBarToggleButtonStyle}" TargetType="AppBarToggleButton">
+        <Setter Property="Width" Value="{ThemeResource AppBarThemeCompactWidth}" />
     </Style>
 
 </ResourceDictionary>

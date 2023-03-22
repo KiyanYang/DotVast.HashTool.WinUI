@@ -61,7 +61,7 @@
             Grid.Column="2"
             DefaultLabelPosition="Collapsed">
             <CommandBar.Resources>
-                <Style BasedOn="{StaticResource CollapsedAppBarButtonStyle}" TargetType="AppBarButton" />
+                <Style BasedOn="{StaticResource CompactAppBarButtonStyle}" TargetType="AppBarButton" />
             </CommandBar.Resources>
             <AppBarButton Command="{x:Bind ViewModel.StartTaskCommand}">
                 <i:Interaction.Behaviors>

@@ -52,8 +52,8 @@
                         Margin="0,0,-8,0"
                         DefaultLabelPosition="Collapsed">
                         <CommandBar.Resources>
-                            <Style BasedOn="{StaticResource CollapsedAppBarButtonStyle}" TargetType="AppBarButton" />
-                            <Style BasedOn="{StaticResource CollapsedAppBarToggleButtonStyle}" TargetType="AppBarToggleButton" />
+                            <Style BasedOn="{StaticResource CompactAppBarButtonStyle}" TargetType="AppBarButton" />
+                            <Style BasedOn="{StaticResource CompactAppBarToggleButtonStyle}" TargetType="AppBarToggleButton" />
                         </CommandBar.Resources>
                         <AppBarButton
                             Command="{StaticResource SaveCommand}"
