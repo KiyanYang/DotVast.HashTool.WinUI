@@ -3,8 +3,17 @@ name: Build MSIX
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'Assets/**'
+      - '.*'
+      - '*.md'
   pull_request:
     branches: [main]
+    paths-ignore:
+      - 'Assets/**'
+      - '.*'
+      - '*.md'
+  workflow_dispatch:
 
 jobs:
   build:
