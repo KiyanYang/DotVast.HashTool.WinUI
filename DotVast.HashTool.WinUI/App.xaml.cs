@@ -51,12 +51,10 @@ public sealed partial class App : Application
     public static MainWindow MainWindow { get; } = new();
 
     private readonly ILogger<App> _logger;
-    private Stopwatch? _stopwatch;
+    private readonly long _createdTimestamp = Stopwatch.GetTimestamp();
 
     public App()
     {
-        _stopwatch = Stopwatch.StartNew();
-
         InitializeComponent();
 
         Host = Microsoft.Extensions.Hosting.Host.
@@ -148,9 +146,7 @@ public sealed partial class App : Application
 
         await GetService<IActivationService>().ActivateAsync(args);
 
-        _stopwatch!.Stop();
-        _logger.AppLaunchedElapsedTime(_stopwatch.ElapsedMilliseconds);
-        _stopwatch = null;
+        _logger.AppLaunchedElapsedTime(Stopwatch.GetElapsedTime(_createdTimestamp));
     }
 
     private static void ConfigureHttpClient(IServiceCollection services)

@@ -14,7 +14,7 @@ internal sealed class ComputeHashService : IComputeHashService
 {
     public async Task ComputeHashAsync(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct)
     {
-        var stopWatch = Stopwatch.StartNew();
+        var startTimestamp = Stopwatch.GetTimestamp();
         hashTask.State = HashTaskState.Working;
         hashTask.Elapsed = default;
         hashTask.Results = default;
@@ -55,8 +55,8 @@ internal sealed class ComputeHashService : IComputeHashService
         }
         finally
         {
-            stopWatch.Stop();
-            App.MainWindow.TryEnqueue(() => hashTask.Elapsed = stopWatch.Elapsed);
+            var elapsed = Stopwatch.GetElapsedTime(startTimestamp);
+            App.MainWindow.TryEnqueue(() => hashTask.Elapsed = elapsed);
         }
     }
 

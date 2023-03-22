@@ -4,10 +4,10 @@ namespace DotVast.HashTool.WinUI.Helpers;
 
 public static partial class Log
 {
-    [LoggerMessage(EventId = 10, Level = LogLevel.Information, Message = "软件已启动, 用时: {Elapsed} ms.")]
-    public static partial void AppLaunchedElapsedTime(this ILogger logger, long elapsed);
+    [LoggerMessage(EventId = 10, Level = LogLevel.Information, Message = "软件已启动, 用时: {Elapsed}.")]
+    public static partial void AppLaunchedElapsedTime(this ILogger logger, TimeSpan elapsed);
 
-    [LoggerMessage(EventId = 100, Level = LogLevel.Information, Message = "AppWindow '{Location}' Destroying.\n##############################")]
+    [LoggerMessage(EventId = 100, Level = LogLevel.Information, Message = "AppWindow '{Location}' Destroying.")]
     public static partial void AppWindowDestroying(this ILogger logger, string? location);
 
     [LoggerMessage(EventId = 200, Level = LogLevel.Information, Message = "Window '{Location}' Closed.")]
