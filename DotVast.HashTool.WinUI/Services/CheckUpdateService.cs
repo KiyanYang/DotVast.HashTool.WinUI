@@ -1,7 +1,6 @@
 using System.Net.Http.Json;
 using System.Text.RegularExpressions;
 
-using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.Models;
@@ -31,7 +30,8 @@ internal partial class CheckUpdateService : ICheckUpdateService
 
     public async Task StartupAsync()
     {
-        await CheckForUpdateOnStartupAsync();
+        _ = CheckForUpdateOnStartupAsync();
+        await Task.CompletedTask;
     }
 
     public async Task<GitHubRelease?> GetLatestGitHubReleaseAsync(bool includePreRelease = false)
