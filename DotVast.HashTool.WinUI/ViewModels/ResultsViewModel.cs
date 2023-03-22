@@ -1,5 +1,4 @@
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
-using DotVast.HashTool.WinUI.Contracts.ViewModels;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 
@@ -7,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
-public sealed partial class ResultsViewModel : ObservableRecipient, INavigationAware
+public sealed partial class ResultsViewModel : ObservableRecipient, IViewModel, INavigationAware
 {
     private readonly ILogger<ResultsViewModel> _logger;
     private readonly IAppearanceSettingsService _appearanceSettingsService;

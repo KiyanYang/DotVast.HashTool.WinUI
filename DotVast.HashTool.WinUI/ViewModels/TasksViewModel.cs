@@ -8,15 +8,13 @@ using System.Text.Unicode;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 
-using DotVast.HashTool.WinUI.Contracts.Services;
-using DotVast.HashTool.WinUI.Contracts.ViewModels;
 using DotVast.HashTool.WinUI.Models;
 
 using Windows.Storage.Pickers;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
-public sealed partial class TasksViewModel : ObservableRecipient, INavigationAware
+public sealed partial class TasksViewModel : ObservableRecipient, IViewModel, INavigationAware
 {
     private readonly IHashTaskService _hashTaskService;
     private readonly INavigationService _navigationService;

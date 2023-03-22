@@ -8,9 +8,11 @@ using Windows.ApplicationModel.DataTransfer;
 
 namespace DotVast.HashTool.WinUI.Views;
 
-public sealed partial class HomePage : Page
+public sealed partial class HomePage : Page, IView
 {
     public HomeViewModel ViewModel { get; }
+
+    IViewModel IView.ViewModel => ViewModel;
 
     public HomePage()
     {

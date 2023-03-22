@@ -1,6 +1,5 @@
 using CommunityToolkit.Mvvm.Input;
 
-using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Core.Enums;
 using DotVast.HashTool.WinUI.Enums;
@@ -8,7 +7,7 @@ using DotVast.HashTool.WinUI.Helpers;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
-public sealed partial class SettingsViewModel : ObservableRecipient
+public sealed partial class SettingsViewModel : ObservableRecipient, IViewModel
 {
     private readonly INavigationService _navigationService;
     private readonly IAppearanceSettingsService _appearanceSettingsService;

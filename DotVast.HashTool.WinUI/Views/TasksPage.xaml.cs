@@ -4,10 +4,12 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace DotVast.HashTool.WinUI.Views;
 
-public sealed partial class TasksPage : Page
+public sealed partial class TasksPage : Page, IView
 {
     public AuxiliaryObject Auxiliary { get; }
     public TasksViewModel ViewModel { get; }
+
+    IViewModel IView.ViewModel => ViewModel;
 
     public TasksPage()
     {

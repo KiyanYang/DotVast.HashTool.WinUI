@@ -5,9 +5,11 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace DotVast.HashTool.WinUI.Views;
 
-public sealed partial class LicensesPage : Page
+public sealed partial class LicensesPage : Page, IView
 {
     public LicensesViewModel ViewModel { get; }
+
+    IViewModel IView.ViewModel => ViewModel;
 
     public LicensesPage()
     {

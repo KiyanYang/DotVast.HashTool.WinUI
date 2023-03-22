@@ -1,5 +1,8 @@
 global using CommunityToolkit.Mvvm.ComponentModel;
 
+global using DotVast.HashTool.WinUI.Contracts.Services;
+global using DotVast.HashTool.WinUI.Contracts.ViewModels;
+global using DotVast.HashTool.WinUI.Contracts.Views;
 global using DotVast.HashTool.WinUI.Strings;
 
 global using static CommunityToolkit.Mvvm.Messaging.IMessengerExtensions;

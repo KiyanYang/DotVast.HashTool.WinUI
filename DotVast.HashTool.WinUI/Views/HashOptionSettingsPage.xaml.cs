@@ -5,11 +5,13 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace DotVast.HashTool.WinUI.Views;
 
-public sealed partial class HashOptionSettingsPage : Page
+public sealed partial class HashOptionSettingsPage : Page, IView
 {
     private const double HashOptionGridViewItemMinWidth = 200;
 
     public HashOptionSettingsViewModel ViewModel { get; }
+
+    IViewModel IView.ViewModel => ViewModel;
 
     public HashOptionSettingsPage()
     {

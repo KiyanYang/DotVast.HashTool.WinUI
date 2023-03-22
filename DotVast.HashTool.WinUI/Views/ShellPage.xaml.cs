@@ -1,4 +1,3 @@
-using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.ViewModels;
 
 using Microsoft.UI.Xaml;
@@ -10,9 +9,11 @@ using Windows.System;
 
 namespace DotVast.HashTool.WinUI.Views;
 
-public sealed partial class ShellPage : Page
+public sealed partial class ShellPage : Page, IView
 {
     public ShellViewModel ViewModel { get; }
+
+    IViewModel IView.ViewModel => ViewModel;
 
     public ShellPage(ShellViewModel viewModel)
     {

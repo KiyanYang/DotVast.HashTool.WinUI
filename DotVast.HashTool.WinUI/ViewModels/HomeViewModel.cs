@@ -3,7 +3,6 @@ using System.Diagnostics;
 
 using CommunityToolkit.Mvvm.Messaging.Messages;
 
-using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
@@ -13,7 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
-public sealed partial class HomeViewModel : ObservableRecipient
+public sealed partial class HomeViewModel : ObservableRecipient, IViewModel
 {
     private const int MillisecondsDelayCreateTask = 750;
 

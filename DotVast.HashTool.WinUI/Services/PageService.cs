@@ -1,4 +1,3 @@
-using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.ViewModels;
 using DotVast.HashTool.WinUI.Views;
 
@@ -35,8 +34,8 @@ public sealed class PageService : IPageService
     }
 
     private void Configure<VM, V>()
-        where VM : ObservableObject
-        where V : Page
+        where VM : IViewModel
+        where V : Page, IView
     {
         lock (_pages)
         {

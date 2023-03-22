@@ -2,7 +2,7 @@ using DotVast.HashTool.WinUI.Models;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
-public sealed class LicensesViewModel : ObservableObject
+public sealed class LicensesViewModel : IViewModel
 {
     public LicenseInfo[] Licenses { get; } = new LicenseInfo[]
     {

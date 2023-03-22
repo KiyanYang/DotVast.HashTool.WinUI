@@ -1,11 +1,10 @@
-using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Views;
 
 using Microsoft.UI.Xaml.Navigation;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
-public sealed partial class ShellViewModel : ObservableObject
+public sealed partial class ShellViewModel : ObservableObject, IViewModel
 {
     public INavigationService NavigationService { get; }
 
