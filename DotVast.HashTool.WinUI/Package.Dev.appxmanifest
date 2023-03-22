@@ -27,8 +27,8 @@
     </Properties>
 
     <Dependencies>
-        <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.22000.0" MaxVersionTested="10.0.22621.0" />
-        <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.22000.0" MaxVersionTested="10.0.22621.0" />
+        <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.19041.0" MaxVersionTested="10.0.22621.0" />
+        <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.19041.0" MaxVersionTested="10.0.22621.0" />
     </Dependencies>
 
     <Resources>
@@ -54,7 +54,7 @@
                         <uap5:ExecutionAlias Alias="DotVast.HashTool.Dev.exe" />
                     </uap5:AppExecutionAlias>
                 </uap5:Extension>
-                
+
                 <desktop:Extension Category="windows.toastNotificationActivation">
                     <desktop:ToastNotificationActivation ToastActivatorCLSID="05A7D9A5-D17B-4950-9DD0-480D90FC606C" />
                 </desktop:Extension>
@@ -70,10 +70,10 @@
                 <desktop4:Extension Category="windows.fileExplorerContextMenus">
                     <desktop4:FileExplorerContextMenus>
                         <desktop5:ItemType Type="*">
-                            <desktop5:Verb Id="Command" Clsid="C8085C38-E65F-4DA6-BBBA-A47246499B6D" />
+                            <desktop5:Verb Id="DotVastHashToolDevCommand" Clsid="C8085C38-E65F-4DA6-BBBA-A47246499B6D" />
                         </desktop5:ItemType>
                         <desktop5:ItemType Type="Directory">
-                            <desktop5:Verb Id="Command" Clsid="C8085C38-E65F-4DA6-BBBA-A47246499B6D" />
+                            <desktop5:Verb Id="DotVastHashToolDevCommand" Clsid="C8085C38-E65F-4DA6-BBBA-A47246499B6D" />
                         </desktop5:ItemType>
                     </desktop4:FileExplorerContextMenus>
                 </desktop4:Extension>
