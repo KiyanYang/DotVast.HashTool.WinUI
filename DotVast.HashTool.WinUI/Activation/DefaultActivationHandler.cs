@@ -1,5 +1,3 @@
-using DotVast.HashTool.WinUI.Contracts.Services;
-
 using Microsoft.UI.Xaml;
 
 namespace DotVast.HashTool.WinUI.Activation;

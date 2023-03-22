@@ -1,4 +1,3 @@
-using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Core.Helpers;
 
 using Windows.Storage;

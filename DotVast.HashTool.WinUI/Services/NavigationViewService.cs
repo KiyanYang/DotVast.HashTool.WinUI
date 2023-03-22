@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 
-using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Helpers;
 
 using Microsoft.UI.Xaml.Controls;

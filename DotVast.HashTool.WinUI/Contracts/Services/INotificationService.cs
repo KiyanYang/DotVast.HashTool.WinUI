@@ -9,7 +9,7 @@ public interface INotificationService
     /// </summary>
     /// <param name="navigationView"></param>
     void Initialize(StackedNotificationsBehavior notificationQueue);
-    
+
     /// <summary>
     /// 显示通知.
     /// </summary>

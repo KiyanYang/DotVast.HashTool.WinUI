@@ -2,8 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 
 using CommunityToolkit.Labs.WinUI;
 
-using DotVast.HashTool.WinUI.Contracts.Services;
-
 namespace DotVast.HashTool.WinUI.Services;
 
 public class NotificationService : INotificationService

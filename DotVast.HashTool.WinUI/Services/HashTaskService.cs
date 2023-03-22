@@ -1,6 +1,5 @@
 using System.Collections.ObjectModel;
 
-using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 

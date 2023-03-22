@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
-using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 
 namespace DotVast.HashTool.WinUI.Services.Settings;

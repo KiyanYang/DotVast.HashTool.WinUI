@@ -1,5 +1,4 @@
 using DotVast.HashTool.WinUI.Activation;
-using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Views;
 

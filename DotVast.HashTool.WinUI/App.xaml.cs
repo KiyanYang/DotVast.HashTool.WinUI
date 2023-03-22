@@ -1,11 +1,8 @@
 using System.Diagnostics;
 
 using DotVast.HashTool.WinUI.Activation;
-using DotVast.HashTool.WinUI.Contracts.Services;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Controls;
-using DotVast.HashTool.WinUI.Core.Contracts.Services;
-using DotVast.HashTool.WinUI.Core.Services;
 using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.Helpers.JsonConverters;
 using DotVast.HashTool.WinUI.Services;
@@ -88,7 +85,6 @@ public sealed partial class App : Application
             services.AddSingleton<IHashTaskService, HashTaskService>();
 
             // Core Services
-            services.AddSingleton<IFileService, FileService>();
 
             // Views and ViewModels
             services.AddTransient<HashOptionSettingsViewModel>();

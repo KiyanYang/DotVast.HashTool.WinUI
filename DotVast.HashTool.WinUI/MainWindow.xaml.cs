@@ -1,5 +1,3 @@
-using DotVast.HashTool.WinUI.Contracts.Services;
-
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 
@@ -25,7 +23,7 @@ public sealed partial class MainWindow : WindowEx
 
         Closed += (_, _) =>
         {
-            foreach(var hashTask in App.GetService<IHashTaskService>().HashTasks)
+            foreach (var hashTask in App.GetService<IHashTaskService>().HashTasks)
             {
                 hashTask.Cancel();
             }
