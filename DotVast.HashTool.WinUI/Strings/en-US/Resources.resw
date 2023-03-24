@@ -51,6 +51,9 @@
   <data name="Licenses_Title" xml:space="preserve">
     <value>Licenses</value>
   </data>
+  <data name="RestartToApplyChange" xml:space="preserve">
+    <value>Change will apply after restart</value>
+  </data>
   <data name="ResultsPage_Detail_CreatedDateTime.Text" xml:space="preserve">
     <value>Created</value>
   </data>

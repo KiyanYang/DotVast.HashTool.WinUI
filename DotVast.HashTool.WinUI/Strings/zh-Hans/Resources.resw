@@ -164,6 +164,9 @@
   <data name="Licenses_Title" xml:space="preserve">
     <value>许可</value>
   </data>
+  <data name="RestartToApplyChange" xml:space="preserve">
+    <value>重启后生效</value>
+  </data>
   <data name="ResultsPage_Detail_CreatedDateTime.Text" xml:space="preserve">
     <value>创建时间</value>
   </data>

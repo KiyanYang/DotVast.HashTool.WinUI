@@ -14,6 +14,7 @@ public sealed partial class SettingsViewModel : ObservableRecipient, IViewModel
     private readonly IPreferencesSettingsService _preferencesSettingsService;
     private readonly ICheckUpdateService _checkUpdateService;
     private readonly IDialogService _dialogService;
+    private readonly INotificationService _notificationService;
 
     public string AppVersionHeader { get; }
 
@@ -34,8 +35,16 @@ public sealed partial class SettingsViewModel : ObservableRecipient, IViewModel
     [ObservableProperty]
     private AppLanguage _appLanguage;
 
-    partial void OnAppLanguageChanged(AppLanguage value) =>
-       _appearanceSettingsService.Language = value;
+    partial void OnAppLanguageChanged(AppLanguage value)
+    {
+        _appearanceSettingsService.Language = value;
+        _notificationService.Show(new()
+        {
+            Title = BaseLocalization.GetLocalized(Localization.SubtreeId, nameof(Localization.RestartToApplyChange), value.Tag),
+            Duration = TimeSpan.FromMilliseconds(3000),
+            Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Informational,
+        });
+    }
 
     #endregion Language
 
@@ -96,13 +105,15 @@ public sealed partial class SettingsViewModel : ObservableRecipient, IViewModel
         IAppearanceSettingsService appearanceSettingsService,
         IPreferencesSettingsService preferencesSettingsService,
         ICheckUpdateService checkUpdateService,
-        IDialogService dialogService)
+        IDialogService dialogService,
+        INotificationService notificationService)
     {
         _navigationService = navigationService;
         _appearanceSettingsService = appearanceSettingsService;
         _preferencesSettingsService = preferencesSettingsService;
         _checkUpdateService = checkUpdateService;
         _dialogService = dialogService;
+        _notificationService = notificationService;
 
         _isAlwaysOnTop = _appearanceSettingsService.IsAlwaysOnTop;
 
