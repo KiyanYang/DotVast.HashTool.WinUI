@@ -67,12 +67,18 @@
             <Frame x:Name="NavigationFrame" />
         </NavigationView>
         <InfoBar
+            MinWidth="400"
             Margin="24"
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom">
             <InfoBar.Resources>
                 <SolidColorBrush x:Key="InfoBarInformationalSeverityBackgroundBrush" Color="{ThemeResource SystemFillColorSolidAttentionBackground}" />
             </InfoBar.Resources>
+            <InfoBar.Transitions>
+                <TransitionCollection>
+                    <EdgeUIThemeTransition />
+                </TransitionCollection>
+            </InfoBar.Transitions>
             <i:Interaction.Behaviors>
                 <labs:StackedNotificationsBehavior x:Name="NotificationQueue" />
             </i:Interaction.Behaviors>
