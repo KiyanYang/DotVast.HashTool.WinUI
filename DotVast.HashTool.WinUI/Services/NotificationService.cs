@@ -4,7 +4,7 @@ using CommunityToolkit.Labs.WinUI;
 
 namespace DotVast.HashTool.WinUI.Services;
 
-public class NotificationService : INotificationService
+public sealed class NotificationService : INotificationService
 {
     private StackedNotificationsBehavior? _notificationQueue { get; set; }
 

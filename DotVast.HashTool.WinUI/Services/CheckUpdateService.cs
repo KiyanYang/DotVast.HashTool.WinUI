@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DotVast.HashTool.WinUI.Services;
 
-internal partial class CheckUpdateService : ICheckUpdateService
+internal sealed partial class CheckUpdateService : ICheckUpdateService
 {
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly ILogger<CheckUpdateService> _logger;

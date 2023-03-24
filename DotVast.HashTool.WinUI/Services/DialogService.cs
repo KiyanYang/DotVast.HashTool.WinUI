@@ -8,7 +8,7 @@ using Microsoft.Xaml.Interactivity;
 
 namespace DotVast.HashTool.WinUI.Services;
 
-internal class DialogService : IDialogService
+internal sealed class DialogService : IDialogService
 {
     private readonly IAppearanceSettingsService _appearanceSettingsService;
 

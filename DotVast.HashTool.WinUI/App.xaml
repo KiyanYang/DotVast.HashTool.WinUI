@@ -23,10 +23,10 @@
             <converters:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter" />
             <ctConverters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
-            <SolidColorBrush x:Key="WindowCaptionForeground" Color="{ThemeResource TextFillColorPrimary}" />
-            <SolidColorBrush x:Key="WindowCaptionForegroundDisabled" Color="{ThemeResource TextFillColorDisabled}" />
             <SolidColorBrush x:Key="WindowCaptionBackground" Color="Transparent" />
             <SolidColorBrush x:Key="WindowCaptionBackgroundDisabled" Color="Transparent" />
+            <SolidColorBrush x:Key="WindowCaptionForeground" Color="{ThemeResource TextFillColorPrimary}" />
+            <SolidColorBrush x:Key="WindowCaptionForegroundDisabled" Color="{ThemeResource TextFillColorDisabled}" />
 
             <!-- https://learn.microsoft.com/windows/apps/design/layout/screen-sizes-and-breakpoints-for-responsive-design -->
             <x:Double x:Key="SmallScreenBreakpoint">641</x:Double>
