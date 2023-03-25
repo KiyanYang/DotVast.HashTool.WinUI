@@ -24,7 +24,7 @@
     <ApplicationIcon>Assets/Icon.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <EnableMsixTooling>true</EnableMsixTooling>
-    <DefaultLanguage>zh-Hans</DefaultLanguage>
+    <DefaultLanguage>en-US</DefaultLanguage>
     <AppxBundle>Never</AppxBundle>
     <AppxPackageDir>bin\AppPackages</AppxPackageDir>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
