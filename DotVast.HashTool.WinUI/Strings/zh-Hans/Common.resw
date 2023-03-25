@@ -155,6 +155,9 @@
   <data name="Resume" xml:space="preserve">
     <value>继续</value>
   </data>
+  <data name="Start" xml:space="preserve">
+    <value>开始</value>
+  </data>
   <data name="Yes" xml:space="preserve">
     <value>是</value>
   </data>

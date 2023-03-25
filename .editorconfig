@@ -154,6 +154,9 @@ csharp_space_between_method_declaration_parameter_list_parentheses = false
 csharp_space_between_parentheses = false
 csharp_space_between_square_brackets = false
 
+# Code Quality
+dotnet_code_quality.CA1822.api_surface = internal, public   # CA1822: Mark members as static
+
 # C++ Files
 [*.{cpp,h,in}]
 charset = utf-8-bom

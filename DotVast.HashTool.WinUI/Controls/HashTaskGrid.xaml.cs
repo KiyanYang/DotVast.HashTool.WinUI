@@ -54,24 +54,24 @@ public sealed partial class HashTaskGrid : UserControl
     private const string IconEdit = "\uE70F";
     private const string IconDelete = "\uE74D";
 
-    public static string GetStartBtnIcon() => IconStart;
+    private string GetStartBtnIcon() => IconStart;
 
-    public static string GetResetBtnIcon(HashTaskState state)
+    private string GetResetBtnIcon(HashTaskState state)
     {
         return state == HashTaskState.Working ? IconPause : IconResume;
     }
 
-    public static string GetCancelBtnIcon() => IconCancel;
+    private string GetCancelBtnIcon() => IconCancel;
 
-    public static string GetEditBtnIcon() => IconEdit;
+    private string GetEditBtnIcon() => IconEdit;
 
-    public static string GetDeleteBtnIcon() => IconDelete;
+    private string GetDeleteBtnIcon() => IconDelete;
 
     #endregion Icon
 
     #region Visibility
 
-    public static Visibility GetHashTaskStateTextVisibility(HashTaskState state)
+    private Visibility GetHashTaskStateTextVisibility(HashTaskState state)
     {
         return GetProgressRingVisibility(state) switch
         {
@@ -80,19 +80,24 @@ public sealed partial class HashTaskGrid : UserControl
         };
     }
 
-    public static Visibility GetProgressRingVisibility(HashTaskState state)
+    private Visibility GetProgressRingVisibility(HashTaskState state)
     {
         return state == HashTaskState.Working || state == HashTaskState.Paused ? Visibility.Visible : Visibility.Collapsed;
     }
 
-    public static bool IsProgressRingIndeterminate(HashTaskState state)
+    private bool IsProgressRingIndeterminate(HashTaskState state)
     {
         return state == HashTaskState.Paused;
     }
 
     #endregion Visibility
 
-    public static string GetSecondaryInformationText(HashTask? hashTask)
+    private string GetResetBtnToolTip(HashTaskState state)
+    {
+        return state == HashTaskState.Working ? LocalizationCommon.Pause : LocalizationCommon.Resume;
+    }
+
+    private string GetSecondaryInformationText(HashTask? hashTask)
     {
         if (hashTask is null)
         {
@@ -111,7 +116,7 @@ public sealed partial class HashTaskGrid : UserControl
         return $"{mode}{dateTime}{encoding}{hashNames}";
     }
 
-    public static string GetProgressText(double val, double max)
+    private string GetProgressText(double val, double max)
     {
         return $"{val / max * 100:F0}";
     }

@@ -7,7 +7,6 @@
     xmlns:behaviors="using:DotVast.HashTool.WinUI.Behaviors"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:i18n="using:DotVast.HashTool.WinUI.Strings"
-    xmlns:local="using:DotVast.HashTool.WinUI.Controls"
     mc:Ignorable="d">
 
     <Grid ColumnSpacing="8" RowSpacing="4">
@@ -41,18 +40,18 @@
             HorizontalAlignment="Center"
             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
             Text="{x:Bind HashTask.State, Mode=OneWay}"
-            Visibility="{x:Bind local:HashTaskGrid.GetHashTaskStateTextVisibility(HashTask.State), Mode=OneWay}" />
+            Visibility="{x:Bind GetHashTaskStateTextVisibility(HashTask.State), Mode=OneWay}" />
         <Grid
             Grid.RowSpan="2"
             Grid.Column="1"
-            Visibility="{x:Bind local:HashTaskGrid.GetProgressRingVisibility(HashTask.State), Mode=OneWay}">
+            Visibility="{x:Bind GetProgressRingVisibility(HashTask.State), Mode=OneWay}">
             <ProgressRing
                 Width="40"
                 Height="40"
-                IsIndeterminate="{x:Bind local:HashTaskGrid.IsProgressRingIndeterminate(HashTask.State), Mode=OneWay}"
+                IsIndeterminate="{x:Bind IsProgressRingIndeterminate(HashTask.State), Mode=OneWay}"
                 Maximum="{x:Bind HashTask.ProgressMax, Mode=OneWay}"
                 Value="{x:Bind HashTask.ProgressVal, Mode=OneWay}" />
-            <TextBlock HorizontalAlignment="Center" Text="{x:Bind local:HashTaskGrid.GetProgressText(HashTask.ProgressVal, HashTask.ProgressMax), Mode=OneWay}" />
+            <TextBlock HorizontalAlignment="Center" Text="{x:Bind GetProgressText(HashTask.ProgressVal, HashTask.ProgressMax), Mode=OneWay}" />
         </Grid>
 
         <!-- 命令: 开始, 暂停, 继续, 取消, 删除 -->
@@ -63,20 +62,26 @@
             <CommandBar.Resources>
                 <Style BasedOn="{StaticResource CompactAppBarButtonStyle}" TargetType="AppBarButton" />
             </CommandBar.Resources>
-            <AppBarButton Command="{x:Bind ViewModel.StartTaskCommand}">
+            <AppBarButton
+                Command="{x:Bind ViewModel.StartTaskCommand}"
+                Label="{x:Bind i18n:LocalizationCommon.Start}"
+                ToolTipService.ToolTip="{x:Bind i18n:LocalizationCommon.Start}">
                 <i:Interaction.Behaviors>
                     <behaviors:ControlIsEnabledToVisibilityBehavior />
                 </i:Interaction.Behaviors>
                 <AppBarButton.Icon>
-                    <FontIcon Glyph="{x:Bind local:HashTaskGrid.GetStartBtnIcon()}" />
+                    <FontIcon Glyph="{x:Bind GetStartBtnIcon()}" />
                 </AppBarButton.Icon>
             </AppBarButton>
-            <AppBarButton Command="{x:Bind ViewModel.ResetTaskCommand}">
+            <AppBarButton
+                Command="{x:Bind ViewModel.ResetTaskCommand}"
+                Label="{x:Bind GetResetBtnToolTip(HashTask.State), Mode=OneWay}"
+                ToolTipService.ToolTip="{x:Bind GetResetBtnToolTip(HashTask.State), Mode=OneWay}">
                 <i:Interaction.Behaviors>
                     <behaviors:ControlIsEnabledToVisibilityBehavior />
                 </i:Interaction.Behaviors>
                 <AppBarButton.Icon>
-                    <FontIcon Glyph="{x:Bind local:HashTaskGrid.GetResetBtnIcon(HashTask.State), Mode=OneWay}" />
+                    <FontIcon Glyph="{x:Bind GetResetBtnIcon(HashTask.State), Mode=OneWay}" />
                 </AppBarButton.Icon>
             </AppBarButton>
             <CommandBar.SecondaryCommands>
@@ -85,17 +90,17 @@
                         <behaviors:ControlIsEnabledToVisibilityBehavior />
                     </i:Interaction.Behaviors>
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="{x:Bind local:HashTaskGrid.GetCancelBtnIcon()}" />
+                        <FontIcon Glyph="{x:Bind GetCancelBtnIcon()}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
                 <AppBarButton Command="{x:Bind ViewModel.EditTaskCommand}" Label="{x:Bind i18n:LocalizationCommon.Edit}">
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="{x:Bind local:HashTaskGrid.GetEditBtnIcon()}" />
+                        <FontIcon Glyph="{x:Bind GetEditBtnIcon()}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
                 <AppBarButton Command="{x:Bind ViewModel.DeleteTaskCommand}" Label="{x:Bind i18n:LocalizationCommon.Delete}">
                     <AppBarButton.Icon>
-                        <FontIcon Glyph="{x:Bind local:HashTaskGrid.GetDeleteBtnIcon()}" />
+                        <FontIcon Glyph="{x:Bind GetDeleteBtnIcon()}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
             </CommandBar.SecondaryCommands>
@@ -106,7 +111,7 @@
             Grid.Row="1"
             FontSize="12"
             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-            Text="{x:Bind local:HashTaskGrid.GetSecondaryInformationText(HashTask), Mode=OneWay}"
+            Text="{x:Bind GetSecondaryInformationText(HashTask), Mode=OneWay}"
             TextTrimming="CharacterEllipsis"
             ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}" />
     </Grid>
