@@ -54,6 +54,7 @@ internal sealed partial class CheckUpdateService : ICheckUpdateService
         catch (Exception ex)
         {
             _logger.LogError("检查更新时发生错误\n{Exception}", ex);
+            // TODO: Notification
         }
 
         if (_gitHubRelease != null)

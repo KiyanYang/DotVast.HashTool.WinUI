@@ -4,7 +4,6 @@ using DotVast.HashTool.WinUI.Views;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using Microsoft.Windows.AppLifecycle;
 
 namespace DotVast.HashTool.WinUI.Services;
@@ -18,7 +17,6 @@ public sealed class ActivationService : IActivationService
     private readonly IPreferencesSettingsService _preferencesSettingsService;
     private readonly ICheckUpdateService _checkUpdateService;
     private readonly IHashTaskService _hashTaskService;
-    private UIElement? _shell = null;
 
     public ActivationService(
         ILogger<ActivationService> logger,
@@ -41,11 +39,7 @@ public sealed class ActivationService : IActivationService
     public async Task ActivateAsync(object activationArgs)
     {
         // Set the MainWindow Content.
-        if (App.MainWindow.Content is null)
-        {
-            _shell = App.GetService<ShellPage>();
-            App.MainWindow.Content = _shell ?? new Frame();
-        }
+        App.MainWindow.Content ??= App.GetService<ShellPage>();
 
         // Execute tasks before activation.
         await InitializeAsync();

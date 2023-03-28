@@ -8,6 +8,8 @@ public interface IPreferencesSettingsService : IBaseObservableSettings
 {
     ObservableCollection<HashOption> HashOptions { get; }
 
+    Task SaveHashOptionsAsync();
+
     /// <summary>
     /// 是否启用资源管理器注册的上下文菜单.
     /// </summary>
@@ -27,6 +29,4 @@ public interface IPreferencesSettingsService : IBaseObservableSettings
     /// 创建任务时是否开始计算.
     /// </summary>
     bool StartingWhenCreateHashTask { get; set; }
-
-    Task SaveHashOptionsAsync();
 }

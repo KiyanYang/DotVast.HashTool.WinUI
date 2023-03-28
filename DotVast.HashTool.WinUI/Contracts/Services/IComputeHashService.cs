@@ -9,7 +9,7 @@ public interface IComputeHashService
     /// </summary>
     /// <param name="hashTask">The hash task with input, mode, algorithm and other info (like progress, state).</param>
     /// <param name="mres">The <see cref="ManualResetEventSlim"/> instance that controls the pause and resume of the computation.</param>
-    /// <param name="ct">The <see cref="CancellationToken"/> instance that can be used to cancel the computation.</param>
+    /// <param name="cancellationToken">The <see cref="CancellationToken"/> instance that can be used to cancel the computation.</param>
     /// <returns>A task that represents the asynchronous computation.</returns>
-    Task ComputeHashAsync(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct);
+    Task ComputeHashAsync(HashTask hashTask, ManualResetEventSlim mres, CancellationToken cancellationToken);
 }

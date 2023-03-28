@@ -11,7 +11,7 @@ namespace DotVast.HashTool.WinUI.Services;
 
 internal sealed class ComputeHashService : IComputeHashService
 {
-    public async Task ComputeHashAsync(HashTask hashTask, ManualResetEventSlim mres, CancellationToken ct)
+    public async Task ComputeHashAsync(HashTask hashTask, ManualResetEventSlim mres, CancellationToken cancellationToken)
     {
         var startTimestamp = Stopwatch.GetTimestamp();
         hashTask.State = HashTaskState.Working;
@@ -23,13 +23,13 @@ internal sealed class ComputeHashService : IComputeHashService
             switch (hashTask.Mode)
             {
                 case var m when m == HashTaskMode.File:
-                    await InternalHashFilesAsync(hashTask, hashTask.Content.Split('|'), mres, ct);
+                    await InternalHashFilesAsync(hashTask, hashTask.Content.Split('|'), mres, cancellationToken);
                     break;
                 case var m when m == HashTaskMode.Folder:
-                    await InternalHashFilesAsync(hashTask, Directory.GetFiles(hashTask.Content), mres, ct);
+                    await InternalHashFilesAsync(hashTask, Directory.GetFiles(hashTask.Content), mres, cancellationToken);
                     break;
                 case var m when m == HashTaskMode.Text:
-                    await InternalHashTextAsync(hashTask, mres, ct);
+                    await InternalHashTextAsync(hashTask, mres, cancellationToken);
                     break;
             }
             hashTask.State = HashTaskState.Completed;
@@ -39,7 +39,7 @@ internal sealed class ComputeHashService : IComputeHashService
             if (ex.InnerExceptions.All(e => e is OperationCanceledException))
             {
                 App.MainWindow.TryEnqueue(() => hashTask.State = HashTaskState.Canceled);
-                throw new OperationCanceledException(ct);
+                throw new OperationCanceledException(cancellationToken);
             }
             else
             {
