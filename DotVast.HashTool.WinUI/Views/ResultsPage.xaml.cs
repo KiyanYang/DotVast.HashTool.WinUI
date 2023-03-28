@@ -16,7 +16,7 @@ public sealed partial class ResultsPage : Page, IView
     public ResultsPage()
     {
         ViewModel = App.GetService<ResultsViewModel>();
-        Resources.AddExpression(() => ViewModel);
+        Resources.AddByExpression(() => ViewModel);
         InitializeComponent();
     }
 

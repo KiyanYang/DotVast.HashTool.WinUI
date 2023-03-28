@@ -15,10 +15,10 @@ public sealed partial class TasksPage : Page, IView
     {
         Auxiliary = new();
         ViewModel = App.GetService<TasksViewModel>();
-        Resources.AddExpression(() => Auxiliary);
-        Resources.AddExpression(() => ViewModel.SaveCommand);
-        Resources.AddExpression(() => ViewModel.ShowResultCommand);
-        Resources.AddExpression(() => Localization.Command_Save_Tip);
+        Resources.AddByExpression(() => Auxiliary);
+        Resources.AddByExpression(() => ViewModel.SaveCommand);
+        Resources.AddByExpression(() => ViewModel.ShowResultCommand);
+        Resources.AddByExpression(() => Localization.Command_Save_Tip);
         InitializeComponent();
     }
 

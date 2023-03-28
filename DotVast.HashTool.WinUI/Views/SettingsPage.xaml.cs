@@ -13,8 +13,8 @@ public sealed partial class SettingsPage : Page, IView
     public SettingsPage()
     {
         ViewModel = App.GetService<SettingsViewModel>();
-        Resources.AddExpression(() => ViewModel.RestartAppCommand);
-        Resources.AddExpression(() => Localization.Command_RestartApp);
+        Resources.AddByExpression(() => ViewModel.RestartAppCommand);
+        Resources.AddByExpression(() => Localization.Command_RestartApp);
         InitializeComponent();
     }
 }
