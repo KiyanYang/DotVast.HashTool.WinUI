@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text.Json.Serialization;
 
@@ -91,6 +92,13 @@ public sealed class Hash : GenericEnum<string>
     {
         Name = name;
         Format = format;
+    }
+
+    public HashAlgorithm GetHashAlgorithm()
+    {
+        var hashAlgorithm = GetHashAlgorithm(this);
+        Debug.Assert(hashAlgorithm is not null);
+        return hashAlgorithm!;
     }
 
     public static HashAlgorithm? GetHashAlgorithm(Hash hash)
