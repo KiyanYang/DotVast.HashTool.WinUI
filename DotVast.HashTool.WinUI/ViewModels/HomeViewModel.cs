@@ -69,21 +69,21 @@ public sealed partial class HomeViewModel : ObservableRecipient, IViewModel
         Messenger.Register<HomeViewModel, FileNotFoundInHashFilesMessage>(this, (r, m) =>
         {
             Debug.WriteLine($"[{DateTime.Now}] HomeViewModel.Messenger > FileNotFoundInHashFilesMessage");
-            Debug.WriteLine($"FilePath: {m.Value}");
+            Debug.WriteLine($"FilePath: {m.FilePath}");
             _notificationService.Show(new()
             {
                 Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Warning,
                 Title = Localization.Tip_FileSkipped_Title,
-                Message = string.Format(Localization.Tip_FileSkipped_FileNotFound, m.Value),
+                Message = string.Format(Localization.Tip_FileSkipped_FileNotFound, m.FilePath),
                 Duration = TimeSpan.FromMilliseconds(3500),
             });
         });
 
         Messenger.Register<HomeViewModel, EditTaskMessage>(this, (r, m) =>
         {
-            InputtingContent = m.Value.Content;
-            InputtingMode = m.Value.Mode;
-            if (m.Value.Mode == HashTaskMode.Text && m.Value.Encoding is System.Text.Encoding encoding)
+            InputtingContent = m.HashTask.Content;
+            InputtingMode = m.HashTask.Mode;
+            if (m.HashTask.Mode == HashTaskMode.Text && m.HashTask.Encoding is System.Text.Encoding encoding)
             {
                 InputtingTextEncoding = TextEncodings.FirstOrDefault(
                     t => t.Name.Equals(encoding.WebName, StringComparison.OrdinalIgnoreCase),
@@ -91,7 +91,7 @@ public sealed partial class HomeViewModel : ObservableRecipient, IViewModel
             }
             foreach (var hashOption in HashOptions)
             {
-                hashOption.IsChecked = m.Value.SelectedHashs.Any(h => h == hashOption.Hash);
+                hashOption.IsChecked = m.HashTask.SelectedHashs.Any(h => h == hashOption.Hash);
             }
             _navigationService.NavigateTo(Constants.PageKeys.HomePage);
         });
