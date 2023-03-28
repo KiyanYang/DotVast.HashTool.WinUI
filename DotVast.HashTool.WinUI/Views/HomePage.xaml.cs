@@ -17,7 +17,6 @@ public sealed partial class HomePage : Page, IView
     public HomePage()
     {
         ViewModel = App.GetService<HomeViewModel>();
-        Resources.AddExpression(() => ViewModel.SaveHashOptionCommand);
         InitializeComponent();
     }
 

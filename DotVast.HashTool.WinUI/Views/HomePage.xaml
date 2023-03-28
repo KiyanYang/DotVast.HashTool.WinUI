@@ -127,11 +127,7 @@
                         </ItemsRepeater.Layout>
                         <ItemsRepeater.ItemTemplate>
                             <DataTemplate x:DataType="models:HashOption">
-                                <CheckBox
-                                    Command="{StaticResource SaveHashOptionCommand}"
-                                    CommandParameter="{x:Bind}"
-                                    Content="{x:Bind Hash.Name}"
-                                    IsChecked="{x:Bind IsChecked, Mode=TwoWay}" />
+                                <CheckBox Content="{x:Bind Hash.Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" />
                             </DataTemplate>
                         </ItemsRepeater.ItemTemplate>
                     </ItemsRepeater>

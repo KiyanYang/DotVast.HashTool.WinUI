@@ -6,7 +6,6 @@ using System.Text.Json;
 using System.Text.Unicode;
 
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Models.Messages;
@@ -61,12 +60,12 @@ public sealed partial class TasksViewModel : ObservableRecipient, IViewModel, IN
 
     #region INavigationAware
 
-    public void OnNavigatedTo(object? parameter)
+    void INavigationAware.OnNavigatedTo(object? parameter)
     {
         IsActive = true;
     }
 
-    public void OnNavigatedFrom()
+    void INavigationAware.OnNavigatedFrom()
     {
         IsActive = false;
     }
@@ -79,7 +78,7 @@ public sealed partial class TasksViewModel : ObservableRecipient, IViewModel, IN
     {
         Messenger.Register<TasksViewModel, HashTaskCheckableIsCheckedChangedMessage>(this, (r, m) =>
         {
-            Debug.WriteLine($"[{DateTime.Now}] TasksViewModel.Messenger > PropertyChangedMessage[HashTaskCheckable.IsChecked]");
+            Debug.WriteLine($"[{DateTime.Now}] TasksViewModel.Messenger > HashTaskCheckableIsCheckedChangedMessage");
             Debug.WriteLine($"HashTask.Content: {m.HashTaskCheckable.HashTask.Content}");
             Debug.WriteLine($"IsChecked:        {m.IsChecked}");
             SaveCommand.NotifyCanExecuteChanged();

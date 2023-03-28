@@ -13,6 +13,7 @@ public partial class HomeViewModel
 {
     private const char FilesSeparator = '|';
     private const int MaxFilesCount = 100;
+    private const int MillisecondsDelayForCreateTask = 750;
 
     [RelayCommand]
     private async Task PickAsync()
@@ -51,11 +52,12 @@ public partial class HomeViewModel
         catch (Exception ex)
         {
             _logger.LogError("选取{Mode}时出现未预料的异常\n{Exception}", InputtingMode, ex);
+            // TODO: Notification
         }
     }
 
     [RelayCommand(CanExecute = nameof(CanCreateTask))]
-    private void CreateTask()
+    private async Task CreateTaskAsync()
     {
         var hashTask = CreateHashTask();
         if (StartingWhenCreateHashTask)
@@ -63,15 +65,11 @@ public partial class HomeViewModel
             _ = hashTask.StartAsync();
         }
         _hashTaskService.HashTasks.Add(hashTask);
-        _timer.Enabled = true;
+        await Task.Delay(MillisecondsDelayForCreateTask);
     }
 
     private bool CanCreateTask()
     {
-        if (IsDelayCreateTask)
-        {
-            return false;
-        }
         if (HashOptions.All(h => h.IsChecked == false))
         {
             return false;
@@ -86,13 +84,6 @@ public partial class HomeViewModel
         }
         return true;
     }
-
-    /// <summary>
-    /// 保存哈希选项.
-    /// </summary>
-    [RelayCommand]
-    private async Task SaveHashOptionAsync() =>
-        await _preferencesSettingsService.SaveHashOptionsAsync();
 
     public void SetHashTaskContenFromPaths(IEnumerable<string> paths)
     {

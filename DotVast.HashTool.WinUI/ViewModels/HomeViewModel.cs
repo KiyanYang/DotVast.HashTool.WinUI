@@ -13,8 +13,6 @@ namespace DotVast.HashTool.WinUI.ViewModels;
 
 public sealed partial class HomeViewModel : ObservableRecipient, IViewModel, INavigationAware
 {
-    private const int MillisecondsDelayCreateTask = 750;
-
     private readonly ILogger<HomeViewModel> _logger;
     private readonly IPreferencesSettingsService _preferencesSettingsService;
     private readonly IComputeHashService _computeHashService;
@@ -22,7 +20,6 @@ public sealed partial class HomeViewModel : ObservableRecipient, IViewModel, INa
     private readonly IHashTaskService _hashTaskService;
     private readonly INavigationService _navigationService;
     private readonly INotificationService _notificationService;
-    private readonly System.Timers.Timer _timer;
 
     public HomeViewModel(
         ILogger<HomeViewModel> logger,
@@ -56,9 +53,6 @@ public sealed partial class HomeViewModel : ObservableRecipient, IViewModel, INa
         _startingWhenCreateHashTask = _preferencesSettingsService.StartingWhenCreateHashTask;
 
         IsActive = true;
-
-        _timer = new();
-        InitializeCreateTaskTimer();
     }
 
     #region Messenger
@@ -78,17 +72,18 @@ public sealed partial class HomeViewModel : ObservableRecipient, IViewModel, INa
             });
         });
 
-        Messenger.Register<HomeViewModel, HashOptionIsCheckedChangedMessage>(this, (r, m) =>
+        Messenger.Register<HomeViewModel, HashOptionIsCheckedChangedMessage>(this, async (r, m) =>
         {
-            Debug.WriteLine($"[{DateTime.Now}] HomeViewModel.Messenger > PropertyChangedMessage[HashOption.IsChecked]");
+            Debug.WriteLine($"[{DateTime.Now}] HomeViewModel.Messenger > HashOptionIsCheckedChangedMessage");
             Debug.WriteLine($"Hash.Name: {m.HashOption.Hash.Name}");
             Debug.WriteLine($"IsChecked: {m.IsChecked}");
+            await _preferencesSettingsService.SaveHashOptionsAsync();
             CreateTaskCommand.NotifyCanExecuteChanged();
         });
 
         Messenger.Register<HomeViewModel, HashOptionIsEnabledChangedMessage>(this, (r, m) =>
         {
-            Debug.WriteLine($"[{DateTime.Now}] HomeViewModel.Messenger > PropertyChangedMessage[HashOption.IsEnabled]");
+            Debug.WriteLine($"[{DateTime.Now}] HomeViewModel.Messenger > HashOptionIsEnabledChangedMessage");
             Debug.WriteLine($"Hash.Name: {m.HashOption.Hash.Name}");
             Debug.WriteLine($"IsEnabled: {m.IsEnabled}");
             OnPropertyChanged(nameof(HashOptions));
@@ -96,23 +91,6 @@ public sealed partial class HomeViewModel : ObservableRecipient, IViewModel, INa
     }
 
     #endregion Messenger
-
-    private void InitializeCreateTaskTimer()
-    {
-        _timer.AutoReset = false;
-        _timer.Enabled = false;
-        _timer.Interval = 10;
-        _timer.Elapsed += (sender, e) => App.MainWindow.DispatcherQueue.TryEnqueue(async () => await DelayCreateTask());
-    }
-
-    private async Task DelayCreateTask()
-    {
-        IsDelayCreateTask = true;
-        CreateTaskCommand.NotifyCanExecuteChanged();
-        await Task.Delay(MillisecondsDelayCreateTask);
-        IsDelayCreateTask = false;
-        CreateTaskCommand.NotifyCanExecuteChanged();
-    }
 
     #region INavigationAware
 

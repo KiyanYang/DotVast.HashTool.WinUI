@@ -35,13 +35,13 @@ public partial class HashOptionSettingsViewModel : ObservableRecipient, IViewMod
 
     #region INavigationAware
 
-    public void OnNavigatedTo(object? parameter)
+    void INavigationAware.OnNavigatedTo(object? parameter)
     {
         IsActive = true;
         HashOptions.CollectionChanged += HashOptions_CollectionChanged;
     }
 
-    public void OnNavigatedFrom()
+    void INavigationAware.OnNavigatedFrom()
     {
         IsActive = false;
         HashOptions.CollectionChanged -= HashOptions_CollectionChanged;

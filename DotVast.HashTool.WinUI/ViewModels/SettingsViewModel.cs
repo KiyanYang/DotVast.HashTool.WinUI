@@ -7,7 +7,7 @@ using DotVast.HashTool.WinUI.Helpers;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
-public sealed partial class SettingsViewModel : ObservableRecipient, IViewModel
+public sealed partial class SettingsViewModel : ObservableObject, IViewModel
 {
     private readonly INavigationService _navigationService;
     private readonly IAppearanceSettingsService _appearanceSettingsService;

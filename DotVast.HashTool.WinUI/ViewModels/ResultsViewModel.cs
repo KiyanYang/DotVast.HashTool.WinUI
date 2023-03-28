@@ -61,7 +61,7 @@ public sealed partial class ResultsViewModel : ObservableRecipient, IViewModel, 
 
     #region INavigationAware
 
-    public void OnNavigatedTo(object? parameter)
+    void INavigationAware.OnNavigatedTo(object? parameter)
     {
         if (parameter is HashTask hashTask)
         {
@@ -74,7 +74,7 @@ public sealed partial class ResultsViewModel : ObservableRecipient, IViewModel, 
         }
     }
 
-    public void OnNavigatedFrom()
+    void INavigationAware.OnNavigatedFrom()
     {
     }
 
