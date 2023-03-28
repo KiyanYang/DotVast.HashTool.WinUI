@@ -1,18 +1,17 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
-using CommunityToolkit.Mvvm.Messaging.Messages;
-
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Models.Messages;
+using DotVast.HashTool.WinUI.Models.Navigation;
 
 using Microsoft.Extensions.Logging;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
-public sealed partial class HomeViewModel : ObservableRecipient, IViewModel
+public sealed partial class HomeViewModel : ObservableRecipient, IViewModel, INavigationAware
 {
     private const int MillisecondsDelayCreateTask = 750;
 
@@ -79,23 +78,6 @@ public sealed partial class HomeViewModel : ObservableRecipient, IViewModel
             });
         });
 
-        Messenger.Register<HomeViewModel, EditTaskMessage>(this, (r, m) =>
-        {
-            InputtingContent = m.HashTask.Content;
-            InputtingMode = m.HashTask.Mode;
-            if (m.HashTask.Mode == HashTaskMode.Text && m.HashTask.Encoding is System.Text.Encoding encoding)
-            {
-                InputtingTextEncoding = TextEncodings.FirstOrDefault(
-                    t => t.Name.Equals(encoding.WebName, StringComparison.OrdinalIgnoreCase),
-                    TextEncoding.UTF8);
-            }
-            foreach (var hashOption in HashOptions)
-            {
-                hashOption.IsChecked = m.HashTask.SelectedHashs.Any(h => h == hashOption.Hash);
-            }
-            _navigationService.NavigateTo(Constants.PageKeys.HomePage);
-        });
-
         Messenger.Register<HomeViewModel, HashOptionIsCheckedChangedMessage>(this, (r, m) =>
         {
             Debug.WriteLine($"[{DateTime.Now}] HomeViewModel.Messenger > PropertyChangedMessage[HashOption.IsChecked]");
@@ -131,4 +113,34 @@ public sealed partial class HomeViewModel : ObservableRecipient, IViewModel
         IsDelayCreateTask = false;
         CreateTaskCommand.NotifyCanExecuteChanged();
     }
+
+    #region INavigationAware
+
+    void INavigationAware.OnNavigatedTo(object? parameter)
+    {
+        if (parameter is not HomeParameter homeParameter)
+        {
+            return;
+        }
+
+        if (homeParameter.Kind == HomeParameterKind.EditHashTask && homeParameter.Data is HashTask hashTask)
+        {
+            InputtingContent = hashTask.Content;
+            InputtingMode = hashTask.Mode;
+            if (hashTask.Mode == HashTaskMode.Text && hashTask.Encoding is System.Text.Encoding encoding)
+            {
+                InputtingTextEncoding = TextEncodings.FirstOrDefault(
+                    t => t.Name.Equals(encoding.WebName, StringComparison.OrdinalIgnoreCase),
+                    TextEncoding.UTF8);
+            }
+            foreach (var hashOption in HashOptions)
+            {
+                hashOption.IsChecked = hashTask.SelectedHashs.Any(h => h == hashOption.Hash);
+            }
+        }
+    }
+
+    void INavigationAware.OnNavigatedFrom() { }
+
+    #endregion INavigationAware
 }

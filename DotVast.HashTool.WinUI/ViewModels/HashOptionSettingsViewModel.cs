@@ -1,8 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
-using CommunityToolkit.Mvvm.Messaging.Messages;
-
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Models.Messages;

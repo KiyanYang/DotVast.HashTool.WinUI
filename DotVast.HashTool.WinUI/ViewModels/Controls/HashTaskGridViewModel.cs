@@ -1,9 +1,8 @@
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
-using DotVast.HashTool.WinUI.Models.Messages;
+using DotVast.HashTool.WinUI.Models.Navigation;
 
 using Microsoft.UI.Xaml.Controls;
 
@@ -13,11 +12,16 @@ public sealed partial class HashTaskGridViewModel : ObservableObject
 {
     private readonly IDialogService _dialogService;
     private readonly IHashTaskService _hashTaskService;
+    private readonly INavigationService _navigationService;
 
-    public HashTaskGridViewModel(IDialogService dialogService, IHashTaskService hashTaskService)
+    public HashTaskGridViewModel(
+        IDialogService dialogService,
+        IHashTaskService hashTaskService,
+        INavigationService navigationService)
     {
         _dialogService = dialogService;
         _hashTaskService = hashTaskService;
+        _navigationService = navigationService;
     }
 
     [ObservableProperty]
@@ -104,7 +108,7 @@ public sealed partial class HashTaskGridViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanEditTask))]
     private void EditTask()
     {
-        WeakReferenceMessenger.Default.Send<EditTaskMessage>(new(HashTask!));
+        _navigationService.NavigateTo(Constants.PageKeys.HomePage, new HomeParameter(HomeParameterKind.EditHashTask, HashTask!));
     }
 
     private bool CanEditTask() => HashTask is not null;
