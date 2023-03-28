@@ -1,10 +1,16 @@
+using CommunityToolkit.Mvvm.Messaging;
+
+using DotVast.HashTool.WinUI.Models.Messages;
+
 namespace DotVast.HashTool.WinUI.Models;
 
-public sealed partial class HashTaskCheckable : ObservableRecipient
+public sealed partial class HashTaskCheckable : ObservableObject
 {
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     private bool _isChecked;
+
+    partial void OnIsCheckedChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new HashTaskCheckableIsCheckedChangedMessage(this, value));
 
     public HashTask HashTask { get; }
 

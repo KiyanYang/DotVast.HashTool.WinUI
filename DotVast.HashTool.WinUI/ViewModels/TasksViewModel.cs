@@ -9,6 +9,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 
 using DotVast.HashTool.WinUI.Models;
+using DotVast.HashTool.WinUI.Models.Messages;
 
 using Windows.Storage.Pickers;
 
@@ -76,26 +77,12 @@ public sealed partial class TasksViewModel : ObservableRecipient, IViewModel, IN
 
     protected override void OnActivated()
     {
-        Messenger.Register<TasksViewModel, PropertyChangedMessage<bool>>(this, (r, m) =>
+        Messenger.Register<TasksViewModel, HashTaskCheckableIsCheckedChangedMessage>(this, (r, m) =>
         {
-            switch (m.Sender)
-            {
-                case HashTaskCheckable hashTaskCheckable:
-                    switch (m.PropertyName)
-                    {
-                        case nameof(HashTaskCheckable.IsChecked):
-                            Debug.WriteLine($"[{DateTime.Now}] TasksViewModel.Messenger > PropertyChangedMessage[HashTaskCheckable.IsChecked]");
-                            Debug.WriteLine($"HashTask.Content: {hashTaskCheckable.HashTask.Content}");
-                            Debug.WriteLine($"IsChecked:        {hashTaskCheckable.IsChecked}");
-                            SaveCommand.NotifyCanExecuteChanged();
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                default:
-                    break;
-            }
+            Debug.WriteLine($"[{DateTime.Now}] TasksViewModel.Messenger > PropertyChangedMessage[HashTaskCheckable.IsChecked]");
+            Debug.WriteLine($"HashTask.Content: {m.HashTaskCheckable.HashTask.Content}");
+            Debug.WriteLine($"IsChecked:        {m.IsChecked}");
+            SaveCommand.NotifyCanExecuteChanged();
         });
     }
 

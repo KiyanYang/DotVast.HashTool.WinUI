@@ -96,32 +96,20 @@ public sealed partial class HomeViewModel : ObservableRecipient, IViewModel
             _navigationService.NavigateTo(Constants.PageKeys.HomePage);
         });
 
-        Messenger.Register<HomeViewModel, PropertyChangedMessage<bool>>(this, (r, m) =>
+        Messenger.Register<HomeViewModel, HashOptionIsCheckedChangedMessage>(this, (r, m) =>
         {
-            switch (m.Sender)
-            {
-                case HashOption hashOption:
-                    switch (m.PropertyName)
-                    {
-                        case nameof(HashOption.IsChecked):
-                            Debug.WriteLine($"[{DateTime.Now}] HomeViewModel.Messenger > PropertyChangedMessage[HashOption.IsChecked]");
-                            Debug.WriteLine($"Hash.Name: {hashOption.Hash.Name}");
-                            Debug.WriteLine($"IsChecked: {hashOption.IsChecked}");
-                            CreateTaskCommand.NotifyCanExecuteChanged();
-                            break;
-                        case nameof(HashOption.IsEnabled):
-                            Debug.WriteLine($"[{DateTime.Now}] HomeViewModel.Messenger > PropertyChangedMessage[HashOption.IsEnabled]");
-                            Debug.WriteLine($"Hash.Name: {hashOption.Hash.Name}");
-                            Debug.WriteLine($"IsEnabled: {hashOption.IsEnabled}");
-                            OnPropertyChanged(nameof(HashOptions));
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                default:
-                    break;
-            }
+            Debug.WriteLine($"[{DateTime.Now}] HomeViewModel.Messenger > PropertyChangedMessage[HashOption.IsChecked]");
+            Debug.WriteLine($"Hash.Name: {m.HashOption.Hash.Name}");
+            Debug.WriteLine($"IsChecked: {m.IsChecked}");
+            CreateTaskCommand.NotifyCanExecuteChanged();
+        });
+
+        Messenger.Register<HomeViewModel, HashOptionIsEnabledChangedMessage>(this, (r, m) =>
+        {
+            Debug.WriteLine($"[{DateTime.Now}] HomeViewModel.Messenger > PropertyChangedMessage[HashOption.IsEnabled]");
+            Debug.WriteLine($"Hash.Name: {m.HashOption.Hash.Name}");
+            Debug.WriteLine($"IsEnabled: {m.IsEnabled}");
+            OnPropertyChanged(nameof(HashOptions));
         });
     }
 

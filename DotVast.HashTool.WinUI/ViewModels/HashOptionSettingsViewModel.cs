@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Models;
+using DotVast.HashTool.WinUI.Models.Messages;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
@@ -23,16 +24,12 @@ public partial class HashOptionSettingsViewModel : ObservableRecipient, IViewMod
 
     protected override void OnActivated()
     {
-        // PropertyChangedMessage[HashOption.IsEnabled]
-        Messenger.Register<HashOptionSettingsViewModel, PropertyChangedMessage<bool>>(this, async (r, m) =>
+        Messenger.Register<HashOptionSettingsViewModel, HashOptionIsEnabledChangedMessage>(this, async (r, m) =>
         {
-            if (m.Sender is HashOption hashOption && m.PropertyName == nameof(HashOption.IsEnabled))
-            {
-                Debug.WriteLine($"[{DateTime.Now}] HashOptionSettingsViewModel.Messenger > PropertyChangedMessage[HashOption.IsEnabled]");
-                Debug.WriteLine($"Hash.Name: {hashOption.Hash.Name}");
-                Debug.WriteLine($"IsEnabled: {hashOption.IsEnabled}");
-                await _preferencesSettingsService.SaveHashOptionsAsync();
-            }
+            Debug.WriteLine($"[{DateTime.Now}] HashOptionSettingsViewModel.Messenger > PropertyChangedMessage[HashOption.IsEnabled]");
+            Debug.WriteLine($"Hash.Name: {m.HashOption.Hash.Name}");
+            Debug.WriteLine($"IsEnabled: {m.IsEnabled}");
+            await _preferencesSettingsService.SaveHashOptionsAsync();
         });
     }
 
