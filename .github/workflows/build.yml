@@ -35,6 +35,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Used in `Update appxmanifest version`
 
       # Install the .NET Core workload: https://github.com/actions/setup-dotnet
       - name: Install .NET Core
@@ -96,7 +98,7 @@ jobs:
           $msixFullName = $msixFolder.FullName
           $msixName = $msixFolder.Name
           Get-ChildItem "$msixFullName/Dependencies" | Where-Object Name -NotLike ${{ matrix.platform }} | Remove-Item -Recurse
-          $gitDatetime = Get-Date -Date (git show -s --format=%cI HEAD) -Format 'yyMMdd_HHmm'
+          $gitDatetime = Get-Date -UnixTimeSeconds (git show -s --format=%ct HEAD) -Format 'yyMMdd'
           $gitShortHash = git show -s --format=%h HEAD
           $newMsixName = "$msixName-$gitDatetime-$gitShortHash"
           "DotVast_PackageName=$newMsixName" >> $env:GITHUB_ENV
