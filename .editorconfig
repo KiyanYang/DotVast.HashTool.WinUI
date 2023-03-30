@@ -189,3 +189,7 @@ indent_size = 2
 # YAML config files
 [*.{yml,yaml}]
 indent_size = 2
+
+# Markdown
+[*.md]
+indent_size = 2
