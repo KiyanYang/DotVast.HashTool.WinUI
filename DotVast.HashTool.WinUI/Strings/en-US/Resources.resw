@@ -13,7 +13,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppDescription" xml:space="preserve">
-    <value>A Tool for Calculating and Verifying the Hash Value of Any File, Folder, or Text!</value>
+    <value>A Tool for Calculating the Hash Value of Any File, Folder, or Text!</value>
   </data>
   <data name="AppDisplayName" xml:space="preserve">
     <value>HashTool</value>
@@ -35,9 +35,6 @@
   </data>
   <data name="HomePage_CreateAndStart" xml:space="preserve">
     <value>Create and start</value>
-  </data>
-  <data name="HomePage_VerifyingHashBox.PlaceholderText" xml:space="preserve">
-    <value>Hash to be compared</value>
   </data>
   <data name="Home_Button_FullContent_Tip" xml:space="preserve">
     <value>Expand the input box</value>

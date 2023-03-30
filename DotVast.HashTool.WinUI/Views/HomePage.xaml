@@ -162,37 +162,6 @@
                     </DropDownButton>
                 </Grid>
 
-                <!-- 对比框 -->
-                <Grid>
-                    <Grid.Resources>
-                        <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
-                            <Setter Property="TextWrapping" Value="Wrap" />
-                        </Style>
-                    </Grid.Resources>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="40" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <TextBox
-                        x:Uid="HomePage_VerifyingHashBox"
-                        Grid.Column="0"
-                        FontFamily="{Binding Path=HashFontFamilyName, Source={StaticResource AppearanceSettingsService}}"
-                        Text="{x:Bind ViewModel.VerifyingHash1, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBlock
-                        Grid.Column="1"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        FontSize="24"
-                        Text="{x:Bind ViewModel.VerifyingResult, Mode=OneWay}" />
-                    <TextBox
-                        x:Uid="HomePage_VerifyingHashBox"
-                        Grid.Column="2"
-                        FontFamily="{Binding Path=HashFontFamilyName, Source={StaticResource AppearanceSettingsService}}"
-                        Text="{x:Bind ViewModel.VerifyingHash2, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </Grid>
-
                 <!-- 最近一次任务 -->
                 <Button
                     Padding="16,6,8,6"
