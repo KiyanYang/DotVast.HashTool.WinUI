@@ -129,16 +129,16 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
 
         _checkForUpdatesOnStartup = _preferencesSettingsService.CheckForUpdatesOnStartup;
 
-#if DEBUG
-        AppVersionHeader = $"{Localization.AppDisplayNameDev}  {RuntimeHelper.AppVersion}";
-#elif GITHUB_ACTIONS
+#if GITHUB_ACTIONS
         var assemblyInformationalVersion = typeof(SettingsViewModel).Assembly
             .GetCustomAttributes(typeof(System.Reflection.AssemblyInformationalVersionAttribute), true)
             .OfType<System.Reflection.AssemblyInformationalVersionAttribute>()
             .First().InformationalVersion;
         AppVersionHeader = $"{Localization.AppDisplayName}  {assemblyInformationalVersion}";
-#else
+#elif !DEBUG
         AppVersionHeader = $"{Localization.AppDisplayName}  {RuntimeHelper.AppVersion}";
+#else
+        AppVersionHeader = $"{Localization.AppDisplayNameDev}  {RuntimeHelper.AppVersion}";
 #endif
     }
 

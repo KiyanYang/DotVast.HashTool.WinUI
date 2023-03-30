@@ -16,7 +16,7 @@
 
   <PropertyGroup Condition="$(Configuration) == Debug">
     <!-- DOTVAST_SLOWCPU: 模拟慢速 CPU -->
-    <DefineConstants>DOTVAST_SLOWCPU</DefineConstants>
+    <DefineConstants>$(DefineConstants);DOTVAST_SLOWCPU</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup>
