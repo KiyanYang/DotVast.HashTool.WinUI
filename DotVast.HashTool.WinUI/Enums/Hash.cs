@@ -25,6 +25,7 @@ public sealed class Hash : GenericEnum<string>
 
     // CRC
     public static readonly Hash CRC32 = new("CRC32");
+    public static readonly Hash CRC64 = new("CRC64");
 
     // MD
     public static readonly Hash MD4 = new("MD4");
@@ -105,7 +106,8 @@ public sealed class Hash : GenericEnum<string>
     {
         return hash switch
         {
-            _ when hash == CRC32 => CreateCRC(CRCModel.CRC32).ToHashAlgorithm(),
+            _ when hash == CRC32 => new System.IO.Hashing.Crc32().ToHashAlgorithm(reverse: true),
+            _ when hash == CRC64 => new System.IO.Hashing.Crc64().ToHashAlgorithm(),
             _ when hash == MD4 => CreateMD4().ToHashAlgorithm(),
             _ when hash == MD5 => Crypto.MD5.Create(),
             _ when hash == SHA1 => Crypto.SHA1.Create(),
