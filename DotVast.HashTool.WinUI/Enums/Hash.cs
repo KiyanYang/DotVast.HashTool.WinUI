@@ -24,8 +24,8 @@ public sealed class Hash : GenericEnum<string>
     public HashFormat Format { get; }
 
     // CRC
-    public static readonly Hash CRC32 = new("CRC32");
-    public static readonly Hash CRC64 = new("CRC64");
+    public static readonly Hash CRC32 = new("CRC-32");
+    public static readonly Hash CRC64 = new("CRC-64");
 
     // MD
     public static readonly Hash MD4 = new("MD4");
@@ -80,6 +80,8 @@ public sealed class Hash : GenericEnum<string>
     // xxHash
     public static readonly Hash XxHash32 = new("xxHash32");
     public static readonly Hash XxHash64 = new("xxHash64");
+    public static readonly Hash XxHash3 = new("xxHash3");
+    public static readonly Hash XxHash128 = new("xxHash128");
 
     // Others
     public static readonly Hash QuickXor = new("QuickXor", HashFormat.Base64);
@@ -142,6 +144,8 @@ public sealed class Hash : GenericEnum<string>
             _ when hash == Keccak_512 => CreateKeccak_512().ToHashAlgorithm(),
             _ when hash == XxHash32 => new System.IO.Hashing.XxHash32().ToHashAlgorithm(),
             _ when hash == XxHash64 => new System.IO.Hashing.XxHash64().ToHashAlgorithm(),
+            _ when hash == XxHash3 => new System.IO.Hashing.XxHash3().ToHashAlgorithm(),
+            _ when hash == XxHash128 => new System.IO.Hashing.XxHash128().ToHashAlgorithm(),
             _ when hash == QuickXor => new QuickXorHash(),
             _ when hash == Ed2k => new Ed2k(),
             _ when hash == Has160 => CreateHAS160().ToHashAlgorithm(),
