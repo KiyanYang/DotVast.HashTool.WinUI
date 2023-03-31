@@ -12,7 +12,8 @@ namespace DotVast.HashTool.WinUI.Services;
 
 internal sealed class ComputeHashService : IComputeHashService
 {
-    private const int BufferSize = 1024 * 1024 * 4;
+    private const int BufferSize = 1024 * 1024;
+    private const double LimitSeconds = 0.1;
 
     public async Task ComputeHashAsync(HashTask hashTask, ManualResetEventSlim mres, CancellationToken cancellationToken)
     {
@@ -151,6 +152,7 @@ internal sealed class ComputeHashService : IComputeHashService
 
         byte[]? buffer = null;
         int clearLimit = 0;
+        var limiter = new RateLimiter(LimitSeconds);
 
         try
         {
@@ -184,7 +186,7 @@ internal sealed class ComputeHashService : IComputeHashService
                 clearLimit = Math.Max(clearLimit, readLength);
 
                 // 报告进度. stream.Length 在此处始终大于 0.
-                App.MainWindow.TryEnqueue(() => hashTask.ProgressVal = (double)stream.Position / stream.Length + progressOffset);
+                limiter.Report(() => hashTask.ProgressVal = (double)stream.Position / stream.Length + progressOffset);
             });
 
             // 定义本地函数。当读取长度大于 0 时，先屏障同步（包括读取文件、报告进度等），再并行计算。
@@ -205,7 +207,7 @@ internal sealed class ComputeHashService : IComputeHashService
             ThreadPool.SetMinThreads(minWorker, minIOC);
 
             // 确保报告计算完成. 主要用于当 stream.Length == 0 时没有在 barrier.postPhaseAction 进行报告的情况.
-            App.MainWindow.TryEnqueue(() => hashTask.ProgressVal = progressOffset + 1);
+            limiter.ReportFinal(() => hashTask.ProgressVal = progressOffset + 1);
 
             #endregion
 
@@ -245,6 +247,7 @@ internal sealed class ComputeHashService : IComputeHashService
 
         byte[]? buffer = null;
         int clearLimit = 0;
+        var limiter = new RateLimiter(LimitSeconds);
 
         try
         {
@@ -270,7 +273,7 @@ internal sealed class ComputeHashService : IComputeHashService
                 cancellationToken.ThrowIfCancellationRequested();
 
                 // 报告进度. stream.Length 在此处始终大于 0.
-                App.MainWindow.TryEnqueue(() => hashTask.ProgressVal = (double)stream.Position / stream.Length + progressOffset);
+                limiter.Report(() => hashTask.ProgressVal = (double)stream.Position / stream.Length + progressOffset);
 
                 hashAlgorithm.TransformBlock(buffer, 0, readLength, null, 0);
 #if DOTVAST_SLOWCPU // 睡眠一段时间，以便观察进度条。
@@ -280,7 +283,7 @@ internal sealed class ComputeHashService : IComputeHashService
             hashAlgorithm.TransformFinalBlock(buffer, 0, 0);
 
             // 确保报告计算完成. 主要用于当 stream.Length == 0 时没有进行过报告的情况.
-            App.MainWindow.TryEnqueue(() => hashTask.ProgressVal = progressOffset + 1);
+            limiter.ReportFinal(() => hashTask.ProgressVal = progressOffset + 1);
 
             var hashString = GetFormattedHash(hashAlgorithm.Hash!, hash.Format);
             var hashResultItem = new HashResultItem(hash, hashString);
@@ -306,5 +309,32 @@ internal sealed class ComputeHashService : IComputeHashService
             HashFormat.Base64 => Convert.ToBase64String(hashData),
             _ => throw new ArgumentOutOfRangeException(nameof(format), $"The HashFormat {format} is out of range and cannot be processed."),
         };
+    }
+
+    private struct RateLimiter
+    {
+        private readonly long _limitTimestamps;
+        private long _expirationTimestamp = 0;
+
+        public RateLimiter(double limitSeconds)
+        {
+            _limitTimestamps = (long)(Stopwatch.Frequency * limitSeconds);
+        }
+
+        public void Report(Microsoft.UI.Dispatching.DispatcherQueueHandler handler)
+        {
+            var timestamp = Stopwatch.GetTimestamp();
+            if (timestamp > _expirationTimestamp)
+            {
+                App.MainWindow.TryEnqueue(handler);
+                _expirationTimestamp = timestamp + _limitTimestamps;
+            }
+        }
+
+        public void ReportFinal(Microsoft.UI.Dispatching.DispatcherQueueHandler handler)
+        {
+            App.MainWindow.TryEnqueue(handler);
+            _expirationTimestamp = long.MaxValue;
+        }
     }
 }
