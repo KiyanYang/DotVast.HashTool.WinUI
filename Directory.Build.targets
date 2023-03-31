@@ -1,7 +1,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!-- https://stackoverflow.com/a/45248069/20935540 -->
   <Target Name="SetSourceRevisionId" BeforeTargets="InitializeSourceControlInformation">
-    <Exec Command="git rev-parse --short HEAD" ConsoleToMSBuild="True" IgnoreExitCode="False">
+    <Exec Command="git rev-parse --short HEAD" ConsoleToMSBuild="True" IgnoreExitCode="False" StandardOutputImportance="Low">
       <Output PropertyName="SourceRevisionId" TaskParameter="ConsoleOutput"/>
     </Exec>
   </Target>
