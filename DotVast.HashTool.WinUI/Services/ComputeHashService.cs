@@ -13,7 +13,7 @@ namespace DotVast.HashTool.WinUI.Services;
 internal sealed class ComputeHashService : IComputeHashService
 {
     private const int BufferSize = 1024 * 1024;
-    private const double LimitSeconds = 0.1;
+    private const long ReportFrequency = 10;
 
     public async Task ComputeHashAsync(HashTask hashTask, ManualResetEventSlim mres, CancellationToken cancellationToken)
     {
@@ -152,7 +152,7 @@ internal sealed class ComputeHashService : IComputeHashService
 
         byte[]? buffer = null;
         int clearLimit = 0;
-        var limiter = new RateLimiter(LimitSeconds);
+        var limiter = new ProgressRateLimiter(ReportFrequency);
 
         try
         {
@@ -247,7 +247,7 @@ internal sealed class ComputeHashService : IComputeHashService
 
         byte[]? buffer = null;
         int clearLimit = 0;
-        var limiter = new RateLimiter(LimitSeconds);
+        var limiter = new ProgressRateLimiter(ReportFrequency);
 
         try
         {
@@ -311,17 +311,17 @@ internal sealed class ComputeHashService : IComputeHashService
         };
     }
 
-    private struct RateLimiter
+    private struct ProgressRateLimiter
     {
         private readonly long _limitTimestamps;
         private long _expirationTimestamp = 0;
 
-        public RateLimiter(double limitSeconds)
+        internal ProgressRateLimiter(long reportFrequency)
         {
-            _limitTimestamps = (long)(Stopwatch.Frequency * limitSeconds);
+            _limitTimestamps = Stopwatch.Frequency / reportFrequency;
         }
 
-        public void Report(Microsoft.UI.Dispatching.DispatcherQueueHandler handler)
+        internal void Report(Microsoft.UI.Dispatching.DispatcherQueueHandler handler)
         {
             var timestamp = Stopwatch.GetTimestamp();
             if (timestamp > _expirationTimestamp)
@@ -331,7 +331,7 @@ internal sealed class ComputeHashService : IComputeHashService
             }
         }
 
-        public void ReportFinal(Microsoft.UI.Dispatching.DispatcherQueueHandler handler)
+        internal void ReportFinal(Microsoft.UI.Dispatching.DispatcherQueueHandler handler)
         {
             App.MainWindow.TryEnqueue(handler);
             _expirationTimestamp = long.MaxValue;
