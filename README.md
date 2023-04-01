@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="DotVast.HashTool.WinUI/Assets/Logo.png" width = "128" height = "128" alt="图标"/>
+  <img src="./src/DotVast.HashTool.WinUI/Assets/Logo.png" width = "128" height = "128" alt="图标"/>
 </p>
 
 <div align="center">
@@ -40,7 +40,7 @@
 
 ## 界面
 
-![主页](./Assets/HomePage-0.3.0.webp)
+![主页](./docs/images/HomePage-0.3.0.webp)
 
 ## 贡献
 

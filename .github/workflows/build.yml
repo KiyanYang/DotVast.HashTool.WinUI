@@ -3,16 +3,12 @@ name: Build MSIX
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - "Assets/**"
-      - ".*"
-      - "*.md"
+    paths:
+      - src/**
   pull_request:
     branches: [main]
-    paths-ignore:
-      - "Assets/**"
-      - ".*"
-      - "*.md"
+    paths:
+      - src/**
   workflow_dispatch:
 
 jobs:
@@ -27,10 +23,10 @@ jobs:
       windows-latest
 
     env:
-      DotVast_SolutionName: DotVast.HashTool.WinUI
+      DotVast_SolutionPath: src\DotVast.HashTool.WinUI.sln
+      DotVast_AppxmanifestPath: src\DotVast.HashTool.WinUI\Package.appxmanifest
       DotVast_PfxName: GitHubActionsWorkflow.pfx
       DotVast_PfxThumbprint: A87830CE7AA286884D04D11E8FA020CB5A1097C5
-      DotVast_AppxmanifestName: Package.appxmanifest
 
     steps:
       - name: Checkout
@@ -50,7 +46,7 @@ jobs:
 
       - name: Update appxmanifest version
         run: |
-          $appxmanifestPath = Convert-Path .\$env:DotVast_SolutionName\$env:DotVast_AppxmanifestName
+          $appxmanifestPath = Convert-Path $env:DotVast_AppxmanifestPath
           [xml]$appxmanifest = Get-Content $appxmanifestPath
           $gitCountFromLatestTag = git rev-list --count "$(git describe --tag --abbrev=0)..HEAD"
           $newVersion = $appxmanifest.Package.Identity.Version -replace ('^(\d+\.\d+\.\d+)\.\d+$', "`$1.$gitCountFromLatestTag")
@@ -70,7 +66,7 @@ jobs:
       # https://learn.microsoft.com/en-us/nuget/reference/msbuild-targets#restoring-packagereference-and-packagesconfig-projects-with-msbuild
       - name: Restore the application
         run: |
-          msbuild "$env:DotVast_SolutionName.sln" `
+          msbuild $env:DotVast_SolutionPath `
             -t:Restore `
             -p:RestorePackagesConfig=true `
             -p:Configuration=${{ matrix.configuration }}
@@ -78,12 +74,15 @@ jobs:
       # Create the app package by building and packaging the project
       - name: Create the app package
         run: |
-          msbuild "$env:DotVast_SolutionName.sln" `
+          $appxPackageBaseDir = New-Item -Path AppxPackages -ItemType Directory
+          $appxPackageBaseFullName = $appxPackageBaseDir.FullName
+          "DotVast_AppxPackageBaseDir=$appxPackageBaseFullName" >> $env:GITHUB_ENV
+          msbuild $env:DotVast_SolutionPath `
             -p:Configuration=${{ matrix.configuration }} `
             -p:Platform=${{ matrix.platform }} `
             -p:AppxBundle=Never `
             -p:UapAppxPackageBuildMode=SideloadOnly `
-            -p:AppxPackageDir='Packages/${{ matrix.platform }}/' `
+            -p:AppxPackageDir="$appxPackageBaseFullName\${{ matrix.platform }}\" `
             -p:GenerateAppxPackageOnBuild=true
 
       # Remove the pfx
@@ -94,9 +93,9 @@ jobs:
 
       - name: Remove unnecessary dependencies and set MSIX package name
         run: |
-          $msixFolder = (Get-ChildItem "$env:DotVast_SolutionName/Packages/${{ matrix.platform }}")[0]
-          $msixFullName = $msixFolder.FullName
-          $msixName = $msixFolder.Name
+          $msixDir = (Get-ChildItem '${{ env.DotVast_AppxPackageBaseDir }}\${{ matrix.platform }}')[0]
+          $msixFullName = $msixDir.FullName
+          $msixName = $msixDir.Name
           Get-ChildItem "$msixFullName/Dependencies" | Where-Object Name -NotLike ${{ matrix.platform }} | Remove-Item -Recurse
           $gitDatetime = Get-Date -UnixTimeSeconds (git show -s --format=%ct HEAD) -Format 'yyMMdd'
           $gitShortHash = git show -s --format=%h HEAD
@@ -109,4 +108,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.DotVast_PackageName }}
-          path: ${{ env.DotVast_SolutionName }}/Packages/${{ matrix.platform }}
+          path: ${{ env.DotVast_AppxPackageBaseDir }}\${{ matrix.platform }}
