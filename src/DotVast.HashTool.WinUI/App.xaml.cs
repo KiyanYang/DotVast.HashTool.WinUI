@@ -136,7 +136,6 @@ public sealed partial class App : Application
         }
 #endif
 
-        // TODO: Resources 里的 DataTemplate 不能绑定到 ViewModel, 因此使用静态资源访问.
         // 该表达式要在 IActivationService.ActivateAsync() 之前.
         Current.Resources[nameof(AppearanceSettingsService)] = GetService<IAppearanceSettingsService>();
 

@@ -11,7 +11,18 @@ public sealed partial class GithubUpdateDialog : ContentDialog
     public GitHubRelease? Release
     {
         get => _release;
-        set => SetData(value);
+        set
+        {
+            if (value is null)
+            {
+                return;
+            }
+
+            _release = value;
+            TitleText.Text = value.TagName;
+            PublishAtText.Text = value.PublishAt.ToLocalTime().ToString();
+            MarkdownText.Text = value.Description;
+        }
     }
 
     public GithubUpdateDialog()
@@ -21,26 +32,13 @@ public sealed partial class GithubUpdateDialog : ContentDialog
         PrimaryButtonClick += GithubUpdateDialog_PrimaryButtonClick;
     }
 
-    private void SetData(GitHubRelease? release)
-    {
-        if (release is null)
-        {
-            return;
-        }
-
-        _release = release;
-        TitleText.Text = release.TagName;
-        PublishAtText.Text = release.PublishAt.ToLocalTime().ToString();
-        MarkdownText.Text = release.Description;
-    }
-
     private async void GithubUpdateDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
     {
-        if (_release is null)
+        if (Release is null)
         {
             return;
         }
 
-        await Windows.System.Launcher.LaunchUriAsync(new(_release.Url));
+        await Windows.System.Launcher.LaunchUriAsync(new(Release.Url));
     }
 }

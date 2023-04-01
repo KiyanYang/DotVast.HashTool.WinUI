@@ -1,3 +1,5 @@
+using System.Text;
+
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.ViewModels.Controls;
@@ -104,16 +106,30 @@ public sealed partial class HashTaskGrid : UserControl
             return string.Empty;
         }
 
-        const string separator = "  |  ";
+        const string ItemSeparator = "  |  ";
+        const string HashSeparator = ", ";
 
-        var mode = hashTask.Mode.ToString();
-        var dateTime = $"{separator}{hashTask.DateTime:HH:mm:ss}";
-        var encoding = hashTask.Mode == HashTaskMode.Text
-            ? $"{separator}{hashTask.Encoding!.WebName.ToUpper()}"
-            : string.Empty;
-        var hashNames = $"{separator}{string.Join(", ", hashTask.SelectedHashs.Select(i => i.Name))}";
+        var sb = new StringBuilder();
+        sb.Append(hashTask.Mode.ToString());
+        sb.Append(ItemSeparator);
+        sb.Append(hashTask.DateTime.ToString("HH:mm:ss"));
+        if (hashTask.Mode == HashTaskMode.Text)
+        {
+            sb.Append(ItemSeparator);
+            sb.Append(hashTask.Encoding!.WebName.ToUpper());
+        }
+        sb.Append(ItemSeparator);
+        var hashes = hashTask.SelectedHashs;
+        for (int i = 0; i < hashes.Count; i++)
+        {
+            if (i > 0)
+            {
+                sb.Append(HashSeparator);
+            }
+            sb.Append(hashes[i].Name);
+        }
 
-        return $"{mode}{dateTime}{encoding}{hashNames}";
+        return sb.ToString();
     }
 
     private string GetProgressText(double val, double max)

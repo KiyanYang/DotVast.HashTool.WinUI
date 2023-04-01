@@ -27,7 +27,7 @@ public class TextBlockHighlightTextBehavior : Behavior<TextBlock>
 
     private static void OnHighlightTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (string.Equals(e.OldValue as string, e.NewValue as string))
+        if (string.Equals(e.OldValue as string, e.NewValue as string, StringComparison.OrdinalIgnoreCase))
         {
             return;
         }

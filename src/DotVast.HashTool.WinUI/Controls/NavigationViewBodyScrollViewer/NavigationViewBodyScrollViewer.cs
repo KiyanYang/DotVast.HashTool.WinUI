@@ -16,17 +16,17 @@ public sealed class NavigationViewBodyScrollViewer : ContentControl
 
     #region Dependency Properties
 
-    public static readonly DependencyProperty HorizontalScrollBarVisibilityProperty = DependencyProperty.Register(
-        nameof(HorizontalScrollBarVisibility),
-        typeof(ScrollBarVisibility),
-        typeof(NavigationViewBodyScrollViewer),
-        new PropertyMetadata(null));
-
     public ScrollBarVisibility HorizontalScrollBarVisibility
     {
         get => (ScrollBarVisibility)GetValue(HorizontalScrollBarVisibilityProperty);
         set => SetValue(HorizontalScrollBarVisibilityProperty, value);
     }
+
+    public static readonly DependencyProperty HorizontalScrollBarVisibilityProperty = DependencyProperty.Register(
+        nameof(HorizontalScrollBarVisibility),
+        typeof(ScrollBarVisibility),
+        typeof(NavigationViewBodyScrollViewer),
+        new PropertyMetadata(null));
 
     #endregion Dependency Properties
 

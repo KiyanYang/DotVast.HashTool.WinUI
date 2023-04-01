@@ -71,6 +71,19 @@ public sealed partial class CommandLineActivationHandler : ActivationHandler<App
         }
 
         await Task.CompletedTask;
+
+        static PathWithMode? CreatePathWithMode(string path)
+        {
+            if (File.Exists(path))
+            {
+                return new(path, HashTaskMode.File);
+            }
+            if (Directory.Exists(path))
+            {
+                return new(path, HashTaskMode.Folder);
+            }
+            return null;
+        }
     }
 
     [LibraryImport("shell32.dll", SetLastError = true)]
@@ -120,28 +133,6 @@ public sealed partial class CommandLineActivationHandler : ActivationHandler<App
     private static Hash[] GetHashesFromNames(string[] names)
     {
         return Hash.All.IntersectBy(names, h => h.Name, StringComparer.OrdinalIgnoreCase).ToArray();
-    }
-
-    /// <summary>
-    /// 从路径获取 <see cref="HashTaskMode"/> 值.
-    /// </summary>
-    /// <param name="path"></param>
-    /// <returns>
-    /// 文件则返回 <see cref="HashTaskMode.File"/>;
-    /// 文件夹则返回 <see cref="HashTaskMode.Folder"/>;
-    /// 无效路径则返回 <see langword="null"/>.
-    /// </returns>
-    private static PathWithMode? CreatePathWithMode(string path)
-    {
-        if (File.Exists(path))
-        {
-            return new(path, HashTaskMode.File);
-        }
-        if (Directory.Exists(path))
-        {
-            return new(path, HashTaskMode.Folder);
-        }
-        return null;
     }
 
     private static HashTask CreateHashTask(Hash[] hashes, string path, HashTaskMode mode)
