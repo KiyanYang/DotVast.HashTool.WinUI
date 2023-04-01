@@ -14,7 +14,7 @@ body:
       label: 问题
       description: 描述你想要解决的问题或者功能的使用场景。
       placeholder: |
-        如果有已存在的 issues，请附上链接。
+        清晰且简洁地描述你遇到的问题或功能的使用场景。
 
   - type: textarea
     id: solution-description
@@ -22,20 +22,16 @@ body:
       required: true
     attributes:
       label: 解决方案
-      description: 对于该问题, 你预期的解决方案是怎样的。
-      placeholder: |
-        清晰地描述你所预期的解决方案，它会以怎样的方式解决你所遇到的问题。
+      description: 清晰且简洁地描述你你预期的解决方案。
 
   - type: textarea
     id: alternatives
     attributes:
       label: 备选方案
-      description: 描述可能的替代方案。
-      placeholder: |
-        当前一种解决方案难以实现时，你是否考虑了其他的替代方案？
+      description: 清晰且简洁地描述你考虑的替代方案。
 
   - type: textarea
     id: additional-info
     attributes:
       label: 附加信息
-      description: 添加一些你认为有必要的备注信息或草图。
+      description: 添加其他你认为有必要的信息。

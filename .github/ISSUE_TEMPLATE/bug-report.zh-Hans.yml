@@ -10,9 +10,9 @@ body:
     id: check
     attributes:
       label: 检查
-      description: 请在反馈问题之前确认以下问题。
+      description: 请确认以下问题。
       options:
-        - label: 没有在仓库[议题](https://github.com/KiyanYang/DotVast.HashTool.WinUI/issues)搜索到相关的议题。
+        - label: 没有在仓库[议题](https://github.com/KiyanYang/DotVast.HashTool.WinUI/issues)搜索到相关的议题！
           required: true
         - label: 此问题可以在最新版本中复现。
           required: true
@@ -22,8 +22,8 @@ body:
     validations:
       required: true
     attributes:
-      label: 问题描述
-      description: 简要描述你遇到的问题。
+      label: 问题
+      description: 清晰且简洁地描述你遇到的问题。
 
   - type: textarea
     id: reproduce-steps
@@ -31,12 +31,12 @@ body:
       required: true
     attributes:
       label: 复现步骤
-      description: 详细地描述复现的具体步骤。
-      value: |
-        1. 进入……页面
-        2. 点击……
-        3. 滚动到……
-        4. 出现……问题
+      description: 简洁地描述复现的具体步骤。
+      placeholder: |
+        1. 进入 …… 页面
+        2. 点击 ……
+        3. 滚动到 ……
+        4. 出现 …… 问题
 
   - type: textarea
     id: expected-behavior
@@ -44,13 +44,13 @@ body:
       required: true
     attributes:
       label: 预期行为
-      description: 清晰且简洁地描述你希望看到什么样的结果。
+      description: 清晰且简洁地描述预期的行为。
 
   - type: textarea
     id: screenshots
     attributes:
       label: 截图
-      description: 如果静态截图无法合适的描述问题，可以使用 [ScreenToGif](https://github.com/NickeManarin/ScreenToGif) 来录制 Gif 动图。
+      description: 如果截图无法合适地描述问题，可以使用 GIF 或视频。
 
   - type: textarea
     id: environment
@@ -59,17 +59,20 @@ body:
     attributes:
       label: 环境
       description: |
-        打开“设置”搜索“Windows 规格”查看版本信息。
+        使用 <kbd>Win</kbd> + <kbd>Pause/Break</kbd> 来打开 Windows 设置。
       value: |
-        - 应用版本: v0.1.0
-        - 系统版本: Windows 11 22H2 (22623.746)
+        - 应用版本: v0.5.0
+        - 系统版本: Windows 11 22H2 (22621.1413)
       render: Markdown
 
   - type: textarea
     id: logs
     attributes:
       label: 日志
-      description: 添加日志文件，打开软件->设置->日志，将包含问题的日志上传（一般只用上传当天的日志）
+      description: 请勿直接在该区域粘贴文本。
+      placeholder: |
+        1. 打开设置 -> 日志
+        2. 拖放日志到该区域
 
   - type: textarea
     id: remarks

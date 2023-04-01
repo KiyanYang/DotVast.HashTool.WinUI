@@ -1,0 +1,81 @@
+name: Bug Report
+description: Create a bug report to help improve HashTool
+labels:
+  - bug
+assignees:
+  - KiyanYang
+
+body:
+  - type: checkboxes
+    id: check
+    attributes:
+      label: Check
+      description: Please confirm the following questions.
+      options:
+        - label: Make sure to search for existing [issues](https://github.com/KiyanYang/DotVast.HashTool.WinUI/issues) before filing a new one!
+          required: true
+        - label: This bug can be reproduced in the latest version.
+          required: true
+
+  - type: textarea
+    id: bug-description
+    validations:
+      required: true
+    attributes:
+      label: Bug
+      description: A clear and concise description of what the bug is.
+
+  - type: textarea
+    id: reproduce-steps
+    validations:
+      required: true
+    attributes:
+      label: Steps to reproduce
+      description: Steps to reproduce the behavior.
+      placeholder: |
+        1. Go to ...
+        2. Click on ...
+        3. Scroll down to ...
+        4. See error ...
+
+  - type: textarea
+    id: expected-behavior
+    validations:
+      required: true
+    attributes:
+      label: Expected Behavior
+      description: A clear and concise description of what you expected to happen.
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: If the screenshot cannot describe the problem, you can use GIF or video.
+
+  - type: textarea
+    id: environment
+    validations:
+      required: true
+    attributes:
+      label: Environment
+      description: |
+        Press <kbd>Win</kbd> + <kbd>Pause/Break</kbd> to open Windows Settings.
+      value: |
+        - App Version: v0.5.0
+        - OS  Version: Windows 11 22H2 (22621.1413)
+      render: Markdown
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log file
+      description: Do not enter text into this field, it's for attaching the log file only.
+      placeholder: |
+        1. Open Settings -> Logs
+        2. Drag and drop them into this text area
+
+  - type: textarea
+    id: remarks
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here.
