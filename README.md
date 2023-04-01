@@ -6,9 +6,7 @@
 
 # HashTool
 
-**用于计算文件、文件夹或文本哈希值的工具！**
-
-**A Tool for Calculating the Hash Value of Any File, Folder, or Text!**
+**A Tool for Calculating the Hash Values of Files, Folders or Texts!**
 
 [![MIT License](https://img.shields.io/github/license/KiyanYang/DotVast.HashTool.WinUI)](./LICENSE.txt)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/KiyanYang/DotVast.HashTool.WinUI)](https://github.com/KiyanYang/DotVast.HashTool.WinUI/releases)
@@ -23,51 +21,30 @@
 
 ---
 
-## 特性
+> [简体中文](./docs/README.zh-Hans.md)
 
-- 可以计算文件，文件夹或文本的哈希值。
-- 支持 MD5, SHA1, SHA2, SHA3 等多种哈希算法，详见 [wiki](https://github.com/KiyanYang/DotVast.HashTool.WinUI/wiki/功能#哈希算法)。
-- 支持拖放文件和文件夹。
-- 现代化且友好的界面。
-- 支持简体中文和英语。
+DotVast.HashTool.WinUI allows you to calculate the hash values of files, folders or text. It is a useful tool for verifying the integrity and authenticity of your data.
 
-## 使用
+## Features
 
-1. 打开 [系统设置 > 隐私和安全性 > 开发者选项](ms-settings:developers)，启用 `开发人员模式`，并展开下方的 `PowerShell`，启用`更改执行策略，以允许本地 PowerShell 脚本在未签名的情况下运行。远程脚本需要签名。`。
-2. 在右侧的 [Release](https://github.com/KiyanYang/DotVast.HashTool.WinUI/releases) 中，找到最新版本，并下载适用于当前系统的压缩包。
-3. 解压压缩包，右击 `Install.ps1` 脚本，选择“使用 PowerShell 运行”，根据提示进行安装。
-4. 安装完毕后，注意恢复第 1 步启用的功能。
+- Calculate the hash values of files, folders or texts.
+- Support MD5, SHA1, SHA2, SHA3 and so on. See [wiki](https://github.com/KiyanYang/DotVast.HashTool.WinUI/wiki/功能#哈希算法) for more details.
+- Support drag and drop files and folder.
+- Modern and friendly user interface.
+- Support multiple languages.
 
-## 界面
+## Installation
 
-![主页](./docs/images/HomePage-0.3.0.webp)
+You can download the latest release from the [GitHub Releases](https://github.com/KiyanYang/DotVast.HashTool.WinUI/releases) page. Alternatively, you can clone this repository and build the project yourself using Visual Studio 2022 or later.
 
-## 贡献
+## Screenshots
 
-欢迎参与 DotVast.HashTool.WinUI 项目，您可以在 [Discussions](https://github.com/KiyanYang/DotVast.HashTool.WinUI/discussions) 进行讨论， 如果您有任何反馈，请阅读[贡献指南](./CONTRIBUTING.md)。
+![HomePage](./docs/images/HomePage-0.3.0.webp)
 
-## 感谢
+## Contribution
 
-- 工具
+If you find any bugs or have any suggestions for improvement, please feel free to open an issue or a pull request on GitHub after reading the [contribution guide](./CONTRIBUTING.md). You can also fork this repository and make your own modifications. If you like this project, please consider giving it a star on GitHub to show your support.
 
-  - [.NET](https://dotnet.microsoft.com/)
-  - [ResXResourceManager](https://github.com/dotnet/ResXResourceManager)
-  - [Template Studio](https://github.com/microsoft/TemplateStudio)
-  - [Visual Studio Community](https://visualstudio.microsoft.com/vs/community/)
-  - [XamlStyler](https://github.com/Xavalon/XamlStyler)
+## License
 
-- 项目
-
-  - [CommunityToolkit.Labs](https://github.com/CommunityToolkit/Labs-Windows)
-  - [CommunityToolkit.Mvvm](https://github.com/CommunityToolkit/dotnet)
-  - [CommunityToolkit.WinUI](https://github.com/CommunityToolkit/WindowsCommunityToolkit)
-  - [CryptoBase](https://github.com/HMBSbige/CryptoBase)
-  - [HashLib4CSharp](https://github.com/Xor-el/HashLib4CSharp)
-  - [Microsoft.WindowsAppSDK](https://github.com/microsoft/WindowsAppSDK)
-  - [Microsoft.Extensions](https://github.com/dotnet/runtime)
-  - [Serilog](https://github.com/serilog/serilog)
-  - [System.IO.Hashing](https://github.com/dotnet/runtime)
-  - [WinUIEx](https://github.com/dotMorten/WinUIEx)
-
-- 代码片段
-  - [QuickXorHash.cs](https://gist.github.com/rgregg/c07a91964300315c6c3e77f7b5b861e4)
+DotVast.HashTool.WinUI is licensed under the MIT License. See [LICENSE](./LICENSE.txt) for more details.
