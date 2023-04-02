@@ -20,9 +20,9 @@ public sealed partial class HashOptionSettingsPage : Page, IView
         NavigationViewHeaderBehavior.SetHeaderContext(this, Localization.HashOptionSettings_Title);
     }
 
-    private void ItemsWrapGrid_SizeChanged(object sender, Microsoft.UI.Xaml.SizeChangedEventArgs e)
+    private void GridView_SizeChanged(object sender, Microsoft.UI.Xaml.SizeChangedEventArgs e)
     {
-        if (e.NewSize.Width != e.PreviousSize.Width && sender is ItemsWrapGrid itemsWrapGrid)
+        if (e.NewSize.Width != e.PreviousSize.Width && sender is GridView { ItemsPanelRoot: ItemsWrapGrid itemsWrapGrid })
         {
             var columns = Math.Floor(e.NewSize.Width / HashOptionGridViewItemMinWidth);
             itemsWrapGrid.ItemWidth = e.NewSize.Width / columns;

@@ -30,7 +30,8 @@
                 CanReorderItems="True"
                 ItemTemplate="{StaticResource HashSettingDataTemplate}"
                 ItemsSource="{x:Bind ViewModel.HashSettings}"
-                SelectionMode="None">
+                SelectionMode="None"
+                SizeChanged="GridView_SizeChanged">
                 <GridView.ItemContainerStyle>
                     <Style TargetType="GridViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -39,7 +40,7 @@
                 </GridView.ItemContainerStyle>
                 <GridView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <ItemsWrapGrid Orientation="Horizontal" SizeChanged="ItemsWrapGrid_SizeChanged" />
+                        <ItemsWrapGrid Orientation="Horizontal" />
                     </ItemsPanelTemplate>
                 </GridView.ItemsPanel>
                 <GridView.ItemContainerTransitions>
