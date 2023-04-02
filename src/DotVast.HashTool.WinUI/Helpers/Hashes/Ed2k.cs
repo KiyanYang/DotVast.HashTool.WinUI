@@ -1,12 +1,14 @@
 using System.Security.Cryptography;
 
+using DotVast.HashTool.WinUI.Enums;
+
 namespace DotVast.HashTool.WinUI.Helpers.Hashes;
 
 internal class Ed2k : HashAlgorithm
 {
     private const int Ed2kChunkSize = 9728000;
 
-    private readonly HashAlgorithm _md4 = Enums.Hash.GetHashAlgorithm(Enums.Hash.MD4)!;
+    private readonly HashAlgorithm _md4 = HashKind.MD4.ToHashAlgorithm();
     private readonly List<byte> _chunkHashes = new();
     private int _currentChunkSize;
 

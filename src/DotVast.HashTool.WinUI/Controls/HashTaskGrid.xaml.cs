@@ -37,6 +37,8 @@ public sealed partial class HashTaskGrid : UserControl
 
     #endregion Dependency Properties
 
+    private readonly IHashService _hashService = App.GetService<IHashService>();
+
     public HashTaskGridViewModel ViewModel { get; set; }
 
     public HashTaskGrid()
@@ -119,14 +121,14 @@ public sealed partial class HashTaskGrid : UserControl
             sb.Append(hashTask.Encoding!.WebName.ToUpper());
         }
         sb.Append(ItemSeparator);
-        var hashes = hashTask.SelectedHashs;
-        for (int i = 0; i < hashes.Count; i++)
+        var hashKinds = hashTask.SelectedHashKinds;
+        for (int i = 0; i < hashKinds.Length; i++)
         {
             if (i > 0)
             {
                 sb.Append(HashSeparator);
             }
-            sb.Append(hashes[i].Name);
+            sb.Append(_hashService.GetHashData(hashKinds[i]).Name);
         }
 
         return sb.ToString();
