@@ -7,8 +7,7 @@ using namespace winrt::Windows::Data::Json;
 struct HashCommand : public BaseCommand
 {
 public:
-    HashCommand(JsonObject hashOption);
-    HashCommand(winrt::hstring hashName, bool isEnabled);
+    HashCommand(winrt::hstring hashName);
     STDMETHODIMP GetTitle(
         _In_opt_ IShellItemArray* psiItemArray,
         _Outptr_ LPWSTR* ppszName) override;
@@ -16,6 +15,6 @@ public:
         _In_opt_ IShellItemArray* psiItemArray,
         _In_opt_ IBindCtx* pbc) override;
 
-    winrt::hstring HashName;
-    bool IsEnabled;
+private:
+    winrt::hstring m_hashName;
 };

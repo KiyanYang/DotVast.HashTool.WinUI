@@ -46,7 +46,9 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
 
     public async Task SaveHashSettingsAsync()
     {
-        await SaveAsync(HashSettings, nameof(HashSettings));
+        await _localSettingsService.SaveSettingAsync(nameof(HashSettings), HashSettings);
+        var hashNamesForContexMenu = HashSettings.Where(h => h.IsEnabledForContextMenu).Select(h => h.Name);
+        await _localSettingsService.SaveSettingAsync("ContextMenu", "HashNames", hashNamesForContexMenu);
     }
     #endregion HashSettings
 
@@ -55,7 +57,7 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
     public bool FileExplorerContextMenusEnabled
     {
         get => _fileExplorerContextMenusEnabled;
-        set => SetAndSave(ref _fileExplorerContextMenusEnabled, value);
+        set => SetAndSave("ContextMenu", "IsEnabled", value, ref _fileExplorerContextMenusEnabled);
     }
     #endregion FileExplorerContextMenusEnabled
 

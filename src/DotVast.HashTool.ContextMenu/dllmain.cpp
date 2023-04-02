@@ -28,19 +28,22 @@ struct ContextMenuCommand : public BaseCommand
 {
 public:
     const bool DefaultContextMenusEnabled = true;
-    const winrt::hstring ContextMenusEnabledKey = L"FileExplorerContextMenusEnabled";
-    const winrt::hstring HashOptionsKey = L"HashOptions";
+    const winrt::hstring ContextMenuContainerName = L"ContextMenu";
+    const winrt::hstring IsEnabledKey = L"IsEnabled";
+    const winrt::hstring HashNamesKey = L"HashNames";
 
     ContextMenuCommand()
     {
         m_title = winrt::Windows::ApplicationModel::AppInfo::Current().DisplayInfo().DisplayName();
 
-        auto values = winrt::Windows::Storage::ApplicationData::Current().LocalSettings().Values();
+        auto values = winrt::Windows::Storage::ApplicationData::Current().LocalSettings()
+            .CreateContainer(ContextMenuContainerName, winrt::Windows::Storage::ApplicationDataCreateDisposition::Always)
+            .Values();
 
         m_enabled = DefaultContextMenusEnabled;
-        if (values.HasKey(ContextMenusEnabledKey))
+        if (values.HasKey(IsEnabledKey))
         {
-            auto contextMenusEnabled = winrt::unbox_value<winrt::hstring>(values.Lookup(ContextMenusEnabledKey));
+            auto contextMenusEnabled = winrt::unbox_value<winrt::hstring>(values.Lookup(IsEnabledKey));
             JsonValue enabled = JsonValue::CreateNullValue();
             if (JsonValue::TryParse(contextMenusEnabled, enabled) && enabled.ValueType() == JsonValueType::Boolean)
             {
@@ -48,29 +51,26 @@ public:
             }
         }
 
-        if (values.HasKey(HashOptionsKey))
+        if (m_enabled && values.HasKey(HashNamesKey))
         {
-            auto hashOptions = winrt::unbox_value<winrt::hstring>(values.Lookup(HashOptionsKey));
+            auto hashSettings = winrt::unbox_value<winrt::hstring>(values.Lookup(HashNamesKey));
             JsonArray result;
-            if (JsonArray::TryParse(hashOptions, result))
+            if (JsonArray::TryParse(hashSettings, result))
             {
                 for (const auto& obj : result)
                 {
-                    auto command = winrt::make_self<HashCommand>(obj.GetObjectW());
-                    if (command.get()->IsEnabled)
-                    {
-                        m_commands.push_back(command);
-                    }
+                    auto command = winrt::make_self<HashCommand>(obj.GetString());
+                    m_commands.push_back(command);
                 }
             }
         }
 
-        if (m_commands.size() == 0)
+        if (m_enabled && m_commands.size() == 0)
         {
-            const winrt::hstring DefaultHashNames[] = { L"MD5", L"SHA1", L"SHA256", L"SHA384" , L"SHA512" };
+            const winrt::hstring DefaultHashNames[] = { L"MD5", L"SHA-1", L"SHA-256", L"SHA-384" , L"SHA-512" };
             for (const auto& hashName : DefaultHashNames)
             {
-                auto command = winrt::make_self<HashCommand>(hashName, true);
+                auto command = winrt::make_self<HashCommand>(hashName);
                 m_commands.push_back(command);
             }
         }

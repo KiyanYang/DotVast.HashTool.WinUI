@@ -15,16 +15,9 @@ static std::wstring QuoteAndReplaceSlash(const std::wstring_view& str)
     return out;
 }
 
-HashCommand::HashCommand(JsonObject hashOption)
+HashCommand::HashCommand(winrt::hstring hashName)
 {
-    HashName = hashOption.GetNamedString(L"Hash", L"");
-    IsEnabled = hashOption.GetNamedBoolean(L"IsEnabled", false);
-}
-
-HashCommand::HashCommand(winrt::hstring hashName, bool isEnabled)
-{
-    HashName = hashName;
-    IsEnabled = isEnabled;
+    m_hashName = hashName;
 }
 
 STDMETHODIMP HashCommand::GetTitle(
@@ -32,7 +25,7 @@ STDMETHODIMP HashCommand::GetTitle(
     _Outptr_ LPWSTR* ppszName)
 {
     *ppszName = nullptr;
-    return SHStrDup(HashName.c_str(), ppszName);
+    return SHStrDup(m_hashName.c_str(), ppszName);
 }
 
 STDMETHODIMP HashCommand::Invoke(
@@ -51,7 +44,7 @@ STDMETHODIMP HashCommand::Invoke(
 
         std::wostringstream args;
 
-        args << L"--hash " << QuoteAndReplaceSlash(HashName) << L" --path";
+        args << L"--hash " << QuoteAndReplaceSlash(m_hashName) << L" --path";
 
         for (DWORD i = 0; i < count; ++i)
         {
