@@ -5,6 +5,7 @@ using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Controls;
 using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.Helpers.JsonConverters;
+using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Services;
 using DotVast.HashTool.WinUI.Services.Settings;
 using DotVast.HashTool.WinUI.ViewModels;
@@ -82,6 +83,7 @@ public sealed partial class App : Application
             services.AddSingleton<ICheckUpdateService, CheckUpdateService>();
             services.AddTransient<IComputeHashService, ComputeHashService>();
             services.AddSingleton<IDialogService, DialogService>();
+            services.AddSingleton<IHashService, HashService>();
             services.AddSingleton<IHashTaskService, HashTaskService>();
 
             // Core Services
@@ -104,6 +106,9 @@ public sealed partial class App : Application
 
             services.AddTransient<HashTaskGrid>();
             services.AddTransient<HashTaskGridViewModel>();
+
+            // Configuration
+            services.Configure<DataOptions>(context.Configuration.GetSection(nameof(DataOptions)));
         }).
         UseSerilog((context, services, loggerConfiguration) =>
         {

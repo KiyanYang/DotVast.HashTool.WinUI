@@ -75,6 +75,10 @@
     <ProjectReference Include="..\DotVast.HashTool.ContextMenu\DotVast.HashTool.ContextMenu.vcxproj" ReferenceOutputAssembly="False" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <ProjectCapability Include="Msix" />
   </ItemGroup>
