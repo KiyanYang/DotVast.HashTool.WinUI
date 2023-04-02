@@ -51,27 +51,33 @@ public:
             }
         }
 
-        if (m_enabled && values.HasKey(HashNamesKey))
+        if (m_enabled)
         {
-            auto hashSettings = winrt::unbox_value<winrt::hstring>(values.Lookup(HashNamesKey));
-            JsonArray result;
-            if (JsonArray::TryParse(hashSettings, result))
+            if (values.HasKey(HashNamesKey))
             {
-                for (const auto& obj : result)
+                auto hashSettings = winrt::unbox_value<winrt::hstring>(values.Lookup(HashNamesKey));
+                JsonArray result;
+                if (JsonArray::TryParse(hashSettings, result))
                 {
-                    auto command = winrt::make_self<HashCommand>(obj.GetString());
-                    m_commands.push_back(command);
+                    for (const auto& obj : result)
+                    {
+                        auto command = winrt::make_self<HashCommand>(obj.GetString());
+                        m_commands.push_back(command);
+                    }
+                }
+                if (m_commands.size() == 0)
+                {
+                    m_enabled = false;
                 }
             }
-        }
-
-        if (m_enabled && m_commands.size() == 0)
-        {
-            const winrt::hstring DefaultHashNames[] = { L"MD5", L"SHA-1", L"SHA-256", L"SHA-384" , L"SHA-512" };
-            for (const auto& hashName : DefaultHashNames)
+            else // 当启用菜单但是未设置 HashNames 时，使用默认 HashNames
             {
-                auto command = winrt::make_self<HashCommand>(hashName);
-                m_commands.push_back(command);
+                const winrt::hstring DefaultHashNames[] = { L"MD5", L"SHA-1", L"SHA-256", L"SHA-384" , L"SHA-512" };
+                for (const auto& hashName : DefaultHashNames)
+                {
+                    auto command = winrt::make_self<HashCommand>(hashName);
+                    m_commands.push_back(command);
+                }
             }
         }
     }
