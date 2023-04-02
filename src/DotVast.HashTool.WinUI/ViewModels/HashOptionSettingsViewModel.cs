@@ -16,18 +16,18 @@ public partial class HashOptionSettingsViewModel : ObservableRecipient, IViewMod
         _preferencesSettingsService = preferencesSettingsService;
     }
 
-    public ObservableCollection<HashOption> HashOptions => _preferencesSettingsService.HashOptions;
+    public ObservableCollection<HashSetting> HashSettings => _preferencesSettingsService.HashSettings;
 
     #region Messenger
 
     protected override void OnActivated()
     {
-        Messenger.Register<HashOptionSettingsViewModel, HashOptionIsEnabledChangedMessage>(this, async (r, m) =>
+        Messenger.Register<HashOptionSettingsViewModel, HashSettingIsEnabledForAppChangedMessage>(this, async (r, m) =>
         {
-            Debug.WriteLine($"[{DateTime.Now}] HashOptionSettingsViewModel.Messenger > PropertyChangedMessage[HashOption.IsEnabled]");
-            Debug.WriteLine($"Hash.Name: {m.HashOption.Hash.Name}");
-            Debug.WriteLine($"IsEnabled: {m.IsEnabled}");
-            await _preferencesSettingsService.SaveHashOptionsAsync();
+            Debug.WriteLine($"[{DateTime.Now}] HashOptionSettingsViewModel.Messenger > HashSettingIsEnabledForAppChangedMessage");
+            Debug.WriteLine($"Hash.Name: {m.HashSetting.Kind}");
+            Debug.WriteLine($"IsEnabled: {m.IsEnabledForApp}");
+            await _preferencesSettingsService.SaveHashSettingsAsync();
         });
     }
 
@@ -38,23 +38,23 @@ public partial class HashOptionSettingsViewModel : ObservableRecipient, IViewMod
     void INavigationAware.OnNavigatedTo(object? parameter)
     {
         IsActive = true;
-        HashOptions.CollectionChanged += HashOptions_CollectionChanged;
+        HashSettings.CollectionChanged += HashOptions_CollectionChanged;
     }
 
     void INavigationAware.OnNavigatedFrom()
     {
         IsActive = false;
-        HashOptions.CollectionChanged -= HashOptions_CollectionChanged;
+        HashSettings.CollectionChanged -= HashOptions_CollectionChanged;
     }
 
     #endregion INavigationAware
 
     private void HashOptions_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
-        if (sender is ObservableCollection<HashOption>
+        if (sender is ObservableCollection<HashSetting>
             && e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
         {
-            _preferencesSettingsService.SaveHashOptionsAsync();
+            _preferencesSettingsService.SaveHashSettingsAsync();
         }
     }
 }

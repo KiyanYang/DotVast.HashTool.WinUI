@@ -83,8 +83,8 @@ public sealed partial class HashTask : ObservableObject, IDisposable
         {
             sb.Append($", {nameof(Encoding)} = {Encoding.WebName}");
         }
-        sb.Append($", SelectedHashes = [ ");
-        sb.Append(string.Join(", ", SelectedHashs));
+        sb.Append($", {nameof(SelectedHashKinds)} = [ ");
+        sb.Append(string.Join(", ", SelectedHashKinds));
         sb.Append(" ]");
         sb.Append(" }");
         return sb.ToString();

@@ -43,7 +43,7 @@ public partial class HomeViewModel
     /// <summary>
     /// Hash 选项.
     /// </summary>
-    public IEnumerable<HashOption> HashOptions => _preferencesSettingsService.HashOptions.Where(i => i.IsEnabled);
+    public IEnumerable<HashSetting> HashSettings => _preferencesSettingsService.HashSettings.Where(i => i.IsEnabledForApp);
 
     /// <summary>
     /// 是否处于任务延迟创建状态. 若处于延迟状态, 则当前无法创建任务.
