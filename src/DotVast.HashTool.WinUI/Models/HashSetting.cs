@@ -42,7 +42,7 @@ public sealed partial class HashSetting : ObservableObject
         WeakReferenceMessenger.Default.Send(new HashSettingIsEnabledForAppChangedMessage(this, value));
 
     /// <summary>
-    /// 是否在资源管理器上下文菜单启用该项.
+    /// 是否在资源管理器上下文菜单内启用该项.
     /// </summary>
     [ObservableProperty]
     private bool _isEnabledForContextMenu;

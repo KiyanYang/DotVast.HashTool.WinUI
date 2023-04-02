@@ -13,17 +13,20 @@ namespace DotVast.HashTool.WinUI.Activation;
 
 public sealed partial class CommandLineActivationHandler : ActivationHandler<AppActivationArguments>
 {
-    public record struct PathWithMode(string Path, HashTaskMode Mode);
+    private record struct PathWithMode(string Path, HashTaskMode Mode);
     private readonly ILogger<CommandLineActivationHandler> _logger;
     private readonly INavigationService _navigationService;
+    private readonly IHashService _hashService;
     private readonly IHashTaskService _hashTaskService;
 
     public CommandLineActivationHandler(ILogger<CommandLineActivationHandler> logger,
         INavigationService navigationService,
+        IHashService hashService,
         IHashTaskService hashTaskService)
     {
         _logger = logger;
         _navigationService = navigationService;
+        _hashService = hashService;
         _hashTaskService = hashTaskService;
     }
 
@@ -46,7 +49,7 @@ public sealed partial class CommandLineActivationHandler : ActivationHandler<App
             if (hashNames is null)
                 return;
 
-            var hashes = GetHashesFromNames(hashNames);
+            var hashes = _hashService.GetHashes(hashNames);
             if (hashes.Length <= 0)
                 return;
 
@@ -130,19 +133,14 @@ public sealed partial class CommandLineActivationHandler : ActivationHandler<App
         return ret;
     }
 
-    private static Hash[] GetHashesFromNames(string[] names)
-    {
-        return Hash.All.IntersectBy(names, h => h.Name, StringComparer.OrdinalIgnoreCase).ToArray();
-    }
-
-    private static HashTask CreateHashTask(Hash[] hashes, string path, HashTaskMode mode)
+    private static HashTask CreateHashTask(HashKind[] hashes, string path, HashTaskMode mode)
     {
         return new()
         {
             DateTime = DateTime.Now,
             Mode = mode,
             Content = path.Trim(),
-            SelectedHashs = hashes,
+            SelectedHashKinds = hashes,
             State = HashTaskState.Waiting,
         };
     }

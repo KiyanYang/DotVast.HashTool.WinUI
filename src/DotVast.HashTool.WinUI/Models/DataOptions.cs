@@ -2,12 +2,12 @@ using DotVast.HashTool.WinUI.Enums;
 
 namespace DotVast.HashTool.WinUI.Models;
 
-internal class DataOptions
+public class DataOptions
 {
     public Dictionary<HashKind, HashData>? Hashes { get; set; }
 }
 
-internal class HashData
+public class HashData
 {
     public string Name { get; set; } = string.Empty;
     public string[] Alias { get; set; } = Array.Empty<string>();
