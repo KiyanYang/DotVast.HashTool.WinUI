@@ -6,17 +6,17 @@
     xmlns:models="using:DotVast.HashTool.WinUI.Models">
 
     <Page.Resources>
-        <DataTemplate x:Key="HashOptionDataTemplate" x:DataType="models:HashOption">
+        <DataTemplate x:Key="HashSettingDataTemplate" x:DataType="models:HashSetting">
             <Grid Style="{StaticResource CardGridStyle}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock VerticalAlignment="Center" Text="{x:Bind Hash.Name}" />
+                <TextBlock VerticalAlignment="Center" Text="{x:Bind Name}" />
                 <ToggleSwitch
                     Grid.Column="1"
                     MinWidth="0"
-                    IsOn="{x:Bind IsEnabled, Mode=TwoWay}" />
+                    IsOn="{x:Bind IsEnabledForApp, Mode=TwoWay}" />
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -28,8 +28,8 @@
                 Padding="0,-4"
                 AllowDrop="True"
                 CanReorderItems="True"
-                ItemTemplate="{StaticResource HashOptionDataTemplate}"
-                ItemsSource="{x:Bind ViewModel.HashOptions}"
+                ItemTemplate="{StaticResource HashSettingDataTemplate}"
+                ItemsSource="{x:Bind ViewModel.HashSettings}"
                 SelectionMode="None">
                 <GridView.ItemContainerStyle>
                     <Style TargetType="GridViewItem">
