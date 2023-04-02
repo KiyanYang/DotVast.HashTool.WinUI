@@ -6,9 +6,9 @@ namespace DotVast.HashTool.WinUI.Contracts.Services.Settings;
 
 public interface IPreferencesSettingsService : IBaseObservableSettings
 {
-    ObservableCollection<HashOption> HashOptions { get; }
+    ObservableCollection<HashSetting> HashSettings { get; }
 
-    Task SaveHashOptionsAsync();
+    Task SaveHashSettingsAsync();
 
     /// <summary>
     /// 是否启用资源管理器注册的上下文菜单.
