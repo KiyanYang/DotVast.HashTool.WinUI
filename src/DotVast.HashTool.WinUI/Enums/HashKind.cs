@@ -1,9 +1,15 @@
+using System.Text.Json.Serialization;
+
 namespace DotVast.HashTool.WinUI.Enums;
 
+// Don't change the enum name unless absolutely necessary.
+// If the name is changed, it will destroy the deserialization and cause the app to start failure.
+// The name is the same as the key in the appsettings.json:DataOptions:Hashes.
+[JsonConverter(typeof(JsonStringEnumConverter))]
 public enum HashKind
 {
-    CRC_32,
-    CRC_64,
+    CRC_32_V42,
+    CRC_64_ECMA182,
     MD4,
     MD5,
     SHA1,

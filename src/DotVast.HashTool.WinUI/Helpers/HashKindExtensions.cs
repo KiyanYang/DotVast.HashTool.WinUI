@@ -14,8 +14,8 @@ internal static class HashKindExtensions
     {
         return hashKind switch
         {
-            HashKind.CRC_32 => new System.IO.Hashing.Crc32().ToHashAlgorithm(reverse: true),
-            HashKind.CRC_64 => new System.IO.Hashing.Crc64().ToHashAlgorithm(),
+            HashKind.CRC_32_V42 => new System.IO.Hashing.Crc32().ToHashAlgorithm(reverse: true),
+            HashKind.CRC_64_ECMA182 => new System.IO.Hashing.Crc64().ToHashAlgorithm(),
             HashKind.MD4 => HashLib4CSharp.Base.HashFactory.Crypto.CreateMD4().ToHashAlgorithm(),
             HashKind.MD5 => MD5.Create(),
             HashKind.SHA1 => SHA1.Create(),
