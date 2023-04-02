@@ -7,23 +7,38 @@
 
     <Page.Resources>
         <DataTemplate x:Key="HashSettingDataTemplate" x:DataType="models:HashSetting">
-            <Grid Style="{StaticResource CardGridStyle}">
+            <Grid ColumnSpacing="12" Style="{StaticResource CardGridStyle}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock VerticalAlignment="Center" Text="{x:Bind Name}" />
-                <ToggleSwitch
+                <CheckBox
                     Grid.Column="1"
                     MinWidth="0"
-                    IsOn="{x:Bind IsEnabledForApp, Mode=TwoWay}" />
+                    IsChecked="{x:Bind IsEnabledForApp, Mode=TwoWay}" />
+                <CheckBox
+                    Grid.Column="2"
+                    MinWidth="0"
+                    IsChecked="{x:Bind IsEnabledForContextMenu, Mode=TwoWay}" />
             </Grid>
         </DataTemplate>
     </Page.Resources>
 
     <controls:NavigationViewBodyScrollViewer>
         <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewBodyContentStyle}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <InfoBar
+                x:Uid="HashSettingsPage_ItemDescription"
+                Margin="0,0,0,16"
+                IsClosable="False"
+                IsOpen="True" />
             <GridView
+                Grid.Row="1"
                 Margin="-8,0"
                 Padding="0,-4"
                 AllowDrop="True"

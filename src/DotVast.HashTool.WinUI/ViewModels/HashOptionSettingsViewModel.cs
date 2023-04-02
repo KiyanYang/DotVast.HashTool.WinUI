@@ -29,6 +29,14 @@ public partial class HashOptionSettingsViewModel : ObservableRecipient, IViewMod
             Debug.WriteLine($"IsEnabled: {m.IsEnabledForApp}");
             await _preferencesSettingsService.SaveHashSettingsAsync();
         });
+
+        Messenger.Register<HashOptionSettingsViewModel, HashSettingIsEnabledForContextMenuChangedMessage>(this, async (r, m) =>
+        {
+            Debug.WriteLine($"[{DateTime.Now}] HashOptionSettingsViewModel.Messenger > HashSettingIsEnabledForContextMenuChangedMessage");
+            Debug.WriteLine($"Hash.Name: {m.HashSetting.Kind}");
+            Debug.WriteLine($"IsEnabled: {m.IsEnabledForContextMenu}");
+            await _preferencesSettingsService.SaveHashSettingsAsync();
+        });
     }
 
     #endregion Messenger

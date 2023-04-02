@@ -141,6 +141,12 @@
   <data name="HashOptionSettings_Title" xml:space="preserve">
     <value>哈希选项</value>
   </data>
+  <data name="HashSettingsPage_ItemDescription.Message" xml:space="preserve">
+    <value>哈希名称，在软件内启用，在资源管理器菜单内启用。</value>
+  </data>
+  <data name="HashSettingsPage_ItemDescription.Title" xml:space="preserve">
+    <value>条目内容从左至右依次表示</value>
+  </data>
   <data name="HomePage_CreateAndStart" xml:space="preserve">
     <value>创建并开始</value>
     <comment>是否创建并开始计算</comment>

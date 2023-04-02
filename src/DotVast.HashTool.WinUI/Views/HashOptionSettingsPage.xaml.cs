@@ -7,7 +7,7 @@ namespace DotVast.HashTool.WinUI.Views;
 
 public sealed partial class HashOptionSettingsPage : Page, IView
 {
-    private const double HashOptionGridViewItemMinWidth = 200;
+    private const double HashOptionGridViewItemMinWidth = 240;
 
     public HashOptionSettingsViewModel ViewModel { get; }
 
