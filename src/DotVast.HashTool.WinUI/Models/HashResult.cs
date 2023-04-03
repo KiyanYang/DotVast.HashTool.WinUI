@@ -1,4 +1,7 @@
+using System.Text.Json.Serialization;
+
 using DotVast.HashTool.WinUI.Enums;
+using DotVast.HashTool.WinUI.Helpers;
 
 namespace DotVast.HashTool.WinUI.Models;
 
@@ -20,4 +23,8 @@ public sealed class HashResult
     public IReadOnlyList<HashResultItem>? Data { get; set; }
 }
 
-public readonly record struct HashResultItem(Hash Hash, string Value);
+public readonly record struct HashResultItem(HashKind Kind, string Value)
+{
+    [JsonIgnore]
+    public string Name { get; } = Kind.ToHashData().Name;
+}

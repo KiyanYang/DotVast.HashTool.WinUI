@@ -18,7 +18,7 @@ namespace DotVast.HashTool.WinUI.Helpers;
 [JsonSerializable(typeof(DateTime))]
 [JsonSerializable(typeof(TimeSpan))]
 
-[JsonSerializable(typeof(IList<Hash>))]
+[JsonSerializable(typeof(IList<HashKind>))]
 [JsonSerializable(typeof(HashTaskMode))]
 [JsonSerializable(typeof(HashTaskState))]
 
@@ -279,20 +279,20 @@ public sealed partial class JsonContext2
         JsonPropertyInfo propertyInfo3 = JsonMetadataServices.CreatePropertyInfo(options, info3);
         properties[3] = propertyInfo3;
 
-        JsonPropertyInfoValues<IList<Hash>> info4 = new JsonPropertyInfoValues<IList<Hash>>()
+        JsonPropertyInfoValues<HashKind[]> info4 = new JsonPropertyInfoValues<HashKind[]>()
         {
             IsProperty = true,
             IsPublic = true,
             IsVirtual = false,
             DeclaringType = typeof(HashTask),
             Converter = null,
-            Getter = static (obj) => ((HashTask)obj).SelectedHashs!,
-            Setter = static (obj, value) => ((HashTask)obj).SelectedHashs = value!,
+            Getter = static (obj) => ((HashTask)obj).SelectedHashKinds!,
+            Setter = static (obj, value) => ((HashTask)obj).SelectedHashKinds = value!,
             IgnoreCondition = null,
             HasJsonInclude = false,
             IsExtensionData = false,
             NumberHandling = default,
-            PropertyName = "SelectedHashs",
+            PropertyName = "SelectedHashKinds",
             JsonPropertyName = null
         };
 

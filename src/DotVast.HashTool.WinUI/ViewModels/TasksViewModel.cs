@@ -90,7 +90,7 @@ public sealed partial class TasksViewModel : ObservableRecipient, IViewModel, IN
     [RelayCommand]
     private void ShowResult(HashTask hashTask)
     {
-        _navigationService.NavigateTo(Constants.PageKeys.ResultsPage, parameter: hashTask);
+        _navigationService.NavigateTo(Constants.PageKey.ResultsPage, parameter: hashTask);
     }
 
     public bool CanExecuteSave => HashTaskCheckables?.Any(h => h.IsChecked) ?? false;

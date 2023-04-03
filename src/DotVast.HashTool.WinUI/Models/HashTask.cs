@@ -38,7 +38,7 @@ public sealed partial class HashTask : ObservableObject, IDisposable
     [JsonConverter(typeof(EncodingJsonConverter))]
     public Encoding? Encoding { get; set; }
 
-    public IList<Hash> SelectedHashs { get; internal set; } = Array.Empty<Hash>();
+    public HashKind[] SelectedHashKinds { get; internal set; } = Array.Empty<HashKind>();
 
     /// <summary>
     /// 结果.
@@ -83,8 +83,8 @@ public sealed partial class HashTask : ObservableObject, IDisposable
         {
             sb.Append($", {nameof(Encoding)} = {Encoding.WebName}");
         }
-        sb.Append($", SelectedHashes = [ ");
-        sb.Append(string.Join(", ", SelectedHashs));
+        sb.Append($", {nameof(SelectedHashKinds)} = [ ");
+        sb.Append(string.Join(", ", SelectedHashKinds));
         sb.Append(" ]");
         sb.Append(" }");
         return sb.ToString();

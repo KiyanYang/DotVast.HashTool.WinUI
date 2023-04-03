@@ -121,13 +121,13 @@
 
                 <!-- 哈希算法选择 -->
                 <Border Style="{StaticResource CardBorderStyle}">
-                    <ItemsRepeater ItemsSource="{x:Bind ViewModel.HashOptions, Mode=OneWay}">
+                    <ItemsRepeater ItemsSource="{x:Bind ViewModel.HashSettings, Mode=OneWay}">
                         <ItemsRepeater.Layout>
                             <UniformGridLayout ItemsStretch="Fill" />
                         </ItemsRepeater.Layout>
                         <ItemsRepeater.ItemTemplate>
-                            <DataTemplate x:DataType="models:HashOption">
-                                <CheckBox Content="{x:Bind Hash.Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" />
+                            <DataTemplate x:DataType="models:HashSetting">
+                                <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" />
                             </DataTemplate>
                         </ItemsRepeater.ItemTemplate>
                     </ItemsRepeater>

@@ -16,7 +16,7 @@ public sealed class PageService : IPageService
         Configure<TasksViewModel, TasksPage>();
         Configure<ResultsViewModel, ResultsPage>();
         Configure<LicensesViewModel, LicensesPage>();
-        Configure<HashOptionSettingsViewModel, HashOptionSettingsPage>();
+        Configure<HashSettingsViewModel, HashSettingsPage>();
     }
 
     public Type GetPageType(string key)

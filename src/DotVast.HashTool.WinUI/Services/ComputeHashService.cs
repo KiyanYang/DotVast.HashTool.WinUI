@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using CommunityToolkit.Mvvm.Messaging;
 
 using DotVast.HashTool.WinUI.Enums;
+using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Models.Messages;
 
@@ -131,7 +132,7 @@ internal sealed class ComputeHashService : IComputeHashService
         ManualResetEventSlim mres,
         CancellationToken cancellationToken)
     {
-        if (hashTask.SelectedHashs.Count == 1)
+        if (hashTask.SelectedHashKinds.Length == 1)
         {
             return HashStreamForSingleHashAlgorithm(hashTask, stream, progressOffset, mres, cancellationToken);
         }
@@ -147,8 +148,7 @@ internal sealed class ComputeHashService : IComputeHashService
         ManualResetEventSlim mres,
         CancellationToken cancellationToken)
     {
-        var hashAlgorithms = hashTask.SelectedHashs.Select(Hash.GetHashAlgorithm).OfType<HashAlgorithm>().ToArray();
-        Debug.Assert(hashTask.SelectedHashs.Count == hashAlgorithms.Length);
+        var hashAlgorithms = hashTask.SelectedHashKinds.Select(k => k.ToHashAlgorithm()).ToArray();
 
         byte[]? buffer = null;
         int clearLimit = 0;
@@ -215,8 +215,8 @@ internal sealed class ComputeHashService : IComputeHashService
 
             for (int i = 0; i < hashAlgorithms.Length; i++)
             {
-                var hashString = GetFormattedHash(hashAlgorithms[i].Hash!, hashTask.SelectedHashs[i].Format);
-                hashResultData[i] = new(hashTask.SelectedHashs[i], hashString);
+                var hashString = GetFormattedHash(hashAlgorithms[i].Hash!, hashTask.SelectedHashKinds[i]);
+                hashResultData[i] = new(hashTask.SelectedHashKinds[i], hashString);
             }
 
             return new HashResult() { Data = hashResultData };
@@ -242,8 +242,8 @@ internal sealed class ComputeHashService : IComputeHashService
         ManualResetEventSlim mres,
         CancellationToken cancellationToken)
     {
-        var hash = hashTask.SelectedHashs[0];
-        var hashAlgorithm = hash.GetHashAlgorithm();
+        var hashKind = hashTask.SelectedHashKinds[0];
+        var hashAlgorithm = hashKind.ToHashAlgorithm();
 
         byte[]? buffer = null;
         int clearLimit = 0;
@@ -285,8 +285,8 @@ internal sealed class ComputeHashService : IComputeHashService
             // 确保报告计算完成. 主要用于当 stream.Length == 0 时没有进行过报告的情况.
             limiter.ReportFinal(() => hashTask.ProgressVal = progressOffset + 1);
 
-            var hashString = GetFormattedHash(hashAlgorithm.Hash!, hash.Format);
-            var hashResultItem = new HashResultItem(hash, hashString);
+            var hashString = GetFormattedHash(hashAlgorithm.Hash!, hashKind);
+            var hashResultItem = new HashResultItem(hashKind, hashString);
 
             return new HashResult() { Data = new[] { hashResultItem } };
         }
@@ -301,13 +301,13 @@ internal sealed class ComputeHashService : IComputeHashService
         }
     }
 
-    private string GetFormattedHash(byte[] hashData, HashFormat format)
+    private string GetFormattedHash(byte[] hashData, HashKind kind)
     {
-        return format switch
+        return kind.ToHashData().Format switch
         {
             HashFormat.Base16 => Convert.ToHexString(hashData),
             HashFormat.Base64 => Convert.ToBase64String(hashData),
-            _ => throw new ArgumentOutOfRangeException(nameof(format), $"The HashFormat {format} is out of range and cannot be processed."),
+            _ => throw new ArgumentOutOfRangeException(nameof(kind), $"The HashKind {kind} is out of range and cannot be processed."),
         };
     }
 

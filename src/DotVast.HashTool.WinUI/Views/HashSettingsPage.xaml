@@ -1,36 +1,52 @@
 <Page
-    x:Class="DotVast.HashTool.WinUI.Views.HashOptionSettingsPage"
+    x:Class="DotVast.HashTool.WinUI.Views.HashSettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:DotVast.HashTool.WinUI.Controls"
     xmlns:models="using:DotVast.HashTool.WinUI.Models">
 
     <Page.Resources>
-        <DataTemplate x:Key="HashOptionDataTemplate" x:DataType="models:HashOption">
-            <Grid Style="{StaticResource CardGridStyle}">
+        <DataTemplate x:Key="HashSettingDataTemplate" x:DataType="models:HashSetting">
+            <Grid ColumnSpacing="12" Style="{StaticResource CardGridStyle}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock VerticalAlignment="Center" Text="{x:Bind Hash.Name}" />
-                <ToggleSwitch
+                <TextBlock VerticalAlignment="Center" Text="{x:Bind Name}" />
+                <CheckBox
                     Grid.Column="1"
                     MinWidth="0"
-                    IsOn="{x:Bind IsEnabled, Mode=TwoWay}" />
+                    IsChecked="{x:Bind IsEnabledForApp, Mode=TwoWay}" />
+                <CheckBox
+                    Grid.Column="2"
+                    MinWidth="0"
+                    IsChecked="{x:Bind IsEnabledForContextMenu, Mode=TwoWay}" />
             </Grid>
         </DataTemplate>
     </Page.Resources>
 
     <controls:NavigationViewBodyScrollViewer>
         <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewBodyContentStyle}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <InfoBar
+                x:Uid="HashSettingsPage_ItemDescription"
+                Margin="0,0,0,16"
+                IsClosable="False"
+                IsOpen="True" />
             <GridView
+                Grid.Row="1"
                 Margin="-8,0"
                 Padding="0,-4"
                 AllowDrop="True"
                 CanReorderItems="True"
-                ItemTemplate="{StaticResource HashOptionDataTemplate}"
-                ItemsSource="{x:Bind ViewModel.HashOptions}"
-                SelectionMode="None">
+                ItemTemplate="{StaticResource HashSettingDataTemplate}"
+                ItemsSource="{x:Bind ViewModel.HashSettings}"
+                SelectionMode="None"
+                SizeChanged="GridView_SizeChanged">
                 <GridView.ItemContainerStyle>
                     <Style TargetType="GridViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -39,7 +55,7 @@
                 </GridView.ItemContainerStyle>
                 <GridView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <ItemsWrapGrid Orientation="Horizontal" SizeChanged="ItemsWrapGrid_SizeChanged" />
+                        <ItemsWrapGrid Orientation="Horizontal" />
                     </ItemsPanelTemplate>
                 </GridView.ItemsPanel>
                 <GridView.ItemContainerTransitions>

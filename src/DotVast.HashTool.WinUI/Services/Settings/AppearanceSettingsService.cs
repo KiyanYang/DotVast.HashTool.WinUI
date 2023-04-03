@@ -1,5 +1,6 @@
 using System.Diagnostics;
 
+using DotVast.HashTool.WinUI.Constants;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Core.Enums;
 using DotVast.HashTool.WinUI.Enums;
@@ -8,8 +9,6 @@ using DotVast.HashTool.WinUI.Helpers;
 using Microsoft.UI.Xaml;
 
 using Windows.Globalization;
-
-using static DotVast.HashTool.WinUI.Constants;
 
 namespace DotVast.HashTool.WinUI.Services.Settings;
 

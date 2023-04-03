@@ -70,7 +70,7 @@ public partial class HomeViewModel
 
     private bool CanCreateTask()
     {
-        if (HashOptions.All(h => h.IsChecked == false))
+        if (HashSettings.All(h => !h.IsChecked))
         {
             return false;
         }
@@ -93,7 +93,7 @@ public partial class HomeViewModel
     [RelayCommand]
     private void ShowResult(HashTask hashTask)
     {
-        _navigationService.NavigateTo(Constants.PageKeys.ResultsPage, parameter: hashTask);
+        _navigationService.NavigateTo(Constants.PageKey.ResultsPage, parameter: hashTask);
     }
 
     #region Helper
@@ -111,7 +111,7 @@ public partial class HomeViewModel
                 _ => InputtingContent,
             },
             Encoding = InputtingMode == HashTaskMode.Text ? InputtingTextEncoding.Encoding.Value : null,
-            SelectedHashs = HashOptions.Where(i => i.IsChecked).Select(i => i.Hash).ToArray(),
+            SelectedHashKinds = HashSettings.Where(i => i.IsChecked).Select(i => i.Kind).ToArray(),
             State = HashTaskState.Waiting,
         };
     }

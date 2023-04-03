@@ -10,16 +10,13 @@ internal abstract partial class BaseObservableSettings : ObservableObject, IBase
     public abstract Task InitializeAsync();
     public abstract Task StartupAsync();
 
-    private readonly ILocalSettingsService _localSettingsService = App.GetService<ILocalSettingsService>();
+    protected readonly ILocalSettingsService _localSettingsService = App.GetService<ILocalSettingsService>();
 
     protected async Task<T> LoadAsync<T>(string key, T defaultValue)
     {
         var (hasValue, value) = await _localSettingsService.ReadSettingAsync<T>(key);
         return hasValue ? (value ?? defaultValue) : defaultValue;
     }
-
-    protected async Task SaveAsync<T>(T value, string key) =>
-        await _localSettingsService.SaveSettingAsync(key, value);
 
     protected bool SetAndSave<T>([NotNullIfNotNull(nameof(newValue))] ref T field, T newValue, [CallerMemberName] string? propertyName = null)
     {
@@ -37,6 +34,16 @@ internal abstract partial class BaseObservableSettings : ObservableObject, IBase
         {
             Task.Run(() => _localSettingsService.SaveSettingAsync(propertyName, newValue));
             action();
+            return true;
+        }
+        return false;
+    }
+
+    protected bool SetAndSave<T>(string containerName, string key, T value, [NotNullIfNotNull(nameof(value))] ref T field, [CallerMemberName] string? propertyName = null)
+    {
+        if (SetProperty(ref field, value, propertyName) && propertyName != null)
+        {
+            Task.Run(() => _localSettingsService.SaveSettingAsync(containerName, key, value));
             return true;
         }
         return false;

@@ -39,12 +39,12 @@ public sealed partial class HomeViewModel : ObservableRecipient, IViewModel, INa
         _notificationService = notificationService;
 
         // 响应哈希选项排序
-        _preferencesSettingsService.HashOptions.CollectionChanged += (sender, e) =>
+        _preferencesSettingsService.HashSettings.CollectionChanged += (sender, e) =>
         {
-            if (sender is ObservableCollection<HashOption>
+            if (sender is ObservableCollection<HashSetting>
                 && e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
             {
-                OnPropertyChanged(nameof(HashOptions));
+                OnPropertyChanged(nameof(HashSettings));
             }
         };
 
@@ -72,21 +72,21 @@ public sealed partial class HomeViewModel : ObservableRecipient, IViewModel, INa
             });
         });
 
-        Messenger.Register<HomeViewModel, HashOptionIsCheckedChangedMessage>(this, async (r, m) =>
+        Messenger.Register<HomeViewModel, HashSettingIsCheckedChangedMessage>(this, async (r, m) =>
         {
-            Debug.WriteLine($"[{DateTime.Now}] HomeViewModel.Messenger > HashOptionIsCheckedChangedMessage");
-            Debug.WriteLine($"Hash.Name: {m.HashOption.Hash.Name}");
+            Debug.WriteLine($"[{DateTime.Now}] HomeViewModel.Messenger > HashSettingIsCheckedChangedMessage");
+            Debug.WriteLine($"Hash.Name: {m.HashSetting.Kind}");
             Debug.WriteLine($"IsChecked: {m.IsChecked}");
-            await _preferencesSettingsService.SaveHashOptionsAsync();
+            await _preferencesSettingsService.SaveHashSettingsAsync();
             CreateTaskCommand.NotifyCanExecuteChanged();
         });
 
-        Messenger.Register<HomeViewModel, HashOptionIsEnabledChangedMessage>(this, (r, m) =>
+        Messenger.Register<HomeViewModel, HashSettingIsEnabledForAppChangedMessage>(this, (r, m) =>
         {
-            Debug.WriteLine($"[{DateTime.Now}] HomeViewModel.Messenger > HashOptionIsEnabledChangedMessage");
-            Debug.WriteLine($"Hash.Name: {m.HashOption.Hash.Name}");
-            Debug.WriteLine($"IsEnabled: {m.IsEnabled}");
-            OnPropertyChanged(nameof(HashOptions));
+            Debug.WriteLine($"[{DateTime.Now}] HomeViewModel.Messenger > HashSettingIsEnabledForAppChangedMessage");
+            Debug.WriteLine($"Hash.Name: {m.HashSetting.Kind}");
+            Debug.WriteLine($"IsEnabled: {m.IsEnabledForApp}");
+            OnPropertyChanged(nameof(HashSettings));
         });
     }
 
@@ -111,9 +111,9 @@ public sealed partial class HomeViewModel : ObservableRecipient, IViewModel, INa
                     t => t.Name.Equals(encoding.WebName, StringComparison.OrdinalIgnoreCase),
                     TextEncoding.UTF8);
             }
-            foreach (var hashOption in HashOptions)
+            foreach (var hashSetting in HashSettings)
             {
-                hashOption.IsChecked = hashTask.SelectedHashs.Any(h => h == hashOption.Hash);
+                hashSetting.IsChecked = hashTask.SelectedHashKinds.Any(h => h == hashSetting.Kind);
             }
         }
     }

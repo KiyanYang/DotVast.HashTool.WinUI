@@ -1,19 +1,23 @@
 using System.Collections.ObjectModel;
 
+using DotVast.HashTool.WinUI.Constants;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
-using DotVast.HashTool.WinUI.Core.Enums;
-using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
-
-using static DotVast.HashTool.WinUI.Constants;
 
 namespace DotVast.HashTool.WinUI.Services.Settings;
 
 internal sealed partial class PreferencesSettingsService : BaseObservableSettings, IPreferencesSettingsService
 {
+    private readonly IHashService _hashService;
+
+    public PreferencesSettingsService(IHashService hashService)
+    {
+        _hashService = hashService;
+    }
+
     public override async Task InitializeAsync()
     {
-        await InitializeHashOptions();
+        await InitializeHashSettings();
         _fileExplorerContextMenusEnabled = await LoadAsync(nameof(FileExplorerContextMenusEnabled), DefaultPreferencesSettings.FileExplorerContextMenusEnabled);
         _includePreRelease = await LoadAsync(nameof(IncludePreRelease), DefaultPreferencesSettings.IncludePreRelease);
         _checkForUpdatesOnStartup = await LoadAsync(nameof(CheckForUpdatesOnStartup), DefaultPreferencesSettings.CheckForUpdatesOnStartup);
@@ -25,37 +29,34 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
         await Task.CompletedTask;
     }
 
-    #region HashOptions
-    public ObservableCollection<HashOption> HashOptions { get; } = new();
+    #region HashSettings
+    public ObservableCollection<HashSetting> HashSettings { get; } = new();
 
-    private async Task InitializeHashOptions()
+    private async Task InitializeHashSettings()
     {
-        var allHashes = GenericEnum.GetFieldValues<Hash>();
-        var allHashOptions = allHashes.Select(i => new HashOption(i));
-
-        // 反序列化时, HashOption 的属性 Hash 可能为 null
-        var hashOptionsSettings = await LoadAsync<List<HashOption>>(nameof(HashOptions), new());
-        var hashOptions = hashOptionsSettings.Where(i => i.Hash != null)
-            .UnionBy(allHashOptions, hashOption => hashOption.Hash);
-
-        foreach (var hashOption in hashOptions)
+        // TODO: 反序列化时, HashSetting 的属性 Hash 可能为 null
+        var hashSettingsFromLocalSettings = await LoadAsync(nameof(HashSettings), Array.Empty<HashSetting>());
+        var hashSettings = _hashService.FillHashSettings(hashSettingsFromLocalSettings);
+        foreach (var hashSetting in hashSettings)
         {
-            HashOptions.Add(hashOption);
+            HashSettings.Add(hashSetting);
         }
     }
 
-    public async Task SaveHashOptionsAsync()
+    public async Task SaveHashSettingsAsync()
     {
-        await SaveAsync(HashOptions, nameof(HashOptions));
+        await _localSettingsService.SaveSettingAsync(nameof(HashSettings), HashSettings);
+        var hashNamesForContexMenu = HashSettings.Where(h => h.IsEnabledForContextMenu).Select(h => h.Name);
+        await _localSettingsService.SaveSettingAsync("ContextMenu", "HashNames", hashNamesForContexMenu);
     }
-    #endregion HashOptions
+    #endregion HashSettings
 
     #region FileExplorerContextMenusEnabled
     private bool _fileExplorerContextMenusEnabled;
     public bool FileExplorerContextMenusEnabled
     {
         get => _fileExplorerContextMenusEnabled;
-        set => SetAndSave(ref _fileExplorerContextMenusEnabled, value);
+        set => SetAndSave("ContextMenu", "IsEnabled", value, ref _fileExplorerContextMenusEnabled);
     }
     #endregion FileExplorerContextMenusEnabled
 
