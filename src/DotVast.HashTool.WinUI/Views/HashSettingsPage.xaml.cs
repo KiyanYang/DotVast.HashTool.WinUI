@@ -5,19 +5,19 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace DotVast.HashTool.WinUI.Views;
 
-public sealed partial class HashOptionSettingsPage : Page, IView
+public sealed partial class HashSettingsPage : Page, IView
 {
     private const double HashOptionGridViewItemMinWidth = 240;
 
-    public HashOptionSettingsViewModel ViewModel { get; }
+    public HashSettingsViewModel ViewModel { get; }
 
     IViewModel IView.ViewModel => ViewModel;
 
-    public HashOptionSettingsPage()
+    public HashSettingsPage()
     {
-        ViewModel = App.GetService<HashOptionSettingsViewModel>();
+        ViewModel = App.GetService<HashSettingsViewModel>();
         InitializeComponent();
-        NavigationViewHeaderBehavior.SetHeaderContext(this, Localization.HashOptionSettings_Title);
+        NavigationViewHeaderBehavior.SetHeaderContext(this, Localization.HashSettingsPage_Title);
     }
 
     private void GridView_SizeChanged(object sender, Microsoft.UI.Xaml.SizeChangedEventArgs e)

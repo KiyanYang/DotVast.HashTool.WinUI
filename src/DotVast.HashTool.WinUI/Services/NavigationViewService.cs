@@ -57,7 +57,7 @@ public sealed class NavigationViewService : INavigationViewService
     {
         if (args.IsSettingsInvoked)
         {
-            _navigationService.NavigateTo(Constants.PageKeys.SettingsPage);
+            _navigationService.NavigateTo(Constants.PageKey.SettingsPage);
         }
         else
         {

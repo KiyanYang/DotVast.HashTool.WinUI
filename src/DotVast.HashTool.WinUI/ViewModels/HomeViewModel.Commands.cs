@@ -93,7 +93,7 @@ public partial class HomeViewModel
     [RelayCommand]
     private void ShowResult(HashTask hashTask)
     {
-        _navigationService.NavigateTo(Constants.PageKeys.ResultsPage, parameter: hashTask);
+        _navigationService.NavigateTo(Constants.PageKey.ResultsPage, parameter: hashTask);
     }
 
     #region Helper

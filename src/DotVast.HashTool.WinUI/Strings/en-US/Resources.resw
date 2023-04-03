@@ -30,14 +30,14 @@
   <data name="Command_Save_Tip" xml:space="preserve">
     <value>Save (Ctrl+S)</value>
   </data>
-  <data name="HashOptionSettings_Title" xml:space="preserve">
-    <value>Hash Options</value>
-  </data>
   <data name="HashSettingsPage_ItemDescription.Message" xml:space="preserve">
     <value>Hash name, Enabled in the APP, Enabled in the explorer context menu.</value>
   </data>
   <data name="HashSettingsPage_ItemDescription.Title" xml:space="preserve">
     <value>The Content of the Item Is Expressed From Left to Right</value>
+  </data>
+  <data name="HashSettingsPage_Title" xml:space="preserve">
+    <value>Hash Settings</value>
   </data>
   <data name="HomePage_CreateAndStart" xml:space="preserve">
     <value>Create and start</value>
@@ -102,11 +102,11 @@
   <data name="SettingsPage_HashFontFamily.Header" xml:space="preserve">
     <value>Hash FontFamily</value>
   </data>
-  <data name="SettingsPage_HashOptions.Description" xml:space="preserve">
-    <value>Set hash options which are displayed on the Home</value>
+  <data name="SettingsPage_HashSettings.Description" xml:space="preserve">
+    <value>Set the hashes that are displayed</value>
   </data>
-  <data name="SettingsPage_HashOptions.Header" xml:space="preserve">
-    <value>Hash Option</value>
+  <data name="SettingsPage_HashSettings.Header" xml:space="preserve">
+    <value>Hash Settings</value>
   </data>
   <data name="SettingsPage_IncludePreRelease.Header" xml:space="preserve">
     <value>Include Pre-Release</value>

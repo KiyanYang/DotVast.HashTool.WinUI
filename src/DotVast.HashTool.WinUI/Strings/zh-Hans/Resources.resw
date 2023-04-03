@@ -138,14 +138,14 @@
     <value>保存 (Ctrl+S)</value>
     <comment>保存; 快捷键 Ctrl+S</comment>
   </data>
-  <data name="HashOptionSettings_Title" xml:space="preserve">
-    <value>哈希选项</value>
-  </data>
   <data name="HashSettingsPage_ItemDescription.Message" xml:space="preserve">
     <value>哈希名称，在软件内启用，在资源管理器菜单内启用。</value>
   </data>
   <data name="HashSettingsPage_ItemDescription.Title" xml:space="preserve">
     <value>条目内容从左至右依次表示</value>
+  </data>
+  <data name="HashSettingsPage_Title" xml:space="preserve">
+    <value>哈希设置</value>
   </data>
   <data name="HomePage_CreateAndStart" xml:space="preserve">
     <value>创建并开始</value>
@@ -214,11 +214,11 @@
   <data name="SettingsPage_HashFontFamily.Header" xml:space="preserve">
     <value>哈希字体</value>
   </data>
-  <data name="SettingsPage_HashOptions.Description" xml:space="preserve">
-    <value>设置首页显示哪些哈希选项</value>
+  <data name="SettingsPage_HashSettings.Description" xml:space="preserve">
+    <value>设置显示哪些哈希算法</value>
   </data>
-  <data name="SettingsPage_HashOptions.Header" xml:space="preserve">
-    <value>哈希选项</value>
+  <data name="SettingsPage_HashSettings.Header" xml:space="preserve">
+    <value>哈希设置</value>
   </data>
   <data name="SettingsPage_IncludePreRelease.Header" xml:space="preserve">
     <value>包含预发行版本</value>

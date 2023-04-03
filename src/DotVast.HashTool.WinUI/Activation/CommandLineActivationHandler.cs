@@ -66,7 +66,7 @@ public sealed partial class CommandLineActivationHandler : ActivationHandler<App
                 _hashTaskService.HashTasks.Add(CreateHashTask(hashes, path, mode));
             }
 
-            _navigationService.NavigateTo(Constants.PageKeys.TaskPage);
+            _navigationService.NavigateTo(Constants.PageKey.TasksPage);
         }
         catch (Exception e)
         {

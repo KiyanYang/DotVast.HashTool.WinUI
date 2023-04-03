@@ -7,11 +7,11 @@ using DotVast.HashTool.WinUI.Models.Messages;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
-public partial class HashOptionSettingsViewModel : ObservableRecipient, IViewModel, INavigationAware
+public partial class HashSettingsViewModel : ObservableRecipient, IViewModel, INavigationAware
 {
     private readonly IPreferencesSettingsService _preferencesSettingsService;
 
-    public HashOptionSettingsViewModel(IPreferencesSettingsService preferencesSettingsService)
+    public HashSettingsViewModel(IPreferencesSettingsService preferencesSettingsService)
     {
         _preferencesSettingsService = preferencesSettingsService;
     }
@@ -22,7 +22,7 @@ public partial class HashOptionSettingsViewModel : ObservableRecipient, IViewMod
 
     protected override void OnActivated()
     {
-        Messenger.Register<HashOptionSettingsViewModel, HashSettingIsEnabledForAppChangedMessage>(this, async (r, m) =>
+        Messenger.Register<HashSettingsViewModel, HashSettingIsEnabledForAppChangedMessage>(this, async (r, m) =>
         {
             Debug.WriteLine($"[{DateTime.Now}] HashOptionSettingsViewModel.Messenger > HashSettingIsEnabledForAppChangedMessage");
             Debug.WriteLine($"Hash.Name: {m.HashSetting.Kind}");
@@ -30,7 +30,7 @@ public partial class HashOptionSettingsViewModel : ObservableRecipient, IViewMod
             await _preferencesSettingsService.SaveHashSettingsAsync();
         });
 
-        Messenger.Register<HashOptionSettingsViewModel, HashSettingIsEnabledForContextMenuChangedMessage>(this, async (r, m) =>
+        Messenger.Register<HashSettingsViewModel, HashSettingIsEnabledForContextMenuChangedMessage>(this, async (r, m) =>
         {
             Debug.WriteLine($"[{DateTime.Now}] HashOptionSettingsViewModel.Messenger > HashSettingIsEnabledForContextMenuChangedMessage");
             Debug.WriteLine($"Hash.Name: {m.HashSetting.Kind}");

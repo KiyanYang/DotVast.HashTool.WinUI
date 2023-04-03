@@ -89,8 +89,8 @@ public sealed partial class App : Application
             // Core Services
 
             // Views and ViewModels
-            services.AddTransient<HashOptionSettingsViewModel>();
-            services.AddTransient<HashOptionSettingsPage>();
+            services.AddTransient<HashSettingsViewModel>();
+            services.AddTransient<HashSettingsPage>();
             services.AddTransient<LicensesViewModel>();
             services.AddTransient<LicensesPage>();
             services.AddTransient<ResultsViewModel>();

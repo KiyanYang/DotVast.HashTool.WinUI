@@ -1,9 +1,8 @@
 using System.Collections.ObjectModel;
 
+using DotVast.HashTool.WinUI.Constants;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Models;
-
-using static DotVast.HashTool.WinUI.Constants;
 
 namespace DotVast.HashTool.WinUI.Services.Settings;
 
