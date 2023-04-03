@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
+using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Helpers;
 
 using Microsoft.Extensions.Logging;
@@ -83,7 +84,7 @@ public sealed class NavigationService : INavigationService
         return false;
     }
 
-    public bool NavigateTo(string pageKey, object? parameter = null, bool clearNavigation = false)
+    public bool NavigateTo(PageKey pageKey, object? parameter = null, bool clearNavigation = false)
     {
         var pageType = _pageService.GetPageType(pageKey);
 

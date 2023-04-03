@@ -10,22 +10,6 @@ public static class CommandLineArgs
     public const string Path = "--path";
 }
 
-public static class PageKey
-{
-    private static readonly Type s_homePageType = typeof(HomeViewModel);
-    private static readonly Type s_tasksPageType = typeof(TasksViewModel);
-    private static readonly Type s_resultsPageType = typeof(ResultsViewModel);
-    private static readonly Type s_settingsPageType = typeof(SettingsViewModel);
-    private static readonly Type s_hashSettingsPageType = typeof(HashSettingsViewModel);
-    private static readonly Type s_licensesPageType = typeof(LicensesViewModel);
-    public static readonly string HomePage = s_homePageType.FullName!;
-    public static readonly string TasksPage = s_tasksPageType.FullName!;
-    public static readonly string ResultsPage = s_resultsPageType.FullName!;
-    public static readonly string SettingsPage = s_settingsPageType.FullName!;
-    public static readonly string HashSettingsPage = s_hashSettingsPageType.FullName!;
-    public static readonly string LicensesPage = s_licensesPageType.FullName!;
-}
-
 public static class GitHubRestApi
 {
     public const string BaseUrl = "https://api.github.com/";

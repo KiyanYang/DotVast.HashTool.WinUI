@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
+using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Helpers;
 
 using Microsoft.UI.Xaml.Controls;
@@ -57,13 +58,13 @@ public sealed class NavigationViewService : INavigationViewService
     {
         if (args.IsSettingsInvoked)
         {
-            _navigationService.NavigateTo(Constants.PageKey.SettingsPage);
+            _navigationService.NavigateTo(PageKey.SettingsPage);
         }
         else
         {
             var selectedItem = args.InvokedItemContainer as NavigationViewItem;
 
-            if (selectedItem?.GetValue(NavigationHelper.NavigateToProperty) is string pageKey)
+            if (selectedItem?.GetValue(NavigationHelper.NavigateToProperty) is PageKey pageKey)
             {
                 _navigationService.NavigateTo(pageKey);
             }
@@ -91,7 +92,7 @@ public sealed class NavigationViewService : INavigationViewService
 
     private bool IsMenuItemForPageType(NavigationViewItem menuItem, Type sourcePageType)
     {
-        if (menuItem.GetValue(NavigationHelper.NavigateToProperty) is string pageKey)
+        if (menuItem.GetValue(NavigationHelper.NavigateToProperty) is PageKey pageKey)
         {
             return _pageService.GetPageType(pageKey) == sourcePageType;
         }

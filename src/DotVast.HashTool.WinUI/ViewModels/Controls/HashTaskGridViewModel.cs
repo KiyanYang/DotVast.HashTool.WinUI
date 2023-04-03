@@ -107,7 +107,7 @@ public sealed partial class HashTaskGridViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanEditTask))]
     private void EditTask()
     {
-        _navigationService.NavigateTo(Constants.PageKey.HomePage, new HomeParameter(HomeParameterKind.EditHashTask, HashTask!));
+        _navigationService.NavigateTo(PageKey.HomePage, new HomeParameter(HomeParameterKind.EditHashTask, HashTask!));
     }
 
     private bool CanEditTask() => HashTask is not null;

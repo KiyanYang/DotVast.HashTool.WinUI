@@ -7,6 +7,7 @@ using System.Text.Unicode;
 
 using CommunityToolkit.Mvvm.Input;
 
+using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Models.Messages;
 
@@ -90,7 +91,7 @@ public sealed partial class TasksViewModel : ObservableRecipient, IViewModel, IN
     [RelayCommand]
     private void ShowResult(HashTask hashTask)
     {
-        _navigationService.NavigateTo(Constants.PageKey.ResultsPage, parameter: hashTask);
+        _navigationService.NavigateTo(PageKey.ResultsPage, parameter: hashTask);
     }
 
     public bool CanExecuteSave => HashTaskCheckables?.Any(h => h.IsChecked) ?? false;

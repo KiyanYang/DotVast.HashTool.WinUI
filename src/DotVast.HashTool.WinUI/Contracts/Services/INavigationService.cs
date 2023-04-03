@@ -1,3 +1,5 @@
+using DotVast.HashTool.WinUI.Enums;
+
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 
@@ -11,7 +13,7 @@ public interface INavigationService
 
     Frame? Frame { get; set; }
 
-    bool NavigateTo(string pageKey, object? parameter = null, bool clearNavigation = false);
+    bool NavigateTo(PageKey pageKey, object? parameter = null, bool clearNavigation = false);
 
     bool GoBack();
 }

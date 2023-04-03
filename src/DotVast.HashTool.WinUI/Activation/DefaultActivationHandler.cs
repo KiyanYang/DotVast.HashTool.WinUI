@@ -1,3 +1,5 @@
+using DotVast.HashTool.WinUI.Enums;
+
 using Microsoft.UI.Xaml;
 
 namespace DotVast.HashTool.WinUI.Activation;
@@ -19,7 +21,7 @@ public sealed class DefaultActivationHandler : ActivationHandler<LaunchActivated
 
     protected override async Task HandleInternalAsync(LaunchActivatedEventArgs args)
     {
-        _navigationService.NavigateTo(Constants.PageKey.HomePage, args.Arguments);
+        _navigationService.NavigateTo(PageKey.HomePage, args.Arguments);
 
         await Task.CompletedTask;
     }

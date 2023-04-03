@@ -143,7 +143,7 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
     }
 
     [RelayCommand]
-    private void NavigateTo(string pageKey) => _navigationService.NavigateTo(pageKey);
+    private void NavigateTo(PageKey pageKey) => _navigationService.NavigateTo(pageKey);
 
     [RelayCommand]
     private static async Task NavigateToLogsFolderAsync()

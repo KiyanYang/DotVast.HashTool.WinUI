@@ -55,6 +55,7 @@ internal sealed partial class CheckUpdateService : ICheckUpdateService
         {
             _logger.LogError("检查更新时发生错误\n{Exception}", ex);
             // TODO: Notification
+            // TODO: System.Net.Http.HttpRequestException: Response status code does not indicate success: 403 (rate limit exceeded).
         }
 
         if (_gitHubRelease != null)
