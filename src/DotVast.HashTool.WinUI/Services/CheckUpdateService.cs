@@ -60,8 +60,7 @@ internal sealed partial class CheckUpdateService : ICheckUpdateService
 
         if (_gitHubRelease != null)
         {
-            _gitHubRelease.Description = GitCommitHashRegex().Replace(_gitHubRelease.Description, string.Empty);
-            _gitHubRelease.Description = VerifyingHashRegex().Replace(_gitHubRelease.Description, string.Empty);
+            _gitHubRelease.Description = DescriptionToExcludeRegex().Replace(_gitHubRelease.Description, string.Empty);
         }
 
         return _gitHubRelease;
@@ -81,9 +80,6 @@ internal sealed partial class CheckUpdateService : ICheckUpdateService
         }
     }
 
-    [GeneratedRegex(@"\s[0-9A-Fa-f]{40}")]
-    private static partial Regex GitCommitHashRegex();
-
-    [GeneratedRegex(@"###.+校验[\S\s]+$")]
-    private static partial Regex VerifyingHashRegex();
+    [GeneratedRegex(@"(\s[0-9A-Fa-f]{40}|###.+校验[\S\s]+$)", RegexOptions.ExplicitCapture)]
+    private static partial Regex DescriptionToExcludeRegex();
 }
