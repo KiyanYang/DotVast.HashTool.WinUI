@@ -19,9 +19,10 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
         _hashFontFamilyName = await LoadAsync(nameof(HashFontFamilyName), DefaultAppearanceSettings.HashFontFamilyName);
         _isAlwaysOnTop = await LoadAsync(nameof(IsAlwaysOnTop), DefaultAppearanceSettings.IsAlwaysOnTop);
         _theme = await LoadAsync(nameof(Theme), DefaultAppearanceSettings.Theme);
-        Languages = GenericEnum.GetFieldValues<AppLanguage>();
-        Language = Languages.Where(x => x.Tag == ApplicationLanguages.PrimaryLanguageOverride)
-                            .FirstOrDefault() ?? AppLanguage.ZhHans;
+
+        Language = string.IsNullOrWhiteSpace(ApplicationLanguages.PrimaryLanguageOverride)
+            ? AppLanguage.System
+            : Languages.Single(x => StringComparer.OrdinalIgnoreCase.Equals(x.Tag, ApplicationLanguages.PrimaryLanguageOverride));
 
         SetTheme(); // 在初始化时就设置主题
     }
@@ -81,7 +82,7 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
     #endregion Theme
 
     #region Language
-    public AppLanguage[] Languages { get; private set; } = Array.Empty<AppLanguage>();
+    public AppLanguage[] Languages { get; } = GenericEnum.GetFieldValues<AppLanguage>();
 
     [ObservableProperty]
     private AppLanguage _language = AppLanguage.ZhHans;

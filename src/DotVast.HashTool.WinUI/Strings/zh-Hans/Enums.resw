@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppLanguage_System_NativeName" xml:space="preserve">
+    <value>跟随系统语言设置</value>
+  </data>
   <data name="AppTheme_Dark" xml:space="preserve">
     <value>深色</value>
   </data>

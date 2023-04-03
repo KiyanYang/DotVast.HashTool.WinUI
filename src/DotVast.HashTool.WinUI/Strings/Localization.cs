@@ -13,6 +13,7 @@ internal abstract class BaseLocalization
     private static readonly ResourceManager s_resourceManager;
     private static readonly ResourceContext s_resourceContext;
     private static readonly ResourceMap s_resourceMap;
+    private static readonly string s_defaultLanguage;
 
     private static ResourceContext? s_tmpResourceContext;
 
@@ -20,7 +21,8 @@ internal abstract class BaseLocalization
     {
         s_resourceManager = new ResourceManager();
         s_resourceContext = s_resourceManager.CreateResourceContext();
-        s_resourceContext.QualifierValues[LanguageQualifier] = ApplicationLanguages.PrimaryLanguageOverride;
+        s_defaultLanguage = s_resourceContext.QualifierValues[LanguageQualifier];
+        SetLanguageQualifierValue(s_resourceContext, ApplicationLanguages.PrimaryLanguageOverride);
         s_resourceMap = s_resourceManager.MainResourceMap;
     }
 
@@ -30,8 +32,13 @@ internal abstract class BaseLocalization
     internal static string GetLocalized(string subtreeId, string resourceKey, string language)
     {
         s_tmpResourceContext ??= s_resourceManager.CreateResourceContext();
-        s_tmpResourceContext.QualifierValues[LanguageQualifier] = language;
+        SetLanguageQualifierValue(s_tmpResourceContext, language);
         return s_resourceMap.GetSubtree(subtreeId).GetValue(resourceKey, s_tmpResourceContext).ValueAsString;
+    }
+
+    internal static void SetLanguageQualifierValue(ResourceContext resourceContext, string language)
+    {
+        resourceContext.QualifierValues[LanguageQualifier] = string.IsNullOrEmpty(language) ? s_defaultLanguage : language;
     }
 }
 
