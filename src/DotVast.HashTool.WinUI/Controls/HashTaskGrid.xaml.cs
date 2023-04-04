@@ -1,6 +1,7 @@
 using System.Text;
 
 using DotVast.HashTool.WinUI.Enums;
+using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.ViewModels.Controls;
 
@@ -115,22 +116,8 @@ public sealed partial class HashTaskGrid : UserControl
         sb.Append(hashTask.Mode.ToString());
         sb.Append(ItemSeparator);
         sb.Append(hashTask.DateTime.ToString("HH:mm:ss"));
-        if (hashTask.Mode == HashTaskMode.Text)
-        {
-            sb.Append(ItemSeparator);
-            sb.Append(hashTask.Encoding!.WebName.ToUpper());
-        }
         sb.Append(ItemSeparator);
-        var hashKinds = hashTask.SelectedHashKinds;
-        for (int i = 0; i < hashKinds.Length; i++)
-        {
-            if (i > 0)
-            {
-                sb.Append(HashSeparator);
-            }
-            sb.Append(_hashService.GetHashData(hashKinds[i]).Name);
-        }
-
+        sb.AppendJoin(HashSeparator, hashTask.SelectedHashKinds.Select(kind => kind.ToHashData().Name));
         return sb.ToString();
     }
 

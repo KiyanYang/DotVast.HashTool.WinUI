@@ -17,10 +17,5 @@ public sealed class HashTaskMode : GenericEnum<string>
     /// </summary>
     public static readonly HashTaskMode Folder = new(LocalizationEnum.HashTaskMode_Folder);
 
-    /// <summary>
-    /// 文本.
-    /// </summary>
-    public static readonly HashTaskMode Text = new(LocalizationEnum.HashTaskMode_Text);
-
     private HashTaskMode(string name) : base(name) { }
 }

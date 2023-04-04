@@ -4,8 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:DotVast.HashTool.WinUI.Behaviors"
     xmlns:controls="using:DotVast.HashTool.WinUI.Controls"
-    xmlns:helpers="using:DotVast.HashTool.WinUI.Helpers"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:i18n="using:DotVast.HashTool.WinUI.Strings"
     xmlns:models="using:DotVast.HashTool.WinUI.Models"
     xmlns:system="using:System"
     NavigationCacheMode="Enabled">
@@ -34,7 +34,6 @@
                         </Style>
                     </Grid.Resources>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -76,22 +75,11 @@
                         Text="{x:Bind system:String.Format('{0:N3} s', ViewModel.HashTask.Elapsed.TotalSeconds), Mode=OneWay}" />
 
                     <TextBlock
-                        x:Uid="ResultsPage_Detail_Encoding"
-                        Grid.Row="4"
-                        Grid.Column="0"
-                        Visibility="{x:Bind helpers:XamlFunc.VisibleIfText(ViewModel.HashTask.Mode), Mode=OneWay}" />
-                    <TextBlock
-                        Grid.Row="4"
-                        Grid.Column="1"
-                        Text="{x:Bind ViewModel.HashTask.Encoding.WebName.ToUpper()}"
-                        Visibility="{x:Bind helpers:XamlFunc.VisibleIfText(ViewModel.HashTask.Mode), Mode=OneWay}" />
-
-                    <TextBlock
                         x:Uid="ResultsPage_Detail_State"
-                        Grid.Row="5"
+                        Grid.Row="4"
                         Grid.Column="0" />
                     <TextBlock
-                        Grid.Row="5"
+                        Grid.Row="4"
                         Grid.Column="1"
                         Text="{x:Bind ViewModel.HashTask.State, Mode=OneWay}" />
                 </Grid>
@@ -143,12 +131,12 @@
                                 <TextBlock
                                     Grid.Row="0"
                                     Grid.Column="0"
-                                    Text="{x:Bind Type}" />
+                                    Text="{x:Bind i18n:LocalizationCommon.File}" />
                                 <TextBlock
                                     Grid.Row="0"
                                     Grid.Column="1"
                                     IsTextSelectionEnabled="True"
-                                    Text="{x:Bind Content}"
+                                    Text="{x:Bind Path}"
                                     TextWrapping="Wrap" />
                                 <ItemsRepeater
                                     Grid.Row="1"

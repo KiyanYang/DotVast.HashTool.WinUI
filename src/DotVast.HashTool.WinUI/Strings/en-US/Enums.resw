@@ -24,20 +24,11 @@
   <data name="AppTheme_Light" xml:space="preserve">
     <value>Light</value>
   </data>
-  <data name="HashResultType_File" xml:space="preserve">
-    <value>File</value>
-  </data>
-  <data name="HashResultType_Text" xml:space="preserve">
-    <value>Text</value>
-  </data>
   <data name="HashTaskMode_File" xml:space="preserve">
     <value>File</value>
   </data>
   <data name="HashTaskMode_Folder" xml:space="preserve">
     <value>Folder</value>
-  </data>
-  <data name="HashTaskMode_Text" xml:space="preserve">
-    <value>Text</value>
   </data>
   <data name="HashTaskState_Aborted" xml:space="preserve">
     <value>Aborted</value>

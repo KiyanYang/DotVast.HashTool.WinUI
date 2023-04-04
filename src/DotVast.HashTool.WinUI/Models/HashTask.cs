@@ -1,9 +1,9 @@
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text;
 using System.Text.Json.Serialization;
 
 using DotVast.HashTool.WinUI.Enums;
-using DotVast.HashTool.WinUI.Helpers.JsonConverters;
 
 using Microsoft.Extensions.Logging;
 
@@ -13,6 +13,33 @@ public sealed partial class HashTask : ObservableObject, IDisposable
 {
     #region Properties
 
+    public HashTaskMode Mode { get; set; } = HashTaskMode.File;
+
+    public string Content { get; set; } = string.Empty;
+
+    public HashKind[] SelectedHashKinds { get; internal set; } = Array.Empty<HashKind>();
+
+    /// <summary>
+    /// 结果.
+    /// </summary>
+    public ObservableCollection<HashResult>? Results
+    {
+        get => _results;
+        set
+        {
+            if (!EqualityComparerEquals(_results, value))
+            {
+                OnPropertyChanging(s_resultsChangingEventArgs);
+                _results = value;
+                OnPropertyChanged(s_resultsChangedEventArgs);
+            }
+        }
+    }
+    private ObservableCollection<HashResult>? _results;
+    private static readonly PropertyChangingEventArgs s_resultsChangingEventArgs = new(nameof(Results));
+    private static readonly PropertyChangedEventArgs s_resultsChangedEventArgs = new(nameof(Results));
+
+    // TODO: 考虑添加计算开始时间.
     /// <summary>
     /// 任务创建时间.
     /// </summary>
@@ -21,44 +48,84 @@ public sealed partial class HashTask : ObservableObject, IDisposable
     /// <summary>
     /// 用时.
     /// </summary>
-    [ObservableProperty]
+    public TimeSpan Elapsed
+    {
+        get => _elapsed;
+        set
+        {
+            if (!EqualityComparerEquals(_elapsed, value))
+            {
+                OnPropertyChanging(s_elapsedChangingEventArgs);
+                _elapsed = value;
+                OnPropertyChanged(s_elapsedChangedEventArgs);
+            }
+        }
+    }
     private TimeSpan _elapsed;
+    private static readonly PropertyChangingEventArgs s_elapsedChangingEventArgs = new(nameof(Elapsed));
+    private static readonly PropertyChangedEventArgs s_elapsedChangedEventArgs = new(nameof(Elapsed));
 
     /// <summary>
     /// 任务状态.
     /// </summary>
-    [ObservableProperty]
+    public HashTaskState? State
+    {
+        get => _state;
+        set
+        {
+            if (!EqualityComparerEquals(_state, value))
+            {
+                OnPropertyChanging(s_stateChangingEventArgs);
+                _state = value;
+                OnPropertyChanged(s_stateChangedEventArgs);
+            }
+        }
+    }
     private HashTaskState? _state;
-
-    public HashTaskMode Mode { get; set; } = HashTaskMode.File;
-
-    public string Content { get; set; } = string.Empty;
-
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    [JsonConverter(typeof(EncodingJsonConverter))]
-    public Encoding? Encoding { get; set; }
-
-    public HashKind[] SelectedHashKinds { get; internal set; } = Array.Empty<HashKind>();
-
-    /// <summary>
-    /// 结果.
-    /// </summary>
-    [ObservableProperty]
-    private ObservableCollection<HashResult>? _results;
+    private static readonly PropertyChangingEventArgs s_stateChangingEventArgs = new(nameof(State));
+    private static readonly PropertyChangedEventArgs s_stateChangedEventArgs = new(nameof(State));
 
     /// <summary>
     /// 进度当前值.
     /// </summary>
-    [property: JsonIgnore]
-    [ObservableProperty]
+    [JsonIgnore]
+    public double ProgressVal
+    {
+        get => _progressVal;
+        set
+        {
+            if (_progressVal != value)
+            {
+                OnPropertyChanging(s_progressValChangingEventArgs);
+                _progressVal = value;
+                OnPropertyChanged(s_progressValChangedEventArgs);
+            }
+        }
+    }
     private double _progressVal;
+    private static readonly PropertyChangingEventArgs s_progressValChangingEventArgs = new(nameof(ProgressVal));
+    private static readonly PropertyChangedEventArgs s_progressValChangedEventArgs = new(nameof(ProgressVal));
 
     /// <summary>
     /// 进度最大值(计算完毕后等于 Results.Count).
     /// </summary>
-    [property: JsonIgnore]
-    [ObservableProperty]
+    [JsonIgnore]
+    public double ProgressMax
+    {
+        get => _progressMax;
+        set
+        {
+            if (_progressMax != value)
+            {
+                OnPropertyChanging(s_progressMaxChangingEventArgs);
+                _progressMax = value;
+                OnPropertyChanged(s_progressMaxChangedEventArgs);
+            }
+        }
+    }
     private double _progressMax;
+    private static readonly PropertyChangingEventArgs s_progressMaxChangingEventArgs = new(nameof(ProgressMax));
+    private static readonly PropertyChangedEventArgs s_progressMaxChangedEventArgs = new(nameof(ProgressMax));
 
     #endregion Properties
 
@@ -77,17 +144,18 @@ public sealed partial class HashTask : ObservableObject, IDisposable
     {
         var sb = new StringBuilder();
         sb.Append($"{nameof(HashTask)} {{ ");
-        sb.Append($"{nameof(Content)} = {Content}");
-        sb.Append($", {nameof(Mode)} = {Mode}");
-        if (Mode == HashTaskMode.Text && Encoding is not null)
-        {
-            sb.Append($", {nameof(Encoding)} = {Encoding.WebName}");
-        }
+        sb.Append($"{nameof(Content)} = '{Content}'");
+        sb.Append($", {nameof(Mode)} = '{Mode}'");
         sb.Append($", {nameof(SelectedHashKinds)} = [ ");
-        sb.Append(string.Join(", ", SelectedHashKinds));
+        sb.AppendJoin(", ", SelectedHashKinds);
         sb.Append(" ]");
         sb.Append(" }");
         return sb.ToString();
+    }
+
+    private static bool EqualityComparerEquals<T>(T? x, T? y)
+    {
+        return EqualityComparer<T>.Default.Equals(x, y);
     }
 
     #region Finalizer, IDisposable

@@ -4,7 +4,6 @@ using DotVast.HashTool.WinUI.Activation;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Controls;
 using DotVast.HashTool.WinUI.Helpers;
-using DotVast.HashTool.WinUI.Helpers.JsonConverters;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Services;
 using DotVast.HashTool.WinUI.Services.Settings;
@@ -169,6 +168,6 @@ public sealed partial class App : Application
     /// <param name="services">Specifies the contract for a collection of service descriptors.</param>
     private static void ConfigureSingletonAsDefault(IServiceCollection services)
     {
-        services.AddSingleton<EncodingJsonConverter>();
+        //services.AddSingleton<EncodingInfoJsonConverter>();
     }
 }
