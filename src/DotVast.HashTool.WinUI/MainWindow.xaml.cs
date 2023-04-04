@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Logging;
-using Microsoft.UI.Dispatching;
 
 using WinUIEx;
 
@@ -34,10 +33,5 @@ public sealed partial class MainWindow : WindowEx
         {
             _logger.AppWindowDestroying(typeof(MainWindow).FullName);
         };
-    }
-
-    public void TryEnqueue(DispatcherQueueHandler handler)
-    {
-        DispatcherQueue?.TryEnqueue(handler);
     }
 }

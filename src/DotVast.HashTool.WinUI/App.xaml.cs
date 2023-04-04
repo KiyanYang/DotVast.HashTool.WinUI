@@ -14,6 +14,7 @@ using DotVast.HashTool.WinUI.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 
 using Serilog;
@@ -70,6 +71,7 @@ public sealed partial class App : Application
 
             // Services
             services.AddSingleton<IActivationService, ActivationService>();
+            services.AddSingleton<IDispatchingService, DispatchingService>();
             services.AddSingleton<IPageService, PageService>();
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddTransient<INavigationViewService, NavigationViewService>();
@@ -143,6 +145,7 @@ public sealed partial class App : Application
         // 该表达式要在 IActivationService.ActivateAsync() 之前.
         Current.Resources[nameof(AppearanceSettingsService)] = GetService<IAppearanceSettingsService>();
 
+        GetService<IDispatchingService>().Initialize(DispatcherQueue.GetForCurrentThread());
         await GetService<IActivationService>().ActivateAsync(args);
 
         _logger.AppLaunchedElapsedTime(Stopwatch.GetElapsedTime(_createdTimestamp));

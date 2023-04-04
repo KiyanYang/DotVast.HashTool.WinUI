@@ -16,6 +16,8 @@ internal sealed class ComputeHashService : IComputeHashService
     private const int BufferSize = 1024 * 1024;
     private const long ReportFrequency = 10;
 
+    private readonly IDispatchingService _dispatchingService = App.GetService<IDispatchingService>();
+
     public async Task ComputeHashAsync(HashTask hashTask, ManualResetEventSlim mres, CancellationToken cancellationToken)
     {
         var startTimestamp = Stopwatch.GetTimestamp();
@@ -43,29 +45,29 @@ internal sealed class ComputeHashService : IComputeHashService
         {
             if (ex.InnerExceptions.All(e => e is OperationCanceledException))
             {
-                App.MainWindow.TryEnqueue(() => hashTask.State = HashTaskState.Canceled);
+                _dispatchingService.TryEnqueue(() => hashTask.State = HashTaskState.Canceled);
                 throw new OperationCanceledException(cancellationToken);
             }
             else
             {
-                App.MainWindow.TryEnqueue(() => hashTask.State = HashTaskState.Aborted);
+                _dispatchingService.TryEnqueue(() => hashTask.State = HashTaskState.Aborted);
                 throw;
             }
         }
         catch (OperationCanceledException)
         {
-            App.MainWindow.TryEnqueue(() => hashTask.State = HashTaskState.Canceled);
+            _dispatchingService.TryEnqueue(() => hashTask.State = HashTaskState.Canceled);
             throw;
         }
         catch (Exception)
         {
-            App.MainWindow.TryEnqueue(() => hashTask.State = HashTaskState.Aborted);
+            _dispatchingService.TryEnqueue(() => hashTask.State = HashTaskState.Aborted);
             throw;
         }
         finally
         {
             var elapsed = Stopwatch.GetElapsedTime(startTimestamp);
-            App.MainWindow.TryEnqueue(() => hashTask.Elapsed = elapsed);
+            _dispatchingService.TryEnqueue(() => hashTask.Elapsed = elapsed);
         }
     }
 
@@ -154,14 +156,14 @@ internal sealed class ComputeHashService : IComputeHashService
             {
                 if (!mres.IsSet)
                 {
-                    App.MainWindow.TryEnqueue(() => hashTask.State = HashTaskState.Paused);
+                    _dispatchingService.TryEnqueue(() => hashTask.State = HashTaskState.Paused);
                     mres.Wait(CancellationToken.None);
                     // 在下方 State 刷新前, 进行一次判断, 以避免 UI 状态的错误改变.
                     if (cancellationToken.IsCancellationRequested)
                     {
                         return;
                     }
-                    App.MainWindow.TryEnqueue(() => hashTask.State = HashTaskState.Working);
+                    _dispatchingService.TryEnqueue(() => hashTask.State = HashTaskState.Working);
                 }
 
                 // 实际读取长度. 读取完毕时该值为 0.
@@ -245,12 +247,12 @@ internal sealed class ComputeHashService : IComputeHashService
 
                 if (!mres.IsSet)
                 {
-                    App.MainWindow.TryEnqueue(() => hashTask.State = HashTaskState.Paused);
+                    _dispatchingService.TryEnqueue(() => hashTask.State = HashTaskState.Paused);
                     mres.Wait(CancellationToken.None);
                     // 在下方 State 刷新前, 进行一次判断, 以避免 UI 状态的错误改变.
                     if (!cancellationToken.IsCancellationRequested)
                     {
-                        App.MainWindow.TryEnqueue(() => hashTask.State = HashTaskState.Working);
+                        _dispatchingService.TryEnqueue(() => hashTask.State = HashTaskState.Working);
                     }
                 }
                 cancellationToken.ThrowIfCancellationRequested();
@@ -296,6 +298,7 @@ internal sealed class ComputeHashService : IComputeHashService
 
     private struct ProgressRateLimiter
     {
+        private readonly IDispatchingService _dispatchingService = App.GetService<IDispatchingService>();
         private readonly long _limitTimestamps;
         private long _expirationTimestamp = 0;
 
@@ -304,19 +307,19 @@ internal sealed class ComputeHashService : IComputeHashService
             _limitTimestamps = Stopwatch.Frequency / reportFrequency;
         }
 
-        internal void Report(Microsoft.UI.Dispatching.DispatcherQueueHandler handler)
+        internal void Report(Action action)
         {
             var timestamp = Stopwatch.GetTimestamp();
             if (timestamp > _expirationTimestamp)
             {
-                App.MainWindow.TryEnqueue(handler);
+                _dispatchingService.TryEnqueue(action);
                 _expirationTimestamp = timestamp + _limitTimestamps;
             }
         }
 
-        internal void ReportFinal(Microsoft.UI.Dispatching.DispatcherQueueHandler handler)
+        internal void ReportFinal(Action action)
         {
-            App.MainWindow.TryEnqueue(handler);
+            _dispatchingService.TryEnqueue(action);
             _expirationTimestamp = long.MaxValue;
         }
     }
