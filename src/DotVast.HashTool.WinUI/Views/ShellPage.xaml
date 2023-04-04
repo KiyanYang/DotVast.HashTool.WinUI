@@ -3,7 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:DotVast.HashTool.WinUI.Behaviors"
-    xmlns:constants="using:DotVast.HashTool.WinUI.Constants"
     xmlns:controls="using:DotVast.HashTool.WinUI.Controls"
     xmlns:helpers="using:DotVast.HashTool.WinUI.Helpers"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
@@ -68,13 +67,20 @@
             <Frame x:Name="NavigationFrame" />
         </NavigationView>
         <InfoBar
+            x:Name="NotificationsInfoBar"
             MinWidth="400"
-            Margin="24"
+            Margin="24,0,24,48"
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom">
             <InfoBar.Resources>
                 <SolidColorBrush x:Key="InfoBarInformationalSeverityBackgroundBrush" Color="{ThemeResource SystemFillColorSolidAttentionBackground}" />
             </InfoBar.Resources>
+            <InfoBar.Shadow>
+                <ThemeShadow />
+            </InfoBar.Shadow>
+            <InfoBar.TranslationTransition>
+                <Vector3Transition Duration="0:0:1" />
+            </InfoBar.TranslationTransition>
             <InfoBar.Transitions>
                 <TransitionCollection>
                     <EdgeUIThemeTransition />

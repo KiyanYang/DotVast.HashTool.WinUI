@@ -34,6 +34,8 @@ public sealed partial class ShellPage : Page, IView
 #else
         AppTitleBarText.Text = Localization.AppDisplayName;
 #endif
+
+        InitializeNotificationsInfoBar();
     }
 
     private void OnLoaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -81,5 +83,25 @@ public sealed partial class ShellPage : Page, IView
         var result = navigationService.GoBack();
 
         args.Handled = result;
+    }
+
+    private void InitializeNotificationsInfoBar()
+    {
+        NotificationsInfoBar.RegisterPropertyChangedCallback(InfoBar.IsOpenProperty, (sender, dp) =>
+        {
+            if (sender is not InfoBar infoBar || dp != InfoBar.IsOpenProperty)
+            {
+                return;
+            }
+
+            if (infoBar.IsOpen)
+            {
+                infoBar.Translation = new(0, 0, 64);
+            }
+            else
+            {
+                infoBar.Translation = new(0, 0, 0);
+            }
+        });
     }
 }
