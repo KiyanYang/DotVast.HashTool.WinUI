@@ -129,20 +129,11 @@
   <data name="AppTheme_Light" xml:space="preserve">
     <value>浅色</value>
   </data>
-  <data name="HashResultType_File" xml:space="preserve">
-    <value>文件</value>
-  </data>
-  <data name="HashResultType_Text" xml:space="preserve">
-    <value>文本</value>
-  </data>
   <data name="HashTaskMode_File" xml:space="preserve">
     <value>文件</value>
   </data>
   <data name="HashTaskMode_Folder" xml:space="preserve">
     <value>文件夹</value>
-  </data>
-  <data name="HashTaskMode_Text" xml:space="preserve">
-    <value>文本</value>
   </data>
   <data name="HashTaskState_Aborted" xml:space="preserve">
     <value>已中止</value>

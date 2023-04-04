@@ -8,14 +8,9 @@ namespace DotVast.HashTool.WinUI.Models;
 public sealed class HashResult
 {
     /// <summary>
-    /// 哈希结果的计算类型.
+    /// 文件路径.
     /// </summary>
-    public HashResultType? Type { get; set; }
-
-    /// <summary>
-    /// 哈希结果的计算内容.
-    /// </summary>
-    public string Content { get; set; } = string.Empty;
+    public string Path { get; set; } = string.Empty;
 
     /// <summary>
     /// 哈希结果.

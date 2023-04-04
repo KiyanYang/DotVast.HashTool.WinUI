@@ -13,6 +13,32 @@ public sealed partial class HashTask : ObservableObject, IDisposable
 {
     #region Properties
 
+    public HashTaskMode Mode { get; set; } = HashTaskMode.File;
+
+    public string Content { get; set; } = string.Empty;
+
+    public HashKind[] SelectedHashKinds { get; internal set; } = Array.Empty<HashKind>();
+
+    /// <summary>
+    /// 结果.
+    /// </summary>
+    public ObservableCollection<HashResult>? Results
+    {
+        get => _results;
+        set
+        {
+            if (!EqualityComparerEquals(_results, value))
+            {
+                OnPropertyChanging(s_resultsChangingEventArgs);
+                _results = value;
+                OnPropertyChanged(s_resultsChangedEventArgs);
+            }
+        }
+    }
+    private ObservableCollection<HashResult>? _results;
+    private static readonly PropertyChangingEventArgs s_resultsChangingEventArgs = new(nameof(Results));
+    private static readonly PropertyChangedEventArgs s_resultsChangedEventArgs = new(nameof(Results));
+
     // TODO: 考虑添加计算开始时间.
     /// <summary>
     /// 任务创建时间.
@@ -58,32 +84,6 @@ public sealed partial class HashTask : ObservableObject, IDisposable
     private HashTaskState? _state;
     private static readonly PropertyChangingEventArgs s_stateChangingEventArgs = new(nameof(State));
     private static readonly PropertyChangedEventArgs s_stateChangedEventArgs = new(nameof(State));
-
-    public HashTaskMode Mode { get; set; } = HashTaskMode.File;
-
-    public string Content { get; set; } = string.Empty;
-
-    public HashKind[] SelectedHashKinds { get; internal set; } = Array.Empty<HashKind>();
-
-    /// <summary>
-    /// 结果.
-    /// </summary>
-    public ObservableCollection<HashResult>? Results
-    {
-        get => _results;
-        set
-        {
-            if (!EqualityComparerEquals(_results, value))
-            {
-                OnPropertyChanging(s_resultsChangingEventArgs);
-                _results = value;
-                OnPropertyChanged(s_resultsChangedEventArgs);
-            }
-        }
-    }
-    private ObservableCollection<HashResult>? _results;
-    private static readonly PropertyChangingEventArgs s_resultsChangingEventArgs = new(nameof(Results));
-    private static readonly PropertyChangedEventArgs s_resultsChangedEventArgs = new(nameof(Results));
 
     /// <summary>
     /// 进度当前值.
@@ -144,10 +144,10 @@ public sealed partial class HashTask : ObservableObject, IDisposable
     {
         var sb = new StringBuilder();
         sb.Append($"{nameof(HashTask)} {{ ");
-        sb.Append($"{nameof(Content)} = {Content}");
-        sb.Append($", {nameof(Mode)} = {Mode}");
+        sb.Append($"{nameof(Content)} = '{Content}'");
+        sb.Append($", {nameof(Mode)} = '{Mode}'");
         sb.Append($", {nameof(SelectedHashKinds)} = [ ");
-        sb.Append(string.Join(", ", SelectedHashKinds));
+        sb.AppendJoin(", ", SelectedHashKinds);
         sb.Append(" ]");
         sb.Append(" }");
         return sb.ToString();

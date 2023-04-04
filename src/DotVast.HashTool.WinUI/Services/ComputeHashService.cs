@@ -25,14 +25,17 @@ internal sealed class ComputeHashService : IComputeHashService
 
         try
         {
-            switch (hashTask.Mode)
+            if (hashTask.Mode == HashTaskMode.File)
             {
-                case var m when m == HashTaskMode.File:
-                    await InternalHashFilesAsync(hashTask, hashTask.Content.Split('|'), mres, cancellationToken);
-                    break;
-                case var m when m == HashTaskMode.Folder:
-                    await InternalHashFilesAsync(hashTask, Directory.GetFiles(hashTask.Content), mres, cancellationToken);
-                    break;
+                await InternalHashFilesAsync(hashTask, hashTask.Content.Split('|'), mres, cancellationToken);
+            }
+            else if (hashTask.Mode == HashTaskMode.Folder)
+            {
+                await InternalHashFilesAsync(hashTask, Directory.GetFiles(hashTask.Content), mres, cancellationToken);
+            }
+            else
+            {
+                throw new InvalidOperationException();
             }
             hashTask.State = HashTaskState.Completed;
         }
@@ -81,8 +84,7 @@ internal sealed class ComputeHashService : IComputeHashService
                 var hashResult = await Task.Run(() => HashStream(hashTask, stream, i - failedFilesCount, mres, cancellationToken));
                 if (hashResult != null)
                 {
-                    hashResult.Type = HashResultType.File;
-                    hashResult.Content = filePaths[i];
+                    hashResult.Path = filePaths[i];
                     hashTask.Results.Add(hashResult);
                 }
             }

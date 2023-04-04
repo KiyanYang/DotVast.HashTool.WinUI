@@ -1,5 +1,3 @@
-using DotVast.HashTool.WinUI.ViewModels;
-
 using Microsoft.UI.Xaml;
 
 namespace DotVast.HashTool.WinUI.Constants;

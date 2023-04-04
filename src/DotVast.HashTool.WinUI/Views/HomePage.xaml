@@ -84,15 +84,18 @@
                         Grid.Column="1"
                         IsLightDismissEnabled="True"
                         IsOpen="{x:Bind helpers:XamlFunc.TrueIfTrue(InputtingContentToggleButton.IsChecked), Mode=OneWay}">
-                        <Border Background="{ThemeResource CardStrokeColorDefaultSolidBrush}" CornerRadius="{ThemeResource ControlCornerRadius}">
-                            <TextBox
-                                x:Name="InputtingContentFull"
-                                MinHeight="64"
-                                AcceptsReturn="True"
-                                Loaded="InputtingContentFull_Loaded"
-                                Text="{x:Bind ViewModel.InputtingContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                TextWrapping="Wrap" />
-                        </Border>
+                        <TextBox
+                            x:Name="InputtingContentFull"
+                            MinHeight="64"
+                            AcceptsReturn="False"
+                            Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
+                            Loaded="InputtingContentFull_Loaded"
+                            Text="{x:Bind ViewModel.InputtingContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            TextWrapping="Wrap">
+                            <TextBox.Resources>
+                                <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="{ThemeResource SolidBackgroundFillColorBase}" />
+                            </TextBox.Resources>
+                        </TextBox>
                     </Popup>
                     <ToggleButton
                         x:Name="InputtingContentToggleButton"

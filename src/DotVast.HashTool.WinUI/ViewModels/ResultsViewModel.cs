@@ -48,7 +48,7 @@ public sealed partial class ResultsViewModel : ObservableRecipient, IViewModel, 
             else if (HashResultsFilterByContentIsEnabled)
             {
                 _hashResultsFiltered = HashTask?.Results?.Where(h =>
-                    IgnoreCaseContains(h.Content, filter) || (h.Data?.Any(d => IgnoreCaseContains(d.Value, filter)) ?? false)
+                    IgnoreCaseContains(h.Path, filter) || (h.Data?.Any(d => IgnoreCaseContains(d.Value, filter)) ?? false)
                 ).ToArray();
             }
             return _hashResultsFiltered;
