@@ -10,4 +10,3 @@ global using static DotVast.HashTool.WinUI.Helpers.Log;
 global using static DotVast.HashTool.WinUI.Helpers.ResourceDictionaryExtensions;
 
 global using JsonContext = DotVast.HashTool.WinUI.Helpers.JsonContext;
-global using JsonContext2 = DotVast.HashTool.WinUI.Helpers.JsonContext2;

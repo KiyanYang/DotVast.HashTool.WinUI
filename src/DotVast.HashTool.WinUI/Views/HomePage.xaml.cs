@@ -56,7 +56,6 @@ public sealed partial class HomePage : Page, IView
         {
             _ when mode == HashTaskMode.File => "\uE7C3",
             _ when mode == HashTaskMode.Folder => "\uE8B7",
-            _ when mode == HashTaskMode.Text => "\uE8C1",
             _ => null,
         };
     }

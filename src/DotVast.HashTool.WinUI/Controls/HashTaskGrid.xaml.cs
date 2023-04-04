@@ -115,11 +115,6 @@ public sealed partial class HashTaskGrid : UserControl
         sb.Append(hashTask.Mode.ToString());
         sb.Append(ItemSeparator);
         sb.Append(hashTask.DateTime.ToString("HH:mm:ss"));
-        if (hashTask.Mode == HashTaskMode.Text)
-        {
-            sb.Append(ItemSeparator);
-            sb.Append(hashTask.Encoding!.WebName.ToUpper());
-        }
         sb.Append(ItemSeparator);
         var hashKinds = hashTask.SelectedHashKinds;
         for (int i = 0; i < hashKinds.Length; i++)

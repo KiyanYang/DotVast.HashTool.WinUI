@@ -102,20 +102,12 @@
                         <FontIcon Glyph="&#xE740;" />
                     </ToggleButton>
                     <Grid Grid.Column="3">
-                        <Button
-                            Command="{x:Bind ViewModel.PickCommand}"
-                            ToolTipService.ToolTip="{x:Bind i18n:Localization.Home_Button_Pick}"
-                            Visibility="{x:Bind helpers:XamlFunc.VisibleIfNotText(ViewModel.InputtingMode), Mode=OneWay}">
+                        <Button Command="{x:Bind ViewModel.PickCommand}" ToolTipService.ToolTip="{x:Bind i18n:Localization.Home_Button_Pick}">
                             <FontIcon Glyph="{x:Bind local:HomePage.GetPickerFontIconGlyph(ViewModel.InputtingMode), Mode=OneWay}" />
                             <Button.KeyboardAccelerators>
                                 <KeyboardAccelerator Key="O" Modifiers="Control" />
                             </Button.KeyboardAccelerators>
                         </Button>
-                        <ComboBox
-                            DisplayMemberPath="Name"
-                            ItemsSource="{x:Bind ViewModel.TextEncodings}"
-                            SelectedItem="{x:Bind ViewModel.InputtingTextEncoding, Mode=TwoWay}"
-                            Visibility="{x:Bind helpers:XamlFunc.VisibleIfText(ViewModel.InputtingMode), Mode=OneWay}" />
                     </Grid>
                 </Grid>
 

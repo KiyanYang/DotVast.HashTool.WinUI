@@ -2,7 +2,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
-using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Models.Messages;
 using DotVast.HashTool.WinUI.Models.Navigation;
@@ -105,12 +104,6 @@ public sealed partial class HomeViewModel : ObservableRecipient, IViewModel, INa
         {
             InputtingContent = hashTask.Content;
             InputtingMode = hashTask.Mode;
-            if (hashTask.Mode == HashTaskMode.Text && hashTask.Encoding is System.Text.Encoding encoding)
-            {
-                InputtingTextEncoding = TextEncodings.FirstOrDefault(
-                    t => t.Name.Equals(encoding.WebName, StringComparison.OrdinalIgnoreCase),
-                    TextEncoding.UTF8);
-            }
             foreach (var hashSetting in HashSettings)
             {
                 hashSetting.IsChecked = hashTask.SelectedHashKinds.Any(h => h == hashSetting.Kind);

@@ -1,9 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Text;
-using System.Text.Json.Serialization;
 
 using DotVast.HashTool.WinUI.Enums;
-using DotVast.HashTool.WinUI.Helpers.JsonConverters;
 
 using Microsoft.Extensions.Logging;
 
@@ -34,10 +32,6 @@ public sealed partial class HashTask : ObservableObject, IDisposable
 
     public string Content { get; set; } = string.Empty;
 
-    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    [JsonConverter(typeof(EncodingJsonConverter))]
-    public Encoding? Encoding { get; set; }
-
     public HashKind[] SelectedHashKinds { get; internal set; } = Array.Empty<HashKind>();
 
     /// <summary>
@@ -49,14 +43,14 @@ public sealed partial class HashTask : ObservableObject, IDisposable
     /// <summary>
     /// 进度当前值.
     /// </summary>
-    [property: JsonIgnore]
+    //[property: JsonIgnore]
     [ObservableProperty]
     private double _progressVal;
 
     /// <summary>
     /// 进度最大值(计算完毕后等于 Results.Count).
     /// </summary>
-    [property: JsonIgnore]
+    //[property: JsonIgnore]
     [ObservableProperty]
     private double _progressMax;
 
@@ -79,10 +73,6 @@ public sealed partial class HashTask : ObservableObject, IDisposable
         sb.Append($"{nameof(HashTask)} {{ ");
         sb.Append($"{nameof(Content)} = {Content}");
         sb.Append($", {nameof(Mode)} = {Mode}");
-        if (Mode == HashTaskMode.Text && Encoding is not null)
-        {
-            sb.Append($", {nameof(Encoding)} = {Encoding.WebName}");
-        }
         sb.Append($", {nameof(SelectedHashKinds)} = [ ");
         sb.Append(string.Join(", ", SelectedHashKinds));
         sb.Append(" ]");

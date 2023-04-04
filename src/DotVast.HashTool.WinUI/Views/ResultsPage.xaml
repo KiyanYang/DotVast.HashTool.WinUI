@@ -39,7 +39,6 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="{ThemeResource ItemLeftWidth}" />
@@ -76,22 +75,11 @@
                         Text="{x:Bind system:String.Format('{0:N3} s', ViewModel.HashTask.Elapsed.TotalSeconds), Mode=OneWay}" />
 
                     <TextBlock
-                        x:Uid="ResultsPage_Detail_Encoding"
-                        Grid.Row="4"
-                        Grid.Column="0"
-                        Visibility="{x:Bind helpers:XamlFunc.VisibleIfText(ViewModel.HashTask.Mode), Mode=OneWay}" />
-                    <TextBlock
-                        Grid.Row="4"
-                        Grid.Column="1"
-                        Text="{x:Bind ViewModel.HashTask.Encoding.WebName.ToUpper()}"
-                        Visibility="{x:Bind helpers:XamlFunc.VisibleIfText(ViewModel.HashTask.Mode), Mode=OneWay}" />
-
-                    <TextBlock
                         x:Uid="ResultsPage_Detail_State"
-                        Grid.Row="5"
+                        Grid.Row="4"
                         Grid.Column="0" />
                     <TextBlock
-                        Grid.Row="5"
+                        Grid.Row="4"
                         Grid.Column="1"
                         Text="{x:Bind ViewModel.HashTask.State, Mode=OneWay}" />
                 </Grid>

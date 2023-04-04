@@ -33,9 +33,6 @@ internal sealed class ComputeHashService : IComputeHashService
                 case var m when m == HashTaskMode.Folder:
                     await InternalHashFilesAsync(hashTask, Directory.GetFiles(hashTask.Content), mres, cancellationToken);
                     break;
-                case var m when m == HashTaskMode.Text:
-                    await InternalHashTextAsync(hashTask, mres, cancellationToken);
-                    break;
             }
             hashTask.State = HashTaskState.Completed;
         }
@@ -98,22 +95,6 @@ internal sealed class ComputeHashService : IComputeHashService
             {
                 throw;
             }
-        }
-    }
-
-    private async Task InternalHashTextAsync(HashTask hashTask, ManualResetEventSlim mres, CancellationToken CancellationToken)
-    {
-        ArgumentNullException.ThrowIfNull(hashTask.Encoding);
-
-        hashTask.ProgressMax = 1;
-        var contentBytes = hashTask.Encoding.GetBytes(hashTask.Content);
-        using Stream stream = new MemoryStream(contentBytes);
-        var hashResult = await Task.Run(() => HashStream(hashTask, stream, 0, mres, CancellationToken));
-        if (hashResult != null)
-        {
-            hashResult.Type = HashResultType.Text;
-            hashResult.Content = hashTask.Content;
-            hashTask.Results = new() { hashResult };
         }
     }
 

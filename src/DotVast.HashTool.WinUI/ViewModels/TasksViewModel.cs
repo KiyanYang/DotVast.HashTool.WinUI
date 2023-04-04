@@ -118,7 +118,7 @@ public sealed partial class TasksViewModel : ObservableRecipient, IViewModel, IN
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
                 WriteIndented = true,
             };
-            var contents = JsonSerializer.Serialize(hashTasks, new JsonContext2(options).IEnumerableHashTask);
+            var contents = JsonSerializer.Serialize(hashTasks, new JsonContext(options).IEnumerableHashTask);
             await File.WriteAllTextAsync(result.Path, contents);
         }
     }
