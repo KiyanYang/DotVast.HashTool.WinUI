@@ -1,32 +1,52 @@
-using DotVast.HashTool.WinUI.Core.Enums;
-
 using Windows.Globalization;
 
 namespace DotVast.HashTool.WinUI.Enums;
 
-public sealed class AppLanguage : GenericEnum<string>
+public enum AppLanguage
 {
     // System as the first
-    public static readonly AppLanguage System = new("", LocalizationEnum.AppLanguage_System_NativeName);
+    System,
 
     // Others are sorted alphabetically
-    public static readonly AppLanguage EnUS = new("en-US");
-    public static readonly AppLanguage ZhHans = new("zh-Hans");
+    EnUS,
+    ZhHans,
+}
 
-    public string Tag { get; }
+public static class AppLanguageExtensions
+{
+    private static AppLanguage[]? s_appLanguages;
+    private static AppLanguage[] _Values => s_appLanguages ??= Enum.GetValues<AppLanguage>();
 
-    public string NativeName { get; }
+    private static Language? s_enUS;
+    private static Language? s_zhHans;
 
-    private AppLanguage(string languageTag) : base(languageTag)
+    private static Language _EnUS => s_enUS ??= new("en-US");
+    private static Language _ZhHans => s_zhHans ??= new("zh-Hans");
+
+    public static AppLanguage ToAppLanguage(this string languageTag)
     {
-        var language = new Language(languageTag);
-        Tag = languageTag;
-        NativeName = language.NativeName;
+        return _Values.First(v => v.ToTag().Equals(languageTag, StringComparison.OrdinalIgnoreCase));
     }
 
-    private AppLanguage(string tag, string nativeName) : base(tag)
+    public static string ToTag(this AppLanguage appLanguage)
     {
-        Tag = tag;
-        NativeName = nativeName;
+        return appLanguage switch
+        {
+            AppLanguage.System => string.Empty,
+            AppLanguage.EnUS => _EnUS.LanguageTag,
+            AppLanguage.ZhHans => _ZhHans.LanguageTag,
+            _ => throw new ArgumentOutOfRangeException(nameof(appLanguage))
+        };
+    }
+
+    public static string ToNativeName(this AppLanguage appLanguage)
+    {
+        return appLanguage switch
+        {
+            AppLanguage.System => LocalizationEnum.AppLanguage_System_NativeName,
+            AppLanguage.EnUS => _EnUS.NativeName,
+            AppLanguage.ZhHans => _ZhHans.NativeName,
+            _ => throw new ArgumentOutOfRangeException(nameof(appLanguage))
+        };
     }
 }

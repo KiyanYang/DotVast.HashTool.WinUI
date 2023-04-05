@@ -115,9 +115,14 @@
                     </labs:SettingsCard.HeaderIcon>
                     <ComboBox
                         MinWidth="140"
-                        DisplayMemberPath="NativeName"
                         ItemsSource="{x:Bind ViewModel.AppLanguages}"
-                        SelectedItem="{x:Bind ViewModel.AppLanguage, Mode=TwoWay}" />
+                        SelectedItem="{x:Bind ViewModel.AppLanguage, Mode=TwoWay}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="enums:AppLanguage">
+                                <TextBlock Text="{x:Bind enums:AppLanguageExtensions.ToNativeName((enums:AppLanguage))}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </labs:SettingsCard>
 
                 <!-- 副标题: 关于 -->

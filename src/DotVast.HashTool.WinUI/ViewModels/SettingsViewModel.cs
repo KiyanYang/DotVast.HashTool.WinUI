@@ -1,7 +1,6 @@
 using CommunityToolkit.Mvvm.Input;
 
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
-using DotVast.HashTool.WinUI.Core.Enums;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Helpers;
 
@@ -40,7 +39,7 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
         _appearanceSettingsService.Language = value;
         _notificationService.Show(new()
         {
-            Title = BaseLocalization.GetLocalized(Localization.SubtreeId, nameof(Localization.RestartToApplyChange), value.Tag),
+            Title = BaseLocalization.GetLocalized(Localization.SubtreeId, nameof(Localization.RestartToApplyChange), value.ToTag()),
             Duration = TimeSpan.FromMilliseconds(3000),
             Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Informational,
         });
