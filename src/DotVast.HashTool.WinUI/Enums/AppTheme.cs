@@ -1,19 +1,35 @@
-using DotVast.HashTool.WinUI.Core.Enums;
-
 using Microsoft.UI.Xaml;
 
 namespace DotVast.HashTool.WinUI.Enums;
 
-public sealed class AppTheme : GenericEnum<string>
+public enum AppTheme
 {
-    public static readonly AppTheme Default = new(LocalizationEnum.AppTheme_Default, ElementTheme.Default);
-    public static readonly AppTheme Light = new(LocalizationEnum.AppTheme_Light, ElementTheme.Light);
-    public static readonly AppTheme Dark = new(LocalizationEnum.AppTheme_Dark, ElementTheme.Dark);
+    Default,
+    Light,
+    Dark,
+}
 
-    public ElementTheme Theme { get; }
-
-    private AppTheme(string name, ElementTheme theme) : base(name)
+public static class AppThemeExtensions
+{
+    public static string ToDisplay(this AppTheme appTheme)
     {
-        Theme = theme;
+        return appTheme switch
+        {
+            AppTheme.Default => LocalizationEnum.AppTheme_Default,
+            AppTheme.Light => LocalizationEnum.AppTheme_Light,
+            AppTheme.Dark => LocalizationEnum.AppTheme_Dark,
+            _ => throw new ArgumentOutOfRangeException(nameof(appTheme)),
+        };
+    }
+
+    public static ElementTheme ToElementTheme(this AppTheme appTheme)
+    {
+        return appTheme switch
+        {
+            AppTheme.Default => ElementTheme.Default,
+            AppTheme.Light => ElementTheme.Light,
+            AppTheme.Dark => ElementTheme.Dark,
+            _ => throw new ArgumentOutOfRangeException(nameof(appTheme)),
+        };
     }
 }

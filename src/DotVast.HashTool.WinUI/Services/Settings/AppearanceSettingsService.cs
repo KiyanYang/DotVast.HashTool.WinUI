@@ -32,7 +32,7 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
         SetIsAlwaysOnTop();
         SetLanguage();
 
-        Debug.Assert((App.MainWindow.Content as FrameworkElement)?.RequestedTheme == Theme);
+        Debug.Assert((App.MainWindow.Content as FrameworkElement)?.RequestedTheme == Theme.ToElementTheme());
         Debug.Assert(App.MainWindow.IsAlwaysOnTop == IsAlwaysOnTop);
         Debug.Assert(ApplicationLanguages.PrimaryLanguageOverride == Language.Tag);
 
@@ -62,8 +62,8 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
     #endregion IsAlwaysOnTop
 
     #region Theme
-    private ElementTheme _theme;
-    public ElementTheme Theme
+    private AppTheme _theme;
+    public AppTheme Theme
     {
         get => _theme;
         set => SetAndSave(ref _theme, value, SetTheme);
@@ -74,7 +74,7 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
         //TODO: 等待 Application.Current.RequestedTheme 的动态更改功能, https://github.com/microsoft/microsoft-ui-xaml/issues/4474
         if (App.MainWindow.Content is FrameworkElement rootElement)
         {
-            rootElement.RequestedTheme = Theme;
+            rootElement.RequestedTheme = Theme.ToElementTheme();
         }
 
         TitleBarContextMenuHelper.UpdateTitleBarContextMenu(Theme);

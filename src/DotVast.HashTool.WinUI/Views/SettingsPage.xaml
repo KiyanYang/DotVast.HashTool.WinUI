@@ -99,7 +99,13 @@
                     <ComboBox
                         MinWidth="100"
                         ItemsSource="{x:Bind ViewModel.Themes}"
-                        SelectedItem="{x:Bind ViewModel.Theme, Mode=TwoWay}" />
+                        SelectedItem="{x:Bind ViewModel.Theme, Mode=TwoWay}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="enums:AppTheme">
+                                <TextBlock Text="{x:Bind enums:AppThemeExtensions.ToDisplay((enums:AppTheme))}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </labs:SettingsCard>
 
                 <!-- 设置: 语言 -->
