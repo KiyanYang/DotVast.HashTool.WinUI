@@ -42,7 +42,7 @@
                     </TransitionCollection>
                 </StackPanel.ChildrenTransitions>
 
-                <!-- 任务模式选择, 输入, 浏览按钮, 文本编码选择 -->
+                <!-- 任务模式选择, 输入, 浏览按钮 -->
                 <Grid ColumnSpacing="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
