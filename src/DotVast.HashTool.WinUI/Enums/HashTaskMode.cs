@@ -1,21 +1,23 @@
 using System.Text.Json.Serialization;
 
-using DotVast.HashTool.WinUI.Core.Enums;
-
 namespace DotVast.HashTool.WinUI.Enums;
 
-[JsonConverter(typeof(JsonConverterFactoryForGenericEnumDerived))]
-public sealed class HashTaskMode : GenericEnum<string>
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum HashTaskMode
 {
-    /// <summary>
-    /// 文件.
-    /// </summary>
-    public static readonly HashTaskMode File = new(LocalizationEnum.HashTaskMode_File);
+    File,
+    Folder,
+}
 
-    /// <summary>
-    /// 文件夹.
-    /// </summary>
-    public static readonly HashTaskMode Folder = new(LocalizationEnum.HashTaskMode_Folder);
-
-    private HashTaskMode(string name) : base(name) { }
+internal static class HashTaskModeExtensions
+{
+    public static string ToDisplay(this HashTaskMode hashTaskMode)
+    {
+        return hashTaskMode switch
+        {
+            HashTaskMode.File => LocalizationEnum.HashTaskMode_File,
+            HashTaskMode.Folder => LocalizationEnum.HashTaskMode_Folder,
+            _ => throw new ArgumentOutOfRangeException(nameof(hashTaskMode)),
+        };
+    }
 }

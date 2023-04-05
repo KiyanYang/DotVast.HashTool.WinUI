@@ -1,4 +1,3 @@
-using DotVast.HashTool.WinUI.Core.Enums;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 
@@ -25,9 +24,9 @@ public partial class HomeViewModel
     #endregion Inputting
 
     /// <summary>
-    /// 哈希任务模式. 文件, 文件夹, 文本.
+    /// 哈希任务模式.
     /// </summary>
-    public HashTaskMode[] HashTaskModes { get; } = GenericEnum.GetFieldValues<HashTaskMode>();
+    public HashTaskMode[] HashTaskModes { get; } = Enum.GetValues<HashTaskMode>();
 
     /// <summary>
     /// Hash 选项.
