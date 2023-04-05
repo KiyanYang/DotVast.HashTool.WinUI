@@ -103,7 +103,7 @@ internal static class HashKindExtensions
             HashKind.QuickXor => new QuickXorHash(),
             HashKind.Ed2k => new Ed2k(),
             HashKind.HAS_160 => HashLib4CSharp.Base.HashFactory.Crypto.CreateHAS160().ToHashAlgorithm(),
-            _ => throw new NotImplementedException(),
+            _ => throw new ArgumentOutOfRangeException(nameof(hashKind)),
         };
     }
 
