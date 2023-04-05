@@ -1,5 +1,4 @@
 using System.Collections.Specialized;
-using System.Runtime.InteropServices;
 
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
@@ -44,7 +43,8 @@ public sealed partial class CommandLineActivationHandler : ActivationHandler<App
 
         try
         {
-            var parsedArgs = Parse(launchArgs.Arguments);
+            var cmdLineArgs = Environment.GetCommandLineArgs(); // this way instead of launchArgs.Arguments
+            var parsedArgs = Parse(cmdLineArgs);
             var hashNames = parsedArgs.GetValues(Constants.CommandLineArgs.Hash);
             if (hashNames is null)
                 return;
@@ -89,37 +89,11 @@ public sealed partial class CommandLineActivationHandler : ActivationHandler<App
         }
     }
 
-    [LibraryImport("shell32.dll", SetLastError = true)]
-    private static partial IntPtr CommandLineToArgvW([MarshalAs(UnmanagedType.LPWStr)] string lpCmdLine, out int pNumArgs);
-
-    private static string[] CommandLineToArgs(string commandLine)
+    private static NameValueCollection Parse(string[] cmdLineArgs)
     {
-        var argv = CommandLineToArgvW(commandLine, out var argc);
-        if (argv == IntPtr.Zero)
-            throw new System.ComponentModel.Win32Exception();
-        try
-        {
-            var args = new string[argc];
-            for (var i = 0; i < args.Length; i++)
-            {
-                var p = Marshal.ReadIntPtr(argv, i * IntPtr.Size);
-                args[i] = Marshal.PtrToStringUni(p)!;
-            }
-
-            return args;
-        }
-        finally
-        {
-            Marshal.FreeHGlobal(argv);
-        }
-    }
-
-    private static NameValueCollection Parse(string argString)
-    {
-        var args = CommandLineToArgs(argString);
         var ret = new NameValueCollection();
         string? key = null;
-        foreach (var arg in args)
+        foreach (var arg in cmdLineArgs)
         {
             if (arg.StartsWith("--"))
             {
