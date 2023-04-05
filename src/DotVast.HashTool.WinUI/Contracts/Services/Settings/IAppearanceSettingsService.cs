@@ -1,7 +1,5 @@
 using DotVast.HashTool.WinUI.Enums;
 
-using Microsoft.UI.Xaml;
-
 namespace DotVast.HashTool.WinUI.Contracts.Services.Settings;
 
 public interface IAppearanceSettingsService : IBaseObservableSettings
@@ -19,7 +17,7 @@ public interface IAppearanceSettingsService : IBaseObservableSettings
     /// <summary>
     /// 主题.
     /// </summary>
-    ElementTheme Theme { get; set; }
+    AppTheme Theme { get; set; }
 
     /// <summary>
     /// 语言.

@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:behaviors="using:DotVast.HashTool.WinUI.Behaviors"
+    xmlns:enums="using:DotVast.HashTool.WinUI.Enums"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:i18n="using:DotVast.HashTool.WinUI.Strings"
     mc:Ignorable="d">
@@ -39,7 +40,7 @@
             Grid.Column="1"
             HorizontalAlignment="Center"
             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-            Text="{x:Bind HashTask.State, Mode=OneWay}"
+            Text="{x:Bind enums:HashTaskStateExtensions.ToDisplay(HashTask.State), Mode=OneWay}"
             Visibility="{x:Bind GetHashTaskStateTextVisibility(HashTask.State), Mode=OneWay}" />
         <Grid
             Grid.RowSpan="2"

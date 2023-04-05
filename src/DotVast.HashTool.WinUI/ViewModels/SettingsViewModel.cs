@@ -1,7 +1,6 @@
 using CommunityToolkit.Mvvm.Input;
 
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
-using DotVast.HashTool.WinUI.Core.Enums;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Helpers;
 
@@ -40,7 +39,7 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
         _appearanceSettingsService.Language = value;
         _notificationService.Show(new()
         {
-            Title = BaseLocalization.GetLocalized(Localization.SubtreeId, nameof(Localization.RestartToApplyChange), value.Tag),
+            Title = BaseLocalization.GetLocalized(Localization.SubtreeId, nameof(Localization.RestartToApplyChange), value.ToTag()),
             Duration = TimeSpan.FromMilliseconds(3000),
             Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Informational,
         });
@@ -50,13 +49,13 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
 
     #region Theme
 
-    public AppTheme[] Themes { get; } = GenericEnum.GetFieldValues<AppTheme>();
+    public AppTheme[] Themes { get; } = Enum.GetValues<AppTheme>();
 
     [ObservableProperty]
     private AppTheme _theme;
 
     partial void OnThemeChanged(AppTheme value) =>
-        _appearanceSettingsService.Theme = value.Theme;
+        _appearanceSettingsService.Theme = value;
 
     #endregion Theme
 
@@ -119,7 +118,7 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
 
         _appLanguage = _appearanceSettingsService.Language;
 
-        _theme = Themes.First(x => x.Theme == _appearanceSettingsService.Theme);
+        _theme = _appearanceSettingsService.Theme;
 
         _hashFontFamilyName = _appearanceSettingsService.HashFontFamilyName;
 

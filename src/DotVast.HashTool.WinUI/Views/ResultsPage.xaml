@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:DotVast.HashTool.WinUI.Behaviors"
     xmlns:controls="using:DotVast.HashTool.WinUI.Controls"
+    xmlns:enums="using:DotVast.HashTool.WinUI.Enums"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:i18n="using:DotVast.HashTool.WinUI.Strings"
     xmlns:models="using:DotVast.HashTool.WinUI.Models"
@@ -48,7 +49,7 @@
                     <TextBlock
                         Grid.Row="0"
                         Grid.Column="0"
-                        Text="{x:Bind ViewModel.HashTask.Mode, Mode=OneWay}" />
+                        Text="{x:Bind enums:HashTaskModeExtensions.ToDisplay(ViewModel.HashTask.Mode), Mode=OneWay}" />
                     <TextBlock
                         Grid.Row="0"
                         Grid.Column="1"
@@ -81,7 +82,7 @@
                     <TextBlock
                         Grid.Row="4"
                         Grid.Column="1"
-                        Text="{x:Bind ViewModel.HashTask.State, Mode=OneWay}" />
+                        Text="{x:Bind enums:HashTaskStateExtensions.ToDisplay(ViewModel.HashTask.State), Mode=OneWay}" />
                 </Grid>
 
                 <!-- 标题: 任务结果; 筛选文本框 -->

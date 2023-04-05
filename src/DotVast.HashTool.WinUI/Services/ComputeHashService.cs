@@ -5,7 +5,6 @@ using System.Security.Cryptography;
 using CommunityToolkit.Mvvm.Messaging;
 
 using DotVast.HashTool.WinUI.Enums;
-using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Models.Messages;
 

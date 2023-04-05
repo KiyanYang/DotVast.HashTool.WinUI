@@ -68,12 +68,12 @@ public sealed partial class HashTask : ObservableObject, IDisposable
     /// <summary>
     /// 任务状态.
     /// </summary>
-    public HashTaskState? State
+    public HashTaskState State
     {
         get => _state;
         set
         {
-            if (!EqualityComparerEquals(_state, value))
+            if (_state != value)
             {
                 OnPropertyChanging(s_stateChangingEventArgs);
                 _state = value;
@@ -81,7 +81,7 @@ public sealed partial class HashTask : ObservableObject, IDisposable
             }
         }
     }
-    private HashTaskState? _state;
+    private HashTaskState _state;
     private static readonly PropertyChangingEventArgs s_stateChangingEventArgs = new(nameof(State));
     private static readonly PropertyChangedEventArgs s_stateChangedEventArgs = new(nameof(State));
 

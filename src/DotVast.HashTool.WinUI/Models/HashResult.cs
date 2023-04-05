@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 
 using DotVast.HashTool.WinUI.Enums;
-using DotVast.HashTool.WinUI.Helpers;
 
 namespace DotVast.HashTool.WinUI.Models;
 

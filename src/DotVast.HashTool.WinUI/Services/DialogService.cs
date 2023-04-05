@@ -1,6 +1,7 @@
 using DotVast.HashTool.WinUI.Behaviors;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Controls.Dialogs;
+using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 
 using Microsoft.UI.Xaml.Controls;
@@ -56,7 +57,7 @@ internal sealed class DialogService : IDialogService
     private void SetupDialog(ContentDialog dialog)
     {
         // TODO: 设置主题, 临时解决对话框主题问题 https://github.com/microsoft/microsoft-ui-xaml/issues/2331
-        dialog.RequestedTheme = _appearanceSettingsService.Theme;
+        dialog.RequestedTheme = _appearanceSettingsService.Theme.ToElementTheme();
         dialog.XamlRoot = App.MainWindow.Content.XamlRoot;
         Interaction.SetBehaviors(dialog, new() { new ContentDialogBehavior() });
     }

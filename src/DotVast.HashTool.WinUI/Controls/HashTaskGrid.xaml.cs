@@ -1,7 +1,6 @@
 using System.Text;
 
 using DotVast.HashTool.WinUI.Enums;
-using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.ViewModels.Controls;
 
@@ -113,7 +112,7 @@ public sealed partial class HashTaskGrid : UserControl
         const string HashSeparator = ", ";
 
         var sb = new StringBuilder();
-        sb.Append(hashTask.Mode.ToString());
+        sb.Append(hashTask.Mode.ToDisplay());
         sb.Append(ItemSeparator);
         sb.Append(hashTask.DateTime.ToString("HH:mm:ss"));
         sb.Append(ItemSeparator);

@@ -1,4 +1,4 @@
-using Microsoft.UI.Xaml;
+using DotVast.HashTool.WinUI.Enums;
 
 namespace DotVast.HashTool.WinUI.Constants;
 
@@ -19,7 +19,7 @@ public static class DefaultAppearanceSettings
 {
     public const string HashFontFamilyName = "Consolas";
     public const bool IsAlwaysOnTop = false;
-    public const ElementTheme Theme = ElementTheme.Default;
+    public const AppTheme Theme = AppTheme.Default;
 }
 
 public static class DefaultPreferencesSettings

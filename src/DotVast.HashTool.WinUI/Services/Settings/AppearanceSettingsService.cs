@@ -2,13 +2,12 @@ using System.Diagnostics;
 
 using DotVast.HashTool.WinUI.Constants;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
-using DotVast.HashTool.WinUI.Core.Enums;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Helpers;
 
 using Microsoft.UI.Xaml;
 
-using Windows.Globalization;
+using WGAL = Windows.Globalization.ApplicationLanguages;
 
 namespace DotVast.HashTool.WinUI.Services.Settings;
 
@@ -20,9 +19,9 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
         _isAlwaysOnTop = await LoadAsync(nameof(IsAlwaysOnTop), DefaultAppearanceSettings.IsAlwaysOnTop);
         _theme = await LoadAsync(nameof(Theme), DefaultAppearanceSettings.Theme);
 
-        Language = string.IsNullOrWhiteSpace(ApplicationLanguages.PrimaryLanguageOverride)
+        Language = string.IsNullOrWhiteSpace(WGAL.PrimaryLanguageOverride)
             ? AppLanguage.System
-            : Languages.Single(x => StringComparer.OrdinalIgnoreCase.Equals(x.Tag, ApplicationLanguages.PrimaryLanguageOverride));
+            : WGAL.PrimaryLanguageOverride.ToAppLanguage();
 
         SetTheme(); // 在初始化时就设置主题
     }
@@ -32,9 +31,9 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
         SetIsAlwaysOnTop();
         SetLanguage();
 
-        Debug.Assert((App.MainWindow.Content as FrameworkElement)?.RequestedTheme == Theme);
+        Debug.Assert((App.MainWindow.Content as FrameworkElement)?.RequestedTheme == Theme.ToElementTheme());
         Debug.Assert(App.MainWindow.IsAlwaysOnTop == IsAlwaysOnTop);
-        Debug.Assert(ApplicationLanguages.PrimaryLanguageOverride == Language.Tag);
+        Debug.Assert(WGAL.PrimaryLanguageOverride == Language.ToTag());
 
         await Task.CompletedTask;
     }
@@ -62,8 +61,8 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
     #endregion IsAlwaysOnTop
 
     #region Theme
-    private ElementTheme _theme;
-    public ElementTheme Theme
+    private AppTheme _theme;
+    public AppTheme Theme
     {
         get => _theme;
         set => SetAndSave(ref _theme, value, SetTheme);
@@ -74,7 +73,7 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
         //TODO: 等待 Application.Current.RequestedTheme 的动态更改功能, https://github.com/microsoft/microsoft-ui-xaml/issues/4474
         if (App.MainWindow.Content is FrameworkElement rootElement)
         {
-            rootElement.RequestedTheme = Theme;
+            rootElement.RequestedTheme = Theme.ToElementTheme();
         }
 
         TitleBarContextMenuHelper.UpdateTitleBarContextMenu(Theme);
@@ -82,17 +81,17 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
     #endregion Theme
 
     #region Language
-    public AppLanguage[] Languages { get; } = GenericEnum.GetFieldValues<AppLanguage>();
+    public AppLanguage[] Languages { get; } = Enum.GetValues<AppLanguage>();
 
     [ObservableProperty]
-    private AppLanguage _language = AppLanguage.ZhHans;
+    private AppLanguage _language;
 
     partial void OnLanguageChanged(AppLanguage value) =>
         SetLanguage();
 
     private void SetLanguage()
     {
-        ApplicationLanguages.PrimaryLanguageOverride = Language.Tag;
+        WGAL.PrimaryLanguageOverride = Language.ToTag();
     }
     #endregion Language
 }

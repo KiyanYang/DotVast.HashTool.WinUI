@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-using Microsoft.UI.Xaml;
+using DotVast.HashTool.WinUI.Enums;
 
 namespace DotVast.HashTool.WinUI.Helpers;
 
@@ -25,12 +25,12 @@ internal sealed partial class TitleBarContextMenuHelper
     /// 更新标题栏上下文菜单主题.
     /// </summary>
     /// <param name="theme">元素主题.</param>
-    public static void UpdateTitleBarContextMenu(ElementTheme theme)
+    public static void UpdateTitleBarContextMenu(AppTheme theme)
     {
         var mode = theme switch
         {
-            ElementTheme.Light => PreferredAppMode.ForceLight,
-            ElementTheme.Dark => PreferredAppMode.ForceDark,
+            AppTheme.Light => PreferredAppMode.ForceLight,
+            AppTheme.Dark => PreferredAppMode.ForceDark,
             _ => PreferredAppMode.AllowDark,
         };
         SetPreferredAppMode(mode);
