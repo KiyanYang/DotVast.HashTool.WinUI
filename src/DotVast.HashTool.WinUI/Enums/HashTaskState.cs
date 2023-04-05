@@ -42,12 +42,12 @@ public static class HashTaskStateExtensions
     {
         return hashTaskState switch
         {
-            HashTaskState.Waiting => new(LocalizationEnum.HashTaskState_Waiting),
-            HashTaskState.Working => new(LocalizationEnum.HashTaskState_Working),
-            HashTaskState.Paused => new(LocalizationEnum.HashTaskState_Paused),
-            HashTaskState.Completed => new(LocalizationEnum.HashTaskState_Completed),
-            HashTaskState.Canceled => new(LocalizationEnum.HashTaskState_Canceled),
-            HashTaskState.Aborted => new(LocalizationEnum.HashTaskState_Aborted),
+            HashTaskState.Waiting => LocalizationEnum.HashTaskState_Waiting,
+            HashTaskState.Working => LocalizationEnum.HashTaskState_Working,
+            HashTaskState.Paused => LocalizationEnum.HashTaskState_Paused,
+            HashTaskState.Completed => LocalizationEnum.HashTaskState_Completed,
+            HashTaskState.Canceled => LocalizationEnum.HashTaskState_Canceled,
+            HashTaskState.Aborted => LocalizationEnum.HashTaskState_Aborted,
             _ => throw new ArgumentOutOfRangeException(nameof(hashTaskState)),
         };
     }
