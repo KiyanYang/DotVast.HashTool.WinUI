@@ -8,7 +8,7 @@ public interface IPreferencesSettingsService : IBaseObservableSettings
 {
     ObservableCollection<HashSetting> HashSettings { get; }
 
-    Task SaveHashSettingsAsync();
+    void SaveHashSettings();
 
     /// <summary>
     /// 是否启用资源管理器注册的上下文菜单.

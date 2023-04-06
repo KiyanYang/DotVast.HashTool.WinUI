@@ -71,12 +71,12 @@ public sealed partial class HomeViewModel : ObservableRecipient, IViewModel, INa
             });
         });
 
-        Messenger.Register<HomeViewModel, HashSettingIsCheckedChangedMessage>(this, async (r, m) =>
+        Messenger.Register<HomeViewModel, HashSettingIsCheckedChangedMessage>(this, (r, m) =>
         {
             Debug.WriteLine($"[{DateTime.Now}] HomeViewModel.Messenger > HashSettingIsCheckedChangedMessage");
             Debug.WriteLine($"Hash.Name: {m.HashSetting.Kind}");
             Debug.WriteLine($"IsChecked: {m.IsChecked}");
-            await _preferencesSettingsService.SaveHashSettingsAsync();
+            _preferencesSettingsService.SaveHashSettings();
             CreateTaskCommand.NotifyCanExecuteChanged();
         });
 

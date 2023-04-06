@@ -18,10 +18,10 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
     public override async Task InitializeAsync()
     {
         await InitializeHashSettings();
-        _fileExplorerContextMenusEnabled = await LoadAsync(nameof(FileExplorerContextMenusEnabled), DefaultPreferencesSettings.FileExplorerContextMenusEnabled);
-        _includePreRelease = await LoadAsync(nameof(IncludePreRelease), DefaultPreferencesSettings.IncludePreRelease);
-        _checkForUpdatesOnStartup = await LoadAsync(nameof(CheckForUpdatesOnStartup), DefaultPreferencesSettings.CheckForUpdatesOnStartup);
-        _startingWhenCreateHashTask = await LoadAsync(nameof(StartingWhenCreateHashTask), DefaultPreferencesSettings.StartingWhenCreateHashTask);
+        _fileExplorerContextMenusEnabled = Load(nameof(FileExplorerContextMenusEnabled), DefaultPreferencesSettings.FileExplorerContextMenusEnabled);
+        _includePreRelease = Load(nameof(IncludePreRelease), DefaultPreferencesSettings.IncludePreRelease);
+        _checkForUpdatesOnStartup = Load(nameof(CheckForUpdatesOnStartup), DefaultPreferencesSettings.CheckForUpdatesOnStartup);
+        _startingWhenCreateHashTask = Load(nameof(StartingWhenCreateHashTask), DefaultPreferencesSettings.StartingWhenCreateHashTask);
     }
 
     public override async Task StartupAsync()
@@ -47,15 +47,15 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
         await Task.CompletedTask;
     }
 
-    public async Task SaveHashSettingsAsync()
+    public void SaveHashSettings()
     {
         foreach (var hashSetting in HashSettings)
         {
-            await _localSettingsService.SaveSettingAsync(SettingsContainerName.DataOptions_Hashes, hashSetting.Kind.ToString(), hashSetting);
+            _localSettingsService.SaveSetting(SettingsContainerName.DataOptions_Hashes, hashSetting.Kind.ToString(), hashSetting);
         }
 
         var hashNamesForContexMenu = HashSettings.Where(h => h.IsEnabledForContextMenu).Select(h => h.Name);
-        await _localSettingsService.SaveSettingAsync(SettingsContainerName.ContextMenu, "HashNames", hashNamesForContexMenu);
+        _localSettingsService.SaveSetting(SettingsContainerName.ContextMenu, "HashNames", hashNamesForContexMenu);
     }
     #endregion HashSettings
 
@@ -64,7 +64,7 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
     public bool FileExplorerContextMenusEnabled
     {
         get => _fileExplorerContextMenusEnabled;
-        set => SetAndSave("ContextMenu", "IsEnabled", value, ref _fileExplorerContextMenusEnabled);
+        set => SetPropertyAndSave(SettingsContainerName.ContextMenu, "IsEnabled", value, ref _fileExplorerContextMenusEnabled);
     }
     #endregion FileExplorerContextMenusEnabled
 
@@ -73,7 +73,7 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
     public bool IncludePreRelease
     {
         get => _includePreRelease;
-        set => SetAndSave(ref _includePreRelease, value);
+        set => SetPropertyAndSave(value, ref _includePreRelease);
     }
     #endregion IncludePreRelease
 
@@ -82,7 +82,7 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
     public bool CheckForUpdatesOnStartup
     {
         get => _checkForUpdatesOnStartup;
-        set => SetAndSave(ref _checkForUpdatesOnStartup, value);
+        set => SetPropertyAndSave(value, ref _checkForUpdatesOnStartup);
     }
     #endregion CheckForUpdatesOnStartup
 
@@ -91,7 +91,7 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
     public bool StartingWhenCreateHashTask
     {
         get => _startingWhenCreateHashTask;
-        set => SetAndSave(ref _startingWhenCreateHashTask, value);
+        set => SetPropertyAndSave(value, ref _startingWhenCreateHashTask);
     }
     #endregion
 }

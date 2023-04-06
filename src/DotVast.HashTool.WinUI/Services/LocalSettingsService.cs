@@ -1,4 +1,5 @@
-using DotVast.HashTool.WinUI.Core.Helpers;
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 
 using Windows.Storage;
 
@@ -6,34 +7,39 @@ namespace DotVast.HashTool.WinUI.Services;
 
 public sealed class LocalSettingsService : ILocalSettingsService
 {
-    public async Task<(bool HasValue, T? Value)> ReadSettingAsync<T>(string key)
+    private readonly ApplicationDataContainer _localSettings = ApplicationData.Current.LocalSettings;
+
+    [return: NotNullIfNotNull(nameof(defaultValue))]
+    public T? ReadSetting<T>(string key, T? defaultValue = default)
     {
-        if (ApplicationData.Current.LocalSettings.Values.TryGetValue(key, out var obj))
+        if (_localSettings.Values.TryGetValue(key, out var obj) && obj is string str)
         {
-            return (true, await Json.ToObjectAsync<T>((string)obj));
+            return JsonSerializer.Deserialize<T>(str) ?? defaultValue;
         }
-        return (false, default);
+        return defaultValue;
     }
 
-    public async Task<(bool HasValue, T? Value)> ReadSettingAsync<T>(string containerName, string key)
+    [return: NotNullIfNotNull(nameof(defaultValue))]
+    public T? ReadSetting<T>(string containerName, string key, T? defaultValue = default)
     {
-        var containers = ApplicationData.Current.LocalSettings.Containers;
-        if (containers.TryGetValue(containerName, out var container) && container.Values.TryGetValue(key, out var obj))
+        var containers = _localSettings.Containers;
+        if (containers.TryGetValue(containerName, out var container)
+         && container.Values.TryGetValue(key, out var obj)
+         && obj is string str)
         {
-            return (true, await Json.ToObjectAsync<T>((string)obj));
+            return JsonSerializer.Deserialize<T>(str) ?? defaultValue;
         }
-
-        return (false, default);
+        return defaultValue;
     }
 
-    public async Task SaveSettingAsync<T>(string key, T value)
+    public void SaveSetting<T>(string key, T value)
     {
-        ApplicationData.Current.LocalSettings.Values[key] = await Json.StringifyAsync(value);
+        _localSettings.Values[key] = JsonSerializer.Serialize(value);
     }
 
-    public async Task SaveSettingAsync<T>(string containerName, string key, T value)
+    public void SaveSetting<T>(string containerName, string key, T value)
     {
-        var container = ApplicationData.Current.LocalSettings.CreateContainer(containerName, ApplicationDataCreateDisposition.Always);
-        container.Values[key] = await Json.StringifyAsync(value);
+        var container = _localSettings.CreateContainer(containerName, ApplicationDataCreateDisposition.Always);
+        container.Values[key] = JsonSerializer.Serialize(value);
     }
 }

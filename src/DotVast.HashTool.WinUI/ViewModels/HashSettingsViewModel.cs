@@ -22,20 +22,20 @@ public partial class HashSettingsViewModel : ObservableRecipient, IViewModel, IN
 
     protected override void OnActivated()
     {
-        Messenger.Register<HashSettingsViewModel, HashSettingIsEnabledForAppChangedMessage>(this, async (r, m) =>
+        Messenger.Register<HashSettingsViewModel, HashSettingIsEnabledForAppChangedMessage>(this, (r, m) =>
         {
             Debug.WriteLine($"[{DateTime.Now}] HashOptionSettingsViewModel.Messenger > HashSettingIsEnabledForAppChangedMessage");
             Debug.WriteLine($"Hash.Name: {m.HashSetting.Kind}");
             Debug.WriteLine($"IsEnabled: {m.IsEnabledForApp}");
-            await _preferencesSettingsService.SaveHashSettingsAsync();
+            _preferencesSettingsService.SaveHashSettings();
         });
 
-        Messenger.Register<HashSettingsViewModel, HashSettingIsEnabledForContextMenuChangedMessage>(this, async (r, m) =>
+        Messenger.Register<HashSettingsViewModel, HashSettingIsEnabledForContextMenuChangedMessage>(this, (r, m) =>
         {
             Debug.WriteLine($"[{DateTime.Now}] HashOptionSettingsViewModel.Messenger > HashSettingIsEnabledForContextMenuChangedMessage");
             Debug.WriteLine($"Hash.Name: {m.HashSetting.Kind}");
             Debug.WriteLine($"IsEnabled: {m.IsEnabledForContextMenu}");
-            await _preferencesSettingsService.SaveHashSettingsAsync();
+            _preferencesSettingsService.SaveHashSettings();
         });
     }
 
@@ -62,7 +62,7 @@ public partial class HashSettingsViewModel : ObservableRecipient, IViewModel, IN
         if (sender is ObservableCollection<HashSetting>
             && e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
         {
-            _preferencesSettingsService.SaveHashSettingsAsync();
+            _preferencesSettingsService.SaveHashSettings();
         }
     }
 }

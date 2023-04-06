@@ -15,15 +15,16 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
 {
     public override async Task InitializeAsync()
     {
-        _hashFontFamilyName = await LoadAsync(nameof(HashFontFamilyName), DefaultAppearanceSettings.HashFontFamilyName);
-        _isAlwaysOnTop = await LoadAsync(nameof(IsAlwaysOnTop), DefaultAppearanceSettings.IsAlwaysOnTop);
-        _theme = await LoadAsync(nameof(Theme), DefaultAppearanceSettings.Theme);
+        _hashFontFamilyName = Load(nameof(HashFontFamilyName), DefaultAppearanceSettings.HashFontFamilyName);
+        _isAlwaysOnTop = Load(nameof(IsAlwaysOnTop), DefaultAppearanceSettings.IsAlwaysOnTop);
+        _theme = Load(nameof(Theme), DefaultAppearanceSettings.Theme);
 
         Language = string.IsNullOrWhiteSpace(WGAL.PrimaryLanguageOverride)
             ? AppLanguage.System
             : WGAL.PrimaryLanguageOverride.ToAppLanguage();
 
         SetTheme(); // 在初始化时就设置主题
+        await Task.CompletedTask;
     }
 
     public override async Task StartupAsync()
@@ -43,7 +44,7 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
     public string HashFontFamilyName
     {
         get => _hashFontFamilyName;
-        set => SetAndSave(ref _hashFontFamilyName, value);
+        set => SetPropertyAndSave(value, ref _hashFontFamilyName);
     }
     #endregion HashFontFamilyName
 
@@ -52,7 +53,7 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
     public bool IsAlwaysOnTop
     {
         get => _isAlwaysOnTop;
-        set => SetAndSave(ref _isAlwaysOnTop, value, SetIsAlwaysOnTop);
+        set => SetPropertyAndSave(value, ref _isAlwaysOnTop, SetIsAlwaysOnTop);
     }
     private void SetIsAlwaysOnTop()
     {
@@ -65,9 +66,8 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
     public AppTheme Theme
     {
         get => _theme;
-        set => SetAndSave(ref _theme, value, SetTheme);
+        set => SetPropertyAndSave(value, ref _theme, SetTheme);
     }
-
     private void SetTheme()
     {
         //TODO: 等待 Application.Current.RequestedTheme 的动态更改功能, https://github.com/microsoft/microsoft-ui-xaml/issues/4474
