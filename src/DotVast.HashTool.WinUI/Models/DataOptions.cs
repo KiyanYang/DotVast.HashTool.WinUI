@@ -12,6 +12,7 @@ public class HashData
     public string Name { get; set; } = string.Empty;
     public string[] Alias { get; set; } = Array.Empty<string>();
     public HashFormat Format { get; set; } = HashFormat.Base16;
+    public bool IsChecked { get; set; }
     public bool IsEnabledForApp { get; set; }
     public bool IsEnabledForContextMenu { get; set; }
 }
