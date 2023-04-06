@@ -41,8 +41,6 @@
                 Grid.Row="1"
                 Margin="-8,0"
                 Padding="0,-4"
-                AllowDrop="True"
-                CanReorderItems="True"
                 ItemTemplate="{StaticResource HashSettingDataTemplate}"
                 ItemsSource="{x:Bind ViewModel.HashSettings}"
                 SelectionMode="None"

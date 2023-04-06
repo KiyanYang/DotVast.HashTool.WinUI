@@ -47,13 +47,18 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
         await Task.CompletedTask;
     }
 
-    public void SaveHashSettings()
+    public void SaveHashSetting(HashSetting hashSetting, bool forContextMenu = false)
     {
-        foreach (var hashSetting in HashSettings)
-        {
-            _localSettingsService.SaveSetting(SettingsContainerName.DataOptions_Hashes, hashSetting.Kind.ToString(), hashSetting);
-        }
+        _localSettingsService.SaveSetting(SettingsContainerName.DataOptions_Hashes, hashSetting.Kind.ToString(), hashSetting);
 
+        if (forContextMenu)
+        {
+            SaveHashNamesForContextMenu();
+        }
+    }
+
+    private void SaveHashNamesForContextMenu()
+    {
         var hashNamesForContexMenu = HashSettings.Where(h => h.IsEnabledForContextMenu).Select(h => h.Name);
         _localSettingsService.SaveSetting(SettingsContainerName.ContextMenu, "HashNames", hashNamesForContexMenu);
     }
