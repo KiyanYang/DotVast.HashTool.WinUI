@@ -28,11 +28,11 @@ internal static class IMessengerExtensions
 #endif
     }
 
-    internal static void RegisterP<TRecipient, TOwner, TValue>(this IMessenger messenger, TRecipient recipient, MessageToken token, MessageHandler<TRecipient, PropertyUpdatedMessage<TOwner, TValue>> handler)
+    internal static void RegisterP<TRecipient, TOwner, TValue>(this IMessenger messenger, TRecipient recipient, MessageToken token, Action<TRecipient, TOwner, string, TValue, TValue> action)
         where TRecipient : class
     {
 #if !DEBUG
-        messenger.Register<TRecipient, PropertyUpdatedMessage<TOwner, TValue>, int>(recipient, (int)(object)token, handler);
+        messenger.Register<TRecipient, PropertyUpdatedMessage<TOwner, TValue>, int>(recipient, (int)(object)token, (r, m) => action(r, m.Owner, m.PropertyName, m.OldValue, m.NewValue));
 #else
         messenger.Register<TRecipient, PropertyUpdatedMessage<TOwner, TValue>, int>(recipient, (int)(object)token, (r, m) =>
         {
@@ -44,7 +44,7 @@ internal static class IMessengerExtensions
             Debug.WriteLine($"    PropertyName: {m.PropertyName}");
             Debug.WriteLine($"    NewValue: {m.NewValue}");
             Debug.WriteLine($"    OldValue: {m.OldValue}");
-            handler(r, m);
+            action(r, m.Owner, m.PropertyName, m.OldValue, m.NewValue);
         });
 #endif
     }
