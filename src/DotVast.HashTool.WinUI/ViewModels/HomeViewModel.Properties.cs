@@ -31,7 +31,7 @@ public partial class HomeViewModel
     /// <summary>
     /// Hash 选项.
     /// </summary>
-    public IEnumerable<HashSetting> HashSettings => _preferencesSettingsService.HashSettings.Where(i => i.IsEnabledForApp);
+    public IList<HashSetting> HashSettings => _preferencesSettingsService.HashSettings.Where(i => i.IsEnabledForApp).ToArray();
 
     /// <summary>
     /// 最近一次任务.

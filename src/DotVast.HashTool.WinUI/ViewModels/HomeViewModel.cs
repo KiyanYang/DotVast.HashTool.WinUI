@@ -60,11 +60,6 @@ public sealed partial class HomeViewModel : ObservableRecipient, IViewModel, INa
             r._preferencesSettingsService.SaveHashSetting(o);
             r.CreateTaskCommand.NotifyCanExecuteChanged();
         });
-
-        Messenger.RegisterV<HomeViewModel, HashSetting, bool>(this, EMT.HashSetting_IsEnabledForApp, static (r, _, _) =>
-        {
-            r.OnPropertyChanged(nameof(HashSettings));
-        });
     }
 
     #endregion Messenger
@@ -73,6 +68,8 @@ public sealed partial class HomeViewModel : ObservableRecipient, IViewModel, INa
 
     void INavigationAware.OnNavigatedTo(object? parameter)
     {
+        OnPropertyChanged(nameof(HashSettings));
+
         if (parameter is not HomeParameter homeParameter)
         {
             return;
