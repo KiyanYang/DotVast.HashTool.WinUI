@@ -13,9 +13,9 @@ internal static class IMessengerExtensions
         where TRecipient : class
     {
 #if !DEBUG
-        messenger.Register<TRecipient, ValueUpdatedMessage<TOwner, TValue>, int>(recipient, (int)(object)token, (r, m) => action(r, m.Owner, m.Value));
+        messenger.Register<TRecipient, ValueUpdatedMessage<TOwner, TValue>, int>(recipient, (int)token, (r, m) => action(r, m.Owner, m.Value));
 #else
-        messenger.Register<TRecipient, ValueUpdatedMessage<TOwner, TValue>, int>(recipient, (int)(object)token, (r, m) =>
+        messenger.Register<TRecipient, ValueUpdatedMessage<TOwner, TValue>, int>(recipient, (int)token, (r, m) =>
         {
             var recipientTypeName = typeof(TRecipient).Name;
             var ownerTypeName = typeof(TOwner).Name;
@@ -32,9 +32,9 @@ internal static class IMessengerExtensions
         where TRecipient : class
     {
 #if !DEBUG
-        messenger.Register<TRecipient, PropertyUpdatedMessage<TOwner, TValue>, int>(recipient, (int)(object)token, (r, m) => action(r, m.Owner, m.PropertyName, m.OldValue, m.NewValue));
+        messenger.Register<TRecipient, PropertyUpdatedMessage<TOwner, TValue>, int>(recipient, (int)token, (r, m) => action(r, m.Owner, m.PropertyName, m.OldValue, m.NewValue));
 #else
-        messenger.Register<TRecipient, PropertyUpdatedMessage<TOwner, TValue>, int>(recipient, (int)(object)token, (r, m) =>
+        messenger.Register<TRecipient, PropertyUpdatedMessage<TOwner, TValue>, int>(recipient, (int)token, (r, m) =>
         {
             var recipientTypeName = typeof(TRecipient).Name;
             var ownerTypeName = typeof(TOwner).Name;
@@ -51,11 +51,11 @@ internal static class IMessengerExtensions
 
     internal static ValueUpdatedMessage<TOwner, TValue> SendV<TOwner, TValue>(this IMessenger messenger, ValueUpdatedMessage<TOwner, TValue> message, MessageToken token)
     {
-        return messenger.Send(message, (int)(object)token);
+        return messenger.Send(message, (int)token);
     }
 
     internal static PropertyUpdatedMessage<TOwner, TValue> SendP<TOwner, TValue>(this IMessenger messenger, PropertyUpdatedMessage<TOwner, TValue> message, MessageToken token)
     {
-        return messenger.Send(message, (int)(object)token);
+        return messenger.Send(message, (int)token);
     }
 }

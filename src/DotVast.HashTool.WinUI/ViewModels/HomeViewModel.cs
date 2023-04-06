@@ -1,5 +1,3 @@
-using System.Collections.ObjectModel;
-
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Models.Navigation;
@@ -34,16 +32,6 @@ public sealed partial class HomeViewModel : ObservableRecipient, IViewModel, INa
         _hashTaskService = hashTaskService;
         _navigationService = navigationService;
         _notificationService = notificationService;
-
-        // 响应哈希选项排序
-        _preferencesSettingsService.HashSettings.CollectionChanged += (sender, e) =>
-        {
-            if (sender is ObservableCollection<HashSetting>
-                && e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
-            {
-                OnPropertyChanged(nameof(HashSettings));
-            }
-        };
 
         _hashTaskService.HashTasks.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(LastHashTask));
 

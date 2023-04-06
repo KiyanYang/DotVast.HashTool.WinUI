@@ -34,12 +34,6 @@ public partial class HomeViewModel
     public IEnumerable<HashSetting> HashSettings => _preferencesSettingsService.HashSettings.Where(i => i.IsEnabledForApp);
 
     /// <summary>
-    /// 是否处于任务延迟创建状态. 若处于延迟状态, 则当前无法创建任务.
-    /// </summary>
-    [ObservableProperty]
-    private bool _isDelayCreateTask = false;
-
-    /// <summary>
     /// 最近一次任务.
     /// </summary>
     public HashTask? LastHashTask => _hashTaskService.HashTasks.LastOrDefault();
