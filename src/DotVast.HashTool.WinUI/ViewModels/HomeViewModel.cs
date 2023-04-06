@@ -1,9 +1,7 @@
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Models;
-using DotVast.HashTool.WinUI.Models.Messages;
 using DotVast.HashTool.WinUI.Models.Navigation;
 
 using Microsoft.Extensions.Logging;
@@ -58,34 +56,26 @@ public sealed partial class HomeViewModel : ObservableRecipient, IViewModel, INa
 
     protected override void OnActivated()
     {
-        Messenger.Register<HomeViewModel, FileNotFoundInHashFilesMessage>(this, (r, m) =>
+        Messenger.RegisterV<HomeViewModel, IComputeHashService, string>(this, EMT.IComputeHashService_FileNotFound, static (r, _, v) =>
         {
-            Debug.WriteLine($"[{DateTime.Now}] HomeViewModel.Messenger > FileNotFoundInHashFilesMessage");
-            Debug.WriteLine($"FilePath: {m.FilePath}");
-            _notificationService.Show(new()
+            r._notificationService.Show(new()
             {
                 Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Warning,
                 Title = Localization.Tip_FileSkipped_Title,
-                Message = string.Format(Localization.Tip_FileSkipped_FileNotFound, m.FilePath),
+                Message = string.Format(Localization.Tip_FileSkipped_FileNotFound, v),
                 Duration = TimeSpan.FromMilliseconds(3500),
             });
         });
 
-        Messenger.Register<HomeViewModel, HashSettingIsCheckedChangedMessage>(this, (r, m) =>
+        Messenger.RegisterV<HomeViewModel, HashSetting, bool>(this, EMT.HashSetting_IsChecked, static (r, o, _) =>
         {
-            Debug.WriteLine($"[{DateTime.Now}] HomeViewModel.Messenger > HashSettingIsCheckedChangedMessage");
-            Debug.WriteLine($"Hash.Name: {m.HashSetting.Kind}");
-            Debug.WriteLine($"IsChecked: {m.IsChecked}");
-            _preferencesSettingsService.SaveHashSetting(m.HashSetting);
-            CreateTaskCommand.NotifyCanExecuteChanged();
+            r._preferencesSettingsService.SaveHashSetting(o);
+            r.CreateTaskCommand.NotifyCanExecuteChanged();
         });
 
-        Messenger.Register<HomeViewModel, HashSettingIsEnabledForAppChangedMessage>(this, (r, m) =>
+        Messenger.RegisterV<HomeViewModel, HashSetting, bool>(this, EMT.HashSetting_IsEnabledForApp, static (r, _, _) =>
         {
-            Debug.WriteLine($"[{DateTime.Now}] HomeViewModel.Messenger > HashSettingIsEnabledForAppChangedMessage");
-            Debug.WriteLine($"Hash.Name: {m.HashSetting.Kind}");
-            Debug.WriteLine($"IsEnabled: {m.IsEnabledForApp}");
-            OnPropertyChanged(nameof(HashSettings));
+            r.OnPropertyChanged(nameof(HashSettings));
         });
     }
 

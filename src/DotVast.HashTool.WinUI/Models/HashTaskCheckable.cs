@@ -1,7 +1,5 @@
 using CommunityToolkit.Mvvm.Messaging;
 
-using DotVast.HashTool.WinUI.Models.Messages;
-
 namespace DotVast.HashTool.WinUI.Models;
 
 public sealed partial class HashTaskCheckable : ObservableObject
@@ -10,7 +8,7 @@ public sealed partial class HashTaskCheckable : ObservableObject
     private bool _isChecked;
 
     partial void OnIsCheckedChanged(bool value) =>
-        WeakReferenceMessenger.Default.Send(new HashTaskCheckableIsCheckedChangedMessage(this, value));
+        WeakReferenceMessenger.Default.SendV<HashTaskCheckable, bool>(new(this, value), EMT.HashTaskCheckable_IsChecked);
 
     public HashTask HashTask { get; }
 
