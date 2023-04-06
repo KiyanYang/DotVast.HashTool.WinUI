@@ -6,7 +6,6 @@ using CommunityToolkit.Mvvm.Messaging;
 
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
-using DotVast.HashTool.WinUI.Models.Messages;
 
 namespace DotVast.HashTool.WinUI.Services;
 
@@ -91,7 +90,7 @@ internal sealed class ComputeHashService : IComputeHashService
             }
             catch (Exception e) when (e is DirectoryNotFoundException or FileNotFoundException)
             {
-                WeakReferenceMessenger.Default.Send(new FileNotFoundInHashFilesMessage(filePaths[i]));
+                WeakReferenceMessenger.Default.SendV<IComputeHashService, string>(new(this, filePaths[i]), EMT.IComputeHashService_FileNotFound);
                 failedFilesCount++;
             }
             catch (Exception)

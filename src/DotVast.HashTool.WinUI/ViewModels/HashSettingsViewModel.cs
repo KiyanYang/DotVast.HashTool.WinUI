@@ -1,9 +1,8 @@
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
+using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.Models;
-using DotVast.HashTool.WinUI.Models.Messages;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
@@ -22,20 +21,14 @@ public partial class HashSettingsViewModel : ObservableRecipient, IViewModel, IN
 
     protected override void OnActivated()
     {
-        Messenger.Register<HashSettingsViewModel, HashSettingIsEnabledForAppChangedMessage>(this, (r, m) =>
+        Messenger.RegisterV<HashSettingsViewModel, HashSetting, bool>(this, EMT.HashSetting_IsEnabledForApp, static (r, o, _) =>
         {
-            Debug.WriteLine($"[{DateTime.Now}] HashOptionSettingsViewModel.Messenger > HashSettingIsEnabledForAppChangedMessage");
-            Debug.WriteLine($"Hash.Name: {m.HashSetting.Kind}");
-            Debug.WriteLine($"IsEnabled: {m.IsEnabledForApp}");
-            _preferencesSettingsService.SaveHashSetting(m.HashSetting);
+            r._preferencesSettingsService.SaveHashSetting(o);
         });
 
-        Messenger.Register<HashSettingsViewModel, HashSettingIsEnabledForContextMenuChangedMessage>(this, (r, m) =>
+        Messenger.RegisterV<HashSettingsViewModel, HashSetting, bool>(this, EMT.HashSetting_IsEnabledForContextMenu, static (r, o, _) =>
         {
-            Debug.WriteLine($"[{DateTime.Now}] HashOptionSettingsViewModel.Messenger > HashSettingIsEnabledForContextMenuChangedMessage");
-            Debug.WriteLine($"Hash.Name: {m.HashSetting.Kind}");
-            Debug.WriteLine($"IsEnabled: {m.IsEnabledForContextMenu}");
-            _preferencesSettingsService.SaveHashSetting(m.HashSetting, true);
+            r._preferencesSettingsService.SaveHashSetting(o, true);
         });
     }
 

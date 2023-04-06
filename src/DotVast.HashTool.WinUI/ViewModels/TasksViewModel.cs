@@ -77,12 +77,9 @@ public sealed partial class TasksViewModel : ObservableRecipient, IViewModel, IN
 
     protected override void OnActivated()
     {
-        Messenger.Register<TasksViewModel, HashTaskCheckableIsCheckedChangedMessage>(this, (r, m) =>
+        Messenger.RegisterV<TasksViewModel, HashTaskCheckable, bool>(this, EMT.HashTaskCheckable_IsChecked, static (r, _, _) =>
         {
-            Debug.WriteLine($"[{DateTime.Now}] TasksViewModel.Messenger > HashTaskCheckableIsCheckedChangedMessage");
-            Debug.WriteLine($"HashTask.Content: {m.HashTaskCheckable.HashTask.Content}");
-            Debug.WriteLine($"IsChecked:        {m.IsChecked}");
-            SaveCommand.NotifyCanExecuteChanged();
+            r.SaveCommand.NotifyCanExecuteChanged();
         });
     }
 
