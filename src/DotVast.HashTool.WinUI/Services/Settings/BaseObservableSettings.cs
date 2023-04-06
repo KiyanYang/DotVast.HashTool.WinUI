@@ -12,38 +12,44 @@ internal abstract partial class BaseObservableSettings : ObservableObject, IBase
 
     protected readonly ILocalSettingsService _localSettingsService = App.GetService<ILocalSettingsService>();
 
-    protected async Task<T> LoadAsync<T>(string key, T defaultValue)
+    [return: NotNullIfNotNull(nameof(defaultValue))]
+    protected T? Load<T>(string key, T? defaultValue = default)
     {
-        var (hasValue, value) = await _localSettingsService.ReadSettingAsync<T>(key);
-        return hasValue ? (value ?? defaultValue) : defaultValue;
+        return _localSettingsService.ReadSetting(key, defaultValue);
     }
 
-    protected bool SetAndSave<T>([NotNullIfNotNull(nameof(newValue))] ref T field, T newValue, [CallerMemberName] string? propertyName = null)
+    [return: NotNullIfNotNull(nameof(defaultValue))]
+    protected T? Load<T>(string containerName, string key, T? defaultValue = default)
     {
-        if (SetProperty(ref field, newValue, propertyName) && propertyName != null)
-        {
-            Task.Run(() => _localSettingsService.SaveSettingAsync(propertyName, newValue));
-            return true;
-        }
-        return false;
+        return _localSettingsService.ReadSetting(containerName, key, defaultValue);
     }
 
-    protected bool SetAndSave<T>([NotNullIfNotNull(nameof(newValue))] ref T field, T newValue, Action action, [CallerMemberName] string? propertyName = null)
-    {
-        if (SetProperty(ref field, newValue, propertyName) && propertyName != null)
-        {
-            Task.Run(() => _localSettingsService.SaveSettingAsync(propertyName, newValue));
-            action();
-            return true;
-        }
-        return false;
-    }
-
-    protected bool SetAndSave<T>(string containerName, string key, T value, [NotNullIfNotNull(nameof(value))] ref T field, [CallerMemberName] string? propertyName = null)
+    protected bool SetPropertyAndSave<T>(T value, [NotNullIfNotNull(nameof(value))] ref T field, [CallerMemberName] string? propertyName = null)
     {
         if (SetProperty(ref field, value, propertyName) && propertyName != null)
         {
-            Task.Run(() => _localSettingsService.SaveSettingAsync(containerName, key, value));
+            _localSettingsService.SaveSetting(propertyName, value);
+            return true;
+        }
+        return false;
+    }
+
+    protected bool SetPropertyAndSave<T>(string containerName, string key, T value, [NotNullIfNotNull(nameof(value))] ref T field, [CallerMemberName] string? propertyName = null)
+    {
+        if (SetProperty(ref field, value, propertyName) && propertyName != null)
+        {
+            _localSettingsService.SaveSetting(containerName, key, value);
+            return true;
+        }
+        return false;
+    }
+
+    protected bool SetPropertyAndSave<T>(T value, [NotNullIfNotNull(nameof(value))] ref T field, Action action, [CallerMemberName] string? propertyName = null)
+    {
+        if (SetProperty(ref field, value, propertyName) && propertyName != null)
+        {
+            _localSettingsService.SaveSetting(propertyName, value);
+            action();
             return true;
         }
         return false;

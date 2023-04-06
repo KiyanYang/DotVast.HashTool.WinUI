@@ -1,12 +1,16 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace DotVast.HashTool.WinUI.Contracts.Services;
 
 public interface ILocalSettingsService
 {
-    Task<(bool HasValue, T? Value)> ReadSettingAsync<T>(string key);
+    [return: NotNullIfNotNull(nameof(defaultValue))]
+    T? ReadSetting<T>(string key, T? defaultValue = default);
 
-    Task<(bool HasValue, T? Value)> ReadSettingAsync<T>(string containerName, string key);
+    [return: NotNullIfNotNull(nameof(defaultValue))]
+    T? ReadSetting<T>(string containerName, string key, T? defaultValue = default);
 
-    Task SaveSettingAsync<T>(string key, T value);
+    void SaveSetting<T>(string key, T value);
 
-    Task SaveSettingAsync<T>(string containerName, string key, T value);
+    void SaveSetting<T>(string containerName, string key, T value);
 }

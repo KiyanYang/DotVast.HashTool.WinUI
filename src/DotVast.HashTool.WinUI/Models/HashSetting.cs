@@ -9,7 +9,6 @@ namespace DotVast.HashTool.WinUI.Models;
 
 public sealed partial class HashSetting : ObservableObject
 {
-    private HashKind _kind;
     public HashKind Kind
     {
         get => _kind;
@@ -19,6 +18,7 @@ public sealed partial class HashSetting : ObservableObject
             Name = App.GetService<IHashService>().GetHashData(value).Name;
         }
     }
+    private HashKind _kind;
 
     [JsonIgnore]
     public string Name { get; private set; } = string.Empty;
