@@ -15,7 +15,7 @@ internal class HashService : IHashService
         _hashes = dataOptions.Value.Hashes;
     }
 
-    public HashKind[] AllHashes { get; } = Enum.GetValues<HashKind>();
+    public HashKind[] HashKinds { get; } = Enum.GetValues<HashKind>();
 
     public HashKind? GetHash(string hashName)
     {
@@ -50,7 +50,7 @@ internal class HashService : IHashService
     {
         if (hashSettings is null || !hashSettings.Any())
         {
-            return AllHashes.Select(CreateHashSetting);
+            return HashKinds.Select(CreateHashSetting);
         }
 
         return FillNotEmptyHashSettings(hashSettings);
@@ -58,7 +58,7 @@ internal class HashService : IHashService
 
     private IEnumerable<HashSetting> FillNotEmptyHashSettings(IEnumerable<HashSetting> hashSettings)
     {
-        var hashSet = new HashSet<HashKind>(AllHashes.Length);
+        var hashSet = new HashSet<HashKind>(HashKinds.Length);
         foreach (var hashSetting in hashSettings)
         {
             if (hashSet.Add(hashSetting.Kind))
@@ -66,7 +66,7 @@ internal class HashService : IHashService
                 yield return hashSetting!;
             }
         }
-        foreach (var hash in AllHashes)
+        foreach (var hash in HashKinds)
         {
             if (hashSet.Add(hash))
             {
@@ -84,5 +84,26 @@ internal class HashService : IHashService
             IsEnabledForApp = _hashes[hash].IsEnabledForApp,
             IsEnabledForContextMenu = _hashes[hash].IsEnabledForContextMenu,
         };
+    }
+
+    public IEnumerable<HashSetting> MergeHashSettings(IList<HashSetting> hashSettings)
+    {
+        return HashKinds.Select(kind => Merge(kind, hashSettings));
+
+        HashSetting Merge(HashKind defaultHashSettingKind, IList<HashSetting> hashSettings)
+        {
+            var retHashSetting = CreateHashSetting(defaultHashSettingKind);
+            var newHashSetting = hashSettings.FirstOrDefault(x => x.Kind == defaultHashSettingKind);
+            if (newHashSetting is null)
+            {
+                return retHashSetting;
+            }
+
+            retHashSetting.IsChecked = newHashSetting.IsChecked;
+            retHashSetting.IsEnabledForApp = newHashSetting.IsEnabledForApp;
+            retHashSetting.IsEnabledForContextMenu = newHashSetting.IsEnabledForContextMenu;
+
+            return retHashSetting;
+        }
     }
 }

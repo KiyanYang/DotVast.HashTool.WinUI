@@ -8,6 +8,12 @@ public static class CommandLineArgs
     public const string Path = "--path";
 }
 
+internal static class SettingsContainerName
+{
+    public const string ContextMenu = "ContextMenu";
+    public const string DataOptions_Hashes = "DataOptions:Hashes";
+}
+
 public static class GitHubRestApi
 {
     public const string BaseUrl = "https://api.github.com/";

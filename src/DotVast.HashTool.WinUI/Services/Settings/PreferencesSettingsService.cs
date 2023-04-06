@@ -35,19 +35,27 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
     private async Task InitializeHashSettings()
     {
         // TODO: 反序列化时, HashSetting 的属性 Hash 可能为 null
-        var hashSettingsFromLocalSettings = await LoadAsync(nameof(HashSettings), Array.Empty<HashSetting>());
-        var hashSettings = _hashService.FillHashSettings(hashSettingsFromLocalSettings);
+        var hashSettingsFromLocalSettings = _hashService.HashKinds.Select(kind =>
+                Load(SettingsContainerName.DataOptions_Hashes, kind.ToString(), default(HashSetting)))
+            .OfType<HashSetting>()
+            .ToArray();
+        var hashSettings = _hashService.MergeHashSettings(hashSettingsFromLocalSettings);
         foreach (var hashSetting in hashSettings)
         {
             HashSettings.Add(hashSetting);
         }
+        await Task.CompletedTask;
     }
 
     public async Task SaveHashSettingsAsync()
     {
-        await _localSettingsService.SaveSettingAsync(nameof(HashSettings), HashSettings);
+        foreach (var hashSetting in HashSettings)
+        {
+            await _localSettingsService.SaveSettingAsync(SettingsContainerName.DataOptions_Hashes, hashSetting.Kind.ToString(), hashSetting);
+        }
+
         var hashNamesForContexMenu = HashSettings.Where(h => h.IsEnabledForContextMenu).Select(h => h.Name);
-        await _localSettingsService.SaveSettingAsync("ContextMenu", "HashNames", hashNamesForContexMenu);
+        await _localSettingsService.SaveSettingAsync(SettingsContainerName.ContextMenu, "HashNames", hashNamesForContexMenu);
     }
     #endregion HashSettings
 
