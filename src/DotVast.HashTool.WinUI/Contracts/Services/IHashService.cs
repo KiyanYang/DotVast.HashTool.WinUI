@@ -13,10 +13,8 @@ public interface IHashService
 
     HashData GetHashData(HashKind hash);
 
-    IEnumerable<HashSetting> FillHashSettings(IEnumerable<HashSetting>? hashSettings);
-
     /// <summary>
-    /// 将提供的设置合并到默认设置.
+    /// 获取合并后的哈希设置.
     /// </summary>
     /// <remarks>
     /// 仅支持 <see cref="HashSetting.IsChecked"/>,
@@ -24,7 +22,7 @@ public interface IHashService
     /// <see cref="HashSetting.IsEnabledForContextMenu"/>
     /// 属性的合并.
     /// </remarks>
-    /// <param name="hashSettings">哈希设置.</param>
-    /// <returns>合并后的设置.</returns>
-    IEnumerable<HashSetting> MergeHashSettings(IList<HashSetting> hashSettings);
+    /// <param name="hashSettings">要合并的哈希设置.</param>
+    /// <returns>合并后的哈希设置.</returns>
+    IEnumerable<HashSetting> GetMergedHashSettings(IList<HashSetting> hashSettings);
 }

@@ -34,12 +34,11 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
 
     private async Task InitializeHashSettings()
     {
-        // TODO: 反序列化时, HashSetting 的属性 Hash 可能为 null
         var hashSettingsFromLocalSettings = _hashService.HashKinds.Select(kind =>
                 Load(SettingsContainerName.DataOptions_Hashes, kind.ToString(), default(HashSetting)))
             .OfType<HashSetting>()
             .ToArray();
-        var hashSettings = _hashService.MergeHashSettings(hashSettingsFromLocalSettings);
+        var hashSettings = _hashService.GetMergedHashSettings(hashSettingsFromLocalSettings);
         foreach (var hashSetting in hashSettings)
         {
             HashSettings.Add(hashSetting);

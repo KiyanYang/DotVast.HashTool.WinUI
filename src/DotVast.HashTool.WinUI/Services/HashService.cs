@@ -46,53 +46,20 @@ internal class HashService : IHashService
         return _hashes[hash];
     }
 
-    public IEnumerable<HashSetting> FillHashSettings(IEnumerable<HashSetting>? hashSettings)
-    {
-        if (hashSettings is null || !hashSettings.Any())
-        {
-            return HashKinds.Select(CreateHashSetting);
-        }
-
-        return FillNotEmptyHashSettings(hashSettings);
-    }
-
-    private IEnumerable<HashSetting> FillNotEmptyHashSettings(IEnumerable<HashSetting> hashSettings)
-    {
-        var hashSet = new HashSet<HashKind>(HashKinds.Length);
-        foreach (var hashSetting in hashSettings)
-        {
-            if (hashSet.Add(hashSetting.Kind))
-            {
-                yield return hashSetting!;
-            }
-        }
-        foreach (var hash in HashKinds)
-        {
-            if (hashSet.Add(hash))
-            {
-                yield return CreateHashSetting(hash)!;
-            }
-        }
-    }
-
-    private HashSetting CreateHashSetting(HashKind hash)
-    {
-        return new HashSetting()
-        {
-            Kind = hash,
-            IsChecked = false,
-            IsEnabledForApp = _hashes[hash].IsEnabledForApp,
-            IsEnabledForContextMenu = _hashes[hash].IsEnabledForContextMenu,
-        };
-    }
-
-    public IEnumerable<HashSetting> MergeHashSettings(IList<HashSetting> hashSettings)
+    public IEnumerable<HashSetting> GetMergedHashSettings(IList<HashSetting> hashSettings)
     {
         return HashKinds.Select(kind => Merge(kind, hashSettings));
 
         HashSetting Merge(HashKind defaultHashSettingKind, IList<HashSetting> hashSettings)
         {
-            var retHashSetting = CreateHashSetting(defaultHashSettingKind);
+            var retHashSetting = new HashSetting()
+            {
+                Kind = defaultHashSettingKind,
+                IsChecked = _hashes[defaultHashSettingKind].IsChecked,
+                IsEnabledForApp = _hashes[defaultHashSettingKind].IsEnabledForApp,
+                IsEnabledForContextMenu = _hashes[defaultHashSettingKind].IsEnabledForContextMenu,
+            };
+
             var newHashSetting = hashSettings.FirstOrDefault(x => x.Kind == defaultHashSettingKind);
             if (newHashSetting is null)
             {
