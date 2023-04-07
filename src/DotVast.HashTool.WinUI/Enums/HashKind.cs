@@ -63,9 +63,9 @@ internal static class HashKindExtensions
     private static IHashService s_HashService =>
         s_hashService ??= App.GetService<IHashService>();
 
-    private static IReadOnlyList<HashSetting>? s_hashSettings;
-    private static IReadOnlyList<HashSetting> s_HashSettings =>
-        s_hashSettings ??= App.GetService<IPreferencesSettingsService>().HashSettings;
+    private static IReadOnlyDictionary<HashKind, HashSetting>? s_hashSettings;
+    private static IReadOnlyDictionary<HashKind, HashSetting> s_HashSettings =>
+        s_hashSettings ??= App.GetService<IPreferencesSettingsService>().HashSettings.ToDictionary(hs => hs.Kind);
 
     public static HashAlgorithm ToHashAlgorithm(this HashKind hashKind)
     {
@@ -123,6 +123,6 @@ internal static class HashKindExtensions
 
     public static HashSetting GetHashSetting(this HashKind hashKind)
     {
-        return s_HashSettings.First(hs => hs.Kind == hashKind);
+        return s_HashSettings[hashKind];
     }
 }

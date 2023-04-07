@@ -19,9 +19,11 @@ public sealed class HashResult
 
 public readonly record struct HashResultItem(HashKind Kind, string Value)
 {
+    private readonly HashSetting _hashSetting = Kind.GetHashSetting();
+
     /// <summary>
-    /// 名称. 仅用作界面显示, 不要用于内部调用.
+    /// 名称.
     /// </summary>
     [JsonIgnore]
-    public string Name { get; } = Kind.ToName();
+    public string Name => _hashSetting.Name;
 }

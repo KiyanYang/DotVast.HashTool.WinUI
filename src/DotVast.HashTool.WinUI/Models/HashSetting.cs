@@ -20,7 +20,7 @@ public sealed partial class HashSetting : ObservableObject
     private HashKind _kind;
 
     /// <summary>
-    /// 名称. 仅用作界面显示, 不要用于内部调用.
+    /// 名称. 用作界面显示, 尽可能避免内部调用.
     /// </summary>
     [JsonIgnore]
     public string Name { get; private set; } = string.Empty;
