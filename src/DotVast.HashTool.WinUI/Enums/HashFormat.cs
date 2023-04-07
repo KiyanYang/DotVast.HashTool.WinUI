@@ -12,3 +12,18 @@ public enum HashFormat
     Base16Lower,
     Base64,
 }
+
+internal static class HashFormatExtensions
+{
+    // Don't translate this.
+    public static string ToDisplay(HashFormat hashFormat)
+    {
+        return hashFormat switch
+        {
+            HashFormat.Base16Upper => "Hex Upper",
+            HashFormat.Base16Lower => "Hex Lower",
+            HashFormat.Base64 => "Base64",
+            _ => throw new ArgumentOutOfRangeException(nameof(hashFormat)),
+        };
+    }
+}

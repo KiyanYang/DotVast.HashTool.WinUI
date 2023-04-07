@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:DotVast.HashTool.WinUI.Controls"
+    xmlns:enums="using:DotVast.HashTool.WinUI.Enums"
     xmlns:models="using:DotVast.HashTool.WinUI.Models">
 
     <Page.Resources>
@@ -12,7 +13,7 @@
                     <ColumnDefinition Width="*" MinWidth="88" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="136" />
+                    <ColumnDefinition Width="116" />
                 </Grid.ColumnDefinitions>
                 <TextBlock VerticalAlignment="Center" Text="{x:Bind Name}" />
                 <CheckBox
@@ -27,7 +28,13 @@
                     Grid.Column="3"
                     HorizontalAlignment="Stretch"
                     ItemsSource="{StaticResource HashFormats}"
-                    SelectedItem="{x:Bind Format, Mode=TwoWay}" />
+                    SelectedItem="{x:Bind Format, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="enums:HashFormat">
+                            <TextBlock Text="{x:Bind enums:HashFormatExtensions.ToDisplay((enums:HashFormat))}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </Grid>
         </DataTemplate>
     </Page.Resources>
