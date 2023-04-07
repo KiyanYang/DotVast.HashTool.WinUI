@@ -54,12 +54,17 @@ jobs:
       - name: Setup MSBuild.exe
         uses: microsoft/setup-msbuild@v1
 
+      # 更新 revision 为上次 Commit 到上次 Tag 时间间隔总分钟数除以 6. 最大可以适用 273 天，必须在该天数内发布新 Tag。
       - name: Update appxmanifest version
+        if: ${{ !(github.event_name == 'workflow_dispatch' && inputs.is_release) }}
         run: |
           $appxmanifestPath = Convert-Path $env:DotVast_AppxmanifestPath
           [xml]$appxmanifest = Get-Content $appxmanifestPath
-          $gitCountFromLatestTag = git rev-list --count "$(git describe --tag --abbrev=0)..HEAD"
-          $newVersion = $appxmanifest.Package.Identity.Version -replace ('^(\d+\.\d+\.\d+)\.\d+$', "`$1.$gitCountFromLatestTag")
+          $latestTagTime = Get-Date -UnixTimeSeconds (git show -s --format=%ct "$(git describe --tag --abbrev=0)")
+          $latestCommitTime = Get-Date -UnixTimeSeconds (git show -s --format=%ct HEAD)
+          $timeSpan = New-TimeSpan -Start $latestTagTime -End $latestCommitTime
+          $revision = [int]($timeSpan.TotalMinutes / 6)
+          $newVersion = $appxmanifest.Package.Identity.Version -replace ('^(\d+\.\d+\.\d+)\.\d+$', "`$1.$revision")
           $appxmanifest.Package.Identity.Version = $newVersion
           $appxmanifest.Save($appxmanifestPath)
 
