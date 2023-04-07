@@ -286,9 +286,10 @@ internal sealed class ComputeHashService : IComputeHashService
 
     private string GetFormattedHash(byte[] hashData, HashKind kind)
     {
-        return kind.ToHashData().Format switch
+        return kind.GetHashSetting().Format switch
         {
-            HashFormat.Base16 => Convert.ToHexString(hashData),
+            HashFormat.Base16Upper => Convert.ToHexString(hashData),
+            HashFormat.Base16Lower => Core.Helpers.Converter.ToLowerHexString(hashData),
             HashFormat.Base64 => Convert.ToBase64String(hashData),
             _ => throw new ArgumentOutOfRangeException(nameof(kind), $"The HashKind {kind} is out of range and cannot be processed."),
         };

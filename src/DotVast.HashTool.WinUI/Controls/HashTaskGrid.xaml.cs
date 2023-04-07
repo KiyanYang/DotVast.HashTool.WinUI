@@ -116,7 +116,7 @@ public sealed partial class HashTaskGrid : UserControl
         sb.Append(ItemSeparator);
         sb.Append(hashTask.DateTime.ToString("HH:mm:ss"));
         sb.Append(ItemSeparator);
-        sb.AppendJoin(HashSeparator, hashTask.SelectedHashKinds.Select(kind => kind.ToHashData().Name));
+        sb.AppendJoin(HashSeparator, hashTask.SelectedHashKinds.Select(kind => kind.ToName()));
         return sb.ToString();
     }
 

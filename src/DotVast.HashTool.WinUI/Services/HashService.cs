@@ -15,6 +15,11 @@ internal class HashService : IHashService
         _hashes = dataOptions.Value.Hashes;
     }
 
+    public string GetName(HashKind hashKind)
+    {
+        return _hashes[hashKind].Name;
+    }
+
     public IReadOnlyList<HashKind> HashKinds { get; } = Enum.GetValues<HashKind>();
 
     public HashKind? GetHash(string hashName)
@@ -41,23 +46,20 @@ internal class HashService : IHashService
         return hashNames.Select(GetHash).OfType<HashKind>().ToArray();
     }
 
-    public HashData GetHashData(HashKind hash)
-    {
-        return _hashes[hash];
-    }
-
     public IEnumerable<HashSetting> GetMergedHashSettings(IList<HashSetting> hashSettings)
     {
         return HashKinds.Select(kind => Merge(kind, hashSettings));
 
         HashSetting Merge(HashKind defaultHashSettingKind, IList<HashSetting> hashSettings)
         {
+            var defaultHashSetting = _hashes[defaultHashSettingKind];
             var retHashSetting = new HashSetting()
             {
                 Kind = defaultHashSettingKind,
-                IsChecked = _hashes[defaultHashSettingKind].IsChecked,
-                IsEnabledForApp = _hashes[defaultHashSettingKind].IsEnabledForApp,
-                IsEnabledForContextMenu = _hashes[defaultHashSettingKind].IsEnabledForContextMenu,
+                Format = defaultHashSetting.Format,
+                IsChecked = defaultHashSetting.IsChecked,
+                IsEnabledForApp = defaultHashSetting.IsEnabledForApp,
+                IsEnabledForContextMenu = defaultHashSetting.IsEnabledForContextMenu,
             };
 
             var newHashSetting = hashSettings.FirstOrDefault(x => x.Kind == defaultHashSettingKind);
@@ -66,6 +68,7 @@ internal class HashService : IHashService
                 return retHashSetting;
             }
 
+            retHashSetting.Format = newHashSetting.Format;
             retHashSetting.IsChecked = newHashSetting.IsChecked;
             retHashSetting.IsEnabledForApp = newHashSetting.IsEnabledForApp;
             retHashSetting.IsEnabledForContextMenu = newHashSetting.IsEnabledForContextMenu;

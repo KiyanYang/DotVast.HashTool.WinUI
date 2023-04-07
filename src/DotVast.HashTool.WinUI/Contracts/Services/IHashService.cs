@@ -7,11 +7,11 @@ public interface IHashService
 {
     IReadOnlyList<HashKind> HashKinds { get; }
 
+    string GetName(HashKind hashKind);
+
     HashKind? GetHash(string hashName);
 
     HashKind[] GetHashes(IEnumerable<string> hashNames);
-
-    HashData GetHashData(HashKind hash);
 
     /// <summary>
     /// 获取合并后的哈希设置.

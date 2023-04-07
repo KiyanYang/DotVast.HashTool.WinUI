@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppDescription" xml:space="preserve">
-    <value>用于计算文件、文件夹或文本哈希值的工具！</value>
+    <value>用于计算文件或文件夹哈希值的工具！</value>
   </data>
   <data name="AppDisplayName" xml:space="preserve">
     <value>HashTool</value>
@@ -139,7 +139,7 @@
     <comment>保存; 快捷键 Ctrl+S</comment>
   </data>
   <data name="HashSettingsPage_ItemDescription.Message" xml:space="preserve">
-    <value>哈希名称，在软件内启用，在资源管理器菜单内启用。</value>
+    <value>哈希名称 | 在软件内启用 | 在资源管理器菜单内启用 | 哈希输出格式。</value>
   </data>
   <data name="HashSettingsPage_ItemDescription.Title" xml:space="preserve">
     <value>条目内容从左至右依次表示</value>
