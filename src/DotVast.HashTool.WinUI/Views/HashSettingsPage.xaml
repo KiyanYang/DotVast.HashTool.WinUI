@@ -40,7 +40,7 @@
             </Grid.RowDefinitions>
             <InfoBar
                 x:Uid="HashSettingsPage_ItemDescription"
-                Margin="0,0,0,16"
+                Margin="0,0,0,12"
                 IsClosable="False"
                 IsOpen="True" />
             <ItemsRepeater

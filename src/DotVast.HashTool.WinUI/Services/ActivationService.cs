@@ -6,6 +6,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
 
+using WinUIEx;
+
 namespace DotVast.HashTool.WinUI.Services;
 
 public sealed class ActivationService : IActivationService
@@ -46,6 +48,8 @@ public sealed class ActivationService : IActivationService
 
         // Handle activation via ActivationHandlers.
         await HandleActivationAsync(activationArgs);
+
+        App.MainWindow.CenterOnScreen();
 
         // Activate the MainWindow.
         App.MainWindow.Activate();
