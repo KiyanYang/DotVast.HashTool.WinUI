@@ -16,6 +16,7 @@ public sealed partial class HashSettingsPage : Page, IView
     public HashSettingsPage()
     {
         ViewModel = App.GetService<HashSettingsViewModel>();
+        Resources.AddByExpression(() => ViewModel.HashFormats);
         InitializeComponent();
         NavigationViewHeaderBehavior.SetHeaderContext(this, Localization.HashSettingsPage_Title);
     }

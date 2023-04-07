@@ -6,6 +6,7 @@ internal enum MessageToken
 
     IComputeHashService_FileNotFound,
 
+    HashSetting_Format,
     HashSetting_IsChecked,
     HashSetting_IsEnabledForApp,
     HashSetting_IsEnabledForContextMenu,

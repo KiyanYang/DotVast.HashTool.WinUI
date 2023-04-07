@@ -19,6 +19,9 @@ public sealed class HashResult
 
 public readonly record struct HashResultItem(HashKind Kind, string Value)
 {
+    /// <summary>
+    /// 名称. 仅用作界面显示, 不要用于内部调用.
+    /// </summary>
     [JsonIgnore]
-    public string Name { get; } = Kind.ToHashData().Name;
+    public string Name { get; } = Kind.ToName();
 }

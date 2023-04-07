@@ -7,11 +7,12 @@
 
     <Page.Resources>
         <DataTemplate x:Key="HashSettingDataTemplate" x:DataType="models:HashSetting">
-            <Grid ColumnSpacing="12" Style="{StaticResource CardGridStyle}">
+            <Grid ColumnSpacing="6" Style="{StaticResource CardGridStyle}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" MinWidth="88" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="136" />
                 </Grid.ColumnDefinitions>
                 <TextBlock VerticalAlignment="Center" Text="{x:Bind Name}" />
                 <CheckBox
@@ -22,6 +23,11 @@
                     Grid.Column="2"
                     MinWidth="0"
                     IsChecked="{x:Bind IsEnabledForContextMenu, Mode=TwoWay}" />
+                <ComboBox
+                    Grid.Column="3"
+                    HorizontalAlignment="Stretch"
+                    ItemsSource="{StaticResource HashFormats}"
+                    SelectedItem="{x:Bind Format, Mode=TwoWay}" />
             </Grid>
         </DataTemplate>
     </Page.Resources>
@@ -37,31 +43,17 @@
                 Margin="0,0,0,16"
                 IsClosable="False"
                 IsOpen="True" />
-            <GridView
+            <ItemsRepeater
                 Grid.Row="1"
-                Margin="-8,0"
-                Padding="0,-4"
                 ItemTemplate="{StaticResource HashSettingDataTemplate}"
-                ItemsSource="{x:Bind ViewModel.HashSettings}"
-                SelectionMode="None"
-                SizeChanged="GridView_SizeChanged">
-                <GridView.ItemContainerStyle>
-                    <Style TargetType="GridViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                        <Setter Property="Margin" Value="8,4" />
-                    </Style>
-                </GridView.ItemContainerStyle>
-                <GridView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsWrapGrid Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </GridView.ItemsPanel>
-                <GridView.ItemContainerTransitions>
-                    <TransitionCollection>
-                        <RepositionThemeTransition IsStaggeringEnabled="False" />
-                    </TransitionCollection>
-                </GridView.ItemContainerTransitions>
-            </GridView>
+                ItemsSource="{x:Bind ViewModel.HashSettings}">
+                <ItemsRepeater.Layout>
+                    <UniformGridLayout
+                        ItemsStretch="Fill"
+                        MinColumnSpacing="12"
+                        MinRowSpacing="8" />
+                </ItemsRepeater.Layout>
+            </ItemsRepeater>
         </Grid>
     </controls:NavigationViewBodyScrollViewer>
 

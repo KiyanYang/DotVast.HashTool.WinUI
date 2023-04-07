@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using System.Text.Json.Serialization;
 
+using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Helpers.Hashes;
 
 using DotVast.HashTool.WinUI.Models;
@@ -58,6 +59,14 @@ public enum HashKind
 
 internal static class HashKindExtensions
 {
+    private static IHashService? s_hashService;
+    private static IHashService s_HashService =>
+        s_hashService ??= App.GetService<IHashService>();
+
+    private static IReadOnlyList<HashSetting>? s_hashSettings;
+    private static IReadOnlyList<HashSetting> s_HashSettings =>
+        s_hashSettings ??= App.GetService<IPreferencesSettingsService>().HashSettings;
+
     public static HashAlgorithm ToHashAlgorithm(this HashKind hashKind)
     {
         return hashKind switch
@@ -107,8 +116,13 @@ internal static class HashKindExtensions
         };
     }
 
-    public static HashData ToHashData(this HashKind hashKind)
+    public static string ToName(this HashKind hashKind)
     {
-        return App.GetService<IHashService>().GetHashData(hashKind);
+        return s_HashService.GetName(hashKind);
+    }
+
+    public static HashSetting GetHashSetting(this HashKind hashKind)
+    {
+        return s_HashSettings.First(hs => hs.Kind == hashKind);
     }
 }

@@ -286,26 +286,13 @@ internal sealed class ComputeHashService : IComputeHashService
 
     private string GetFormattedHash(byte[] hashData, HashKind kind)
     {
-        return kind.ToHashData().Format switch
+        return kind.GetHashSetting().Format switch
         {
             HashFormat.Base16Upper => Convert.ToHexString(hashData),
-            HashFormat.Base16Lower => ToHexLowerString(hashData),
+            HashFormat.Base16Lower => Core.Helpers.Converter.ToLowerHexString(hashData),
             HashFormat.Base64 => Convert.ToBase64String(hashData),
             _ => throw new ArgumentOutOfRangeException(nameof(kind), $"The HashKind {kind} is out of range and cannot be processed."),
         };
-    }
-
-    private static string ToHexLowerString(byte[] bytes)
-    {
-        const string LowerHex = "0123456789abcdef";
-        Span<char> result = stackalloc char[bytes.Length * 2];
-        int index = 0;
-        foreach (var b in bytes)
-        {
-            result[index++] = LowerHex[b >> 4];
-            result[index++] = LowerHex[b & 0xF];
-        }
-        return new string(result);
     }
 
     private struct ProgressRateLimiter

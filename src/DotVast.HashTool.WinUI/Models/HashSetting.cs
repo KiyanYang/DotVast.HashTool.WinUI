@@ -14,13 +14,22 @@ public sealed partial class HashSetting : ObservableObject
         init
         {
             _kind = value;
-            Name = App.GetService<IHashService>().GetHashData(value).Name;
+            Name = _kind.ToName();
         }
     }
     private HashKind _kind;
 
+    /// <summary>
+    /// 名称. 仅用作界面显示, 不要用于内部调用.
+    /// </summary>
     [JsonIgnore]
     public string Name { get; private set; } = string.Empty;
+
+    [ObservableProperty]
+    private HashFormat _format;
+
+    partial void OnFormatChanged(HashFormat value) =>
+        WeakReferenceMessenger.Default.SendV<HashSetting, HashFormat>(new(this, value), EMT.HashSetting_Format);
 
     /// <summary>
     /// 是否选择该项.
