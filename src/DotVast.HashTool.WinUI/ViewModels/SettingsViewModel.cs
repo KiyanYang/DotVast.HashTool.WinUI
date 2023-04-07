@@ -128,7 +128,7 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
 
         _checkForUpdatesOnStartup = _preferencesSettingsService.CheckForUpdatesOnStartup;
 
-#if GITHUB_ACTIONS
+#if GITHUB_ACTIONS && !DotVast_CIRelease
         var assemblyInformationalVersion = typeof(SettingsViewModel).Assembly
             .GetCustomAttributes(typeof(System.Reflection.AssemblyInformationalVersionAttribute), true)
             .OfType<System.Reflection.AssemblyInformationalVersionAttribute>()

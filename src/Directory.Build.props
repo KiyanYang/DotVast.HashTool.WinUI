@@ -2,5 +2,6 @@
   <PropertyGroup>
     <Version>0.5.0</Version>
     <DefineConstants Condition="'$(GITHUB_ACTIONS)' == 'true'">$(DefineConstants);GITHUB_ACTIONS</DefineConstants>
+    <DefineConstants Condition="'$(DotVast_CIRelease)' == 'true'">$(DefineConstants);DotVast_CIRelease</DefineConstants>
   </PropertyGroup>
 </Project>
