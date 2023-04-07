@@ -1,5 +1,3 @@
-using System.Collections.ObjectModel;
-
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.Models;
@@ -15,7 +13,7 @@ public partial class HashSettingsViewModel : ObservableRecipient, IViewModel, IN
         _preferencesSettingsService = preferencesSettingsService;
     }
 
-    public ObservableCollection<HashSetting> HashSettings => _preferencesSettingsService.HashSettings;
+    public IReadOnlyList<HashSetting> HashSettings => _preferencesSettingsService.HashSettings;
 
     #region Messenger
 

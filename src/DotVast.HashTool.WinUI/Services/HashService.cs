@@ -15,7 +15,7 @@ internal class HashService : IHashService
         _hashes = dataOptions.Value.Hashes;
     }
 
-    public HashKind[] HashKinds { get; } = Enum.GetValues<HashKind>();
+    public IReadOnlyList<HashKind> HashKinds { get; } = Enum.GetValues<HashKind>();
 
     public HashKind? GetHash(string hashName)
     {

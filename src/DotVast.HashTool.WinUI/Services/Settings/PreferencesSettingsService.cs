@@ -1,5 +1,3 @@
-using System.Collections.ObjectModel;
-
 using DotVast.HashTool.WinUI.Constants;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Models;
@@ -30,7 +28,7 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
     }
 
     #region HashSettings
-    public ObservableCollection<HashSetting> HashSettings { get; } = new();
+    public IReadOnlyList<HashSetting> HashSettings { get; private set; } = Array.Empty<HashSetting>();
 
     private async Task InitializeHashSettings()
     {
@@ -38,11 +36,7 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
                 Load(SettingsContainerName.DataOptions_Hashes, kind.ToString(), default(HashSetting)))
             .OfType<HashSetting>()
             .ToArray();
-        var hashSettings = _hashService.GetMergedHashSettings(hashSettingsFromLocalSettings);
-        foreach (var hashSetting in hashSettings)
-        {
-            HashSettings.Add(hashSetting);
-        }
+        HashSettings = _hashService.GetMergedHashSettings(hashSettingsFromLocalSettings).ToArray();
         await Task.CompletedTask;
     }
 

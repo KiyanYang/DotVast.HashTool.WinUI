@@ -1,12 +1,10 @@
-using System.Collections.ObjectModel;
-
 using DotVast.HashTool.WinUI.Models;
 
 namespace DotVast.HashTool.WinUI.Contracts.Services.Settings;
 
 public interface IPreferencesSettingsService : IBaseObservableSettings
 {
-    ObservableCollection<HashSetting> HashSettings { get; }
+    IReadOnlyList<HashSetting> HashSettings { get; }
 
     /// <summary>
     /// 保存 <see cref="HashSetting"/>

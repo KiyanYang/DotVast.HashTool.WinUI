@@ -5,7 +5,7 @@ namespace DotVast.HashTool.WinUI.Contracts.Services;
 
 public interface IHashService
 {
-    HashKind[] HashKinds { get; }
+    IReadOnlyList<HashKind> HashKinds { get; }
 
     HashKind? GetHash(string hashName);
 
