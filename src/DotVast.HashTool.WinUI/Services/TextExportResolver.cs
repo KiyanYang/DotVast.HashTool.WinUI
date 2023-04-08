@@ -12,11 +12,11 @@ internal class TextExportResolver : IExportResolver
             && obj is IEnumerable<HashTask>;
     }
 
-    public async Task ExportAsync(string filePath, ExportKind exportKind, object obj)
+    public Task ExportAsync(string filePath, ExportKind exportKind, object obj)
     {
         if (!CanResolve(exportKind, obj))
         {
-            await Task.CompletedTask;
+            throw new InvalidOperationException();
         }
 
         var hashTasks = (IEnumerable<HashTask>)obj;
@@ -32,6 +32,8 @@ internal class TextExportResolver : IExportResolver
             indentedWriter.WriteLine();
             WriteHashTask(indentedWriter, hashTask);
         }
+
+        return Task.CompletedTask;
     }
 
     private void WriteHashTask(IndentedWriter writer, HashTask hashTask)

@@ -29,15 +29,14 @@ internal class JsonExportResolver : IExportResolver
         };
 
         var hashTasks = (IEnumerable<HashTask>)obj;
+        using var stream = File.Create(filePath);
         if (hashTasks.Take(2).Count() == 1)
         {
-            var contents = JsonSerializer.Serialize(hashTasks.First(), new JsonContext(options).HashTask);
-            await File.WriteAllTextAsync(filePath, contents);
+            await JsonSerializer.SerializeAsync(stream, hashTasks.First(), new JsonContext(options).HashTask);
         }
         else
         {
-            var contents = JsonSerializer.Serialize(hashTasks, new JsonContext(options).IEnumerableHashTask);
-            await File.WriteAllTextAsync(filePath, contents);
+            await JsonSerializer.SerializeAsync(stream, hashTasks, new JsonContext(options).IEnumerableHashTask);
         }
     }
 }
