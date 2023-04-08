@@ -17,11 +17,16 @@ public sealed partial class TasksViewModel : ObservableRecipient, IViewModel, IN
 {
     private readonly IHashTaskService _hashTaskService;
     private readonly INavigationService _navigationService;
+    private readonly IEnumerable<IExportResolver> _exportResolvers;
 
-    public TasksViewModel(IHashTaskService hashTaskService, INavigationService navigationService)
+    public TasksViewModel(
+        IHashTaskService hashTaskService,
+        INavigationService navigationService,
+        IEnumerable<IExportResolver> exportResolvers)
     {
         _hashTaskService = hashTaskService;
         _navigationService = navigationService;
+        _exportResolvers = exportResolvers;
         InitializeHashTaskCheckables();
         _hashTaskService.HashTasks.CollectionChanged += HashTasks_CollectionChanged;
     }
@@ -108,13 +113,8 @@ public sealed partial class TasksViewModel : ObservableRecipient, IViewModel, IN
         if (result != null)
         {
             var hashTasks = HashTaskCheckables.Where(h => h.IsChecked).Select(h => h.HashTask);
-            var options = new JsonSerializerOptions
-            {
-                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
-                WriteIndented = true,
-            };
-            var contents = JsonSerializer.Serialize(hashTasks, new JsonContext(options).IEnumerableHashTask);
-            await File.WriteAllTextAsync(result.Path, contents);
+            var resolver = _exportResolvers.First(x => x.CanResolve(ExportKind.Text | ExportKind.HashTask, hashTasks));
+            await resolver.ExportAsync(result.Path, ExportKind.Text | ExportKind.HashTask, hashTasks);
         }
     }
 }

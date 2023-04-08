@@ -87,6 +87,8 @@ public sealed partial class App : Application
             services.AddSingleton<IHashService, HashService>();
             services.AddSingleton<IHashTaskService, HashTaskService>();
 
+            services.AddSingleton<IExportResolver, JsonExportResolver>();
+
             // Core Services
 
             // Views and ViewModels
