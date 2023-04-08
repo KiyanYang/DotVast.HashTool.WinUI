@@ -98,7 +98,7 @@ public sealed partial class TasksViewModel : ObservableRecipient, IViewModel, IN
     {
         FileSavePicker picker = new()
         {
-            SuggestedFileName = LocalizationCommon.Result,
+            SuggestedFileName = $"{LocalizationCommon.Results}-{DateTime.Now:yyMMdd_HHmmss}",
             SuggestedStartLocation = PickerLocationId.Desktop,
         };
         picker.FileTypeChoices.Add("Text", new[] { ".txt" });
