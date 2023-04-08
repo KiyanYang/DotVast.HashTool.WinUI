@@ -169,18 +169,6 @@
   <data name="RestartToApplyChange" xml:space="preserve">
     <value>重启后生效</value>
   </data>
-  <data name="ResultsPage_Detail_CreatedDateTime.Text" xml:space="preserve">
-    <value>创建时间</value>
-  </data>
-  <data name="ResultsPage_Detail_Elapsed.Text" xml:space="preserve">
-    <value>计算用时</value>
-  </data>
-  <data name="ResultsPage_Detail_Encoding.Text" xml:space="preserve">
-    <value>文本编码</value>
-  </data>
-  <data name="ResultsPage_Detail_State.Text" xml:space="preserve">
-    <value>状态</value>
-  </data>
   <data name="ResultsPage_FilterByContent.PlaceholderText" xml:space="preserve">
     <value>筛选</value>
   </data>

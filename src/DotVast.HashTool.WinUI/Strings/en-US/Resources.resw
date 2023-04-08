@@ -57,18 +57,6 @@
   <data name="RestartToApplyChange" xml:space="preserve">
     <value>Change will apply after restart</value>
   </data>
-  <data name="ResultsPage_Detail_CreatedDateTime.Text" xml:space="preserve">
-    <value>Created</value>
-  </data>
-  <data name="ResultsPage_Detail_Elapsed.Text" xml:space="preserve">
-    <value>Elapsed</value>
-  </data>
-  <data name="ResultsPage_Detail_Encoding.Text" xml:space="preserve">
-    <value>Encoding</value>
-  </data>
-  <data name="ResultsPage_Detail_State.Text" xml:space="preserve">
-    <value>State</value>
-  </data>
   <data name="ResultsPage_FilterByContent.PlaceholderText" xml:space="preserve">
     <value>Filter</value>
   </data>

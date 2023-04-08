@@ -1,8 +1,5 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Unicode;
 
 using CommunityToolkit.Mvvm.Input;
 
@@ -17,11 +14,16 @@ public sealed partial class TasksViewModel : ObservableRecipient, IViewModel, IN
 {
     private readonly IHashTaskService _hashTaskService;
     private readonly INavigationService _navigationService;
+    private readonly IEnumerable<IExportResolver> _exportResolvers;
 
-    public TasksViewModel(IHashTaskService hashTaskService, INavigationService navigationService)
+    public TasksViewModel(
+        IHashTaskService hashTaskService,
+        INavigationService navigationService,
+        IEnumerable<IExportResolver> exportResolvers)
     {
         _hashTaskService = hashTaskService;
         _navigationService = navigationService;
+        _exportResolvers = exportResolvers;
         InitializeHashTaskCheckables();
         _hashTaskService.HashTasks.CollectionChanged += HashTasks_CollectionChanged;
     }
@@ -96,25 +98,33 @@ public sealed partial class TasksViewModel : ObservableRecipient, IViewModel, IN
     {
         FileSavePicker picker = new()
         {
-            SuggestedFileName = LocalizationCommon.Result,
+            SuggestedFileName = $"{LocalizationCommon.Results}-{DateTime.Now:yyMMdd_HHmmss}",
             SuggestedStartLocation = PickerLocationId.Desktop,
         };
+        picker.FileTypeChoices.Add("Text", new[] { ".txt" });
         picker.FileTypeChoices.Add("JSON", new[] { ".json" });
 
         var hwnd = WinUIEx.HwndExtensions.GetActiveWindow();
         WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
 
-        var result = await picker.PickSaveFileAsync();
-        if (result != null)
+        var file = await picker.PickSaveFileAsync();
+        if (file is null)
         {
-            var hashTasks = HashTaskCheckables.Where(h => h.IsChecked).Select(h => h.HashTask);
-            var options = new JsonSerializerOptions
-            {
-                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
-                WriteIndented = true,
-            };
-            var contents = JsonSerializer.Serialize(hashTasks, new JsonContext(options).IEnumerableHashTask);
-            await File.WriteAllTextAsync(result.Path, contents);
+            return;
+        }
+
+        var hashTasks = HashTaskCheckables.Where(h => h.IsChecked).Select(h => h.HashTask);
+        ExportKind exportKind = file.FileType switch
+        {
+            ".txt" => ExportKind.Text | ExportKind.HashTask,
+            ".json" => ExportKind.Json | ExportKind.HashTask,
+            _ => ExportKind.None,
+        };
+        var resolver = _exportResolvers.FirstOrDefault(x => x.CanResolve(exportKind, hashTasks));
+        if (resolver is not null)
+        {
+            await resolver.ExportAsync(file.Path, exportKind, hashTasks);
+            // TODO: 成功导出通知
         }
     }
 }

@@ -81,12 +81,9 @@ internal sealed class ComputeHashService : IComputeHashService
             {
                 hashTask.ProgressMax = filesCount - failedFilesCount;
                 using var stream = File.Open(filePaths[i], FileMode.Open, FileAccess.Read, FileShare.Read);
-                var hashResult = await Task.Run(() => HashStream(hashTask, stream, i - failedFilesCount, mres, cancellationToken));
-                if (hashResult != null)
-                {
-                    hashResult.Path = filePaths[i];
-                    hashTask.Results.Add(hashResult);
-                }
+                var hashResultItems = await Task.Run(() => HashStream(hashTask, stream, i - failedFilesCount, mres, cancellationToken));
+                var hashResult = new HashResult(filePaths[i], hashResultItems);
+                hashTask.Results.Add(hashResult);
             }
             catch (Exception e) when (e is DirectoryNotFoundException or FileNotFoundException)
             {
@@ -109,7 +106,7 @@ internal sealed class ComputeHashService : IComputeHashService
     /// <param name="mres">控制暂停.</param>
     /// <param name="cancellationToken">控制取消.</param>
     /// <returns>哈希结果.</returns>
-    private HashResult? HashStream(HashTask hashTask,
+    private HashResultItem[] HashStream(HashTask hashTask,
         Stream stream,
         double progressOffset,
         ManualResetEventSlim mres,
@@ -125,7 +122,7 @@ internal sealed class ComputeHashService : IComputeHashService
         }
     }
 
-    private HashResult? HashStreamForMultiHashAlgorithm(HashTask hashTask,
+    private HashResultItem[] HashStreamForMultiHashAlgorithm(HashTask hashTask,
         Stream stream,
         double progressOffset,
         ManualResetEventSlim mres,
@@ -202,7 +199,7 @@ internal sealed class ComputeHashService : IComputeHashService
                 hashResultData[i] = new(hashTask.SelectedHashKinds[i], hashString);
             }
 
-            return new HashResult() { Data = hashResultData };
+            return hashResultData;
         }
         finally
         {
@@ -218,7 +215,7 @@ internal sealed class ComputeHashService : IComputeHashService
         }
     }
 
-    private HashResult? HashStreamForSingleHashAlgorithm(
+    private HashResultItem[] HashStreamForSingleHashAlgorithm(
         HashTask hashTask,
         Stream stream,
         double progressOffset,
@@ -271,7 +268,7 @@ internal sealed class ComputeHashService : IComputeHashService
             var hashString = GetFormattedHash(hashAlgorithm.Hash!, hashKind);
             var hashResultItem = new HashResultItem(hashKind, hashString);
 
-            return new HashResult() { Data = new[] { hashResultItem } };
+            return new[] { hashResultItem };
         }
         finally
         {
