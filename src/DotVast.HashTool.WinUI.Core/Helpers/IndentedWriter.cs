@@ -2,8 +2,8 @@ namespace DotVast.HashTool.WinUI.Core.Helpers;
 
 public struct IndentedWriter
 {
-    private readonly string _tabString;
     private readonly TextWriter _writer;
+    private readonly string _tabString;
     private int _indentLevel = 0;
     private bool _tabsPending = true;
 
@@ -27,9 +27,7 @@ public struct IndentedWriter
 
     public void WriteLine()
     {
-        OutputTabs();
-        _writer.WriteLine();
-        _tabsPending = true;
+        WriteLine(string.Empty);
     }
 
     public void WriteLine(string value)
