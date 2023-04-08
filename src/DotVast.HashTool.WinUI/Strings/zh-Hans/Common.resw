@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Algorithms" xml:space="preserve">
+    <value>算法</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
@@ -134,6 +137,12 @@
   </data>
   <data name="Edit" xml:space="preserve">
     <value>编辑</value>
+  </data>
+  <data name="Elapsed" xml:space="preserve">
+    <value>用时</value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>空</value>
   </data>
   <data name="File" xml:space="preserve">
     <value>文件</value>
@@ -163,6 +172,9 @@
   </data>
   <data name="Start" xml:space="preserve">
     <value>开始</value>
+  </data>
+  <data name="State" xml:space="preserve">
+    <value>状态</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>是</value>

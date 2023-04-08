@@ -56,18 +56,18 @@
                         ToolTipService.ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}" />
 
                     <TextBlock
-                        x:Uid="ResultsPage_Detail_Elapsed"
                         Grid.Row="1"
-                        Grid.Column="0" />
+                        Grid.Column="0"
+                        Text="{x:Bind i18n:LocalizationCommon.Elapsed}" />
                     <TextBlock
                         Grid.Row="1"
                         Grid.Column="1"
                         Text="{x:Bind system:String.Format('{0:N3} s', ViewModel.HashTask.Elapsed.TotalSeconds), Mode=OneWay}" />
 
                     <TextBlock
-                        x:Uid="ResultsPage_Detail_State"
                         Grid.Row="2"
-                        Grid.Column="0" />
+                        Grid.Column="0"
+                        Text="{x:Bind i18n:LocalizationCommon.State}" />
                     <TextBlock
                         Grid.Row="2"
                         Grid.Column="1"

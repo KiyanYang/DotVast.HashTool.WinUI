@@ -1,8 +1,5 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Unicode;
 
 using CommunityToolkit.Mvvm.Input;
 
@@ -104,17 +101,30 @@ public sealed partial class TasksViewModel : ObservableRecipient, IViewModel, IN
             SuggestedFileName = LocalizationCommon.Result,
             SuggestedStartLocation = PickerLocationId.Desktop,
         };
+        picker.FileTypeChoices.Add("Text", new[] { ".txt" });
         picker.FileTypeChoices.Add("JSON", new[] { ".json" });
 
         var hwnd = WinUIEx.HwndExtensions.GetActiveWindow();
         WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
 
-        var result = await picker.PickSaveFileAsync();
-        if (result != null)
+        var file = await picker.PickSaveFileAsync();
+        if (file is null)
         {
-            var hashTasks = HashTaskCheckables.Where(h => h.IsChecked).Select(h => h.HashTask);
-            var resolver = _exportResolvers.First(x => x.CanResolve(ExportKind.Text | ExportKind.HashTask, hashTasks));
-            await resolver.ExportAsync(result.Path, ExportKind.Text | ExportKind.HashTask, hashTasks);
+            return;
+        }
+
+        var hashTasks = HashTaskCheckables.Where(h => h.IsChecked).Select(h => h.HashTask);
+        ExportKind exportKind = file.FileType switch
+        {
+            ".txt" => ExportKind.Text | ExportKind.HashTask,
+            ".json" => ExportKind.Json | ExportKind.HashTask,
+            _ => ExportKind.None,
+        };
+        var resolver = _exportResolvers.FirstOrDefault(x => x.CanResolve(exportKind, hashTasks));
+        if (resolver is not null)
+        {
+            await resolver.ExportAsync(file.Path, exportKind, hashTasks);
+            // TODO: 成功导出通知
         }
     }
 }
