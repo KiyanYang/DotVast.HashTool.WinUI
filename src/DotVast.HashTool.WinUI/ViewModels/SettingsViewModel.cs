@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Helpers;
+using DotVast.HashTool.WinUI.Models;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
@@ -84,8 +85,13 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
     [ObservableProperty]
     private bool _includePreRelease;
 
-    partial void OnIncludePreReleaseChanged(bool value) =>
+    partial void OnIncludePreReleaseChanged(bool value)
+    {
         _preferencesSettingsService.IncludePreRelease = value;
+
+        // 更新该选项时, 刷新 _lastCheckTime 以确保可以获取更新
+        _lastCheckTime = new(0);
+    }
 
     #endregion IncludePreRelease
 
@@ -159,42 +165,32 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
         Microsoft.Windows.AppLifecycle.AppInstance.Restart(string.Empty);
     }
 
-    [ObservableProperty]
-    private bool _isCheckingUpdate;
-
-    private bool _isCheckedUpdate = false;
+    private DateTime _lastCheckTime = new(0);
+    private GitHubRelease? _gitHubRelease;
 
     [RelayCommand]
     private async Task CheckUpdateAsync()
     {
-        IsCheckingUpdate = true;
-
-        // 首次请求需要预热, 用时 1s 左右, 后续用时 100ms - 500ms(网络状况差时), 因此增加一个延时
-        if (_isCheckedUpdate)
+        // 若成功获取, 则缓存结果, 缓存 10 分钟内有效, 超时则重新获取.
+        if (DateTime.Now - _lastCheckTime > TimeSpan.FromMinutes(10))
         {
-            await Task.Delay(500);
-        }
-        else
-        {
-            _isCheckedUpdate = true;
+            _gitHubRelease = await _checkUpdateService.GetLatestGitHubReleaseAsync(IncludePreRelease);
+            if (_gitHubRelease is not null)
+            {
+                _lastCheckTime = DateTime.Now;
+            }
         }
 
-        var release = await _checkUpdateService.GetLatestGitHubReleaseAsync(IncludePreRelease);
-
-        IsCheckingUpdate = false;
-
-        if (release is null)
+        if (_gitHubRelease is null)
         {
             await _dialogService.ShowDialogAsync(
                 LocalizationDialog.GitHubUpdate_Title_Failed,
                 LocalizationDialog.GitHubUpdate_Content_CheckNetwork,
                 LocalizationCommon.Close);
-            return;
         }
-
-        if (release.Version > RuntimeHelper.AppVersion)
+        else if (_gitHubRelease.Version > RuntimeHelper.AppVersion)
         {
-            await _dialogService.ShowGithubUpdateDialogAsync(release);
+            await _dialogService.ShowGithubUpdateDialogAsync(_gitHubRelease);
         }
         else
         {

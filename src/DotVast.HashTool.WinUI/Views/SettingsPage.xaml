@@ -137,8 +137,8 @@
                     <StackPanel Orientation="Horizontal">
                         <ProgressRing
                             Margin="0,0,8,0"
-                            IsActive="{x:Bind ViewModel.IsCheckingUpdate, Mode=OneWay}"
-                            Visibility="{x:Bind helpers:XamlFunc.VisibleIfTrue(ViewModel.IsCheckingUpdate), Mode=OneWay}" />
+                            IsActive="True"
+                            Visibility="{x:Bind helpers:XamlFunc.VisibleIfTrue(ViewModel.CheckUpdateCommand.IsRunning), Mode=OneWay}" />
                         <Button Command="{x:Bind ViewModel.CheckUpdateCommand}" Content="{x:Bind i18n:Localization.Command_CheckForUpdates}" />
                     </StackPanel>
                     <labs:SettingsExpander.Items>
