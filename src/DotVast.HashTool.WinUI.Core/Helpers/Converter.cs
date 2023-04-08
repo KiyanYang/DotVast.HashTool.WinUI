@@ -9,21 +9,14 @@ public static class Converter
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string ToLowerHexString(byte[] bytes)
     {
-        return ToLowerHexString(bytes.AsSpan());
-    }
-
-    public static string ToLowerHexString(ReadOnlySpan<byte> bytes)
-    {
-        Span<char> result = bytes.Length > 64
-            ? new char[bytes.Length * 2].AsSpan()
-            : stackalloc char[bytes.Length * 2];
-
-        int index = 0;
-        foreach (var b in bytes)
+        return string.Create(bytes.Length * 2, bytes, static (chars, args) =>
         {
-            result[index++] = LowerHexChars[b >> 4];
-            result[index++] = LowerHexChars[b & 0xF];
-        }
-        return new string(result);
+            int index = 0;
+            foreach (var b in args.AsSpan())
+            {
+                chars[index++] = LowerHexChars[b >> 4];
+                chars[index++] = LowerHexChars[b & 0xF];
+            }
+        });
     }
 }
