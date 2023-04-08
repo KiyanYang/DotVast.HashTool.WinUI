@@ -1,7 +1,6 @@
 using System.Collections.Specialized;
 
 using DotVast.HashTool.WinUI.Enums;
-using DotVast.HashTool.WinUI.Models;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Windows.AppLifecycle;
@@ -49,8 +48,8 @@ public sealed partial class CommandLineActivationHandler : ActivationHandler<App
             if (hashNames is null)
                 return;
 
-            var hashes = _hashService.GetHashes(hashNames);
-            if (hashes.Length <= 0)
+            var hashKinds = _hashService.GetHashes(hashNames);
+            if (hashKinds.Length <= 0)
                 return;
 
             var paths = parsedArgs.GetValues(Constants.CommandLineArgs.Path);
@@ -63,7 +62,13 @@ public sealed partial class CommandLineActivationHandler : ActivationHandler<App
 
             foreach (var (path, mode) in pathWithModes)
             {
-                _hashTaskService.HashTasks.Add(CreateHashTask(hashes, path, mode));
+                _hashTaskService.HashTasks.Add(new()
+                {
+                    Mode = mode,
+                    Content = path.Trim(),
+                    SelectedHashKinds = hashKinds,
+                    State = HashTaskState.Waiting,
+                });
             }
 
             _navigationService.NavigateTo(PageKey.TasksPage);
@@ -105,17 +110,5 @@ public sealed partial class CommandLineActivationHandler : ActivationHandler<App
             }
         }
         return ret;
-    }
-
-    private static HashTask CreateHashTask(HashKind[] hashes, string path, HashTaskMode mode)
-    {
-        return new()
-        {
-            DateTime = DateTime.Now,
-            Mode = mode,
-            Content = path.Trim(),
-            SelectedHashKinds = hashes,
-            State = HashTaskState.Waiting,
-        };
     }
 }

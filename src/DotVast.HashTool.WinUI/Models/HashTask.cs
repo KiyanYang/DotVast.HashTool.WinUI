@@ -39,12 +39,6 @@ public sealed partial class HashTask : ObservableObject, IDisposable
     private static readonly PropertyChangingEventArgs s_resultsChangingEventArgs = new(nameof(Results));
     private static readonly PropertyChangedEventArgs s_resultsChangedEventArgs = new(nameof(Results));
 
-    // TODO: 考虑添加计算开始时间.
-    /// <summary>
-    /// 任务创建时间.
-    /// </summary>
-    public DateTime DateTime { get; set; }
-
     /// <summary>
     /// 用时.
     /// </summary>

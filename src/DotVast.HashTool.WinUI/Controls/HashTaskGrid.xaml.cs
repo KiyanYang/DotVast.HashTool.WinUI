@@ -37,8 +37,6 @@ public sealed partial class HashTaskGrid : UserControl
 
     #endregion Dependency Properties
 
-    private readonly IHashService _hashService = App.GetService<IHashService>();
-
     public HashTaskGridViewModel ViewModel { get; set; }
 
     public HashTaskGrid()
@@ -113,8 +111,6 @@ public sealed partial class HashTaskGrid : UserControl
 
         var sb = new StringBuilder();
         sb.Append(hashTask.Mode.ToDisplay());
-        sb.Append(ItemSeparator);
-        sb.Append(hashTask.DateTime.ToString("HH:mm:ss"));
         sb.Append(ItemSeparator);
         sb.AppendJoin(HashSeparator, hashTask.SelectedHashKinds.Select(kind => kind.ToName()));
         return sb.ToString();

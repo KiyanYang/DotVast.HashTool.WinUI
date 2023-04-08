@@ -59,7 +59,18 @@ public partial class HomeViewModel
     [RelayCommand(CanExecute = nameof(CanCreateTask))]
     private async Task CreateTaskAsync()
     {
-        var hashTask = CreateHashTask();
+        var hashTask = new HashTask()
+        {
+            Mode = InputtingMode,
+            Content = InputtingMode switch
+            {
+                HashTaskMode.File => string.Join(FilesSeparator, InputtingContent.Split(FilesSeparator).Select(PathTrim)),
+                HashTaskMode.Folder => PathTrim(InputtingContent),
+                _ => throw new InvalidOperationException(),
+            },
+            SelectedHashKinds = HashSettings.Where(i => i.IsChecked).Select(i => i.Kind).ToArray(),
+            State = HashTaskState.Waiting,
+        };
         if (StartingWhenCreateHashTask)
         {
             _ = hashTask.StartAsync();
@@ -70,7 +81,7 @@ public partial class HomeViewModel
 
     private bool CanCreateTask()
     {
-        if (HashSettings.All(h => !h.IsChecked))
+        if (!HashSettings.Any(h => h.IsChecked))
         {
             return false;
         }
@@ -97,23 +108,6 @@ public partial class HomeViewModel
     }
 
     #region Helper
-
-    private HashTask CreateHashTask()
-    {
-        return new()
-        {
-            DateTime = DateTime.Now,
-            Mode = InputtingMode,
-            Content = InputtingMode switch
-            {
-                var m when m == HashTaskMode.Folder => PathTrim(InputtingContent),
-                var m when m == HashTaskMode.File => string.Join(FilesSeparator, InputtingContent.Split(FilesSeparator).Select(i => PathTrim(i))),
-                _ => InputtingContent,
-            },
-            SelectedHashKinds = HashSettings.Where(i => i.IsChecked).Select(i => i.Kind).ToArray(),
-            State = HashTaskState.Waiting,
-        };
-    }
 
     /// <summary>
     /// 修剪路径, 去除其前后空白和引号(").
