@@ -51,8 +51,14 @@ public partial class HomeViewModel
         }
         catch (Exception ex)
         {
-            _logger.LogError("选取{Mode}时出现未预料的异常\n{Exception}", InputtingMode, ex);
-            // TODO: Notification
+            _logger.LogError("选取{Mode}时出现异常\n{Exception}", InputtingMode, ex);
+            _notificationService.Show(new()
+            {
+                Title = LocalizationDialog.Exception_Title_Exception,
+                Message = string.Format(LocalizationDialog.Exception_Message_ExceptionOccurredWhenPick_F, InputtingMode.ToDisplay().ToLower()),
+                Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
+                Duration = TimeSpan.FromSeconds(3),
+            });
         }
     }
 

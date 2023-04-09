@@ -123,6 +123,12 @@
   <data name="DeleteHashTask_Title_DeleteTask" xml:space="preserve">
     <value>删除任务</value>
   </data>
+  <data name="Exception_Message_ExceptionOccurredWhenPick_F" xml:space="preserve">
+    <value>选取{0}时出现异常，请查看日志了解详情。</value>
+  </data>
+  <data name="Exception_Title_Exception" xml:space="preserve">
+    <value>异常</value>
+  </data>
   <data name="GitHubUpdate_Button_Download" xml:space="preserve">
     <value>下载</value>
   </data>

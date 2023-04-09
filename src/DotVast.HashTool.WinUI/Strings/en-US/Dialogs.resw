@@ -18,6 +18,12 @@
   <data name="DeleteHashTask_Title_DeleteTask" xml:space="preserve">
     <value>Delete Task</value>
   </data>
+  <data name="Exception_Message_ExceptionOccurredWhenPick_F" xml:space="preserve">
+    <value>An exception occurred when picking {0}, please check the log for details.</value>
+  </data>
+  <data name="Exception_Title_Exception" xml:space="preserve">
+    <value>Exception</value>
+  </data>
   <data name="GitHubUpdate_Button_Download" xml:space="preserve">
     <value>Download</value>
   </data>

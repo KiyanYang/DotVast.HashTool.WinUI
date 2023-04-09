@@ -13,7 +13,7 @@ public sealed partial class HashTask : ObservableObject, IDisposable
 {
     #region Properties
 
-    public HashTaskMode Mode { get; set; } = HashTaskMode.File;
+    public HashTaskMode Mode { get; set; } = HashTaskMode.Files;
 
     public string Content { get; set; } = string.Empty;
 
