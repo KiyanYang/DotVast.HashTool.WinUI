@@ -2,7 +2,7 @@ using Microsoft.UI.Dispatching;
 
 namespace DotVast.HashTool.WinUI.Services;
 
-internal class DispatchingService : IDispatchingService
+internal sealed class DispatchingService : IDispatchingService
 {
     private DispatcherQueue? _dispatcherQueue;
 

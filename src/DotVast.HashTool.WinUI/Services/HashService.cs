@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 
 namespace DotVast.HashTool.WinUI.Services;
 
-internal class HashService : IHashService
+internal sealed class HashService : IHashService
 {
     private readonly Dictionary<HashKind, HashData> _hashes;
 

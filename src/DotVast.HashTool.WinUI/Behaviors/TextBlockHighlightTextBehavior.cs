@@ -8,7 +8,7 @@ using Windows.UI;
 
 namespace DotVast.HashTool.WinUI.Behaviors;
 
-public class TextBlockHighlightTextBehavior : Behavior<TextBlock>
+public sealed class TextBlockHighlightTextBehavior : Behavior<TextBlock>
 {
     private static readonly Brush s_highlightBrush = new SolidColorBrush((Color)App.Current.Resources["SystemAccentColorLight3"]);
     private readonly TextHighlighter _highlighter = new() { Background = s_highlightBrush };

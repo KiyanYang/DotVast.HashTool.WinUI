@@ -7,7 +7,7 @@ internal enum HomeParameterKind
 
 // Don't use the "record" type. We need to control "equals" method,
 // because we may perform equality judgment on parameter in INavigationService.NavigateTo.
-internal class HomeParameter
+internal sealed class HomeParameter
 {
     /// <summary>
     /// The parameter of navigation to Home.

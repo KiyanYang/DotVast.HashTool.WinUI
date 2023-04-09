@@ -4,7 +4,7 @@ using DotVast.HashTool.WinUI.Models;
 
 namespace DotVast.HashTool.WinUI.Services;
 
-internal class TextExportResolver : IExportResolver
+internal sealed class TextExportResolver : IExportResolver
 {
     public bool CanResolve(ExportKind exportKind, object obj)
     {

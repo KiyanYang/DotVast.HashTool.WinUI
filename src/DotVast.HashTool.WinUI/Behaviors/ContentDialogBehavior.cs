@@ -10,7 +10,7 @@ namespace DotVast.HashTool.WinUI.Behaviors;
 /// <summary>
 /// 使 ContentDialog 的 SmokeLayerBackground 覆盖标题栏.
 /// </summary>
-internal class ContentDialogBehavior : BehaviorBase<FrameworkElement>
+internal sealed class ContentDialogBehavior : BehaviorBase<FrameworkElement>
 {
     protected override void OnAssociatedObjectLoaded()
     {

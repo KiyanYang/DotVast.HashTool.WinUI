@@ -7,7 +7,7 @@ using DotVast.HashTool.WinUI.Models;
 
 namespace DotVast.HashTool.WinUI.Services;
 
-internal class JsonExportResolver : IExportResolver
+internal sealed class JsonExportResolver : IExportResolver
 {
     public bool CanResolve(ExportKind exportKind, object obj)
     {
