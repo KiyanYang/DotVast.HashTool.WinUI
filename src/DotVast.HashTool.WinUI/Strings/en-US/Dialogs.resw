@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -23,6 +23,12 @@
   </data>
   <data name="Exception_Title_Exception" xml:space="preserve">
     <value>Exception</value>
+  </data>
+  <data name="Export_Message_SuccessfullyExportedToPath_F" xml:space="preserve">
+    <value>Successfully exported to '{0}'.</value>
+  </data>
+  <data name="Export_Title_ExportSuccessful" xml:space="preserve">
+    <value>Export successful</value>
   </data>
   <data name="GitHubUpdate_Button_Download" xml:space="preserve">
     <value>Download</value>
