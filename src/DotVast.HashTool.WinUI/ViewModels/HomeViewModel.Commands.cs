@@ -20,7 +20,7 @@ public partial class HomeViewModel
     {
         try
         {
-            if (InputtingMode == HashTaskMode.File)
+            if (InputtingMode == HashTaskMode.Files)
             {
                 FileOpenPicker picker = new();
                 picker.FileTypeFilter.Add("*");
@@ -51,8 +51,14 @@ public partial class HomeViewModel
         }
         catch (Exception ex)
         {
-            _logger.LogError("选取{Mode}时出现未预料的异常\n{Exception}", InputtingMode, ex);
-            // TODO: Notification
+            _logger.LogError("选取{Mode}时出现异常\n{Exception}", InputtingMode, ex);
+            _notificationService.Show(new()
+            {
+                Title = LocalizationPopup.Exception_Title_Exception,
+                Message = string.Format(LocalizationPopup.Exception_Message_ExceptionOccurredWhenPick_F, InputtingMode.ToDisplay().ToLower()),
+                Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
+                Duration = TimeSpan.FromSeconds(3),
+            });
         }
     }
 
@@ -64,7 +70,7 @@ public partial class HomeViewModel
             Mode = InputtingMode,
             Content = InputtingMode switch
             {
-                HashTaskMode.File => string.Join(FilesSeparator, InputtingContent.Split(FilesSeparator).Select(PathTrim)),
+                HashTaskMode.Files => string.Join(FilesSeparator, InputtingContent.Split(FilesSeparator).Select(PathTrim)),
                 HashTaskMode.Folder => PathTrim(InputtingContent),
                 _ => throw new InvalidOperationException(),
             },
@@ -85,7 +91,7 @@ public partial class HomeViewModel
         {
             return false;
         }
-        if (InputtingMode == HashTaskMode.File)
+        if (InputtingMode == HashTaskMode.Files)
         {
             return FilesExists(InputtingContent);
         }

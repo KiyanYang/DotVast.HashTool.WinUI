@@ -45,7 +45,7 @@ internal sealed class DialogService : IDialogService
         var dialog = new GithubUpdateDialog
         {
             Release = release,
-            PrimaryButtonText = LocalizationDialog.GitHubUpdate_Button_Download,
+            PrimaryButtonText = LocalizationPopup.GitHubUpdate_Button_Download,
             CloseButtonText = LocalizationCommon.Close,
         };
 

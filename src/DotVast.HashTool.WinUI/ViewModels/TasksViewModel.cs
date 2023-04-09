@@ -14,15 +14,18 @@ public sealed partial class TasksViewModel : ObservableRecipient, IViewModel, IN
 {
     private readonly IHashTaskService _hashTaskService;
     private readonly INavigationService _navigationService;
+    private readonly INotificationService _notificationService;
     private readonly IEnumerable<IExportResolver> _exportResolvers;
 
     public TasksViewModel(
         IHashTaskService hashTaskService,
         INavigationService navigationService,
+        INotificationService notificationService,
         IEnumerable<IExportResolver> exportResolvers)
     {
         _hashTaskService = hashTaskService;
         _navigationService = navigationService;
+        _notificationService = notificationService;
         _exportResolvers = exportResolvers;
         InitializeHashTaskCheckables();
         _hashTaskService.HashTasks.CollectionChanged += HashTasks_CollectionChanged;
@@ -124,7 +127,13 @@ public sealed partial class TasksViewModel : ObservableRecipient, IViewModel, IN
         if (resolver is not null)
         {
             await resolver.ExportAsync(file.Path, exportKind, hashTasks);
-            // TODO: 成功导出通知
+            _notificationService.Show(new()
+            {
+                Title = LocalizationPopup.Export_Title_ExportSuccessful,
+                Message = string.Format(LocalizationPopup.Export_Message_SuccessfullyExportedToPath_F, file.Path),
+                Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success,
+                Duration = TimeSpan.FromSeconds(3),
+            });
         }
     }
 }

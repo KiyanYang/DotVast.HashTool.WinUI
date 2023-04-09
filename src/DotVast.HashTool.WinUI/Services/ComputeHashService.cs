@@ -25,7 +25,7 @@ internal sealed class ComputeHashService : IComputeHashService
 
         try
         {
-            if (hashTask.Mode == HashTaskMode.File)
+            if (hashTask.Mode == HashTaskMode.Files)
             {
                 await InternalHashFilesAsync(hashTask, hashTask.Content.Split('|'), mres, cancellationToken);
             }

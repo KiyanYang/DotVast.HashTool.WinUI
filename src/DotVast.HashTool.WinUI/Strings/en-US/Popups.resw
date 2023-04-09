@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -18,6 +18,18 @@
   <data name="DeleteHashTask_Title_DeleteTask" xml:space="preserve">
     <value>Delete Task</value>
   </data>
+  <data name="Exception_Message_ExceptionOccurredWhenPick_F" xml:space="preserve">
+    <value>An exception occurred when picking {0}, please check the log for details.</value>
+  </data>
+  <data name="Exception_Title_Exception" xml:space="preserve">
+    <value>Exception</value>
+  </data>
+  <data name="Export_Message_SuccessfullyExportedToPath_F" xml:space="preserve">
+    <value>Successfully exported to '{0}'.</value>
+  </data>
+  <data name="Export_Title_ExportSuccessful" xml:space="preserve">
+    <value>Export successful</value>
+  </data>
   <data name="GitHubUpdate_Button_Download" xml:space="preserve">
     <value>Download</value>
   </data>
@@ -35,5 +47,11 @@
   </data>
   <data name="HashTaskAborted_Title_HashTaskAborted" xml:space="preserve">
     <value>Task Aborted</value>
+  </data>
+  <data name="UnhandledException_Message_UnhandledExceptionOccurred" xml:space="preserve">
+    <value>An unhandled exception occurred, please check the log for details.</value>
+  </data>
+  <data name="UnhandledException_Title_UnhandledException" xml:space="preserve">
+    <value>Unhandled Exception</value>
   </data>
 </root>

@@ -87,8 +87,8 @@ public sealed partial class HashTaskGridViewModel : ObservableObject
     private async Task DeleteTaskAsync()
     {
         var dialogResult = await _dialogService.ShowDialogAsync(
-            LocalizationDialog.DeleteHashTask_Title_DeleteTask,
-            LocalizationDialog.DeleteHashTask_Content_WantToDeleteThisTask,
+            LocalizationPopup.DeleteHashTask_Title_DeleteTask,
+            LocalizationPopup.DeleteHashTask_Content_WantToDeleteThisTask,
             LocalizationCommon.No,
             primaryButtonText: LocalizationCommon.Yes);
 

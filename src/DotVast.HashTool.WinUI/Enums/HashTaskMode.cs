@@ -5,7 +5,7 @@ namespace DotVast.HashTool.WinUI.Enums;
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum HashTaskMode
 {
-    File,
+    Files,
     Folder,
 }
 
@@ -15,7 +15,7 @@ internal static class HashTaskModeExtensions
     {
         return hashTaskMode switch
         {
-            HashTaskMode.File => LocalizationEnum.HashTaskMode_File,
+            HashTaskMode.Files => LocalizationEnum.HashTaskMode_Files,
             HashTaskMode.Folder => LocalizationEnum.HashTaskMode_Folder,
             _ => throw new ArgumentOutOfRangeException(nameof(hashTaskMode)),
         };
