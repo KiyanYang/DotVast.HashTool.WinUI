@@ -5,7 +5,7 @@ using DotVast.HashTool.WinUI.Models;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
-public partial class HashSettingsViewModel : ObservableRecipient, IViewModel, INavigationAware
+public sealed partial class HashSettingsViewModel : SimpleObservableRecipient, IViewModel, INavigationAware
 {
     private readonly IPreferencesSettingsService _preferencesSettingsService;
 

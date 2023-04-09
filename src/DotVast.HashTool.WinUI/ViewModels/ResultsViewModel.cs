@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
-public sealed partial class ResultsViewModel : ObservableRecipient, IViewModel, INavigationAware
+public sealed partial class ResultsViewModel : ObservableObject, IViewModel, INavigationAware
 {
     private readonly ILogger<ResultsViewModel> _logger;
 

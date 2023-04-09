@@ -10,7 +10,7 @@ using Windows.Storage.Pickers;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
-public sealed partial class TasksViewModel : ObservableRecipient, IViewModel, INavigationAware
+public sealed partial class TasksViewModel : SimpleObservableRecipient, IViewModel, INavigationAware
 {
     private readonly IHashTaskService _hashTaskService;
     private readonly INavigationService _navigationService;

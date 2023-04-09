@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
-public sealed partial class HomeViewModel : ObservableRecipient, IViewModel, INavigationAware
+public sealed partial class HomeViewModel : SimpleObservableRecipient, IViewModel, INavigationAware
 {
     private readonly ILogger<HomeViewModel> _logger;
     private readonly IPreferencesSettingsService _preferencesSettingsService;
