@@ -33,12 +33,26 @@ sealed file class CryptoBaseAdapter : HashAlgorithm
     public sealed override void Initialize() =>
         _hash.Reset();
 
-    protected sealed override void Dispose(bool disposing)
+    #region Finalizer, IDisposable
+
+    private bool _disposed = false;
+
+    ~CryptoBaseAdapter() => Dispose(false);
+
+    protected override void Dispose(bool disposing)
     {
-        if (disposing)
+        if (!_disposed)
         {
-            _hash.Dispose();
+            if (disposing)
+            {
+                _hash.Dispose();
+            }
+
+            _disposed = true;
         }
+
         base.Dispose(disposing);
     }
+
+    #endregion Finalizer, IDisposable
 }

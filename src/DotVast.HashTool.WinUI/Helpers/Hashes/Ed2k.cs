@@ -4,7 +4,7 @@ using DotVast.HashTool.WinUI.Enums;
 
 namespace DotVast.HashTool.WinUI.Helpers.Hashes;
 
-internal class Ed2k : HashAlgorithm
+internal sealed class Ed2k : HashAlgorithm
 {
     private const int Ed2kChunkSize = 9728000;
 
@@ -57,4 +57,27 @@ internal class Ed2k : HashAlgorithm
             return _md4.ComputeHash(_chunkHashes.ToArray());
         }
     }
+
+    #region Finalizer, IDisposable
+
+    private bool _disposed = false;
+
+    ~Ed2k() => Dispose(false);
+
+    protected override void Dispose(bool disposing)
+    {
+        if (!_disposed)
+        {
+            if (disposing)
+            {
+                _md4.Dispose();
+            }
+
+            _disposed = true;
+        }
+
+        base.Dispose(disposing);
+    }
+
+    #endregion Finalizer, IDisposable
 }
