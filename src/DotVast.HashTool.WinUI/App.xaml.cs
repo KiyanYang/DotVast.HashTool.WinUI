@@ -134,6 +134,21 @@ public sealed partial class App : Application
         // https://docs.microsoft.com/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.application.unhandledexception.
         _logger.AppUnhandledException(e.Exception);
         e.Handled = true;
+
+        try
+        {
+            var notificationService = GetService<INotificationService>();
+            notificationService.Show(new()
+            {
+                Title = LocalizationDialog.UnhandledException_Title_UnhandledException,
+                Message = LocalizationDialog.UnhandledException_Message_UnhandledExceptionOccurred,
+                Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
+                Duration = TimeSpan.FromSeconds(3),
+            });
+        }
+        catch
+        {
+        }
     }
 
     protected override async void OnLaunched(LaunchActivatedEventArgs args)

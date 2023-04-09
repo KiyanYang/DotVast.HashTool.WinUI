@@ -150,4 +150,10 @@
     <value>任务中止</value>
     <comment>任务中止对话框的标题</comment>
   </data>
+  <data name="UnhandledException_Message_UnhandledExceptionOccurred" xml:space="preserve">
+    <value>出现未处理的异常，请查看日志了解详情。</value>
+  </data>
+  <data name="UnhandledException_Title_UnhandledException" xml:space="preserve">
+    <value>未处理的异常</value>
+  </data>
 </root>

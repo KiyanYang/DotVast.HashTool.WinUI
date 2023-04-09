@@ -42,4 +42,10 @@
   <data name="HashTaskAborted_Title_HashTaskAborted" xml:space="preserve">
     <value>Task Aborted</value>
   </data>
+  <data name="UnhandledException_Message_UnhandledExceptionOccurred" xml:space="preserve">
+    <value>An unhandled exception occurred, please check the log for details.</value>
+  </data>
+  <data name="UnhandledException_Title_UnhandledException" xml:space="preserve">
+    <value>Unhandled Exception</value>
+  </data>
 </root>
