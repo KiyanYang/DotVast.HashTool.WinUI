@@ -84,7 +84,7 @@ public sealed partial class CommandLineActivationHandler : ActivationHandler<App
         {
             if (File.Exists(path))
             {
-                return new(path, HashTaskMode.File);
+                return new(path, HashTaskMode.Files);
             }
             if (Directory.Exists(path))
             {

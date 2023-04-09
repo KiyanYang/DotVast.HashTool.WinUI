@@ -20,7 +20,7 @@ public partial class HomeViewModel
     {
         try
         {
-            if (InputtingMode == HashTaskMode.File)
+            if (InputtingMode == HashTaskMode.Files)
             {
                 FileOpenPicker picker = new();
                 picker.FileTypeFilter.Add("*");
@@ -64,7 +64,7 @@ public partial class HomeViewModel
             Mode = InputtingMode,
             Content = InputtingMode switch
             {
-                HashTaskMode.File => string.Join(FilesSeparator, InputtingContent.Split(FilesSeparator).Select(PathTrim)),
+                HashTaskMode.Files => string.Join(FilesSeparator, InputtingContent.Split(FilesSeparator).Select(PathTrim)),
                 HashTaskMode.Folder => PathTrim(InputtingContent),
                 _ => throw new InvalidOperationException(),
             },
@@ -85,7 +85,7 @@ public partial class HomeViewModel
         {
             return false;
         }
-        if (InputtingMode == HashTaskMode.File)
+        if (InputtingMode == HashTaskMode.Files)
         {
             return FilesExists(InputtingContent);
         }

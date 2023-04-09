@@ -12,7 +12,7 @@ public partial class HomeViewModel
     /// </summary>
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(CreateTaskCommand))]
-    private HashTaskMode _inputtingMode = HashTaskMode.File;
+    private HashTaskMode _inputtingMode = HashTaskMode.Files;
 
     /// <summary>
     /// 当前界面输入的哈希任务内容.

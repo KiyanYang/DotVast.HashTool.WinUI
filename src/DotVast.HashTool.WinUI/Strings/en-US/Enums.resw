@@ -24,8 +24,8 @@
   <data name="AppTheme_Light" xml:space="preserve">
     <value>Light</value>
   </data>
-  <data name="HashTaskMode_File" xml:space="preserve">
-    <value>File</value>
+  <data name="HashTaskMode_Files" xml:space="preserve">
+    <value>Files</value>
   </data>
   <data name="HashTaskMode_Folder" xml:space="preserve">
     <value>Folder</value>
