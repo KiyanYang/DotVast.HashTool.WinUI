@@ -40,7 +40,7 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
         _appearanceSettingsService.Language = value;
         _notificationService.Show(new()
         {
-            Title = BaseLocalization.GetLocalized(Localization.SubtreeId, nameof(Localization.RestartToApplyChange), value.ToTag()),
+            Title = Strings.Base.BaseLocalization.GetLocalized(Localization.SubtreeId, nameof(Localization.RestartToApplyChange), value.ToTag()),
             Duration = TimeSpan.FromMilliseconds(3000),
             Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Informational,
         });
@@ -184,8 +184,8 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
         if (_gitHubRelease is null)
         {
             await _dialogService.ShowDialogAsync(
-                LocalizationDialog.GitHubUpdate_Title_Failed,
-                LocalizationDialog.GitHubUpdate_Content_CheckNetwork,
+                LocalizationPopup.GitHubUpdate_Title_Failed,
+                LocalizationPopup.GitHubUpdate_Content_CheckNetwork,
                 LocalizationCommon.Close);
         }
         else if (_gitHubRelease.Version > RuntimeHelper.AppVersion)
@@ -195,7 +195,7 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
         else
         {
             await _dialogService.ShowDialogAsync(
-                LocalizationDialog.GitHubUpdate_Title_UpToDate,
+                LocalizationPopup.GitHubUpdate_Title_UpToDate,
                 string.Empty,
                 LocalizationCommon.Close);
         }

@@ -54,8 +54,8 @@ public partial class HomeViewModel
             _logger.LogError("选取{Mode}时出现异常\n{Exception}", InputtingMode, ex);
             _notificationService.Show(new()
             {
-                Title = LocalizationDialog.Exception_Title_Exception,
-                Message = string.Format(LocalizationDialog.Exception_Message_ExceptionOccurredWhenPick_F, InputtingMode.ToDisplay().ToLower()),
+                Title = LocalizationPopup.Exception_Title_Exception,
+                Message = string.Format(LocalizationPopup.Exception_Message_ExceptionOccurredWhenPick_F, InputtingMode.ToDisplay().ToLower()),
                 Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
                 Duration = TimeSpan.FromSeconds(3),
             });

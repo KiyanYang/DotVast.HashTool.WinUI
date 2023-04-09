@@ -129,8 +129,8 @@ public sealed partial class TasksViewModel : ObservableRecipient, IViewModel, IN
             await resolver.ExportAsync(file.Path, exportKind, hashTasks);
             _notificationService.Show(new()
             {
-                Title = LocalizationDialog.Export_Title_ExportSuccessful,
-                Message = string.Format(LocalizationDialog.Export_Message_SuccessfullyExportedToPath_F, file.Path),
+                Title = LocalizationPopup.Export_Title_ExportSuccessful,
+                Message = string.Format(LocalizationPopup.Export_Message_SuccessfullyExportedToPath_F, file.Path),
                 Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success,
                 Duration = TimeSpan.FromSeconds(3),
             });

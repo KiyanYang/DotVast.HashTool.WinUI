@@ -140,8 +140,8 @@ public sealed partial class App : Application
             var notificationService = GetService<INotificationService>();
             notificationService.Show(new()
             {
-                Title = LocalizationDialog.UnhandledException_Title_UnhandledException,
-                Message = LocalizationDialog.UnhandledException_Message_UnhandledExceptionOccurred,
+                Title = LocalizationPopup.UnhandledException_Title_UnhandledException,
+                Message = LocalizationPopup.UnhandledException_Message_UnhandledExceptionOccurred,
                 Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
                 Duration = TimeSpan.FromSeconds(3),
             });
