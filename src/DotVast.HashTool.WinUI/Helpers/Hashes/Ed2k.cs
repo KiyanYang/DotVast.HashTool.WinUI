@@ -9,7 +9,7 @@ internal sealed class Ed2k : HashAlgorithm
     private const int Ed2kChunkSize = 9728000;
 
     private readonly HashAlgorithm _md4 = HashKind.MD4.ToHashAlgorithm();
-    private readonly List<byte> _chunkHashes = new();
+    private readonly List<byte> _chunkHashes = new(16);
     private int _currentChunkSize;
 
     public Ed2k()
