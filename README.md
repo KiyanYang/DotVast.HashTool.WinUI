@@ -6,7 +6,7 @@
 
 # HashTool
 
-**A Tool for Calculating the Hash Values of Files, Folders or Texts!**
+**A Tool for Calculating Hash Values of Files or Folders!**
 
 [![MIT License](https://img.shields.io/github/license/KiyanYang/DotVast.HashTool.WinUI)](./LICENSE.txt)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/KiyanYang/DotVast.HashTool.WinUI)](https://github.com/KiyanYang/DotVast.HashTool.WinUI/releases)
@@ -23,11 +23,11 @@
 
 > [简体中文](./docs/README.zh-Hans.md)
 
-DotVast.HashTool.WinUI allows you to calculate the hash values of files, folders or text. It is a useful tool for verifying the integrity and authenticity of your data.
+DotVast.HashTool.WinUI allows you to calculate the hash values of files or folders. It is a useful tool for verifying the integrity and authenticity of your data.
 
 ## Features
 
-- Calculate the hash values of files, folders or texts.
+- Calculate the hash values of files or folders.
 - Support MD5, SHA1, SHA2, SHA3 and so on. See [wiki](https://github.com/KiyanYang/DotVast.HashTool.WinUI/wiki/功能#哈希算法) for more details.
 - Support drag and drop files and folder.
 - Modern and friendly user interface.

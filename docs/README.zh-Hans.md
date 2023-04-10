@@ -6,7 +6,7 @@
 
 # HashTool
 
-**用于计算文件、文件夹或文本哈希值的工具！**
+**用于计算文件或文件夹哈希值的工具！**
 
 [![MIT License](https://img.shields.io/github/license/KiyanYang/DotVast.HashTool.WinUI)](./LICENSE.txt)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/KiyanYang/DotVast.HashTool.WinUI)](https://github.com/KiyanYang/DotVast.HashTool.WinUI/releases)
@@ -21,11 +21,11 @@
 
 ---
 
-DotVast.HashTool.WinUI 允许你计算文件，文件夹或文本的哈希值。它是验证数据完整性和真实性的有用工具。
+DotVast.HashTool.WinUI 允许你计算文件或文件夹的哈希值。它是验证数据完整性和真实性的有用工具。
 
 ## 特性
 
-- 可以计算文件，文件夹或文本的哈希值。
+- 可以计算文件或文件夹的哈希值。
 - 支持 MD5, SHA1, SHA2, SHA3 等哈希算法，详见 [wiki](https://github.com/KiyanYang/DotVast.HashTool.WinUI/wiki/功能#哈希算法)。
 - 支持拖放文件和文件夹。
 - 现代化且友好的界面。
@@ -44,7 +44,7 @@ DotVast.HashTool.WinUI 允许你计算文件，文件夹或文本的哈希值。
 
 ## 贡献
 
-如果你发现错误或者有反馈建议，请在阅读[贡献指南](./CONTRIBUTING.md)后，随时在 GitHub 上打开 issue 或 PR。你也可以 fork 这个存储库并进行自己的修改。如果你喜欢这个项目，请考虑 Star 它，以表示你的支持。
+如果你发现错误或者有反馈建议，请在阅读[贡献指南](./CONTRIBUTING.md)后，随时在 GitHub 上打开 issue 或 PR。你也可以 fork 这个存储库并进行自己的修改。如果你喜欢这个项目，请点亮 star 以表示你的支持。
 
 ## 许可
 
