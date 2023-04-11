@@ -1,11 +1,16 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
+
+using DotVast.HashTool.WinUI.Enums;
+using DotVast.HashTool.WinUI.Models;
 
 using Windows.Storage;
 
 namespace DotVast.HashTool.WinUI.Services;
 
-public sealed class LocalSettingsService : ILocalSettingsService
+public sealed partial class LocalSettingsService : ILocalSettingsService
 {
     private readonly ApplicationDataContainer _localSettings = ApplicationData.Current.LocalSettings;
 
@@ -14,7 +19,7 @@ public sealed class LocalSettingsService : ILocalSettingsService
     {
         if (_localSettings.Values.TryGetValue(key, out var obj) && obj is string str)
         {
-            return JsonSerializer.Deserialize<T>(str) ?? defaultValue;
+            return JsonSerializer.Deserialize<T>(str, JsonContextForSettings.Default.GetTypeInfo<T>()) ?? defaultValue;
         }
         return defaultValue;
     }
@@ -27,19 +32,34 @@ public sealed class LocalSettingsService : ILocalSettingsService
          && container.Values.TryGetValue(key, out var obj)
          && obj is string str)
         {
-            return JsonSerializer.Deserialize<T>(str) ?? defaultValue;
+            return JsonSerializer.Deserialize<T>(str, JsonContextForSettings.Default.GetTypeInfo<T>()) ?? defaultValue;
         }
         return defaultValue;
     }
 
     public void SaveSetting<T>(string key, T value)
     {
-        _localSettings.Values[key] = JsonSerializer.Serialize(value);
+        _localSettings.Values[key] = JsonSerializer.Serialize(value, JsonContextForSettings.Default.GetTypeInfo<T>());
     }
 
     public void SaveSetting<T>(string containerName, string key, T value)
     {
         var container = _localSettings.CreateContainer(containerName, ApplicationDataCreateDisposition.Always);
-        container.Values[key] = JsonSerializer.Serialize(value);
+        container.Values[key] = JsonSerializer.Serialize(value, JsonContextForSettings.Default.GetTypeInfo<T>());
+    }
+
+    /// <summary>
+    /// 用于设置的 JsonSerializerContext.
+    /// </summary>
+    [JsonSerializable(typeof(bool))]
+    [JsonSerializable(typeof(string))]
+    [JsonSerializable(typeof(AppTheme))]
+    [JsonSerializable(typeof(HashSetting))]
+    private sealed partial class JsonContextForSettings : JsonSerializerContext
+    {
+        public JsonTypeInfo<T> GetTypeInfo<T>()
+        {
+            return GetTypeInfo(typeof(T)) as JsonTypeInfo<T> ?? throw new ArgumentOutOfRangeException();
+        }
     }
 }
