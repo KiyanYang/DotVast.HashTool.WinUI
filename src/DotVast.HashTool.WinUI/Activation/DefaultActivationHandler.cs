@@ -19,10 +19,10 @@ public sealed class DefaultActivationHandler : ActivationHandler<LaunchActivated
         return _navigationService.Frame?.Content is null;
     }
 
-    protected override async Task HandleInternalAsync(LaunchActivatedEventArgs args)
+    protected override Task HandleInternalAsync(LaunchActivatedEventArgs args)
     {
         _navigationService.NavigateTo(PageKey.HomePage, args.Arguments);
 
-        await Task.CompletedTask;
+        return Task.CompletedTask;
     }
 }

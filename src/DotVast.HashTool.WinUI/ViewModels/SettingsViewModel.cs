@@ -30,7 +30,7 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
 
     #region Language
 
-    public AppLanguage[] AppLanguages => _appearanceSettingsService.Languages;
+    public AppLanguage[] AppLanguages { get; } = Enum.GetValues<AppLanguage>();
 
     [ObservableProperty]
     private AppLanguage _appLanguage;

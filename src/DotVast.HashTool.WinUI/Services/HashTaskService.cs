@@ -9,12 +9,12 @@ internal sealed class HashTaskService : IHashTaskService
 {
     public ObservableCollection<HashTask> HashTasks { get; } = new();
 
-    public async Task StartupAsync()
+    public Task StartupAsync()
     {
         foreach (var item in HashTasks.Where(x => x.State == HashTaskState.Waiting))
         {
             _ = item.StartAsync();
         }
-        await Task.CompletedTask;
+        return Task.CompletedTask;
     }
 }

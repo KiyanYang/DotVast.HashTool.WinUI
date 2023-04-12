@@ -13,31 +13,32 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
         _hashService = hashService;
     }
 
-    public override async Task InitializeAsync()
+    public override Task InitializeAsync()
     {
-        await InitializeHashSettings();
+        InitializeHashSettings();
         _fileExplorerContextMenusEnabled = Load(nameof(FileExplorerContextMenusEnabled), DefaultPreferencesSettings.FileExplorerContextMenusEnabled);
         _includePreRelease = Load(nameof(IncludePreRelease), DefaultPreferencesSettings.IncludePreRelease);
         _checkForUpdatesOnStartup = Load(nameof(CheckForUpdatesOnStartup), DefaultPreferencesSettings.CheckForUpdatesOnStartup);
         _startingWhenCreateHashTask = Load(nameof(StartingWhenCreateHashTask), DefaultPreferencesSettings.StartingWhenCreateHashTask);
+
+        return Task.CompletedTask;
     }
 
-    public override async Task StartupAsync()
+    public override Task StartupAsync()
     {
-        await Task.CompletedTask;
+        return Task.CompletedTask;
     }
 
     #region HashSettings
     public IReadOnlyList<HashSetting> HashSettings { get; private set; } = Array.Empty<HashSetting>();
 
-    private async Task InitializeHashSettings()
+    private void InitializeHashSettings()
     {
         var hashSettingsFromLocalSettings = _hashService.HashKinds.Select(kind =>
                 Load(SettingsContainerName.DataOptions_Hashes, kind.ToString(), default(HashSetting)))
             .OfType<HashSetting>()
             .ToArray();
         HashSettings = _hashService.GetMergedHashSettings(hashSettingsFromLocalSettings).ToArray();
-        await Task.CompletedTask;
     }
 
     public void SaveHashSetting(HashSetting hashSetting, bool forContextMenu = false)

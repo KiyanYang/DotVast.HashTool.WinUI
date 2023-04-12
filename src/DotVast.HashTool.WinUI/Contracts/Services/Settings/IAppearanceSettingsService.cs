@@ -23,9 +23,4 @@ public interface IAppearanceSettingsService : IBaseObservableSettings
     /// 语言.
     /// </summary>
     AppLanguage Language { get; set; }
-
-    /// <summary>
-    /// 所有支持的语言.
-    /// </summary>
-    AppLanguage[] Languages { get; }
 }

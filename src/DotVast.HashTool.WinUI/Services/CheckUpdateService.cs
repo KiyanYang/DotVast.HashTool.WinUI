@@ -28,10 +28,10 @@ internal sealed partial class CheckUpdateService : ICheckUpdateService
         _preferencesSettingsService = preferencesSettingsService;
     }
 
-    public async Task StartupAsync()
+    public Task StartupAsync()
     {
         _ = CheckForUpdateOnStartupAsync();
-        await Task.CompletedTask;
+        return Task.CompletedTask;
     }
 
     public async Task<GitHubRelease?> GetLatestGitHubReleaseAsync(bool includePreRelease = false)

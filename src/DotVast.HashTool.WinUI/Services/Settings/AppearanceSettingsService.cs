@@ -19,24 +19,18 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
         _isAlwaysOnTop = Load(nameof(IsAlwaysOnTop), DefaultAppearanceSettings.IsAlwaysOnTop);
         _theme = Load(nameof(Theme), DefaultAppearanceSettings.Theme);
 
-        Language = string.IsNullOrWhiteSpace(WGAL.PrimaryLanguageOverride)
-            ? AppLanguage.System
-            : WGAL.PrimaryLanguageOverride.ToAppLanguage();
-
-        await InitializeTheme();
-        await Task.CompletedTask;
+        await InitializeThemeAsync();
     }
 
-    public override async Task StartupAsync()
+    public override Task StartupAsync()
     {
         SetIsAlwaysOnTop();
-        SetLanguage();
 
         Debug.Assert((App.MainWindow.Content as FrameworkElement)?.RequestedTheme == Theme.ToElementTheme());
         Debug.Assert(App.MainWindow.IsAlwaysOnTop == IsAlwaysOnTop);
         Debug.Assert(WGAL.PrimaryLanguageOverride == Language.ToTag());
 
-        await Task.CompletedTask;
+        return Task.CompletedTask;
     }
 
     #region HashFontFamilyName
@@ -78,7 +72,7 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
 
         TitleBarContextMenuHelper.UpdateTitleBarContextMenu(Theme);
     }
-    private async Task InitializeTheme()
+    private async Task InitializeThemeAsync()
     {
         if (App.MainWindow.Content is FrameworkElement rootElement)
         {
@@ -92,10 +86,8 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
     #endregion Theme
 
     #region Language
-    public AppLanguage[] Languages { get; } = Enum.GetValues<AppLanguage>();
-
     [ObservableProperty]
-    private AppLanguage _language;
+    private AppLanguage _language = WGAL.PrimaryLanguageOverride.ToAppLanguage();
 
     partial void OnLanguageChanged(AppLanguage value) =>
         SetLanguage();
