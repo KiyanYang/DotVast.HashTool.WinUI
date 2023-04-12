@@ -23,7 +23,7 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
             ? AppLanguage.System
             : WGAL.PrimaryLanguageOverride.ToAppLanguage();
 
-        SetTheme(); // 在初始化时就设置主题
+        await InitializeTheme();
         await Task.CompletedTask;
     }
 
@@ -77,6 +77,17 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
         }
 
         TitleBarContextMenuHelper.UpdateTitleBarContextMenu(Theme);
+    }
+    private async Task InitializeTheme()
+    {
+        if (App.MainWindow.Content is FrameworkElement rootElement)
+        {
+            while (!rootElement.IsLoaded)
+            {
+                await Task.Delay(25);
+            }
+        }
+        SetTheme();
     }
     #endregion Theme
 
