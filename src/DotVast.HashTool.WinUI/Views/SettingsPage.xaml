@@ -45,7 +45,7 @@
                     </TransitionCollection>
                 </StackPanel.ChildrenTransitions>
 
-                <!-- 跳转设置: 哈希选项 -->
+                <!-- 跳转设置: 哈希设置 -->
                 <labs:SettingsCard
                     x:Uid="SettingsPage_HashSettings"
                     Command="{x:Bind ViewModel.NavigateToCommand}"
@@ -54,14 +54,6 @@
                     <labs:SettingsCard.HeaderIcon>
                         <FontIcon Glyph="&#xE9D5;" />
                     </labs:SettingsCard.HeaderIcon>
-                </labs:SettingsCard>
-
-                <!-- 设置: 置顶 -->
-                <labs:SettingsCard x:Uid="SettingsPage_AlwaysOnTop">
-                    <labs:SettingsCard.HeaderIcon>
-                        <FontIcon Glyph="&#xE840;" />
-                    </labs:SettingsCard.HeaderIcon>
-                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsAlwaysOnTop, Mode=TwoWay}" />
                 </labs:SettingsCard>
 
                 <!-- 设置: 资源管理器菜单 -->
@@ -89,6 +81,14 @@
                         Style="{StaticResource CenterVerticalTextAlignmentTextBoxStyle}"
                         Text="{x:Bind ViewModel.HashFontFamilyName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         TextAlignment="Center" />
+                </labs:SettingsCard>
+
+                <!-- 设置: 置顶 -->
+                <labs:SettingsCard x:Uid="SettingsPage_AlwaysOnTop">
+                    <labs:SettingsCard.HeaderIcon>
+                        <FontIcon Glyph="&#xE840;" />
+                    </labs:SettingsCard.HeaderIcon>
+                    <ToggleSwitch IsOn="{x:Bind ViewModel.IsAlwaysOnTop, Mode=TwoWay}" />
                 </labs:SettingsCard>
 
                 <!-- 设置: 主题 -->
