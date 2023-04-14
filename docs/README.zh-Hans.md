@@ -40,7 +40,7 @@ DotVast.HashTool.WinUI 允许你计算文件或文件夹的哈希值。它是验
 
 ## 界面
 
-![主页](./images/HomePage-0.3.0.webp)
+![主页](./images/HomePage-0.6.0.webp)
 
 ## 贡献
 

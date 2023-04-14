@@ -39,7 +39,7 @@ You can download the latest release from the [GitHub Releases](https://github.co
 
 ## Screenshots
 
-![HomePage](./docs/images/HomePage-0.3.0.webp)
+![HomePage](./docs/images/HomePage-0.6.0.webp)
 
 ## Contribution
 
