@@ -64,6 +64,23 @@
                     <ToggleSwitch IsOn="{x:Bind ViewModel.FileExplorerContextMenusEnabled, Mode=TwoWay}" />
                 </labs:SettingsCard>
 
+                <labs:SettingsExpander x:Uid="SettingsPage_FileOptions">
+                    <labs:SettingsExpander.HeaderIcon>
+                        <FontIcon Glyph="&#xE7C3;" />
+                    </labs:SettingsExpander.HeaderIcon>
+                    <labs:SettingsExpander.Items>
+                        <labs:SettingsCard x:Uid="SettingsPage_FileAttributeHiddenToSkip">
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.FileAttributeHiddenToSkip, Mode=TwoWay}" />
+                        </labs:SettingsCard>
+                        <labs:SettingsCard x:Uid="SettingsPage_FileAttributeOfflineToSkip">
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.FileAttributeOfflineToSkip, Mode=TwoWay}" />
+                        </labs:SettingsCard>
+                        <labs:SettingsCard x:Uid="SettingsPage_FileAttributeSystemToSkip">
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.FileAttributeSystemToSkip, Mode=TwoWay}" />
+                        </labs:SettingsCard>
+                    </labs:SettingsExpander.Items>
+                </labs:SettingsExpander>
+
                 <!-- 副标题: 个性化 -->
                 <TextBlock x:Uid="SettingsPage_Personalization" Style="{StaticResource GroupTitleTextBlockStyle}" />
 

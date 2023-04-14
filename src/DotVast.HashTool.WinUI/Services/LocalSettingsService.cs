@@ -6,13 +6,11 @@ using System.Text.Json.Serialization.Metadata;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 
-using Windows.Storage;
-
 namespace DotVast.HashTool.WinUI.Services;
 
 public sealed partial class LocalSettingsService : ILocalSettingsService
 {
-    private readonly ApplicationDataContainer _localSettings = ApplicationData.Current.LocalSettings;
+    private readonly Windows.Storage.ApplicationDataContainer _localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
     [return: NotNullIfNotNull(nameof(defaultValue))]
     public T? ReadSetting<T>(string key, T? defaultValue = default)
@@ -44,7 +42,7 @@ public sealed partial class LocalSettingsService : ILocalSettingsService
 
     public void SaveSetting<T>(string containerName, string key, T value)
     {
-        var container = _localSettings.CreateContainer(containerName, ApplicationDataCreateDisposition.Always);
+        var container = _localSettings.CreateContainer(containerName, Windows.Storage.ApplicationDataCreateDisposition.Always);
         container.Values[key] = JsonSerializer.Serialize(value, JsonContextForSettings.Default.GetTypeInfo<T>());
     }
 
@@ -54,6 +52,7 @@ public sealed partial class LocalSettingsService : ILocalSettingsService
     [JsonSerializable(typeof(bool))]
     [JsonSerializable(typeof(string))]
     [JsonSerializable(typeof(AppTheme))]
+    [JsonSerializable(typeof(FileAttributes))]
     [JsonSerializable(typeof(HashSetting))]
     private sealed partial class JsonContextForSettings : JsonSerializerContext
     {

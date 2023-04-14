@@ -190,11 +190,26 @@
   <data name="SettingsPage_CheckForUpdatesOnStartup.Header" xml:space="preserve">
     <value>启动时检查更新</value>
   </data>
+  <data name="SettingsPage_FileAttributeHiddenToSkip.Header" xml:space="preserve">
+    <value>跳过隐藏文件</value>
+  </data>
+  <data name="SettingsPage_FileAttributeOfflineToSkip.Header" xml:space="preserve">
+    <value>跳过离线文件</value>
+  </data>
+  <data name="SettingsPage_FileAttributeSystemToSkip.Header" xml:space="preserve">
+    <value>跳过系统文件</value>
+  </data>
   <data name="SettingsPage_FileExplorerContextMenusEnabled.Description" xml:space="preserve">
     <value>是否启用资源管理器注册的上下文菜单</value>
   </data>
   <data name="SettingsPage_FileExplorerContextMenusEnabled.Header" xml:space="preserve">
     <value>上下文菜单</value>
+  </data>
+  <data name="SettingsPage_FileOptions.Description" xml:space="preserve">
+    <value>设置计算时的文件行为</value>
+  </data>
+  <data name="SettingsPage_FileOptions.Header" xml:space="preserve">
+    <value>文件选项</value>
   </data>
   <data name="SettingsPage_HashFontFamily.Description" xml:space="preserve">
     <value>设置显示哈希值的字体</value>

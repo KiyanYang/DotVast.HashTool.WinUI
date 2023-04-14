@@ -16,6 +16,7 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
     public override Task InitializeAsync()
     {
         InitializeHashSettings();
+        _fileAttributesToSkip = Load(nameof(FileAttributesToSkip), DefaultPreferencesSettings.FileAttributesToSkipWhenFolderMode);
         _fileExplorerContextMenusEnabled = Load(nameof(FileExplorerContextMenusEnabled), DefaultPreferencesSettings.FileExplorerContextMenusEnabled);
         _includePreRelease = Load(nameof(IncludePreRelease), DefaultPreferencesSettings.IncludePreRelease);
         _checkForUpdatesOnStartup = Load(nameof(CheckForUpdatesOnStartup), DefaultPreferencesSettings.CheckForUpdatesOnStartup);
@@ -57,6 +58,15 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
         _localSettingsService.SaveSetting(SettingsContainerName.ContextMenu, "HashNames", hashNamesForContexMenu);
     }
     #endregion HashSettings
+
+    #region FileAttributesToSkip
+    private FileAttributes _fileAttributesToSkip;
+    public FileAttributes FileAttributesToSkip
+    {
+        get => _fileAttributesToSkip;
+        set => SetPropertyAndSave(value, ref _fileAttributesToSkip);
+    }
+    #endregion FileAttributesToSkip
 
     #region FileExplorerContextMenusEnabled
     private bool _fileExplorerContextMenusEnabled;
