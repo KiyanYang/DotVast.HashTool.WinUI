@@ -127,7 +127,11 @@
                                     Grid.Column="1"
                                     IsTextSelectionEnabled="True"
                                     Text="{x:Bind Path}"
-                                    TextWrapping="Wrap" />
+                                    TextWrapping="Wrap">
+                                    <i:Interaction.Behaviors>
+                                        <behaviors:TextBlockHighlightTextBehavior HighlightText="{Binding Path=HashResultsFilter, Source={StaticResource ViewModel}}" />
+                                    </i:Interaction.Behaviors>
+                                </TextBlock>
                                 <ItemsRepeater
                                     Grid.Row="1"
                                     Grid.Column="0"
