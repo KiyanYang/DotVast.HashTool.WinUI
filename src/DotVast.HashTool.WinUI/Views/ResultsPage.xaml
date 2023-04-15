@@ -93,13 +93,13 @@
                         Style="{ThemeResource BodyLargeTextBlockStyle}"
                         Text="{x:Bind ViewModel.HashTask.Results.Count, Mode=OneWay}" />
                     <TextBox
-                        x:Uid="ResultsPage_FilterByContent"
+                        x:Uid="ResultsPage_Filter"
                         Grid.Column="2"
                         MinWidth="200"
                         HorizontalAlignment="Right"
-                        IsEnabled="{x:Bind ViewModel.HashResultsFilterByContentIsEnabled, Mode=OneWay}"
+                        IsEnabled="{x:Bind ViewModel.HashResultsFilterIsEnabled, Mode=OneWay}"
                         IsSpellCheckEnabled="False"
-                        Text="{x:Bind ViewModel.HashResultsFilterByContent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{x:Bind ViewModel.HashResultsFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
 
                 <!-- 任务结果 -->
@@ -127,7 +127,11 @@
                                     Grid.Column="1"
                                     IsTextSelectionEnabled="True"
                                     Text="{x:Bind Path}"
-                                    TextWrapping="Wrap" />
+                                    TextWrapping="Wrap">
+                                    <i:Interaction.Behaviors>
+                                        <behaviors:TextBlockHighlightTextBehavior HighlightText="{Binding Path=HashResultsFilter, Source={StaticResource ViewModel}}" />
+                                    </i:Interaction.Behaviors>
+                                </TextBlock>
                                 <ItemsRepeater
                                     Grid.Row="1"
                                     Grid.Column="0"
@@ -154,7 +158,7 @@
                                                     Text="{x:Bind Value}"
                                                     TextWrapping="Wrap">
                                                     <i:Interaction.Behaviors>
-                                                        <behaviors:TextBlockHighlightTextBehavior HighlightText="{Binding Path=HashResultsFilterByContent, Source={StaticResource ViewModel}}" />
+                                                        <behaviors:TextBlockHighlightTextBehavior HighlightText="{Binding Path=HashResultsFilter, Source={StaticResource ViewModel}}" />
                                                     </i:Interaction.Behaviors>
                                                 </TextBlock>
                                             </Grid>

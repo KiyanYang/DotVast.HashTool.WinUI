@@ -57,7 +57,7 @@
   <data name="RestartToApplyChange" xml:space="preserve">
     <value>Change will apply after restart</value>
   </data>
-  <data name="ResultsPage_FilterByContent.PlaceholderText" xml:space="preserve">
+  <data name="ResultsPage_Filter.PlaceholderText" xml:space="preserve">
     <value>Filter</value>
   </data>
   <data name="ResultsPage_Subtitle_TaskDetail.Text" xml:space="preserve">
