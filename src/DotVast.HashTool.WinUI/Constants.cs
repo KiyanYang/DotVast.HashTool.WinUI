@@ -30,6 +30,7 @@ public static class DefaultAppearanceSettings
 
 public static class DefaultPreferencesSettings
 {
+    public const FileAttributes FileAttributesToSkipWhenFolderMode = FileAttributes.Hidden | FileAttributes.Offline | FileAttributes.System;
     public const bool FileExplorerContextMenusEnabled = true;
     public const bool IncludePreRelease = false;
     public const bool CheckForUpdatesOnStartup = false;

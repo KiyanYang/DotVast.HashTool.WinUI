@@ -78,11 +78,26 @@
   <data name="SettingsPage_CheckForUpdatesOnStartup.Header" xml:space="preserve">
     <value>Check for updates on startup</value>
   </data>
+  <data name="SettingsPage_FileAttributeHiddenToSkip.Header" xml:space="preserve">
+    <value>Skip hidden files</value>
+  </data>
+  <data name="SettingsPage_FileAttributeOfflineToSkip.Header" xml:space="preserve">
+    <value>Skip offline files</value>
+  </data>
+  <data name="SettingsPage_FileAttributeSystemToSkip.Header" xml:space="preserve">
+    <value>Skip system files</value>
+  </data>
   <data name="SettingsPage_FileExplorerContextMenusEnabled.Description" xml:space="preserve">
     <value>Whether to enable the context menus in file explorer</value>
   </data>
   <data name="SettingsPage_FileExplorerContextMenusEnabled.Header" xml:space="preserve">
     <value>Context Menus</value>
+  </data>
+  <data name="SettingsPage_FileOptions.Description" xml:space="preserve">
+    <value>Set the file behaviors when calculating</value>
+  </data>
+  <data name="SettingsPage_FileOptions.Header" xml:space="preserve">
+    <value>File Options</value>
   </data>
   <data name="SettingsPage_HashFontFamily.Description" xml:space="preserve">
     <value>Set the font family to display the hash</value>

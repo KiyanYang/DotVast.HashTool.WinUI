@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.Input;
 
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
+using DotVast.HashTool.WinUI.Core.Helpers;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.Models;
@@ -15,6 +16,52 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
     private readonly ICheckUpdateService _checkUpdateService;
     private readonly IDialogService _dialogService;
     private readonly INotificationService _notificationService;
+
+    public SettingsViewModel(
+        INavigationService navigationService,
+        IAppearanceSettingsService appearanceSettingsService,
+        IPreferencesSettingsService preferencesSettingsService,
+        ICheckUpdateService checkUpdateService,
+        IDialogService dialogService,
+        INotificationService notificationService)
+    {
+        _navigationService = navigationService;
+        _appearanceSettingsService = appearanceSettingsService;
+        _preferencesSettingsService = preferencesSettingsService;
+        _checkUpdateService = checkUpdateService;
+        _dialogService = dialogService;
+        _notificationService = notificationService;
+
+        _isAlwaysOnTop = _appearanceSettingsService.IsAlwaysOnTop;
+
+        _appLanguage = _appearanceSettingsService.Language;
+
+        _theme = _appearanceSettingsService.Theme;
+
+        _hashFontFamilyName = _appearanceSettingsService.HashFontFamilyName;
+
+        _fileExplorerContextMenusEnabled = _preferencesSettingsService.FileExplorerContextMenusEnabled;
+
+        _includePreRelease = _preferencesSettingsService.IncludePreRelease;
+
+        _checkForUpdatesOnStartup = _preferencesSettingsService.CheckForUpdatesOnStartup;
+
+        _fileAttributeHiddenToSkip = _preferencesSettingsService.FileAttributesToSkip.HasFlag(FileAttributes.Hidden);
+        _fileAttributeOfflineToSkip = _preferencesSettingsService.FileAttributesToSkip.HasFlag(FileAttributes.Offline);
+        _fileAttributeSystemToSkip = _preferencesSettingsService.FileAttributesToSkip.HasFlag(FileAttributes.System);
+
+#if GITHUB_ACTIONS && !DotVast_CIRelease
+        var assemblyInformationalVersion = typeof(SettingsViewModel).Assembly
+            .GetCustomAttributes(typeof(System.Reflection.AssemblyInformationalVersionAttribute), true)
+            .OfType<System.Reflection.AssemblyInformationalVersionAttribute>()
+            .First().InformationalVersion;
+        AppVersionHeader = $"{Localization.AppDisplayName}  {assemblyInformationalVersion}";
+#elif !DEBUG
+        AppVersionHeader = $"{Localization.AppDisplayName}  {RuntimeHelper.AppVersion}";
+#else
+        AppVersionHeader = $"{Localization.AppDisplayNameDev}  {RuntimeHelper.AppVersion}";
+#endif
+    }
 
     public string AppVersionHeader { get; }
 
@@ -105,47 +152,33 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
 
     #endregion CheckForUpdatesOnStartup
 
-    public SettingsViewModel(
-        INavigationService navigationService,
-        IAppearanceSettingsService appearanceSettingsService,
-        IPreferencesSettingsService preferencesSettingsService,
-        ICheckUpdateService checkUpdateService,
-        IDialogService dialogService,
-        INotificationService notificationService)
+    #region FileAttributesToSkip
+
+    [ObservableProperty]
+    private bool _fileAttributeHiddenToSkip;
+    partial void OnFileAttributeHiddenToSkipChanged(bool value) =>
+        ChangeFileAttributeToSkip(FileAttributes.Hidden, value);
+
+    [ObservableProperty]
+    private bool _fileAttributeOfflineToSkip;
+    partial void OnFileAttributeOfflineToSkipChanged(bool value) =>
+        ChangeFileAttributeToSkip(FileAttributes.Offline, value);
+
+    [ObservableProperty]
+    private bool _fileAttributeSystemToSkip;
+    partial void OnFileAttributeSystemToSkipChanged(bool value) =>
+        ChangeFileAttributeToSkip(FileAttributes.System, value);
+
+    private void ChangeFileAttributeToSkip(FileAttributes flag, bool IsAdd)
     {
-        _navigationService = navigationService;
-        _appearanceSettingsService = appearanceSettingsService;
-        _preferencesSettingsService = preferencesSettingsService;
-        _checkUpdateService = checkUpdateService;
-        _dialogService = dialogService;
-        _notificationService = notificationService;
-
-        _isAlwaysOnTop = _appearanceSettingsService.IsAlwaysOnTop;
-
-        _appLanguage = _appearanceSettingsService.Language;
-
-        _theme = _appearanceSettingsService.Theme;
-
-        _hashFontFamilyName = _appearanceSettingsService.HashFontFamilyName;
-
-        _fileExplorerContextMenusEnabled = _preferencesSettingsService.FileExplorerContextMenusEnabled;
-
-        _includePreRelease = _preferencesSettingsService.IncludePreRelease;
-
-        _checkForUpdatesOnStartup = _preferencesSettingsService.CheckForUpdatesOnStartup;
-
-#if GITHUB_ACTIONS && !DotVast_CIRelease
-        var assemblyInformationalVersion = typeof(SettingsViewModel).Assembly
-            .GetCustomAttributes(typeof(System.Reflection.AssemblyInformationalVersionAttribute), true)
-            .OfType<System.Reflection.AssemblyInformationalVersionAttribute>()
-            .First().InformationalVersion;
-        AppVersionHeader = $"{Localization.AppDisplayName}  {assemblyInformationalVersion}";
-#elif !DEBUG
-        AppVersionHeader = $"{Localization.AppDisplayName}  {RuntimeHelper.AppVersion}";
-#else
-        AppVersionHeader = $"{Localization.AppDisplayNameDev}  {RuntimeHelper.AppVersion}";
-#endif
+        _preferencesSettingsService.FileAttributesToSkip = IsAdd switch
+        {
+            true => _preferencesSettingsService.FileAttributesToSkip.AddFlag(flag),
+            _ => _preferencesSettingsService.FileAttributesToSkip.RemoveFlag(flag),
+        };
     }
+
+    #endregion FileAttributesToSkip
 
     [RelayCommand]
     private void NavigateTo(PageKey pageKey) => _navigationService.NavigateTo(pageKey);

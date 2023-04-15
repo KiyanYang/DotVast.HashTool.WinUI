@@ -4,6 +4,8 @@ using System.Security.Cryptography;
 
 using CommunityToolkit.Mvvm.Messaging;
 
+using DotVast.HashTool.WinUI.Contracts.Services.Settings;
+using DotVast.HashTool.WinUI.Core.Helpers;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 
@@ -15,6 +17,7 @@ internal sealed class ComputeHashService : IComputeHashService
     private const long ReportFrequency = 10;
 
     private readonly IDispatchingService _dispatchingService = App.GetService<IDispatchingService>();
+    private readonly IPreferencesSettingsService _preferencesSettingsService = App.GetService<IPreferencesSettingsService>();
 
     public async Task ComputeHashAsync(HashTask hashTask, ManualResetEventSlim mres, CancellationToken cancellationToken)
     {
@@ -71,11 +74,19 @@ internal sealed class ComputeHashService : IComputeHashService
 
     private async Task InternalHashFilesAsync(HashTask hashTask, IList<string> filePaths, ManualResetEventSlim mres, CancellationToken cancellationToken)
     {
+        var fileAttributesToSkip = _preferencesSettingsService.FileAttributesToSkip;
         hashTask.Results = new();
         var failedFilesCount = 0;
         var filesCount = filePaths.Count;
         for (var i = 0; i < filePaths.Count; i++)
         {
+            var fileAttributes = File.GetAttributes(filePaths[i]);
+            if (fileAttributes.HasAnyFlag(fileAttributesToSkip))
+            {
+                filesCount--;
+                continue;
+            }
+
             // 出现异常情况的频率较低，因此不使用 File.Exists 等涉及 IO 的额外判断操作
             try
             {
