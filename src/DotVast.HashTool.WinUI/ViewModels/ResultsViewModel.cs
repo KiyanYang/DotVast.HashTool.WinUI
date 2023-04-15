@@ -20,11 +20,11 @@ public sealed partial class ResultsViewModel : ObservableObject, IViewModel, INa
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HashResultsFiltered))]
-    private string _hashResultsFilterByContent = string.Empty;
+    private string _hashResultsFilter = string.Empty;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HashResultsFiltered))]
-    private bool _hashResultsFilterByContentIsEnabled = false;
+    private bool _hashResultsFilterIsEnabled = false;
 
     private IList<HashResult>? _hashResultsFiltered;
 
@@ -32,12 +32,12 @@ public sealed partial class ResultsViewModel : ObservableObject, IViewModel, INa
     {
         get
         {
-            var filter = HashResultsFilterByContent;
+            var filter = HashResultsFilter;
             if (string.IsNullOrEmpty(filter))
             {
                 _hashResultsFiltered = HashTask?.Results;
             }
-            else if (HashResultsFilterByContentIsEnabled)
+            else if (HashResultsFilterIsEnabled)
             {
                 _hashResultsFiltered = HashTask?.Results?.Where(h =>
                     IgnoreCaseContains(h.Path, filter) || (h.Data?.Any(d => IgnoreCaseContains(d.Value, filter)) ?? false)
@@ -77,8 +77,8 @@ public sealed partial class ResultsViewModel : ObservableObject, IViewModel, INa
         if (value != null)
         {
             value.PropertyChanged += HashTask_PropertyChanged;
-            HashResultsFilterByContent = string.Empty;
-            HashResultsFilterByContentIsEnabled = value.State != HashTaskState.Waiting && value.State != HashTaskState.Working;
+            HashResultsFilter = string.Empty;
+            HashResultsFilterIsEnabled = value.State != HashTaskState.Waiting && value.State != HashTaskState.Working;
         }
     }
 
@@ -93,7 +93,7 @@ public sealed partial class ResultsViewModel : ObservableObject, IViewModel, INa
         {
             case nameof(HashTask.State):
                 // 当任务处于进行状态时, 禁用搜索
-                HashResultsFilterByContentIsEnabled = hashTask.State != HashTaskState.Waiting && hashTask.State != HashTaskState.Working;
+                HashResultsFilterIsEnabled = hashTask.State != HashTaskState.Waiting && hashTask.State != HashTaskState.Working;
                 break;
 
             case nameof(HashTask.Results):
