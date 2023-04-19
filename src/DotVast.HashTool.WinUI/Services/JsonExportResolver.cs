@@ -1,3 +1,6 @@
+// Copyright (c) Kiyan Yang.
+// Licensed under the MIT License.
+
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Unicode;

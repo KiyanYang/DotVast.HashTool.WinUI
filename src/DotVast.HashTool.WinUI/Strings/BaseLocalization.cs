@@ -1,3 +1,6 @@
+// Copyright (c) Kiyan Yang.
+// Licensed under the MIT License.
+
 using Microsoft.Windows.ApplicationModel.Resources;
 
 using Windows.Globalization;

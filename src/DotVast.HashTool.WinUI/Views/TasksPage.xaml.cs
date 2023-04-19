@@ -1,3 +1,6 @@
+// Copyright (c) Kiyan Yang.
+// Licensed under the MIT License.
+
 using DotVast.HashTool.WinUI.ViewModels;
 
 using Microsoft.UI.Xaml.Controls;

@@ -1,3 +1,6 @@
+// Copyright (c) Kiyan Yang.
+// Licensed under the MIT License.
+
 global using CommunityToolkit.Mvvm.ComponentModel;
 
 global using DotVast.HashTool.WinUI.Contracts.Services;

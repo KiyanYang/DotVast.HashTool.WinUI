@@ -157,6 +157,9 @@ csharp_space_between_square_brackets = false
 # Code Quality
 dotnet_code_quality.CA1822.api_surface = internal, public   # CA1822: Mark members as static
 
+# License header
+file_header_template = Copyright (c) Kiyan Yang.\nLicensed under the MIT License.
+
 # C++ Files
 [*.{cpp,h,in}]
 charset = utf-8-bom

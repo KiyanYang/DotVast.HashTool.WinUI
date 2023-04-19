@@ -1,3 +1,6 @@
+// Copyright (c) Kiyan Yang.
+// Licensed under the MIT License.
+
 using System.Net.Http.Json;
 using System.Text.RegularExpressions;
 

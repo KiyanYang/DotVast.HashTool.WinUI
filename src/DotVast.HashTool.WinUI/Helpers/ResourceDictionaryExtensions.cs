@@ -1,3 +1,6 @@
+// Copyright (c) Kiyan Yang.
+// Licensed under the MIT License.
+
 using System.Linq.Expressions;
 
 using Microsoft.UI.Xaml;

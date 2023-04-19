@@ -1,3 +1,6 @@
+// Copyright (c) Kiyan Yang.
+// Licensed under the MIT License.
+
 using System.CodeDom.Compiler;
 
 using DotVast.HashTool.WinUI.Core.Helpers;

@@ -1,3 +1,6 @@
+// Copyright (c) Kiyan Yang.
+// Licensed under the MIT License.
+
 using Microsoft.UI.Dispatching;
 
 namespace DotVast.HashTool.WinUI.Contracts.Services;

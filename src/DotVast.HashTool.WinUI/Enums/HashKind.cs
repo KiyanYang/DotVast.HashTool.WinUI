@@ -1,3 +1,6 @@
+// Copyright (c) Kiyan Yang.
+// Licensed under the MIT License.
+
 using System.Security.Cryptography;
 using System.Text.Json.Serialization;
 

@@ -1,3 +1,6 @@
+// Copyright (c) Kiyan Yang.
+// Licensed under the MIT License.
+
 using Windows.ApplicationModel;
 
 namespace DotVast.HashTool.WinUI.Helpers;

@@ -1,3 +1,6 @@
+// Copyright (c) Kiyan Yang.
+// Licensed under the MIT License.
+
 using System.IO.Hashing;
 using System.Security.Cryptography;
 

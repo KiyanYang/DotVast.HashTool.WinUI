@@ -1,3 +1,6 @@
+// Copyright (c) Kiyan Yang.
+// Licensed under the MIT License.
+
 using CommunityToolkit.Mvvm.Messaging;
 
 namespace DotVast.HashTool.WinUI.Models;

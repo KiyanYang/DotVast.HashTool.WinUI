@@ -1,3 +1,6 @@
+// Copyright (c) Kiyan Yang.
+// Licensed under the MIT License.
+
 using Windows.Globalization;
 
 namespace DotVast.HashTool.WinUI.Enums;

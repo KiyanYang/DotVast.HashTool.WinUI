@@ -1,3 +1,6 @@
+// Copyright (c) Kiyan Yang.
+// Licensed under the MIT License.
+
 namespace DotVast.HashTool.WinUI.Activation;
 
 // Extend this class to implement new ActivationHandlers. See DefaultActivationHandler for an example.

@@ -1,3 +1,6 @@
+// Copyright (c) Kiyan Yang.
+// Licensed under the MIT License.
+
 using Microsoft.Extensions.Logging;
 
 using WinUIEx;

@@ -1,3 +1,6 @@
+// Copyright (c) Kiyan Yang.
+// Licensed under the MIT License.
+
 using CommunityToolkit.Mvvm.Input;
 
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;

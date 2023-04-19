@@ -1,3 +1,6 @@
+// Copyright (c) Kiyan Yang.
+// Licensed under the MIT License.
+
 using System.Diagnostics.CodeAnalysis;
 
 namespace DotVast.HashTool.WinUI.Contracts.Services;
