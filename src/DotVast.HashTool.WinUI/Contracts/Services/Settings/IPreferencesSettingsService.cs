@@ -1,4 +1,3 @@
-using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 
 namespace DotVast.HashTool.WinUI.Contracts.Services.Settings;

@@ -1,3 +1,5 @@
+using System.CodeDom.Compiler;
+
 using DotVast.HashTool.WinUI.Core.Helpers;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
@@ -9,7 +11,8 @@ internal sealed class TextExportResolver : IExportResolver
     public bool CanResolve(ExportKind exportKind, object obj)
     {
         return exportKind == (ExportKind.Text | ExportKind.HashTask)
-            && obj is IEnumerable<HashTask>;
+            && obj is IEnumerable<HashTask> hashTasks
+            && hashTasks.Any();
     }
 
     public Task ExportAsync(string filePath, ExportKind exportKind, object obj)
@@ -21,22 +24,22 @@ internal sealed class TextExportResolver : IExportResolver
 
         var hashTasks = (IEnumerable<HashTask>)obj;
 
-        using var writer = new StreamWriter(filePath);
-        var indentedWriter = new IndentedWriter(writer, "    ");
+        using var streamWriter = new StreamWriter(filePath);
+        var indentedTextWriter = new IndentedTextWriter(streamWriter, "    ");
 
-        WriteHashTask(indentedWriter, hashTasks.First());
+        WriteHashTask(indentedTextWriter, hashTasks.First());
         foreach (var hashTask in hashTasks.Skip(1))
         {
-            indentedWriter.WriteLine();
-            indentedWriter.WriteLine("----------------------------------------------------------------");
-            indentedWriter.WriteLine();
-            WriteHashTask(indentedWriter, hashTask);
+            indentedTextWriter.WriteLine();
+            indentedTextWriter.WriteLine("----------------------------------------------------------------");
+            indentedTextWriter.WriteLine();
+            WriteHashTask(indentedTextWriter, hashTask);
         }
 
         return Task.CompletedTask;
     }
 
-    private void WriteHashTask(IndentedWriter writer, HashTask hashTask)
+    private void WriteHashTask(IndentedTextWriter writer, HashTask hashTask)
     {
         writer.WritePropertyAndValue(hashTask.Mode.ToDisplay(), hashTask.Content);
         writer.WritePropertyAndValue(LocalizationCommon.Elapsed, hashTask.Elapsed.ToString());
