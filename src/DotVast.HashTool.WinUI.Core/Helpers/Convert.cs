@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace DotVast.HashTool.WinUI.Core.Helpers;
 
-public static class Converter
+public static class Convert
 {
     private const string LowerHexChars = "0123456789abcdef";
 

@@ -299,9 +299,9 @@ internal sealed class ComputeHashService : IComputeHashService
     {
         return kind.GetHashSetting().Format switch
         {
-            HashFormat.Base16Upper => Convert.ToHexString(hashData),
-            HashFormat.Base16Lower => Core.Helpers.Converter.ToLowerHexString(hashData),
-            HashFormat.Base64 => Convert.ToBase64String(hashData),
+            HashFormat.Base16Upper => System.Convert.ToHexString(hashData),
+            HashFormat.Base16Lower => Core.Helpers.Convert.ToLowerHexString(hashData),
+            HashFormat.Base64 => System.Convert.ToBase64String(hashData),
             _ => throw new ArgumentOutOfRangeException(nameof(kind), $"The HashKind {kind} is out of range and cannot be processed."),
         };
     }
