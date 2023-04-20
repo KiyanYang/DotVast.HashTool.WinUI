@@ -28,7 +28,6 @@ jobs:
       windows-latest
 
     env:
-      DotVast_SolutionPath: src\DotVast.HashTool.WinUI.sln
       DotVast_AppxmanifestPath: src\DotVast.HashTool.WinUI\Package.appxmanifest
       DotVast_PfxName: GitHubActionsWorkflow.pfx
       DotVast_PfxThumbprint: A87830CE7AA286884D04D11E8FA020CB5A1097C5
@@ -73,28 +72,12 @@ jobs:
           Import-PfxCertificate -FilePath $env:DotVast_PfxName -CertStoreLocation Cert:\CurrentUser\My -Password $password
           Remove-Variable -Name password
 
-      # Restore the application to populate the obj folder with RuntimeIdentifiers
-      # https://learn.microsoft.com/en-us/nuget/reference/msbuild-targets#restoring-packagereference-and-packagesconfig-projects-with-msbuild
-      - name: Restore the application
-        run: |
-          msbuild $env:DotVast_SolutionPath `
-            -t:Restore `
-            -p:RestorePackagesConfig=true `
-            -p:Configuration=${{ matrix.configuration }}
-
       # Create the app package by building and packaging the project
       - name: Create the app package
         run: |
-          $appxPackageBaseDir = New-Item -Path AppxPackages -ItemType Directory
-          $appxPackageBaseFullName = $appxPackageBaseDir.FullName
-          "DotVast_AppxPackageBaseDir=$appxPackageBaseFullName" >> $env:GITHUB_ENV
-          msbuild $env:DotVast_SolutionPath `
-            -p:Configuration=${{ matrix.configuration }} `
-            -p:Platform=${{ matrix.platform }} `
-            -p:AppxBundle=Never `
-            -p:UapAppxPackageBuildMode=SideloadOnly `
-            -p:AppxPackageDir="$appxPackageBaseFullName\${{ matrix.platform }}\" `
-            -p:GenerateAppxPackageOnBuild=true
+          ./tools/Build-SideloadOnlyPackage.ps1 -Configuration ${{ matrix.configuration }} -Platform ${{ matrix.platform }}
+          "DotVast_PackageName=$($OutputPackage.Name)" >> $env:GITHUB_ENV
+          "DotVast_PackageDir=$($OutputPackage.Parent)" >> $env:GITHUB_ENV
 
       # Remove the pfx
       - name: Remove the pfx
@@ -102,21 +85,9 @@ jobs:
           Remove-Item -Path $env:DotVast_PfxName
           Remove-Item -Path Cert:\CurrentUser\My\$env:DotVast_PfxThumbprint
 
-      - name: Remove unnecessary dependencies and set MSIX package name
-        run: |
-          $msixDir = (Get-ChildItem '${{ env.DotVast_AppxPackageBaseDir }}\${{ matrix.platform }}')[0]
-          $msixFullName = $msixDir.FullName
-          $msixName = $msixDir.Name
-          Get-ChildItem "$msixFullName/Dependencies" | Where-Object Name -NotLike ${{ matrix.platform }} | Remove-Item -Recurse
-          $gitDatetime = Get-Date -UnixTimeSeconds (git show -s --format=%ct HEAD) -Format 'yyMMdd'
-          $gitShortHash = git show -s --format=%h HEAD
-          $newMsixName = "$msixName-$gitDatetime-$gitShortHash"
-          "DotVast_PackageName=$newMsixName" >> $env:GITHUB_ENV
-          Rename-Item -Path $msixFullName -NewName $newMsixName
-
       # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
       - name: Upload MSIX package
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.DotVast_PackageName }}
-          path: ${{ env.DotVast_AppxPackageBaseDir }}\${{ matrix.platform }}
+          path: ${{ env.DotVast_PackageDir }}
