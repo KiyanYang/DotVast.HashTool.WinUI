@@ -15,28 +15,28 @@ internal sealed partial class HashService : IHashService
 
     public IReadOnlyList<HashKind> HashKinds { get; } = Enum.GetValues<HashKind>();
 
-    public HashKind? GetHash(string hashName)
+    public HashKind? GetHashKind(string hashName)
     {
-        if (Enum.TryParse<HashKind>(hashName, out var hash))
+        if (Enum.TryParse<HashKind>(hashName, out var kind))
         {
-            return hash;
+            return kind;
         }
 
-        foreach (var kvp in _hashes)
+        foreach (var (hashKind, hashSettingCore) in _hashes)
         {
-            if (kvp.Value.Name.Equals(hashName, StringComparison.OrdinalIgnoreCase)
-             || kvp.Value.Alias.Any(h => StringComparer.OrdinalIgnoreCase.Equals(hashName, h)))
+            if (hashSettingCore.Name.Equals(hashName, StringComparison.OrdinalIgnoreCase)
+             || hashSettingCore.Alias.Any(h => StringComparer.OrdinalIgnoreCase.Equals(hashName, h)))
             {
-                return kvp.Key;
+                return hashKind;
             }
         }
 
         return null;
     }
 
-    public HashKind[] GetHashes(IEnumerable<string> hashNames)
+    public IEnumerable<HashKind?> GetHashKinds(IEnumerable<string> hashNames)
     {
-        return hashNames.Select(GetHash).OfType<HashKind>().ToArray();
+        return hashNames.Select(GetHashKind);
     }
 
     public IEnumerable<HashSetting> GetMergedHashSettings(IList<HashSetting> hashSettings)

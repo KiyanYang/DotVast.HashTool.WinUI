@@ -51,8 +51,8 @@ public sealed partial class CommandLineActivationHandler : ActivationHandler<App
             if (hashNames is null)
                 return;
 
-            var hashKinds = _hashService.GetHashes(hashNames);
-            if (hashKinds.Length <= 0)
+            var hashKinds = _hashService.GetHashKinds(hashNames).OfType<HashKind>();
+            if (!hashKinds.Any())
                 return;
 
             var paths = parsedArgs.GetValues(Constants.CommandLineArgs.Path);
@@ -69,7 +69,7 @@ public sealed partial class CommandLineActivationHandler : ActivationHandler<App
                 {
                     Mode = mode,
                     Content = path.Trim(),
-                    SelectedHashKinds = hashKinds,
+                    SelectedHashKinds = hashKinds.ToArray(),
                     State = HashTaskState.Waiting,
                 });
             }
