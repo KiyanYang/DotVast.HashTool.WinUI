@@ -4,20 +4,10 @@
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 
-using Microsoft.Extensions.Options;
-
 namespace DotVast.HashTool.WinUI.Services;
 
-internal sealed class HashService : IHashService
+internal sealed partial class HashService : IHashService
 {
-    private readonly Dictionary<HashKind, HashData> _hashes;
-
-    public HashService(IOptions<DataOptions> dataOptions)
-    {
-        ArgumentNullException.ThrowIfNull(dataOptions.Value.Hashes);
-        _hashes = dataOptions.Value.Hashes;
-    }
-
     public string GetName(HashKind hashKind)
     {
         return _hashes[hashKind].Name;
