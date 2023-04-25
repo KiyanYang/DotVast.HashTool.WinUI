@@ -24,7 +24,6 @@ partial class HashService
             Name = "CRC-32",
             Alias = new[] { "CRC-32/ADCCP", "CRC-32/V-42", "CRC-32/XZ", "PKZIP", "CRC-32/ISO-HDLC" },
             IsEnabledForApp = true,
-            IsEnabledForContextMenu = true,
         },
         [HashKind.CRC_64_ECMA182] = new()
         {
@@ -99,7 +98,6 @@ partial class HashService
         {
             Name = "SM3",
             IsEnabledForApp = true,
-            IsEnabledForContextMenu = true,
         },
         [HashKind.BLAKE2b_160] = new()
         {

@@ -72,7 +72,7 @@ public:
             }
             else // 当启用菜单但是未设置 HashNames 时，使用默认 HashNames
             {
-                const winrt::hstring DefaultHashNames[] = { L"MD5", L"SHA-1", L"SHA-256", L"SHA-384" , L"SHA-512" };
+                const winrt::hstring DefaultHashNames[] = { L"MD5", L"SHA-1", L"SHA-256", L"SHA-384" , L"SHA-512" ,L"XXH32", L"XXH64" };
                 for (const auto& hashName : DefaultHashNames)
                 {
                     auto command = winrt::make_self<HashCommand>(hashName);
