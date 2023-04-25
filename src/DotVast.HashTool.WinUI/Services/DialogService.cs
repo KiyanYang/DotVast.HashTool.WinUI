@@ -3,9 +3,9 @@
 
 using DotVast.HashTool.WinUI.Behaviors;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
-using DotVast.HashTool.WinUI.Controls.Dialogs;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
+using DotVast.HashTool.WinUI.Views.Dialogs;
 
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Xaml.Interactivity;

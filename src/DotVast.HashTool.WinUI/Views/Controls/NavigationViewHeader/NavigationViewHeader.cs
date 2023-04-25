@@ -3,7 +3,7 @@
 
 using Microsoft.UI.Xaml.Controls;
 
-namespace DotVast.HashTool.WinUI.Controls;
+namespace DotVast.HashTool.WinUI.Views.Controls;
 
 public sealed class NavigationViewHeader : ContentControl
 {

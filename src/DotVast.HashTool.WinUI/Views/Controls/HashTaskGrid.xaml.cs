@@ -10,7 +10,7 @@ using DotVast.HashTool.WinUI.ViewModels.Controls;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
-namespace DotVast.HashTool.WinUI.Controls;
+namespace DotVast.HashTool.WinUI.Views.Controls;
 
 public sealed partial class HashTaskGrid : UserControl
 {

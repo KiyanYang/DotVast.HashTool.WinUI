@@ -1,8 +1,8 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="ms-appx:///Controls/NavigationViewBodyScrollViewer/NavigationViewBodyScrollViewer.xaml" />
-        <ResourceDictionary Source="ms-appx:///Controls/NavigationViewHeader/NavigationViewHeader.xaml" />
+        <ResourceDictionary Source="ms-appx:///Views/Controls/NavigationViewBodyScrollViewer/NavigationViewBodyScrollViewer.xaml" />
+        <ResourceDictionary Source="ms-appx:///Views/Controls/NavigationViewHeader/NavigationViewHeader.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

@@ -5,7 +5,6 @@ using System.Diagnostics;
 
 using DotVast.HashTool.WinUI.Activation;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
-using DotVast.HashTool.WinUI.Controls;
 using DotVast.HashTool.WinUI.Helpers;
 using DotVast.HashTool.WinUI.Services;
 using DotVast.HashTool.WinUI.Services.Settings;
@@ -110,7 +109,6 @@ public sealed partial class App : Application
             services.AddTransient<ShellPage>();
             services.AddTransient<ShellViewModel>();
 
-            services.AddTransient<HashTaskGrid>();
             services.AddTransient<HashTaskGridViewModel>();
         }).
         UseSerilog((context, services, loggerConfiguration) =>

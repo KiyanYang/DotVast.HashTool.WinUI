@@ -1,20 +1,22 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:DotVast.HashTool.WinUI.Controls">
+    xmlns:local="using:DotVast.HashTool.WinUI.Views.Controls">
 
-    <Style TargetType="local:NavigationViewHeader">
+    <Style TargetType="local:NavigationViewBodyScrollViewer">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="local:NavigationViewHeader">
-                    <Grid
+                <ControlTemplate TargetType="local:NavigationViewBodyScrollViewer">
+                    <ScrollViewer
                         x:Name="Decoration"
                         Margin="{TemplateBinding Margin}"
                         Padding="{TemplateBinding Padding}"
-                        Background="{TemplateBinding Background}">
-                        <ContentPresenter Height="48" Content="{TemplateBinding Content}" />
+                        Background="{TemplateBinding Background}"
+                        HorizontalScrollMode="Disabled"
+                        VerticalScrollBarVisibility="Auto">
+                        <ContentPresenter Content="{TemplateBinding Content}" />
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="LayoutVisualStates">
@@ -23,7 +25,7 @@
                                         <AdaptiveTrigger MinWindowWidth="{StaticResource LargeScreenBreakpoint}" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
-                                        <Setter Target="Decoration.Padding" Value="{StaticResource NavigationViewHeaderLargePadding}" />
+                                        <Setter Target="Decoration.Padding" Value="{StaticResource NavigationViewBodyLargePadding}" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="MediumState">
@@ -31,7 +33,7 @@
                                         <AdaptiveTrigger MinWindowWidth="{StaticResource SmallScreenBreakpoint}" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
-                                        <Setter Target="Decoration.Padding" Value="{StaticResource NavigationViewHeaderMediumPadding}" />
+                                        <Setter Target="Decoration.Padding" Value="{StaticResource NavigationViewBodyMediumPadding}" />
                                     </VisualState.Setters>
                                 </VisualState>
                                 <VisualState x:Name="NarrowState">
@@ -39,12 +41,12 @@
                                         <AdaptiveTrigger MinWindowWidth="0" />
                                     </VisualState.StateTriggers>
                                     <VisualState.Setters>
-                                        <Setter Target="Decoration.Padding" Value="{StaticResource NavigationViewHeaderSmallPadding}" />
+                                        <Setter Target="Decoration.Padding" Value="{StaticResource NavigationViewBodySmallPadding}" />
                                     </VisualState.Setters>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                    </Grid>
+                    </ScrollViewer>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

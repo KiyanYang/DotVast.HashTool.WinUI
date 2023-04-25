@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:DotVast.HashTool.WinUI.Behaviors"
-    xmlns:controls="using:DotVast.HashTool.WinUI.Controls"
+    xmlns:controls="using:DotVast.HashTool.WinUI.Views.Controls"
     xmlns:models="using:DotVast.HashTool.WinUI.Models"
     NavigationCacheMode="Enabled">
 
