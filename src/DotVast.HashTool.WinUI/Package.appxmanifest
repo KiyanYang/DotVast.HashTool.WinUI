@@ -16,7 +16,7 @@
     <Identity
       Name="DotVast.HashTool.WinUI"
       Publisher="CN=Kiyan Yang"
-      Version="0.6.0.0" />
+      Version="0.6.1.0" />
 
     <mp:PhoneIdentity PhoneProductId="A67268F6-D87B-4B1A-9F20-4C89484663C4" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
