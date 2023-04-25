@@ -17,7 +17,8 @@ LocalSettings:
   StartingWhenCreateHashTask: bool # 创建任务时是否开始计算.
 
 LocalSettings.Containers:
-  DataOptions:Hashes: { Enums.HashKind: Models.HashSetting } # 哈希设置.
+  DataOptions:Hashes:
+    <Enums.HashKind>: Models.HashSetting # 哈希设置.
   ContextMenu:
     IsEnabled: bool # 是否启用资源管理器注册的上下文菜单.
     HashNames: [ string ] # 启用的哈希算法名称.

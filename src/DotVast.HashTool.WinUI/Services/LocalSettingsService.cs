@@ -51,11 +51,14 @@ public sealed partial class LocalSettingsService : ILocalSettingsService
 
     /// <summary>
     /// 用于设置的 JsonSerializerContext.
+    /// 相关类型参见 docs/specs/settings.md
     /// </summary>
     [JsonSerializable(typeof(bool))]
     [JsonSerializable(typeof(string))]
+    [JsonSerializable(typeof(IEnumerable<string>))]
     [JsonSerializable(typeof(AppTheme))]
     [JsonSerializable(typeof(FileAttributes))]
+    [JsonSerializable(typeof(HashKind))]
     [JsonSerializable(typeof(HashSetting))]
     private sealed partial class JsonContextForSettings : JsonSerializerContext
     {
