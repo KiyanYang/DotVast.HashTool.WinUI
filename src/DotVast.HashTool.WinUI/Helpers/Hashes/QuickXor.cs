@@ -1,24 +1,25 @@
-//---------------------------------------------------------------------------------------------
-// Copyright (c) 2016 Microsoft Corporation
+// Copyright (c) Kiyan Yang.
+// Licensed under the MIT License.
 //
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
+// Based on namazso/QuickXorHash (https://github.com/namazso/QuickXorHash)
+// under BSD Zero Clause License.
 //
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
+// Copyright (c) 2022 namazso <admin@namazso.eu>
 //
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-//---------------------------------------------------------------------------------------------
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted.
+//
+// THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+// REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+// AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+// INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+// LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+// OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+// PERFORMANCE OF THIS SOFTWARE.
+
+using System.Numerics;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 
 namespace DotVast.HashTool.WinUI.Helpers.Hashes;
 
@@ -55,114 +56,193 @@ namespace DotVast.HashTool.WinUI.Helpers.Hashes;
 ///
 /// The final hash should xor the length of the data with the least significant bits of the resulting block.
 /// </summary>
-internal sealed class QuickXorHash : System.Security.Cryptography.HashAlgorithm
+class QuickXorHash : HashAlgorithm
 {
-    private const int BitsInLastCell = 32;
+    private const int HashSizeInBytes = 20;
+    private const int HashSizeInBits = HashSizeInBytes * 8;
     private const byte Shift = 11;
-    private const byte WidthInBits = 160;
+    private const int BlockExLength = HashSizeInBits * Shift;
 
-    private ulong[] _data = Array.Empty<ulong>();
+    private readonly byte[] _blockEx = new byte[BlockExLength];
     private long _lengthSoFar;
-    private int _shiftSoFar;
 
     public QuickXorHash()
     {
+        HashSizeValue = HashSizeInBytes;
         Initialize();
+    }
+
+    public override void Initialize()
+    {
+        Array.Clear(_blockEx);
+        _lengthSoFar = 0;
     }
 
     protected override void HashCore(byte[] array, int ibStart, int cbSize)
     {
-        unchecked
+        int count = Vector<byte>.Count;
+        while (cbSize > count)
         {
-            var currentShift = _shiftSoFar;
+            int blockExIndex;
 
-            // The bitvector where we'll start xoring
-            var vectorArrayIndex = currentShift / 64;
+            #region Normal
+            //while ((blockExIndex = (int)(_lengthSoFar % BlockExLength)) < BlockExLength - count && cbSize > count)
+            //{
+            //    var vec1 = new Vector<byte>(_blockEx, blockExIndex);
+            //    var vec2 = new Vector<byte>(array, ibStart);
+            //    (vec1 ^ vec2).CopyTo(_blockEx, blockExIndex);
 
-            // The position within the bit vector at which we begin xoring
-            var vectorOffset = currentShift % 64;
-            var iterations = Math.Min(cbSize, WidthInBits);
+            //    _lengthSoFar += count;
+            //    ibStart += count;
+            //    cbSize -= count;
+            //}
+            #endregion Normal
 
-            for (var i = 0; i < iterations; i++)
+            #region NoCopy
+            blockExIndex = (int)(_lengthSoFar % BlockExLength);
+            var blockExVecSpan = MemoryMarshal.Cast<byte, Vector<byte>>(_blockEx.AsSpan(blockExIndex));
+            var arrayVecSpan = MemoryMarshal.Cast<byte, Vector<byte>>(array.AsSpan(ibStart, cbSize));
+            var length = Math.Min(blockExVecSpan.Length, arrayVecSpan.Length);
+            for (var i = length - 1; i >= 0; i--)
             {
-                var isLastCell = vectorArrayIndex == _data.Length - 1;
-                var bitsInVectorCell = isLastCell ? BitsInLastCell : 64;
-
-                // There's at least 2 bitvectors before we reach the end of the array
-                if (vectorOffset <= bitsInVectorCell - 8)
-                {
-                    for (var j = ibStart + i; j < cbSize + ibStart; j += WidthInBits)
-                    {
-                        _data[vectorArrayIndex] ^= (ulong)array[j] << vectorOffset;
-                    }
-                }
-                else
-                {
-                    var index1 = vectorArrayIndex;
-                    var index2 = isLastCell ? 0 : vectorArrayIndex + 1;
-                    var low = (byte)(bitsInVectorCell - vectorOffset);
-
-                    byte xoredByte = 0;
-                    for (var j = ibStart + i; j < cbSize + ibStart; j += WidthInBits)
-                    {
-                        xoredByte ^= array[j];
-                    }
-                    _data[index1] ^= (ulong)xoredByte << vectorOffset;
-                    _data[index2] ^= (ulong)xoredByte >> low;
-                }
-                vectorOffset += Shift;
-                while (vectorOffset >= bitsInVectorCell)
-                {
-                    vectorArrayIndex = isLastCell ? 0 : vectorArrayIndex + 1;
-                    vectorOffset -= bitsInVectorCell;
-                }
+                blockExVecSpan[i] ^= arrayVecSpan[i];
             }
+            _lengthSoFar += length * count;
+            ibStart += length * count;
+            cbSize -= length * count;
+            #endregion NoCopy
 
-            // Update the starting position in a circular shift pattern
-            _shiftSoFar = (_shiftSoFar + Shift * (cbSize % WidthInBits)) % WidthInBits;
+            while (_lengthSoFar % BlockExLength != 0 && cbSize > 0)
+            {
+                _blockEx[_lengthSoFar % BlockExLength] ^= array[ibStart];
+                _lengthSoFar++;
+                ibStart++;
+                cbSize--;
+            }
         }
-
-        _lengthSoFar += cbSize;
+        while (cbSize > 0)
+        {
+            _blockEx[_lengthSoFar % BlockExLength] ^= array[ibStart];
+            _lengthSoFar++;
+            ibStart++;
+            cbSize--;
+        }
     }
 
     protected override byte[] HashFinal()
     {
-        // Create a byte array big enough to hold all our data
-        var rgb = new byte[(WidthInBits - 1) / 8 + 1];
-
-        // Block copy all our bitvectors to this byte array
-        for (var i = 0; i < _data.Length - 1; i++)
+        Span<byte> hash = stackalloc byte[HashSizeInBytes + 1];
+        for (int i = 0; i < BlockExLength; i++)
         {
-            Buffer.BlockCopy(
-                BitConverter.GetBytes(_data[i]), 0,
-                rgb, i * 8,
-                8);
+            int shift = (i * Shift) % HashSizeInBits;
+            int shiftBytes = shift / 8;
+            int shiftBits = shift % 8;
+            int shifted = _blockEx[i] << shiftBits;
+            hash[shiftBytes] ^= (byte)shifted;
+            hash[shiftBytes + 1] ^= (byte)(shifted >> 8);
         }
+        hash[0] ^= hash[20];
 
-        Buffer.BlockCopy(
-            BitConverter.GetBytes(_data[^1]), 0,
-            rgb, (_data.Length - 1) * 8,
-            rgb.Length - (_data.Length - 1) * 8);
+        hash[12] ^= (byte)(_lengthSoFar >> 0);
+        hash[13] ^= (byte)(_lengthSoFar >> 8);
+        hash[14] ^= (byte)(_lengthSoFar >> 16);
+        hash[15] ^= (byte)(_lengthSoFar >> 24);
+        hash[16] ^= (byte)(_lengthSoFar >> 32);
+        hash[17] ^= (byte)(_lengthSoFar >> 40);
+        hash[18] ^= (byte)(_lengthSoFar >> 48);
+        hash[19] ^= (byte)(_lengthSoFar >> 56);
 
-        // XOR the file length with the least significant bits
-        // Note that GetBytes is architecture-dependent, so care should
-        // be taken with porting. The expected value is 8-bytes in length in little-endian format
-        var lengthBytes = BitConverter.GetBytes(_lengthSoFar);
-        System.Diagnostics.Debug.Assert(lengthBytes.Length == 8);
-        for (var i = 0; i < lengthBytes.Length; i++)
-        {
-            rgb[WidthInBits / 8 - lengthBytes.Length + i] ^= lengthBytes[i];
-        }
-
-        return rgb;
+        return hash[..HashSizeInBytes].ToArray();
     }
-
-    public sealed override void Initialize()
-    {
-        _data = new ulong[(WidthInBits - 1) / 64 + 1];
-        _shiftSoFar = 0;
-        _lengthSoFar = 0;
-    }
-
-    public override int HashSize => WidthInBits;
 }
+
+// First, Convert the original version to C#.
+//
+// internal class QuickXor : HashAlgorithm
+// {
+//     private const int HashSizeInBytes = 20;
+//     private const int HashSizeInBits = HashSizeInBytes * 8;
+//     private const byte Shift = 11;
+//     private const int BlockExLength = HashSizeInBits * Shift;
+//
+//     private readonly byte[] _blockEx = new byte[BlockExLength];
+//     private long _lengthSoFar;
+//
+//     public QuickXor()
+//     {
+//         HashSizeValue = HashSizeInBits;
+//         Initialize();
+//     }
+//
+//     public override void Initialize()
+//     {
+//         Array.Clear(_blockEx);
+//         _lengthSoFar = 0;
+//     }
+//
+//     private void XorBlock(Span<byte> data)
+//     {
+//         for (int i = 0; i < BlockExLength; i++)
+//         {
+//             _blockEx[i] ^= data[i];
+//         }
+//     }
+//
+//     protected override void HashCore(byte[] array, int ibStart, int cbSize)
+//     {
+//         int i = 0;
+//         while (_lengthSoFar % BlockExLength != 0 && i < cbSize)
+//         {
+//             _blockEx[_lengthSoFar % BlockExLength] ^= array[ibStart + i];
+//             _lengthSoFar++;
+//             i++;
+//         }
+//         if (i == cbSize)
+//         {
+//             return;
+//         }
+//         while (cbSize - i >= BlockExLength)
+//         {
+//             XorBlock(array.AsSpan(i, BlockExLength));
+//             _lengthSoFar += BlockExLength;
+//             i += BlockExLength;
+//         }
+//         while (i < cbSize)
+//         {
+//             _blockEx[_lengthSoFar % BlockExLength] ^= array[ibStart + i];
+//             _lengthSoFar++;
+//             i++;
+//         }
+//     }
+//
+//     protected override byte[] HashFinal()
+//     {
+//         var output = new byte[HashSizeInBytes];
+//         byte[] hash = new byte[HashSizeInBytes + 1];
+//         for (int i = 0; i < BlockExLength; i++)
+//         {
+//             int shift = (i * 11) % 160;
+//             int shift_bytes = shift / 8;
+//             int shift_bits = shift % 8;
+//             int shifted = _blockEx[i] << shift_bits;
+//             hash[shift_bytes] ^= (byte)shifted;
+//             hash[shift_bytes + 1] ^= (byte)(shifted >> 8);
+//         }
+//         hash[0] ^= hash[20];
+//         for (int i = 0; i < 20; i++)
+//         {
+//             output[i] = hash[i];
+//         }
+//
+//         output[12] ^= (byte)(_lengthSoFar >> 0);
+//         output[13] ^= (byte)(_lengthSoFar >> 8);
+//         output[14] ^= (byte)(_lengthSoFar >> 16);
+//         output[15] ^= (byte)(_lengthSoFar >> 24);
+//         output[16] ^= (byte)(_lengthSoFar >> 32);
+//         output[17] ^= (byte)(_lengthSoFar >> 40);
+//         output[18] ^= (byte)(_lengthSoFar >> 48);
+//         output[19] ^= (byte)(_lengthSoFar >> 56);
+//
+//         return output;
+//     }
+// }
