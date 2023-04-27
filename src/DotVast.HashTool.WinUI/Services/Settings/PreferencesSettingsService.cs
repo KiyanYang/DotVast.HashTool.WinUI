@@ -1,8 +1,11 @@
 // Copyright (c) Kiyan Yang.
 // Licensed under the MIT License.
 
+using CommunityToolkit.Mvvm.Messaging;
+
 using DotVast.HashTool.WinUI.Constants;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
+using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 
 namespace DotVast.HashTool.WinUI.Services.Settings;
@@ -30,7 +33,29 @@ internal sealed partial class PreferencesSettingsService : BaseObservableSetting
 
     public override Task StartupAsync()
     {
+        RegisterMessages();
         return Task.CompletedTask;
+    }
+
+    private void RegisterMessages()
+    {
+        WeakReferenceMessenger.Default.RegisterV<IPreferencesSettingsService, HashSetting, HashFormat>(this, EMT.HashSetting_Format, static (r, o, _) =>
+        {
+            r.SaveHashSetting(o);
+        });
+        WeakReferenceMessenger.Default.RegisterV<IPreferencesSettingsService, HashSetting, bool>(this, EMT.HashSetting_IsChecked, static (r, o, _) =>
+        {
+            r.SaveHashSetting(o);
+        });
+        WeakReferenceMessenger.Default.RegisterV<IPreferencesSettingsService, HashSetting, bool>(this, EMT.HashSetting_IsEnabledForApp, static (r, o, _) =>
+        {
+            r.SaveHashSetting(o);
+        });
+
+        WeakReferenceMessenger.Default.RegisterV<IPreferencesSettingsService, HashSetting, bool>(this, EMT.HashSetting_IsEnabledForContextMenu, static (r, o, _) =>
+        {
+            r.SaveHashSetting(o, true);
+        });
     }
 
     #region HashSettings

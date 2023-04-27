@@ -104,7 +104,6 @@ public sealed partial class HomeViewModel : SimpleObservableRecipient, IViewMode
 
         Messenger.RegisterV<HomeViewModel, HashSetting, bool>(this, EMT.HashSetting_IsChecked, static (r, o, _) =>
         {
-            r._preferencesSettingsService.SaveHashSetting(o);
             r.CreateTaskCommand.NotifyCanExecuteChanged();
         });
     }
