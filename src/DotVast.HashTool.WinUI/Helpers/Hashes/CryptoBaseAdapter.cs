@@ -23,18 +23,21 @@ sealed file class CryptoBaseAdapter : HashAlgorithm
         HashSizeValue = _hash.Length * 8;
     }
 
-    protected sealed override void HashCore(byte[] array, int ibStart, int cbSize) =>
-        _hash.Update(array.AsSpan(ibStart, cbSize));
+    public override void Initialize() =>
+        _hash.Reset();
 
-    protected sealed override byte[] HashFinal()
+    protected override void HashCore(byte[] array, int ibStart, int cbSize) =>
+        _hash.Update(new ReadOnlySpan<byte>(array, ibStart, cbSize));
+
+    protected override void HashCore(ReadOnlySpan<byte> source) =>
+        _hash.Update(source);
+
+    protected override byte[] HashFinal()
     {
         var hashValue = new byte[_hash.Length];
         _hash.GetHash(hashValue.AsSpan());
         return hashValue;
     }
-
-    public sealed override void Initialize() =>
-        _hash.Reset();
 
     #region Finalizer, IDisposable
 

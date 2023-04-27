@@ -17,7 +17,7 @@ sealed file class NonCryptographicHashAlgorithmAdapter : HashAlgorithm
     private readonly NonCryptographicHashAlgorithm _hash;
     private readonly bool _reverse;
 
-    public NonCryptographicHashAlgorithmAdapter(NonCryptographicHashAlgorithm hash, bool reverse)
+    internal NonCryptographicHashAlgorithmAdapter(NonCryptographicHashAlgorithm hash, bool reverse)
     {
         _hash = hash;
         _reverse = reverse;
@@ -28,15 +28,18 @@ sealed file class NonCryptographicHashAlgorithmAdapter : HashAlgorithm
         _hash.Reset();
 
     protected override void HashCore(byte[] array, int ibStart, int cbSize) =>
-        _hash.Append(array.AsSpan(ibStart, cbSize));
+        _hash.Append(new ReadOnlySpan<byte>(array, ibStart, cbSize));
+
+    protected override void HashCore(ReadOnlySpan<byte> source) =>
+        _hash.Append(source);
 
     protected override byte[] HashFinal()
     {
-        var result = _hash.GetCurrentHash();
+        var hashValue = _hash.GetCurrentHash();
         if (_reverse)
         {
-            Array.Reverse(result);
+            Array.Reverse(hashValue);
         }
-        return result;
+        return hashValue;
     }
 }
