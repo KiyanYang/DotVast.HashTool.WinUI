@@ -112,7 +112,7 @@ internal static class HashKindExtensions
             HashKind.XxHash64 => new System.IO.Hashing.XxHash64().ToHashAlgorithm(),
             HashKind.XxHash3 => new System.IO.Hashing.XxHash3().ToHashAlgorithm(),
             HashKind.XxHash128 => new System.IO.Hashing.XxHash128().ToHashAlgorithm(),
-            HashKind.QuickXor => new QuickXorHash(),
+            HashKind.QuickXor => new Core.Hashes.QuickXorHash(),
             HashKind.Ed2k => new Ed2k(),
             HashKind.HAS_160 => HashLib4CSharp.Base.HashFactory.Crypto.CreateHAS160().ToHashAlgorithm(),
             _ => throw new ArgumentOutOfRangeException(nameof(hashKind)),

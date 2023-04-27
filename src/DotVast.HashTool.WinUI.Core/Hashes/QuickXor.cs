@@ -21,7 +21,7 @@ using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
-namespace DotVast.HashTool.WinUI.Helpers.Hashes;
+namespace DotVast.HashTool.WinUI.Core.Hashes;
 
 /// <summary>
 /// A quick, simple non-cryptographic hash algorithm that works by XORing the bytes in a circular-shifting fashion.
@@ -56,7 +56,7 @@ namespace DotVast.HashTool.WinUI.Helpers.Hashes;
 ///
 /// The final hash should xor the length of the data with the least significant bits of the resulting block.
 /// </summary>
-class QuickXorHash : HashAlgorithm
+public sealed class QuickXorHash : HashAlgorithm
 {
     private const int HashSizeInBytes = 20;
     private const int HashSizeInBits = HashSizeInBytes * 8;
@@ -80,7 +80,7 @@ class QuickXorHash : HashAlgorithm
 
     protected override void HashCore(byte[] array, int ibStart, int cbSize)
     {
-        int count = Vector<byte>.Count;
+        var count = Vector<byte>.Count;
         while (cbSize > count)
         {
             int blockExIndex;
@@ -103,7 +103,7 @@ class QuickXorHash : HashAlgorithm
             var blockExVecSpan = MemoryMarshal.Cast<byte, Vector<byte>>(_blockEx.AsSpan(blockExIndex));
             var arrayVecSpan = MemoryMarshal.Cast<byte, Vector<byte>>(array.AsSpan(ibStart, cbSize));
             var length = Math.Min(blockExVecSpan.Length, arrayVecSpan.Length);
-            for (var i = length - 1; i >= 0; i--)
+            for (var i = 0; i < length; i++)
             {
                 blockExVecSpan[i] ^= arrayVecSpan[i];
             }
@@ -132,12 +132,12 @@ class QuickXorHash : HashAlgorithm
     protected override byte[] HashFinal()
     {
         Span<byte> hash = stackalloc byte[HashSizeInBytes + 1];
-        for (int i = 0; i < BlockExLength; i++)
+        for (var i = 0; i < BlockExLength; i++)
         {
-            int shift = (i * Shift) % HashSizeInBits;
-            int shiftBytes = shift / 8;
-            int shiftBits = shift % 8;
-            int shifted = _blockEx[i] << shiftBits;
+            var shift = i * Shift % HashSizeInBits;
+            var shiftBytes = shift / 8;
+            var shiftBits = shift % 8;
+            var shifted = _blockEx[i] << shiftBits;
             hash[shiftBytes] ^= (byte)shifted;
             hash[shiftBytes + 1] ^= (byte)(shifted >> 8);
         }
@@ -156,7 +156,8 @@ class QuickXorHash : HashAlgorithm
     }
 }
 
-// First, Convert the original version to C#.
+// First, convert the original version to C#.
+// Second, perform low-level optimization with Vector<byte>.
 //
 // internal class QuickXor : HashAlgorithm
 // {
