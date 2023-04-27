@@ -32,8 +32,6 @@ public sealed class LicensesViewModel : IViewModel
         new("System.IO.Hashing", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/System.IO.Hashing"),
 
         new("WinUIEx", License.Apache_2_0, NugetLicenseUrl.Apache_2_0, "https://www.nuget.org/packages/WinUIEx"),
-
-        new("QuickXorHash.cs", License.MIT, "https://gist.github.com/rgregg/c07a91964300315c6c3e77f7b5b861e4", "https://gist.github.com/rgregg/c07a91964300315c6c3e77f7b5b861e4"),
     };
 }
 
