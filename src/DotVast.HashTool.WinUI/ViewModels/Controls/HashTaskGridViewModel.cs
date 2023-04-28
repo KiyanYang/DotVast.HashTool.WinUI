@@ -35,15 +35,15 @@ public sealed partial class HashTaskGridViewModel : ObservableObject
     [NotifyCanExecuteChangedFor(nameof(DeleteTaskCommand))]
     private HashTask? _hashTask;
 
-    partial void OnHashTaskChanging(HashTask? value)
+    partial void OnHashTaskChanging(HashTask? oldValue, HashTask? newValue)
     {
-        if (HashTask != null)
+        if (oldValue is not null)
         {
-            HashTask.PropertyChanged -= HashTask_PropertyChanged;
+            oldValue.PropertyChanged -= HashTask_PropertyChanged;
         }
-        if (value != null)
+        if (newValue is not null)
         {
-            value.PropertyChanged += HashTask_PropertyChanged;
+            newValue.PropertyChanged += HashTask_PropertyChanged;
         }
     }
 

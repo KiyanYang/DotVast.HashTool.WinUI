@@ -70,18 +70,18 @@ public sealed partial class ResultsViewModel : ObservableObject, IViewModel, INa
 
     #endregion INavigationAware
 
-    partial void OnHashTaskChanged(HashTask? value)
+    partial void OnHashTaskChanging(HashTask? oldValue, HashTask? newValue)
     {
-        if (HashTask != null)
+        if (oldValue is not null)
         {
-            HashTask.PropertyChanged -= HashTask_PropertyChanged;
+            oldValue.PropertyChanged -= HashTask_PropertyChanged;
         }
 
-        if (value != null)
+        if (newValue is not null)
         {
-            value.PropertyChanged += HashTask_PropertyChanged;
+            newValue.PropertyChanged += HashTask_PropertyChanged;
             HashResultsFilter = string.Empty;
-            HashResultsFilterIsEnabled = value.State != HashTaskState.Waiting && value.State != HashTaskState.Working;
+            HashResultsFilterIsEnabled = newValue.State != HashTaskState.Waiting && newValue.State != HashTaskState.Working;
         }
     }
 
