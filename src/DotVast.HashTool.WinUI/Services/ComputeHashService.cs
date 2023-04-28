@@ -19,15 +19,20 @@ internal sealed class ComputeHashService : IComputeHashService
     private const int BufferSize = 1024 * 1024;
     private const long ReportFrequency = 10;
 
+    private static int s_currentWorkerThreads = 4; // 设置初值为 4, 模拟其他服务所用的工作线程数
+
     private readonly IDispatchingService _dispatchingService = App.GetService<IDispatchingService>();
     private readonly IPreferencesSettingsService _preferencesSettingsService = App.GetService<IPreferencesSettingsService>();
 
     public async Task ComputeHashAsync(HashTask hashTask, ManualResetEventSlim mres, CancellationToken cancellationToken)
     {
         var startTimestamp = Stopwatch.GetTimestamp();
+        hashTask.ProgressVal = 0;
+        hashTask.ProgressMax = 0;
         hashTask.State = HashTaskState.Working;
         hashTask.Elapsed = default;
         hashTask.Results = default;
+        SetMinThreads(hashTask.SelectedHashKinds.Length);
 
         try
         {
@@ -70,8 +75,16 @@ internal sealed class ComputeHashService : IComputeHashService
         }
         finally
         {
+            SetMinThreads(-hashTask.SelectedHashKinds.Length);
             var elapsed = Stopwatch.GetElapsedTime(startTimestamp);
             _dispatchingService.TryEnqueue(() => hashTask.Elapsed = elapsed);
+        }
+
+        static void SetMinThreads(int workerThreadsDelta)
+        {
+            s_currentWorkerThreads += workerThreadsDelta;
+            var workerThreads = Math.Clamp(s_currentWorkerThreads, Helpers.RuntimeHelper.DefaultMinWorkerThreads, Helpers.RuntimeHelper.DefaultMaxWorkerThreads);
+            ThreadPool.SetMinThreads(workerThreads, Helpers.RuntimeHelper.DefaultMinCompletionPortThreads);
         }
     }
 
@@ -158,9 +171,6 @@ internal sealed class ComputeHashService : IComputeHashService
 
             #region 使用屏障并行计算哈希值
 
-            ThreadPool.GetMinThreads(out var minWorker, out var minIOC);
-            ThreadPool.SetMinThreads(hashAlgorithms.Length, minIOC);
-
             using Barrier barrier = new(hashAlgorithms.Length, (b) =>
             {
                 if (!mres.IsSet)
@@ -198,7 +208,6 @@ internal sealed class ComputeHashService : IComputeHashService
             }
 
             Parallel.ForEach(hashAlgorithms, Action);
-            ThreadPool.SetMinThreads(minWorker, minIOC);
 
             // 确保报告计算完成. 主要用于当 stream.Length == 0 时没有在 barrier.postPhaseAction 进行报告的情况.
             limiter.ReportFinal(() => hashTask.ProgressVal = progressOffset + 1);
