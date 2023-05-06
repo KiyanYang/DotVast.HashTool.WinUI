@@ -145,26 +145,31 @@ partial class HashService
             Name = "BLAKE3",
             IsEnabledForApp = true,
         },
-        [HashKind.RIPEMD_128] = new()
+        [HashKind.XxHash32] = new()
         {
-            Name = "RIPEMD-128",
-            Alias = new[] { "RIPEMD128" },
+            Name = "XXH32",
+            Alias = new[] { "xxHash32" },
+            IsEnabledForApp = true,
+            IsEnabledForContextMenu = true
         },
-        [HashKind.RIPEMD_160] = new()
+        [HashKind.XxHash64] = new()
         {
-            Name = "RIPEMD-160",
-            Alias = new[] { "RIPEMD160" },
+            Name = "XXH64",
+            Alias = new[] { "xxHash64" },
+            IsEnabledForApp = true,
+            IsEnabledForContextMenu = true
+        },
+        [HashKind.XxHash3] = new()
+        {
+            Name = "XXH3",
+            Alias = new[] { "xxHash3" },
             IsEnabledForApp = true,
         },
-        [HashKind.RIPEMD_256] = new()
+        [HashKind.XxHash128] = new()
         {
-            Name = "RIPEMD-256",
-            Alias = new[] { "RIPEMD256" },
-        },
-        [HashKind.RIPEMD_320] = new()
-        {
-            Name = "RIPEMD-320",
-            Alias = new[] { "RIPEMD320" },
+            Name = "XXH128",
+            Alias = new[] { "xxHash128" },
+            IsEnabledForApp = true,
         },
         [HashKind.Keccak_224] = new()
         {
@@ -191,31 +196,26 @@ partial class HashService
             Name = "Keccak-512",
             Alias = new[] { "Keccak512" },
         },
-        [HashKind.XxHash32] = new()
+        [HashKind.RIPEMD_128] = new()
         {
-            Name = "XXH32",
-            Alias = new[] { "xxHash32" },
-            IsEnabledForApp = true,
-            IsEnabledForContextMenu = true
+            Name = "RIPEMD-128",
+            Alias = new[] { "RIPEMD128" },
         },
-        [HashKind.XxHash64] = new()
+        [HashKind.RIPEMD_160] = new()
         {
-            Name = "XXH64",
-            Alias = new[] { "xxHash64" },
-            IsEnabledForApp = true,
-            IsEnabledForContextMenu = true
-        },
-        [HashKind.XxHash3] = new()
-        {
-            Name = "XXH3",
-            Alias = new[] { "xxHash3" },
+            Name = "RIPEMD-160",
+            Alias = new[] { "RIPEMD160" },
             IsEnabledForApp = true,
         },
-        [HashKind.XxHash128] = new()
+        [HashKind.RIPEMD_256] = new()
         {
-            Name = "XXH128",
-            Alias = new[] { "xxHash128" },
-            IsEnabledForApp = true,
+            Name = "RIPEMD-256",
+            Alias = new[] { "RIPEMD256" },
+        },
+        [HashKind.RIPEMD_320] = new()
+        {
+            Name = "RIPEMD-320",
+            Alias = new[] { "RIPEMD320" },
         },
         [HashKind.QuickXor] = new()
         {
