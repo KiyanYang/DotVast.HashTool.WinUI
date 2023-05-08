@@ -35,8 +35,23 @@ sealed file class CryptoBaseAdapter : HashAlgorithm
     protected override byte[] HashFinal()
     {
         var hashValue = new byte[_hash.Length];
-        _hash.GetHash(hashValue.AsSpan());
+        _hash.UpdateFinal(default, hashValue.AsSpan());
         return hashValue;
+    }
+
+    protected override bool TryHashFinal(Span<byte> destination, out int bytesWritten)
+    {
+        var hashSizeInBytes = _hash.Length;
+
+        if (destination.Length < hashSizeInBytes)
+        {
+            bytesWritten = 0;
+            return false;
+        }
+
+        _hash.UpdateFinal(default, destination);
+        bytesWritten = hashSizeInBytes;
+        return true;
     }
 
     #region Finalizer, IDisposable

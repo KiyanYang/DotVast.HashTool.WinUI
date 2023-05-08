@@ -42,4 +42,22 @@ sealed file class NonCryptographicHashAlgorithmAdapter : HashAlgorithm
         }
         return hashValue;
     }
+
+    protected override bool TryHashFinal(Span<byte> destination, out int bytesWritten)
+    {
+        var hashSizeInBytes = _hash.HashLengthInBytes;
+
+        if (destination.Length < hashSizeInBytes)
+        {
+            bytesWritten = 0;
+            return false;
+        }
+
+        bytesWritten = _hash.GetCurrentHash(destination);
+        if (_reverse)
+        {
+            destination[..bytesWritten].Reverse();
+        }
+        return true;
+    }
 }
