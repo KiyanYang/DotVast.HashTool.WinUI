@@ -8,7 +8,7 @@
     MinWidth="500"
     MinHeight="300"
     PersistenceId="MainWindow">
-    <windowex:WindowEx.Backdrop>
-        <windowex:MicaSystemBackdrop />
-    </windowex:WindowEx.Backdrop>
+    <Window.SystemBackdrop>
+        <MicaBackdrop />
+    </Window.SystemBackdrop>
 </windowex:WindowEx>
