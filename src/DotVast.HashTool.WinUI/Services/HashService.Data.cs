@@ -17,7 +17,7 @@ partial class HashService
         public bool IsEnabledForContextMenu { get; init; }
     }
 
-    private static readonly Dictionary<HashKind, HashSettingCore> _hashes = new()
+    private static readonly Dictionary<HashKind, HashSettingCore> s_hashes = new()
     {
         [HashKind.CRC_32_V42] = new()
         {

@@ -10,7 +10,7 @@ internal sealed partial class HashService : IHashService
 {
     public string GetName(HashKind hashKind)
     {
-        return _hashes[hashKind].Name;
+        return s_hashes[hashKind].Name;
     }
 
     public IReadOnlyList<HashKind> HashKinds { get; } = Enum.GetValues<HashKind>();
@@ -22,7 +22,7 @@ internal sealed partial class HashService : IHashService
             return kind;
         }
 
-        foreach (var (hashKind, hashSettingCore) in _hashes)
+        foreach (var (hashKind, hashSettingCore) in s_hashes)
         {
             if (hashSettingCore.Name.Equals(hashName, StringComparison.OrdinalIgnoreCase)
              || hashSettingCore.Alias.Any(h => StringComparer.OrdinalIgnoreCase.Equals(hashName, h)))
@@ -45,7 +45,7 @@ internal sealed partial class HashService : IHashService
 
         HashSetting Merge(HashKind defaultHashSettingKind, IList<HashSetting> hashSettings)
         {
-            var defaultHashSetting = _hashes[defaultHashSettingKind];
+            var defaultHashSetting = s_hashes[defaultHashSettingKind];
             var retHashSetting = new HashSetting()
             {
                 Kind = defaultHashSettingKind,
