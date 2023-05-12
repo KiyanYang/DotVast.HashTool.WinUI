@@ -16,7 +16,6 @@ jobs:
     strategy:
       matrix:
         configuration: [Debug, Release]
-        platform: [x64, arm64]
 
     runs-on:
       # For a list of available runner types, refer to https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
@@ -34,4 +33,4 @@ jobs:
 
       - name: Execute unit tests
         run: |
-          dotnet test ./src/DotVast.HashTool.WinUI.Core.Tests/DotVast.HashTool.WinUI.Core.Tests.csproj
+          dotnet test ./src/DotVast.HashTool.WinUI.Core.Tests/DotVast.HashTool.WinUI.Core.Tests.csproj --configuration ${{ matrix.configuration }}
