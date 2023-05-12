@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotVast.HashTool.WinUI.Core
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DotVast.HashTool.ContextMenu", "DotVast.HashTool.ContextMenu\DotVast.HashTool.ContextMenu.vcxproj", "{4A87C523-9E50-4DDA-85E2-ABBDFB75A3A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotVast.HashTool.WinUI.Core.Tests", "DotVast.HashTool.WinUI.Core.Tests\DotVast.HashTool.WinUI.Core.Tests.csproj", "{9A09DFA1-306D-454B-988D-2501D42F7B9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotVast.HashTool.WinUI.Core.Tests", "DotVast.HashTool.WinUI.Core.Tests\DotVast.HashTool.WinUI.Core.Tests.csproj", "{9A09DFA1-306D-454B-988D-2501D42F7B9A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EA0BC8C7-FAFF-439E-A782-F079001D60BF}"
 	ProjectSection(SolutionItems) = preProject
@@ -40,14 +40,14 @@ Global
 		{6565662E-7355-423B-8C81-073CF1A74350}.Release|x64.ActiveCfg = Release|x64
 		{6565662E-7355-423B-8C81-073CF1A74350}.Release|x64.Build.0 = Release|x64
 		{6565662E-7355-423B-8C81-073CF1A74350}.Release|x64.Deploy.0 = Release|x64
-		{9595E053-0B9C-4A69-9653-C4C5F975AAA8}.Debug|arm64.ActiveCfg = Debug|arm64
-		{9595E053-0B9C-4A69-9653-C4C5F975AAA8}.Debug|arm64.Build.0 = Debug|arm64
-		{9595E053-0B9C-4A69-9653-C4C5F975AAA8}.Debug|x64.ActiveCfg = Debug|x64
-		{9595E053-0B9C-4A69-9653-C4C5F975AAA8}.Debug|x64.Build.0 = Debug|x64
-		{9595E053-0B9C-4A69-9653-C4C5F975AAA8}.Release|arm64.ActiveCfg = Release|arm64
-		{9595E053-0B9C-4A69-9653-C4C5F975AAA8}.Release|arm64.Build.0 = Release|arm64
-		{9595E053-0B9C-4A69-9653-C4C5F975AAA8}.Release|x64.ActiveCfg = Release|x64
-		{9595E053-0B9C-4A69-9653-C4C5F975AAA8}.Release|x64.Build.0 = Release|x64
+		{9595E053-0B9C-4A69-9653-C4C5F975AAA8}.Debug|arm64.ActiveCfg = Debug|Any CPU
+		{9595E053-0B9C-4A69-9653-C4C5F975AAA8}.Debug|arm64.Build.0 = Debug|Any CPU
+		{9595E053-0B9C-4A69-9653-C4C5F975AAA8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9595E053-0B9C-4A69-9653-C4C5F975AAA8}.Debug|x64.Build.0 = Debug|Any CPU
+		{9595E053-0B9C-4A69-9653-C4C5F975AAA8}.Release|arm64.ActiveCfg = Release|Any CPU
+		{9595E053-0B9C-4A69-9653-C4C5F975AAA8}.Release|arm64.Build.0 = Release|Any CPU
+		{9595E053-0B9C-4A69-9653-C4C5F975AAA8}.Release|x64.ActiveCfg = Release|Any CPU
+		{9595E053-0B9C-4A69-9653-C4C5F975AAA8}.Release|x64.Build.0 = Release|Any CPU
 		{4A87C523-9E50-4DDA-85E2-ABBDFB75A3A4}.Debug|arm64.ActiveCfg = Debug|arm64
 		{4A87C523-9E50-4DDA-85E2-ABBDFB75A3A4}.Debug|arm64.Build.0 = Debug|arm64
 		{4A87C523-9E50-4DDA-85E2-ABBDFB75A3A4}.Debug|x64.ActiveCfg = Debug|x64
@@ -56,14 +56,14 @@ Global
 		{4A87C523-9E50-4DDA-85E2-ABBDFB75A3A4}.Release|arm64.Build.0 = Release|arm64
 		{4A87C523-9E50-4DDA-85E2-ABBDFB75A3A4}.Release|x64.ActiveCfg = Release|x64
 		{4A87C523-9E50-4DDA-85E2-ABBDFB75A3A4}.Release|x64.Build.0 = Release|x64
-		{9A09DFA1-306D-454B-988D-2501D42F7B9A}.Debug|arm64.ActiveCfg = Debug|arm64
-		{9A09DFA1-306D-454B-988D-2501D42F7B9A}.Debug|arm64.Build.0 = Debug|arm64
-		{9A09DFA1-306D-454B-988D-2501D42F7B9A}.Debug|x64.ActiveCfg = Debug|x64
-		{9A09DFA1-306D-454B-988D-2501D42F7B9A}.Debug|x64.Build.0 = Debug|x64
-		{9A09DFA1-306D-454B-988D-2501D42F7B9A}.Release|arm64.ActiveCfg = Release|arm64
-		{9A09DFA1-306D-454B-988D-2501D42F7B9A}.Release|arm64.Build.0 = Release|arm64
-		{9A09DFA1-306D-454B-988D-2501D42F7B9A}.Release|x64.ActiveCfg = Release|x64
-		{9A09DFA1-306D-454B-988D-2501D42F7B9A}.Release|x64.Build.0 = Release|x64
+		{9A09DFA1-306D-454B-988D-2501D42F7B9A}.Debug|arm64.ActiveCfg = Debug|Any CPU
+		{9A09DFA1-306D-454B-988D-2501D42F7B9A}.Debug|arm64.Build.0 = Debug|Any CPU
+		{9A09DFA1-306D-454B-988D-2501D42F7B9A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9A09DFA1-306D-454B-988D-2501D42F7B9A}.Debug|x64.Build.0 = Debug|Any CPU
+		{9A09DFA1-306D-454B-988D-2501D42F7B9A}.Release|arm64.ActiveCfg = Release|Any CPU
+		{9A09DFA1-306D-454B-988D-2501D42F7B9A}.Release|arm64.Build.0 = Release|Any CPU
+		{9A09DFA1-306D-454B-988D-2501D42F7B9A}.Release|x64.ActiveCfg = Release|Any CPU
+		{9A09DFA1-306D-454B-988D-2501D42F7B9A}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

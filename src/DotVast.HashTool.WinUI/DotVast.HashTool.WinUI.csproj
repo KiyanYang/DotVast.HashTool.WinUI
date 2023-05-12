@@ -9,8 +9,6 @@
     <PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
     <RootNamespace>DotVast.HashTool.WinUI</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
     <NoWarn>$(NoWarn);SYSLIB1037</NoWarn>
   </PropertyGroup>
 
