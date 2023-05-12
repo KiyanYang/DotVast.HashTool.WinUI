@@ -86,7 +86,7 @@ internal static class HashKindExtensions
             HashKind.SHA3_256 => HashLib4CSharp.Base.HashFactory.Crypto.CreateSHA3_256().ToHashAlgorithm(),
             HashKind.SHA3_384 => HashLib4CSharp.Base.HashFactory.Crypto.CreateSHA3_384().ToHashAlgorithm(),
             HashKind.SHA3_512 => HashLib4CSharp.Base.HashFactory.Crypto.CreateSHA3_512().ToHashAlgorithm(),
-            HashKind.SM3 => new CryptoBase.Digests.SM3.SM3Digest().ToHashAlgorithm(),
+            HashKind.SM3 => new Core.Hashes.SM3(),
             HashKind.BLAKE2b_160 => HashLib4CSharp.Base.HashFactory.Crypto.CreateBlake2B_160().ToHashAlgorithm(),
             HashKind.BLAKE2b_256 => HashLib4CSharp.Base.HashFactory.Crypto.CreateBlake2B_256().ToHashAlgorithm(),
             HashKind.BLAKE2b_384 => HashLib4CSharp.Base.HashFactory.Crypto.CreateBlake2B_384().ToHashAlgorithm(),

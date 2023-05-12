@@ -15,8 +15,6 @@ public sealed class LicensesViewModel : IViewModel
         new("CommunityToolkit.WinUI.UI.Behaviors", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/CommunityToolkit.WinUI.UI.Behaviors"),
         new("CommunityToolkit.WinUI.UI.Controls.Markdown", License.MIT, NugetLicenseUrl.MIT,"https://www.nuget.org/packages/CommunityToolkit.WinUI.UI.Controls.Markdown"),
 
-        new("CryptoBase", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/CryptoBase"),
-
         new("DotVast.Toolkit.StringResource", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/DotVast.Toolkit.StringResource"),
 
         new("HashLib4CSharp", License.MIT, "https://www.nuget.org/packages/HashLib4CSharp/1.5.0/License", "https://www.nuget.org/packages/HashLib4CSharp"),
