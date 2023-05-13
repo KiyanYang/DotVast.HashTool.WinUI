@@ -111,7 +111,7 @@ internal static class HashKindExtensions
             HashKind.RIPEMD_160 => HashLib4CSharp.Base.HashFactory.Crypto.CreateRIPEMD160().ToHashAlgorithm(),
             HashKind.RIPEMD_256 => HashLib4CSharp.Base.HashFactory.Crypto.CreateRIPEMD256().ToHashAlgorithm(),
             HashKind.RIPEMD_320 => HashLib4CSharp.Base.HashFactory.Crypto.CreateRIPEMD320().ToHashAlgorithm(),
-            HashKind.QuickXor => new Core.Hashes.QuickXorHash(),
+            HashKind.QuickXor => new Core.Hashes.QuickXor(),
             HashKind.Ed2k => new Ed2k(),
             HashKind.HAS_160 => HashLib4CSharp.Base.HashFactory.Crypto.CreateHAS160().ToHashAlgorithm(),
             _ => throw new ArgumentOutOfRangeException(nameof(hashKind)),

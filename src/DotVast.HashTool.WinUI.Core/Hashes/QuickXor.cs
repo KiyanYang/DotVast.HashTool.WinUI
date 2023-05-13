@@ -17,7 +17,9 @@
 // OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 // PERFORMANCE OF THIS SOFTWARE.
 
+using System.Buffers.Binary;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
@@ -28,16 +30,20 @@ namespace DotVast.HashTool.WinUI.Core.Hashes;
 ///
 /// A high level description of the algorithm without the introduction of the length is as follows:
 ///
+/// <code><![CDATA[
 /// Let's say a "block" is a 160 bit block of bits (e.g. byte[20]).
 ///
 ///   method block zero():
 ///     returns a block with all zero bits.
 ///
+///   method block reverse(block b)
+///     returns a block with all of the bytes reversed (00010203... => ...03020100)
+///
 ///   method block extend8(byte b):
 ///     returns a block with all zero bits except for the lower 8 bits which come from b.
 ///
 ///   method block extend64(int64 i):
-///     returns a block of all zero bits except for the lower 64 bits which come from i.
+///     returns a block of all zero bits except for the lower 64 bits which come from i and are in little-endian byte order.
 ///
 ///   method block rotate(block bl, int n):
 ///     returns bl rotated left by n bits.
@@ -45,18 +51,19 @@ namespace DotVast.HashTool.WinUI.Core.Hashes;
 ///   method block xor(block bl1, block bl2):
 ///     returns a bitwise xor of bl1 with bl2
 ///
-///   method block XorHash0(byte rgb[], int cb):
+///   method block XorHash0(byte[] rgb):
 ///     block ret = zero()
-///     for (int i = 0; i &lt; cb; i ++)
+///     for (int i = 0; i < rgb.Length; i ++)
 ///       ret = xor(ret, rotate(extend8(rgb[i]), i * 11))
-///     returns ret
+///     returns reverse(ret)
 ///
-///   entrypoint block XorHash(byte rgb[], int cb):
-///     returns xor(extend64(cb), XorHash0(rgb, cb))
+///   entrypoint block XorHash(byte[] rgb):
+///     returns xor(extend64(rgb.Length), XorHash0(rgb))
 ///
 /// The final hash should xor the length of the data with the least significant bits of the resulting block.
+/// ]]></code>
 /// </summary>
-public sealed class QuickXorHash : HashAlgorithm
+public sealed class QuickXor : HashAlgorithm
 {
     private const int HashSizeInBytes = 20;
     private const int HashSizeInBits = HashSizeInBytes * 8;
@@ -66,7 +73,13 @@ public sealed class QuickXorHash : HashAlgorithm
     private readonly byte[] _blockEx = new byte[BlockExLength];
     private long _lengthSoFar;
 
-    public QuickXorHash()
+    private int _BlockExIndex
+    {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        get => (int)(_lengthSoFar % BlockExLength);
+    }
+
+    public QuickXor()
     {
         HashSizeValue = HashSizeInBytes;
         Initialize();
@@ -83,24 +96,7 @@ public sealed class QuickXorHash : HashAlgorithm
         var count = Vector<byte>.Count;
         while (cbSize > count)
         {
-            int blockExIndex;
-
-            #region Normal
-            //while ((blockExIndex = (int)(_lengthSoFar % BlockExLength)) < BlockExLength - count && cbSize > count)
-            //{
-            //    var vec1 = new Vector<byte>(_blockEx, blockExIndex);
-            //    var vec2 = new Vector<byte>(array, ibStart);
-            //    (vec1 ^ vec2).CopyTo(_blockEx, blockExIndex);
-
-            //    _lengthSoFar += count;
-            //    ibStart += count;
-            //    cbSize -= count;
-            //}
-            #endregion Normal
-
-            #region NoCopy
-            blockExIndex = (int)(_lengthSoFar % BlockExLength);
-            var blockExVecSpan = MemoryMarshal.Cast<byte, Vector<byte>>(_blockEx.AsSpan(blockExIndex));
+            var blockExVecSpan = MemoryMarshal.Cast<byte, Vector<byte>>(_blockEx.AsSpan(_BlockExIndex));
             var arrayVecSpan = MemoryMarshal.Cast<byte, Vector<byte>>(array.AsSpan(ibStart, cbSize));
             var length = Math.Min(blockExVecSpan.Length, arrayVecSpan.Length);
             for (var i = 0; i < length; i++)
@@ -110,11 +106,10 @@ public sealed class QuickXorHash : HashAlgorithm
             _lengthSoFar += length * count;
             ibStart += length * count;
             cbSize -= length * count;
-            #endregion NoCopy
 
-            while (_lengthSoFar % BlockExLength != 0 && cbSize > 0)
+            while (_BlockExIndex != 0 && cbSize > 0)
             {
-                _blockEx[_lengthSoFar % BlockExLength] ^= array[ibStart];
+                _blockEx[_BlockExIndex] ^= array[ibStart];
                 _lengthSoFar++;
                 ibStart++;
                 cbSize--;
@@ -122,7 +117,7 @@ public sealed class QuickXorHash : HashAlgorithm
         }
         while (cbSize > 0)
         {
-            _blockEx[_lengthSoFar % BlockExLength] ^= array[ibStart];
+            _blockEx[_BlockExIndex] ^= array[ibStart];
             _lengthSoFar++;
             ibStart++;
             cbSize--;
@@ -143,14 +138,9 @@ public sealed class QuickXorHash : HashAlgorithm
         }
         hash[0] ^= hash[20];
 
-        hash[12] ^= (byte)(_lengthSoFar >> 0);
-        hash[13] ^= (byte)(_lengthSoFar >> 8);
-        hash[14] ^= (byte)(_lengthSoFar >> 16);
-        hash[15] ^= (byte)(_lengthSoFar >> 24);
-        hash[16] ^= (byte)(_lengthSoFar >> 32);
-        hash[17] ^= (byte)(_lengthSoFar >> 40);
-        hash[18] ^= (byte)(_lengthSoFar >> 48);
-        hash[19] ^= (byte)(_lengthSoFar >> 56);
+        Unsafe.As<byte, long>(ref hash[12]) ^= BitConverter.IsLittleEndian
+            ? _lengthSoFar
+            : BinaryPrimitives.ReverseEndianness(_lengthSoFar);
 
         return hash[..HashSizeInBytes].ToArray();
     }
