@@ -22,6 +22,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotVast.HashTool.WinUI.Core
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotVast.HashTool.NativeCrypto", "DotVast.HashTool.NativeCrypto\DotVast.HashTool.NativeCrypto.csproj", "{8A0726FA-6411-44B0-A0BC-AA822216894F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotVast.HashTool.SourceGenerators", "DotVast.HashTool.SourceGenerators\DotVast.HashTool.SourceGenerators.csproj", "{48BBCD72-B4A2-4B2C-88EC-A1E1AE95A214}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|arm64 = Debug|arm64
@@ -74,6 +76,14 @@ Global
 		{8A0726FA-6411-44B0-A0BC-AA822216894F}.Release|arm64.Build.0 = Release|arm64
 		{8A0726FA-6411-44B0-A0BC-AA822216894F}.Release|x64.ActiveCfg = Release|x64
 		{8A0726FA-6411-44B0-A0BC-AA822216894F}.Release|x64.Build.0 = Release|x64
+		{48BBCD72-B4A2-4B2C-88EC-A1E1AE95A214}.Debug|arm64.ActiveCfg = Release|Any CPU
+		{48BBCD72-B4A2-4B2C-88EC-A1E1AE95A214}.Debug|arm64.Build.0 = Release|Any CPU
+		{48BBCD72-B4A2-4B2C-88EC-A1E1AE95A214}.Debug|x64.ActiveCfg = Release|Any CPU
+		{48BBCD72-B4A2-4B2C-88EC-A1E1AE95A214}.Debug|x64.Build.0 = Release|Any CPU
+		{48BBCD72-B4A2-4B2C-88EC-A1E1AE95A214}.Release|arm64.ActiveCfg = Release|Any CPU
+		{48BBCD72-B4A2-4B2C-88EC-A1E1AE95A214}.Release|arm64.Build.0 = Release|Any CPU
+		{48BBCD72-B4A2-4B2C-88EC-A1E1AE95A214}.Release|x64.ActiveCfg = Release|Any CPU
+		{48BBCD72-B4A2-4B2C-88EC-A1E1AE95A214}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
