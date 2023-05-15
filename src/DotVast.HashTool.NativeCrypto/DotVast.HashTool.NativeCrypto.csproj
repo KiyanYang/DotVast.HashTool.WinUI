@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Platforms>x64;arm64</Platforms>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    
+    <NativeLibName>native_crypto</NativeLibName>
+    <NativeLibTarget>x86_64-pc-windows-msvc</NativeLibTarget>
+    <NativeLibTarget Condition="'$(Platform)' == 'arm64'">aarch64-pc-windows-msvc</NativeLibTarget>
+  </PropertyGroup>
+
+  <Target Name="BuildNative" BeforeTargets="BeforeBuild">
+    <Exec Command="rustup target add $(NativeLibTarget)" />
+    <Exec Condition="'$(Configuration)' == 'Debug'" Command="cargo build --target $(NativeLibTarget)" WorkingDirectory=".\$(NativeLibName)" />
+    <Exec Condition="'$(Configuration)' != 'Debug'" Command="cargo build --target $(NativeLibTarget) --release" WorkingDirectory=".\$(NativeLibName)" />
+  </Target>
+
+  <ItemGroup>
+    <None Include=".\$(NativeLibName)\target\$(NativeLibTarget)\$(Configuration)\$(NativeLibName).dll" Link="$(NativeLibName).dll" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+
+</Project>
