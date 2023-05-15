@@ -14,3 +14,6 @@ strip = true
 [dependencies]
 paste = "1.0"
 digest = "0.10"
+blake3 = { version = "1.3", features = ["traits-preview"] }
+ripemd = "0.1"
+sm3 = "0.4"
