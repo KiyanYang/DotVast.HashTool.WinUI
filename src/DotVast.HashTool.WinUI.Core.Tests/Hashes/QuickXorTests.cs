@@ -7,14 +7,14 @@ using DotVast.HashTool.WinUI.Core.Hashes;
 
 namespace DotVast.HashTool.WinUI.Core.Tests.Hashes;
 
-public class QuickXorTests : HashTestDriver<QuickXorTests>, ITest<QuickXorTests>
+public class QuickXorTests : HashTestDriver<QuickXorTests>, IHashTest<QuickXorTests>
 {
-    protected override HashAlgorithm Create() => new QuickXor();
+    public static HashAlgorithm Create() => new QuickXor();
 
     [Fact]
     public static void QuickXor_HashSize()
     {
-        var quickXor = new QuickXor();
+        var quickXor = Create();
 
         Assert.Equal(20, quickXor.HashSize);
     }
