@@ -7,14 +7,14 @@ using DotVast.HashTool.WinUI.Core.Hashes;
 
 namespace DotVast.HashTool.WinUI.Core.Tests.Hashes;
 
-public class SM3Tests : HashTestDriver<SM3Tests>, ITest<SM3Tests>
+public class SM3Tests : HashTestDriver<SM3Tests>, IHashTest<SM3Tests>
 {
-    protected override HashAlgorithm Create() => new SM3();
+    public static HashAlgorithm Create() => new SM3();
 
     [Fact]
     public static void SM3_HashSize()
     {
-        var sm3 = new SM3();
+        var sm3 = Create();
 
         Assert.Equal(32, sm3.HashSize);
     }

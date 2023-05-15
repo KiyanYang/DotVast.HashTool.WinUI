@@ -3,14 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotVast.HashTool.WinUI", "DotVast.HashTool.WinUI\DotVast.HashTool.WinUI.csproj", "{6565662E-7355-423B-8C81-073CF1A74350}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotVast.HashTool.WinUI.Core", "DotVast.HashTool.WinUI.Core\DotVast.HashTool.WinUI.Core.csproj", "{9595E053-0B9C-4A69-9653-C4C5F975AAA8}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DotVast.HashTool.ContextMenu", "DotVast.HashTool.ContextMenu\DotVast.HashTool.ContextMenu.vcxproj", "{4A87C523-9E50-4DDA-85E2-ABBDFB75A3A4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotVast.HashTool.WinUI.Core.Tests", "DotVast.HashTool.WinUI.Core.Tests\DotVast.HashTool.WinUI.Core.Tests.csproj", "{9A09DFA1-306D-454B-988D-2501D42F7B9A}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EA0BC8C7-FAFF-439E-A782-F079001D60BF}"
 	ProjectSection(SolutionItems) = preProject
 		.vsconfig = .vsconfig
@@ -19,6 +11,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		nuget.config = nuget.config
 		Settings.XamlStyler = Settings.XamlStyler
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotVast.HashTool.WinUI", "DotVast.HashTool.WinUI\DotVast.HashTool.WinUI.csproj", "{6565662E-7355-423B-8C81-073CF1A74350}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotVast.HashTool.WinUI.Core", "DotVast.HashTool.WinUI.Core\DotVast.HashTool.WinUI.Core.csproj", "{9595E053-0B9C-4A69-9653-C4C5F975AAA8}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DotVast.HashTool.ContextMenu", "DotVast.HashTool.ContextMenu\DotVast.HashTool.ContextMenu.vcxproj", "{4A87C523-9E50-4DDA-85E2-ABBDFB75A3A4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotVast.HashTool.WinUI.Core.Tests", "DotVast.HashTool.WinUI.Core.Tests\DotVast.HashTool.WinUI.Core.Tests.csproj", "{9A09DFA1-306D-454B-988D-2501D42F7B9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
