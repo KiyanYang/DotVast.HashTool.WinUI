@@ -17,16 +17,11 @@ Push-Location (Split-Path $PSScriptRoot -Parent)
 # 创建临时目录
 $tmpAppxPackageDir = New-Item -Path (New-Guid).Guid -ItemType Directory
 
-# Restore
-# https://learn.microsoft.com/en-us/nuget/reference/msbuild-targets#restoring-packagereference-and-packagesconfig-projects-with-msbuild
+# Restore https://learn.microsoft.com/en-us/nuget/reference/msbuild-targets#restoring-packagereference-and-packagesconfig-projects-with-msbuild
+# Build https://learn.microsoft.com/en-us/windows/msix/desktop/azure-dev-ops
 & msbuild '.\src\DotVast.HashTool.WinUI.sln' `
-    -t:Restore `
+    -restore `
     -p:RestorePackagesConfig=true `
-    -p:Configuration=$Configuration `
-    -p:Platform=$Platform
-
-# 构建 MSIX 侧载包
-& msbuild '.\src\DotVast.HashTool.WinUI\DotVast.HashTool.WinUI.csproj' `
     -p:Configuration=$Configuration `
     -p:Platform=$Platform `
     -p:AppxBundle=Never `
