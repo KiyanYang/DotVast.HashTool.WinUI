@@ -24,8 +24,15 @@ public abstract class NativeCryptoBase : HashAlgorithm
     protected abstract void Free();
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private void Update(ReadOnlySpan<byte> source) =>
+    private void Update(ReadOnlySpan<byte> source)
+    {
+        if (source.IsEmpty)
+        {
+            return;
+        }
+
         Update(MemoryMarshal.GetReference(source), (nuint)source.Length);
+    }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Finalize(Span<byte> output)
@@ -55,7 +62,7 @@ public abstract class NativeCryptoBase : HashAlgorithm
     protected sealed override byte[] HashFinal()
     {
         ObjectDisposedException.ThrowIf(_disposed, this);
-        var ret = new byte[HashSize];
+        var ret = GC.AllocateUninitializedArray<byte>(HashSize);
         Finalize(ret);
         return ret;
     }
