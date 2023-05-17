@@ -68,8 +68,8 @@ public sealed class NativeCryptoGenerator : IIncrementalGenerator
 
                 protected override nuint New() => NativeMethods.{{fnPrefix}}_new();
                 protected override void Reset() => NativeMethods.{{fnPrefix}}_reset(_hasher);
-                protected override void Update(in byte input, nuint size) => NativeMethods.{{fnPrefix}}_update(_hasher, input, size);
-                protected override void Finalize(ref byte output, nuint size) => NativeMethods.{{fnPrefix}}_finalize(_hasher, ref output, size);
+                protected override void Update(in byte input, int size) => NativeMethods.{{fnPrefix}}_update(_hasher, input, size);
+                protected override void Finalize(ref byte output, int size) => NativeMethods.{{fnPrefix}}_finalize(_hasher, ref output, size);
                 protected override void Free() => NativeMethods.{{fnPrefix}}_free(_hasher);
             }
 
@@ -82,10 +82,10 @@ public sealed class NativeCryptoGenerator : IIncrementalGenerator
                 internal static extern void {{fnPrefix}}_reset(nuint ptr);
 
                 [System.Runtime.InteropServices.DllImportAttribute(DllName, EntryPoint = "{{fnPrefix}}_update", ExactSpelling = true)]
-                internal static extern void {{fnPrefix}}_update(nuint ptr, in byte input, nuint size);
+                internal static extern void {{fnPrefix}}_update(nuint ptr, in byte input, int size);
 
                 [System.Runtime.InteropServices.DllImportAttribute(DllName, EntryPoint = "{{fnPrefix}}_finalize", ExactSpelling = true)]
-                internal static extern void {{fnPrefix}}_finalize(nuint ptr, ref byte output, nuint size);
+                internal static extern void {{fnPrefix}}_finalize(nuint ptr, ref byte output, int size);
 
                 [System.Runtime.InteropServices.DllImportAttribute(DllName, EntryPoint = "{{fnPrefix}}_free", ExactSpelling = true)]
                 internal static extern void {{fnPrefix}}_free(nuint ptr);

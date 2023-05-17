@@ -9,20 +9,20 @@ pub unsafe fn reset<T: Reset>(hasher: *mut T) {
     hasher.reset();
 }
 
-pub unsafe fn update<T: Digest>(hasher: *mut T, ptr: *const u8, size: usize) {
+pub unsafe fn update<T: Digest>(hasher: *mut T, ptr: *const u8, size: i32) {
     let hasher = &mut *hasher;
-    let slice = std::slice::from_raw_parts(ptr, size);
+    let slice = std::slice::from_raw_parts(ptr, size.try_into().unwrap());
     hasher.update(slice);
 }
 
-pub unsafe fn finalize<T: FixedOutputReset>(hasher: *mut T, ptr: *mut u8, size: usize) {
+pub unsafe fn finalize<T: FixedOutputReset>(hasher: *mut T, ptr: *mut u8, size: i32) {
     let hasher = &mut *hasher;
-    let slice = std::slice::from_raw_parts_mut(ptr, size);
+    let slice = std::slice::from_raw_parts_mut(ptr, size.try_into().unwrap());
     hasher.finalize_into_reset(slice.into());
 }
 
-pub fn free<T>(raw: *mut T) {
-    unsafe { Box::from_raw(raw) };
+pub unsafe fn free<T>(raw: *mut T) {
+    drop(Box::from_raw(raw));
 }
 
 macro_rules! impl_hasher {
@@ -41,12 +41,12 @@ macro_rules! impl_hasher {
             }
 
             #[no_mangle]
-            pub unsafe fn [<$fn_prefix _update>](hasher: *mut $hasher, ptr: *const u8, size: usize) {
+            pub unsafe fn [<$fn_prefix _update>](hasher: *mut $hasher, ptr: *const u8, size: i32) {
                 crate::hasher::update(hasher, ptr, size);
             }
 
             #[no_mangle]
-            pub unsafe fn [<$fn_prefix _finalize>](hasher: *mut $hasher, ptr: *mut u8, size: usize) {
+            pub unsafe fn [<$fn_prefix _finalize>](hasher: *mut $hasher, ptr: *mut u8, size: i32) {
                 crate::hasher::finalize(hasher, ptr, size);
             }
 

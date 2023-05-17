@@ -19,8 +19,8 @@ public abstract class NativeCryptoBase : HashAlgorithm
 
     protected abstract nuint New();
     protected abstract void Reset();
-    protected abstract void Update(in byte input, nuint size);
-    protected abstract void Finalize(ref byte output, nuint size);
+    protected abstract void Update(in byte input, int size);
+    protected abstract void Finalize(ref byte output, int size);
     protected abstract void Free();
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -31,14 +31,14 @@ public abstract class NativeCryptoBase : HashAlgorithm
             return;
         }
 
-        Update(MemoryMarshal.GetReference(source), (nuint)source.Length);
+        Update(MemoryMarshal.GetReference(source), source.Length);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Finalize(Span<byte> output)
     {
         Debug.Assert(output.Length == HashSize);
-        Finalize(ref MemoryMarshal.GetReference(output), (nuint)HashSize);
+        Finalize(ref MemoryMarshal.GetReference(output), HashSize);
     }
 
     public sealed override void Initialize()
