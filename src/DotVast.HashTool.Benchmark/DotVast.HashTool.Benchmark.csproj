@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <Platforms>x64;arm64</Platforms>
+    <TargetFramework>net7.0</TargetFramework>
+    <NoWarn>$(NoWarn);CA1050</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.5" />
+    <PackageReference Include="HashLib4CSharp" Version="1.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DotVast.HashTool.NativeCrypto\DotVast.HashTool.NativeCrypto.csproj" />
+    <ProjectReference Include="..\DotVast.HashTool.WinUI.Core\DotVast.HashTool.WinUI.Core.csproj" />
+  </ItemGroup>
+
+</Project>
