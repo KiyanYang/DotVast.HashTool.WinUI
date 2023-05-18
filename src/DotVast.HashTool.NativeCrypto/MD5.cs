@@ -3,7 +3,7 @@
 
 namespace DotVast.HashTool.NativeCrypto;
 
-[NativeCrypto("md5", 16)]
-public partial class MD5 : NativeCryptoBase
+[NativeCrypto("md5", "md5", 16)]
+public partial class MD5
 {
 }

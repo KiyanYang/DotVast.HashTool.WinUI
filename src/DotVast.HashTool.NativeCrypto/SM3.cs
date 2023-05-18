@@ -3,7 +3,7 @@
 
 namespace DotVast.HashTool.NativeCrypto;
 
-[NativeCrypto("sm3", 32)]
-public partial class SM3 : NativeCryptoBase
+[NativeCrypto("sm3", "sm3", 32)]
+public partial class SM3
 {
 }

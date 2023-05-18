@@ -4,16 +4,19 @@
     <TargetFramework>net7.0</TargetFramework>
     <Platforms>x64;arm64</Platforms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    
+
     <NativeLibName>native_crypto</NativeLibName>
     <NativeLibTarget>x86_64-pc-windows-msvc</NativeLibTarget>
     <NativeLibTarget Condition="'$(Platform)' == 'arm64'">aarch64-pc-windows-msvc</NativeLibTarget>
+
+    <NativeLibBuildCommand>cargo build --target $(NativeLibTarget)</NativeLibBuildCommand>
+    <NativeLibBuildCommand Condition="'$(Configuration)' != 'Debug'">$(NativeLibBuildCommand) --release</NativeLibBuildCommand>
+    <NativeLibBuildCommand Condition="'$(DotVast_CIRelease)' == 'true'">$(NativeLibBuildCommand) --no-default-features --features "$(NativeLibEnabledHasher)"</NativeLibBuildCommand>
   </PropertyGroup>
 
   <Target Name="BuildNative" BeforeTargets="BeforeBuild">
     <Exec Command="rustup target add $(NativeLibTarget)" />
-    <Exec Condition="'$(Configuration)' == 'Debug'" Command="cargo build --target $(NativeLibTarget)" WorkingDirectory=".\$(NativeLibName)" />
-    <Exec Condition="'$(Configuration)' != 'Debug'" Command="cargo build --target $(NativeLibTarget) --release" WorkingDirectory=".\$(NativeLibName)" />
+    <Exec Command="$(NativeLibBuildCommand)" WorkingDirectory=".\$(NativeLibName)" />
   </Target>
 
   <ItemGroup>

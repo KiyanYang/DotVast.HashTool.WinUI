@@ -3,7 +3,7 @@
 
 namespace DotVast.HashTool.NativeCrypto;
 
-[NativeCrypto("sha1", "sha1", 20)]
-public partial class SHA1
+[NativeCrypto("md4", "md4", 16)]
+public partial class MD4
 {
 }
