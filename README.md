@@ -51,5 +51,6 @@ DotVast.HashTool.WinUI is licensed under the MIT License. See [LICENSE](./LICENS
 
 ## Acknowledgements
 
+- https://www.cloudflare.com
 - https://www.flaticon.com/free-icon/documents_4725436
 - https://www.flaticon.com/free-icon/fingerprint-scan_9356557
