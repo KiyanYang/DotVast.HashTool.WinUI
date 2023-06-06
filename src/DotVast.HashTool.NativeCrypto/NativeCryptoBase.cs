@@ -31,14 +31,14 @@ public abstract class NativeCryptoBase : HashAlgorithm
             return;
         }
 
-        Update(MemoryMarshal.GetReference(source), source.Length);
+        Update(in MemoryMarshal.GetReference(source), source.Length);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void Finalize(Span<byte> output)
     {
-        Debug.Assert(output.Length == HashSize);
-        Finalize(ref MemoryMarshal.GetReference(output), HashSize);
+        Debug.Assert(output.Length >= HashSizeValue);
+        Finalize(ref MemoryMarshal.GetReference(output), HashSizeValue);
     }
 
     public sealed override void Initialize()
@@ -62,7 +62,7 @@ public abstract class NativeCryptoBase : HashAlgorithm
     protected sealed override byte[] HashFinal()
     {
         ObjectDisposedException.ThrowIf(_disposed, this);
-        var ret = GC.AllocateUninitializedArray<byte>(HashSize);
+        var ret = GC.AllocateUninitializedArray<byte>(HashSizeValue);
         Finalize(ret);
         return ret;
     }
@@ -71,14 +71,14 @@ public abstract class NativeCryptoBase : HashAlgorithm
     {
         ObjectDisposedException.ThrowIf(_disposed, this);
 
-        if (destination.Length < HashSize)
+        if (destination.Length < HashSizeValue)
         {
             bytesWritten = 0;
             return false;
         }
 
-        Finalize(destination[..HashSize]);
-        bytesWritten = HashSize;
+        Finalize(destination);
+        bytesWritten = HashSizeValue;
         return true;
     }
 
