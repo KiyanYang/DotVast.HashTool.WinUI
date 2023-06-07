@@ -61,6 +61,8 @@ public sealed class NativeCryptoGenerator : IIncrementalGenerator
 
             #if Benchmark || {{feature}}
 
+            using System.Runtime.InteropServices;
+
             namespace {{namespaceName}};
 
             sealed partial class {{className}} : DotVast.HashTool.NativeCrypto.NativeCryptoBase
@@ -79,19 +81,19 @@ public sealed class NativeCryptoGenerator : IIncrementalGenerator
 
             partial class NativeMethods
             {
-                [System.Runtime.InteropServices.DllImportAttribute(DllName, EntryPoint = "{{fnPrefix}}_new", ExactSpelling = true)]
+                [System.Runtime.InteropServices.DllImportAttribute(DllName, EntryPoint = "{{fnPrefix}}_new", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
                 internal static extern nuint {{fnPrefix}}_new();
 
-                [System.Runtime.InteropServices.DllImportAttribute(DllName, EntryPoint = "{{fnPrefix}}_reset", ExactSpelling = true)]
+                [System.Runtime.InteropServices.DllImportAttribute(DllName, EntryPoint = "{{fnPrefix}}_reset", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
                 internal static extern void {{fnPrefix}}_reset(nuint ptr);
 
-                [System.Runtime.InteropServices.DllImportAttribute(DllName, EntryPoint = "{{fnPrefix}}_update", ExactSpelling = true)]
+                [System.Runtime.InteropServices.DllImportAttribute(DllName, EntryPoint = "{{fnPrefix}}_update", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
                 internal static extern void {{fnPrefix}}_update(nuint ptr, in byte input, int size);
 
-                [System.Runtime.InteropServices.DllImportAttribute(DllName, EntryPoint = "{{fnPrefix}}_finalize", ExactSpelling = true)]
+                [System.Runtime.InteropServices.DllImportAttribute(DllName, EntryPoint = "{{fnPrefix}}_finalize", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
                 internal static extern void {{fnPrefix}}_finalize(nuint ptr, ref byte output, int size);
 
-                [System.Runtime.InteropServices.DllImportAttribute(DllName, EntryPoint = "{{fnPrefix}}_free", ExactSpelling = true)]
+                [System.Runtime.InteropServices.DllImportAttribute(DllName, EntryPoint = "{{fnPrefix}}_free", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
                 internal static extern void {{fnPrefix}}_free(nuint ptr);
             }
 

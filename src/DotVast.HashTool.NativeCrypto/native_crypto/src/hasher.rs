@@ -31,27 +31,27 @@ macro_rules! impl_hasher {
     ) => {
         paste::paste! {
             #[no_mangle]
-            pub unsafe fn [<$fn_prefix _new>]() -> *mut $hasher {
+            pub unsafe extern "C" fn [<$fn_prefix _new>]() -> *mut $hasher {
                 crate::hasher::new::<$hasher>()
             }
 
             #[no_mangle]
-            pub unsafe fn [<$fn_prefix _reset>](hasher: *mut $hasher) {
+            pub unsafe extern "C" fn [<$fn_prefix _reset>](hasher: *mut $hasher) {
                 crate::hasher::reset(hasher);
             }
 
             #[no_mangle]
-            pub unsafe fn [<$fn_prefix _update>](hasher: *mut $hasher, ptr: *const u8, size: i32) {
+            pub unsafe extern "C" fn [<$fn_prefix _update>](hasher: *mut $hasher, ptr: *const u8, size: i32) {
                 crate::hasher::update(hasher, ptr, size);
             }
 
             #[no_mangle]
-            pub unsafe fn [<$fn_prefix _finalize>](hasher: *mut $hasher, ptr: *mut u8, size: i32) {
+            pub unsafe extern "C" fn [<$fn_prefix _finalize>](hasher: *mut $hasher, ptr: *mut u8, size: i32) {
                 crate::hasher::finalize(hasher, ptr, size);
             }
 
             #[no_mangle]
-            pub unsafe fn [<$fn_prefix _free>](hasher: *mut $hasher) {
+            pub unsafe extern "C" fn [<$fn_prefix _free>](hasher: *mut $hasher) {
                 crate::hasher::free(hasher);
             }
         }
