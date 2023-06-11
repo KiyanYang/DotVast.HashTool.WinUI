@@ -9,11 +9,17 @@ public sealed class LicensesViewModel : IViewModel
 {
     public LicenseInfo[] Licenses { get; } = new LicenseInfo[]
     {
+        new("crates/blake3", License.Apache_2_0, "https://github.com/BLAKE3-team/BLAKE3/blob/master/LICENSE", "https://github.com/BLAKE3-team/BLAKE3"),
+        new("crates/md5", License.MIT, "https://github.com/RustCrypto/hashes/blob/master/md5/LICENSE-MIT", "https://github.com/RustCrypto/hashes"),
+        new("crates/ripemd", License.MIT, "https://github.com/RustCrypto/hashes/blob/master/ripemd/LICENSE-MIT", "https://github.com/RustCrypto/hashes"),
+        new("crates/sha1", License.MIT, "https://github.com/RustCrypto/hashes/blob/master/sha1/LICENSE-MIT", "https://github.com/RustCrypto/hashes"),
+        new("crates/sm3", License.MIT, "https://github.com/RustCrypto/hashes/blob/master/sm3/LICENSE-MIT", "https://github.com/RustCrypto/hashes"),
+
         new("CommunityToolkit.Labs.WinUI", License.MIT, "https://github.com/CommunityToolkit/Labs-Windows/blob/main/License.md", "https://github.com/CommunityToolkit/Labs-Windows"),
         new("CommunityToolkit.Mvvm", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/CommunityToolkit.Mvvm"),
         new("CommunityToolkit.WinUI.UI", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/CommunityToolkit.WinUI.UI"),
         new("CommunityToolkit.WinUI.UI.Behaviors", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/CommunityToolkit.WinUI.UI.Behaviors"),
-        new("CommunityToolkit.WinUI.UI.Controls.Markdown", License.MIT, NugetLicenseUrl.MIT,"https://www.nuget.org/packages/CommunityToolkit.WinUI.UI.Controls.Markdown"),
+        new("CommunityToolkit.WinUI.UI.Controls.Markdown", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/CommunityToolkit.WinUI.UI.Controls.Markdown"),
 
         new("DotVast.Toolkit.StringResource", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/DotVast.Toolkit.StringResource"),
 
@@ -21,7 +27,7 @@ public sealed class LicensesViewModel : IViewModel
 
         new("Microsoft.Extensions.Hosting", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/Microsoft.Extensions.Hosting"),
         new("Microsoft.Extensions.Http", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/Microsoft.Extensions.Http"),
-        new("Microsoft.WindowsAppSDK", License.Unknown, "https://www.nuget.org/packages/Microsoft.WindowsAppSDK/1.2.230118.102/License","https://www.nuget.org/packages/Microsoft.WindowsAppSDK"),
+        new("Microsoft.WindowsAppSDK", License.Unknown, "https://www.nuget.org/packages/Microsoft.WindowsAppSDK/1.2.230118.102/License", "https://www.nuget.org/packages/Microsoft.WindowsAppSDK"),
 
         new("Serilog", License.Apache_2_0, NugetLicenseUrl.Apache_2_0, "https://www.nuget.org/packages/Serilog"),
         new("Serilog.Extensions.Hosting", License.Apache_2_0, NugetLicenseUrl.Apache_2_0, "https://www.nuget.org/packages/Serilog.Extensions.Hosting"),
