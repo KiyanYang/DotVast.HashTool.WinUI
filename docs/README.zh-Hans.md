@@ -8,18 +8,7 @@
 
 **用于计算文件或文件夹哈希值的工具！**
 
-[![MIT License](https://img.shields.io/github/license/KiyanYang/DotVast.HashTool.WinUI)](./LICENSE.txt)
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/KiyanYang/DotVast.HashTool.WinUI)](https://github.com/KiyanYang/DotVast.HashTool.WinUI/releases)
-[![GitHub issues](https://img.shields.io/github/issues/KiyanYang/DotVast.HashTool.WinUI)](https://github.com/KiyanYang/DotVast.HashTool.WinUI/issues)
-[![GitHub all releases](https://img.shields.io/github/downloads/KiyanYang/DotVast.HashTool.WinUI/total)](https://github.com/KiyanYang/DotVast.HashTool.WinUI/releases)
-
-[![Build](https://github.com/KiyanYang/DotVast.HashTool.WinUI/actions/workflows/build.yml/badge.svg)](https://github.com/KiyanYang/DotVast.HashTool.WinUI/actions/workflows/build.yml)
-[![CodeQL](https://github.com/KiyanYang/DotVast.HashTool.WinUI/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/KiyanYang/DotVast.HashTool.WinUI/actions/workflows/codeql-analysis.yml)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FKiyanYang%2FDotVast.HashTool.WinUI.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FKiyanYang%2FDotVast.HashTool.WinUI?ref=badge_shield)
-
 </div>
-
----
 
 DotVast.HashTool.WinUI 允许你计算文件或文件夹的哈希值。它是验证数据完整性和真实性的有用工具。
 
