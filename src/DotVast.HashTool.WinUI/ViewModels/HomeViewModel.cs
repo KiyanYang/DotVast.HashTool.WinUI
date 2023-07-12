@@ -127,7 +127,7 @@ public sealed partial class HomeViewModel : SimpleObservableRecipient, IViewMode
             InputtingMode = hashTask.Mode;
             foreach (var hashSetting in HashSettings)
             {
-                hashSetting.IsChecked = hashTask.SelectedHashKinds.Any(h => h == hashSetting.Kind);
+                hashSetting.IsChecked = hashTask.HashOptions.Any(option => option.Kind == hashSetting.Kind);
             }
         }
     }

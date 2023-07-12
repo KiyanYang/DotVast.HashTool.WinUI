@@ -4,6 +4,7 @@
 using System.Collections.Specialized;
 
 using DotVast.HashTool.WinUI.Enums;
+using DotVast.HashTool.WinUI.Models;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Windows.AppLifecycle;
@@ -69,7 +70,7 @@ public sealed partial class CommandLineActivationHandler : ActivationHandler<App
                 {
                     Mode = mode,
                     Content = path.Trim(),
-                    SelectedHashKinds = hashKinds.ToArray(),
+                    HashOptions = hashKinds.Select(kind => new HashOption { Kind = kind, Format = kind.GetHashSetting().Format }).ToArray(),
                     State = HashTaskState.Waiting,
                 });
             }

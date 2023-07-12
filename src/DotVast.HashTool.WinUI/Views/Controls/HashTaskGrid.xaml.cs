@@ -115,7 +115,7 @@ public sealed partial class HashTaskGrid : UserControl
         var sb = new StringBuilder();
         sb.Append(hashTask.Mode.ToDisplay());
         sb.Append(ItemSeparator);
-        sb.AppendJoin(HashSeparator, hashTask.SelectedHashKinds.Select(kind => kind.ToName()));
+        sb.AppendJoin(HashSeparator, hashTask.HashOptions.Select(option => option.Kind.ToName()));
         return sb.ToString();
     }
 
