@@ -17,6 +17,33 @@
         <x:Double x:Key="MediumSpacing">12</x:Double>
     </Page.Resources>
 
+    <behaviors:NavigationViewHeaderBehavior.HeaderTemplate>
+        <DataTemplate>
+            <controls:NavigationViewHeader>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Style="{StaticResource PageTitleStyle}" Text="{Binding}" />
+                    <CommandBar
+                        Grid.Column="1"
+                        Margin="0,0,-8,0"
+                        DefaultLabelPosition="Collapsed">
+                        <CommandBar.Resources>
+                            <Style BasedOn="{StaticResource CompactAppBarButtonStyle}" TargetType="AppBarButton" />
+                        </CommandBar.Resources>
+                        <AppBarButton Command="{StaticResource ConfigureCommand}">
+                            <AppBarButton.Icon>
+                                <FontIcon Glyph="&#xE713;" />
+                            </AppBarButton.Icon>
+                        </AppBarButton>
+                    </CommandBar>
+                </Grid>
+            </controls:NavigationViewHeader>
+        </DataTemplate>
+    </behaviors:NavigationViewHeaderBehavior.HeaderTemplate>
+
     <controls:NavigationViewBodyScrollViewer x:Name="ContentScrollViewer">
         <Grid x:Name="ContentArea" Style="{StaticResource NavigationViewBodyContentStyle}">
             <StackPanel Orientation="Vertical" Spacing="12">
@@ -155,7 +182,7 @@
                                                     Grid.Column="1"
                                                     FontFamily="{Binding Path=HashFontFamilyName, Source={StaticResource AppearanceSettingsService}}"
                                                     IsTextSelectionEnabled="True"
-                                                    Text="{x:Bind Value}"
+                                                    Text="{x:Bind Value, Mode=OneWay}"
                                                     TextWrapping="Wrap">
                                                     <i:Interaction.Behaviors>
                                                         <behaviors:TextBlockHighlightTextBehavior HighlightText="{Binding Path=HashResultsFilter, Source={StaticResource ViewModel}}" />

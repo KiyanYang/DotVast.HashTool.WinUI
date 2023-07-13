@@ -218,8 +218,7 @@ internal sealed class ComputeHashService : IComputeHashService
 
             for (int i = 0; i < hashAlgorithms.Length; i++)
             {
-                var hashString = GetFormattedHash(hashAlgorithms[i].Hash!, hashTask.HashOptions[i]);
-                hashResultData[i] = new(hashTask.HashOptions[i].Kind, hashString);
+                hashResultData[i] = new(hashTask.HashOptions[i], hashAlgorithms[i].Hash!);
             }
 
             return hashResultData;
@@ -288,8 +287,7 @@ internal sealed class ComputeHashService : IComputeHashService
             // 确保报告计算完成. 主要用于当 stream.Length == 0 时没有进行过报告的情况.
             limiter.ReportFinal(() => hashTask.ProgressVal = progressOffset + 1);
 
-            var hashString = GetFormattedHash(hashAlgorithm.Hash!, hashOption);
-            var hashResultItem = new HashResultItem(hashOption.Kind, hashString);
+            var hashResultItem = new HashResultItem(hashOption, hashAlgorithm.Hash!);
 
             return new[] { hashResultItem };
         }

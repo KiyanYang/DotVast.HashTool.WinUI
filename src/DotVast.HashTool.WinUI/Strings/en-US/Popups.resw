@@ -42,6 +42,9 @@
   <data name="GitHubUpdate_Title_UpToDate" xml:space="preserve">
     <value>The App is up to date</value>
   </data>
+  <data name="HashResultConfig_Title" xml:space="preserve">
+    <value>Configure</value>
+  </data>
   <data name="HashTaskAborted_Content_UnauthorizedAccess" xml:space="preserve">
     <value>Unauthorized access. Please consider retrying as an administrator.</value>
   </data>

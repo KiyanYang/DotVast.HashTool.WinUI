@@ -1,6 +1,8 @@
 // Copyright (c) Kiyan Yang.
 // Licensed under the MIT License.
 
+using CommunityToolkit.Mvvm.Input;
+
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 
@@ -11,10 +13,12 @@ namespace DotVast.HashTool.WinUI.ViewModels;
 public sealed partial class ResultsViewModel : ObservableObject, IViewModel, INavigationAware
 {
     private readonly ILogger<ResultsViewModel> _logger;
+    private readonly IDialogService _dialogService;
 
-    public ResultsViewModel(ILogger<ResultsViewModel> logger)
+    public ResultsViewModel(ILogger<ResultsViewModel> logger, IDialogService dialogService)
     {
         _logger = logger;
+        _dialogService = dialogService;
     }
 
     [ObservableProperty]
@@ -50,6 +54,18 @@ public sealed partial class ResultsViewModel : ObservableObject, IViewModel, INa
         }
         private set => SetProperty(ref _hashResultsFiltered, value);
     }
+
+    [RelayCommand(CanExecute = nameof(CanConfigure))]
+    private async Task ConfigureAsync()
+    {
+        if (HashTask?.HashOptions is { } hashOptions)
+        {
+            await _dialogService.ShowHashResultConfigDialogAsync(hashOptions);
+        }
+    }
+
+    private bool CanConfigure() =>
+        HashTask?.HashOptions is not null;
 
     #region INavigationAware
 

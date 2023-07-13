@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentDialog
+    x:Class="DotVast.HashTool.WinUI.Views.Dialogs.HashResultConfigDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:enums="using:DotVast.HashTool.WinUI.Enums"
+    xmlns:models="using:DotVast.HashTool.WinUI.Models">
+
+    <ScrollViewer
+        Width="320"
+        Padding="8,0,16,0"
+        HorizontalScrollMode="Disabled">
+        <StackPanel>
+            <ItemsRepeater ItemsSource="{x:Bind HashOptions}">
+                <ItemsRepeater.ItemTemplate>
+                    <DataTemplate x:DataType="models:HashOption">
+                        <Grid Margin="0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" MinWidth="116" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{x:Bind enums:HashKindExtensions.ToName(Kind)}" />
+                            <ComboBox
+                                Grid.Column="1"
+                                HorizontalAlignment="Stretch"
+                                ItemsSource="{StaticResource HashFormats}"
+                                SelectedItem="{x:Bind Format, Mode=TwoWay}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate x:DataType="enums:HashFormat">
+                                        <TextBlock Text="{x:Bind enums:HashFormatExtensions.ToDisplay((enums:HashFormat))}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+            </ItemsRepeater>
+        </StackPanel>
+    </ScrollViewer>
+
+</ContentDialog>
