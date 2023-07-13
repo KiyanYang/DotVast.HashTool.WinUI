@@ -20,7 +20,7 @@ public sealed partial class HashTask : ObservableObject, IDisposable
 
     public string Content { get; set; } = string.Empty;
 
-    public HashKind[] SelectedHashKinds { get; internal set; } = Array.Empty<HashKind>();
+    public HashOption[] HashOptions { get; set; } = Array.Empty<HashOption>();
 
     /// <summary>
     /// 结果.
@@ -143,8 +143,8 @@ public sealed partial class HashTask : ObservableObject, IDisposable
         sb.Append($"{nameof(HashTask)} {{ ");
         sb.Append($"{nameof(Content)} = '{Content}'");
         sb.Append($", {nameof(Mode)} = '{Mode}'");
-        sb.Append($", {nameof(SelectedHashKinds)} = [ ");
-        sb.AppendJoin(", ", SelectedHashKinds);
+        sb.Append($", {nameof(HashOptions)} = [ ");
+        sb.AppendJoin<HashOption>(", ", HashOptions);
         sb.Append(" ]");
         sb.Append(" }");
         return sb.ToString();

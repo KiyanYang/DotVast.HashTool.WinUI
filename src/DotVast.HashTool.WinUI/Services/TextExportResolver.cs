@@ -47,7 +47,7 @@ internal sealed class TextExportResolver : IExportResolver
         writer.WritePropertyAndValue(hashTask.Mode.ToDisplay(), hashTask.Content);
         writer.WritePropertyAndValue(LocalizationCommon.Elapsed, hashTask.Elapsed.ToString());
         writer.WritePropertyAndValue(LocalizationCommon.State, hashTask.State.ToDisplay());
-        writer.WritePropertyAndJoinValue(LocalizationCommon.Algorithms, ", ", hashTask.SelectedHashKinds.Select(h => h.ToName()));
+        writer.WritePropertyAndJoinValue(LocalizationCommon.Algorithms, ", ", hashTask.HashOptions.Select(h => h.Kind.ToName()));
 
         var results = hashTask.Results;
         if (results is null || !results.Any())

@@ -7,6 +7,7 @@ using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.Views.Dialogs;
 
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.Xaml.Interactivity;
 
@@ -57,11 +58,26 @@ internal sealed class DialogService : IDialogService
         return dialog.ShowAsync().AsTask();
     }
 
+    public Task<ContentDialogResult> ShowHashResultConfigDialogAsync(IList<HashOption> hashOptions)
+    {
+
+        var dialog = new HashResultConfigDialog(hashOptions)
+        {
+            CloseButtonText = LocalizationCommon.Close,
+        };
+
+        SetupDialog(dialog);
+
+        return dialog.ShowAsync().AsTask();
+    }
+
     private void SetupDialog(ContentDialog dialog)
     {
         // TODO: 设置主题, 临时解决对话框主题问题 https://github.com/microsoft/microsoft-ui-xaml/issues/2331
         dialog.RequestedTheme = _appearanceSettingsService.Theme.ToElementTheme();
         dialog.XamlRoot = App.MainWindow.Content.XamlRoot;
+        // TODO: 设置样式, 派生的对话框不会自动继承样式 https://github.com/microsoft/microsoft-ui-xaml/issues/3486
+        dialog.Style ??= Application.Current.Resources["DefaultContentDialogStyle"] as Style;
         Interaction.SetBehaviors(dialog, new() { new ContentDialogBehavior() });
     }
 }

@@ -77,7 +77,7 @@ public partial class HomeViewModel
                 HashTaskMode.Folder => PathTrim(InputtingContent),
                 _ => throw new InvalidOperationException(),
             },
-            SelectedHashKinds = HashSettings.Where(i => i.IsChecked).Select(i => i.Kind).ToArray(),
+            HashOptions = HashSettings.Where(i => i.IsChecked).Select(i => new HashOption { Kind = i.Kind, Format = i.Format }).ToArray(),
             State = HashTaskState.Waiting,
         };
         if (StartingWhenCreateHashTask)

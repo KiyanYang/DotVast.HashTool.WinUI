@@ -32,7 +32,7 @@ internal sealed class ComputeHashService : IComputeHashService
         hashTask.State = HashTaskState.Working;
         hashTask.Elapsed = default;
         hashTask.Results = default;
-        SetMinThreads(hashTask.SelectedHashKinds.Length);
+        SetMinThreads(hashTask.HashOptions.Length);
 
         try
         {
@@ -75,7 +75,7 @@ internal sealed class ComputeHashService : IComputeHashService
         }
         finally
         {
-            SetMinThreads(-hashTask.SelectedHashKinds.Length);
+            SetMinThreads(-hashTask.HashOptions.Length);
             var elapsed = Stopwatch.GetElapsedTime(startTimestamp);
             _dispatchingService.TryEnqueue(() => hashTask.Elapsed = elapsed);
         }
@@ -139,7 +139,7 @@ internal sealed class ComputeHashService : IComputeHashService
         ManualResetEventSlim mres,
         CancellationToken cancellationToken)
     {
-        if (hashTask.SelectedHashKinds.Length == 1)
+        if (hashTask.HashOptions.Length == 1)
         {
             return HashStreamForSingleHashAlgorithm(hashTask, stream, progressOffset, mres, cancellationToken);
         }
@@ -155,7 +155,7 @@ internal sealed class ComputeHashService : IComputeHashService
         ManualResetEventSlim mres,
         CancellationToken cancellationToken)
     {
-        var hashAlgorithms = hashTask.SelectedHashKinds.Select(k => k.ToHashAlgorithm()).ToArray();
+        var hashAlgorithms = hashTask.HashOptions.Select(h => h.Kind.ToHashAlgorithm()).ToArray();
 
         byte[]? buffer = null;
         int clearLimit = 0;
@@ -218,8 +218,7 @@ internal sealed class ComputeHashService : IComputeHashService
 
             for (int i = 0; i < hashAlgorithms.Length; i++)
             {
-                var hashString = GetFormattedHash(hashAlgorithms[i].Hash!, hashTask.SelectedHashKinds[i]);
-                hashResultData[i] = new(hashTask.SelectedHashKinds[i], hashString);
+                hashResultData[i] = new(hashTask.HashOptions[i], hashAlgorithms[i].Hash!);
             }
 
             return hashResultData;
@@ -245,8 +244,8 @@ internal sealed class ComputeHashService : IComputeHashService
         ManualResetEventSlim mres,
         CancellationToken cancellationToken)
     {
-        var hashKind = hashTask.SelectedHashKinds[0];
-        var hashAlgorithm = hashKind.ToHashAlgorithm();
+        var hashOption = hashTask.HashOptions[0];
+        var hashAlgorithm = hashOption.Kind.ToHashAlgorithm();
 
         byte[]? buffer = null;
         int clearLimit = 0;
@@ -288,8 +287,7 @@ internal sealed class ComputeHashService : IComputeHashService
             // 确保报告计算完成. 主要用于当 stream.Length == 0 时没有进行过报告的情况.
             limiter.ReportFinal(() => hashTask.ProgressVal = progressOffset + 1);
 
-            var hashString = GetFormattedHash(hashAlgorithm.Hash!, hashKind);
-            var hashResultItem = new HashResultItem(hashKind, hashString);
+            var hashResultItem = new HashResultItem(hashOption, hashAlgorithm.Hash!);
 
             return new[] { hashResultItem };
         }
@@ -304,14 +302,14 @@ internal sealed class ComputeHashService : IComputeHashService
         }
     }
 
-    private string GetFormattedHash(byte[] hashData, HashKind kind)
+    private static string GetFormattedHash(byte[] hashData, HashOption option)
     {
-        return kind.GetHashSetting().Format switch
+        return option.Format switch
         {
             HashFormat.Base16Upper => System.Convert.ToHexString(hashData),
             HashFormat.Base16Lower => Core.Helpers.Convert.ToLowerHexString(hashData),
             HashFormat.Base64 => System.Convert.ToBase64String(hashData),
-            _ => throw new ArgumentOutOfRangeException(nameof(kind), $"The HashKind {kind} is out of range and cannot be processed."),
+            _ => throw new ArgumentOutOfRangeException(nameof(option), $"The HashKind {option.Kind} is out of range and cannot be processed."),
         };
     }
 
