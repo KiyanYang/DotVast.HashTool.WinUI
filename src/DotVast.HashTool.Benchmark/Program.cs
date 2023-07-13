@@ -53,7 +53,9 @@ public class Benchy
                 },
             };
 
-            AddJob(job.WithRuntime(CoreRuntime.Core70));
+            var msbuildArg = new MsBuildArgument("/p:SolutionName=DotVast.HashTool.Benchmark");
+
+            AddJob(job.WithRuntime(CoreRuntime.Core70).WithArguments(new[] { msbuildArg }));
 
             HideColumns(BenchmarkDotNet.Columns.Column.Error, BenchmarkDotNet.Columns.Column.StdDev);
         }
