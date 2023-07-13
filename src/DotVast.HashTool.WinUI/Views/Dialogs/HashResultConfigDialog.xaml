@@ -7,7 +7,7 @@
     xmlns:models="using:DotVast.HashTool.WinUI.Models">
 
     <ScrollViewer
-        Width="320"
+        Width="280"
         Padding="8,0,16,0"
         HorizontalScrollMode="Disabled">
         <StackPanel>
@@ -19,7 +19,7 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" MinWidth="116" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="{x:Bind enums:HashKindExtensions.ToName(Kind)}" />
+                            <TextBlock VerticalAlignment="Center" Text="{x:Bind enums:HashKindExtensions.ToName(Kind)}" />
                             <ComboBox
                                 Grid.Column="1"
                                 HorizontalAlignment="Stretch"
