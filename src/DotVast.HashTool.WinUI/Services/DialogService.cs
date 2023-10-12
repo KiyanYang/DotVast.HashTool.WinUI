@@ -1,7 +1,6 @@
 // Copyright (c) Kiyan Yang.
 // Licensed under the MIT License.
 
-using DotVast.HashTool.WinUI.Behaviors;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
@@ -9,7 +8,6 @@ using DotVast.HashTool.WinUI.Views.Dialogs;
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.Xaml.Interactivity;
 
 namespace DotVast.HashTool.WinUI.Services;
 
@@ -78,6 +76,5 @@ internal sealed class DialogService : IDialogService
         dialog.XamlRoot = App.MainWindow.Content.XamlRoot;
         // TODO: 设置样式, 派生的对话框不会自动继承样式 https://github.com/microsoft/microsoft-ui-xaml/issues/3486
         dialog.Style ??= Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-        Interaction.SetBehaviors(dialog, new() { new ContentDialogBehavior() });
     }
 }
