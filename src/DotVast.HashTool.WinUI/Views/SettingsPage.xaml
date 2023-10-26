@@ -4,11 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:DotVast.HashTool.WinUI.Behaviors"
     xmlns:controls="using:DotVast.HashTool.WinUI.Views.Controls"
-    xmlns:ctControls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:ctControls="using:CommunityToolkit.WinUI.Controls"
     xmlns:enums="using:DotVast.HashTool.WinUI.Enums"
     xmlns:helpers="using:DotVast.HashTool.WinUI.Helpers"
-    xmlns:i18n="using:DotVast.HashTool.WinUI.Strings"
-    xmlns:labs="using:CommunityToolkit.Labs.WinUI">
+    xmlns:i18n="using:DotVast.HashTool.WinUI.Strings">
 
     <Page.Resources>
         <Style x:Key="GroupTitleTextBlockStyle" BasedOn="{StaticResource BodyStrongTextBlockStyle}" TargetType="TextBlock">
@@ -46,49 +45,49 @@
                 </StackPanel.ChildrenTransitions>
 
                 <!-- 跳转设置: 哈希设置 -->
-                <labs:SettingsCard
+                <ctControls:SettingsCard
                     x:Uid="SettingsPage_HashSettings"
                     Command="{x:Bind ViewModel.NavigateToCommand}"
                     CommandParameter="{x:Bind enums:PageKey.HashSettingsPage}"
                     IsClickEnabled="True">
-                    <labs:SettingsCard.HeaderIcon>
+                    <ctControls:SettingsCard.HeaderIcon>
                         <FontIcon Glyph="&#xE9D5;" />
-                    </labs:SettingsCard.HeaderIcon>
-                </labs:SettingsCard>
+                    </ctControls:SettingsCard.HeaderIcon>
+                </ctControls:SettingsCard>
 
                 <!-- 设置: 资源管理器菜单 -->
-                <labs:SettingsCard x:Uid="SettingsPage_FileExplorerContextMenusEnabled">
-                    <labs:SettingsCard.HeaderIcon>
+                <ctControls:SettingsCard x:Uid="SettingsPage_FileExplorerContextMenusEnabled">
+                    <ctControls:SettingsCard.HeaderIcon>
                         <FontIcon Glyph="&#xEC50;" />
-                    </labs:SettingsCard.HeaderIcon>
+                    </ctControls:SettingsCard.HeaderIcon>
                     <ToggleSwitch IsOn="{x:Bind ViewModel.FileExplorerContextMenusEnabled, Mode=TwoWay}" />
-                </labs:SettingsCard>
+                </ctControls:SettingsCard>
 
-                <labs:SettingsExpander x:Uid="SettingsPage_FileOptions">
-                    <labs:SettingsExpander.HeaderIcon>
+                <ctControls:SettingsExpander x:Uid="SettingsPage_FileOptions">
+                    <ctControls:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xE7C3;" />
-                    </labs:SettingsExpander.HeaderIcon>
-                    <labs:SettingsExpander.Items>
-                        <labs:SettingsCard x:Uid="SettingsPage_FileAttributeHiddenToSkip">
+                    </ctControls:SettingsExpander.HeaderIcon>
+                    <ctControls:SettingsExpander.Items>
+                        <ctControls:SettingsCard x:Uid="SettingsPage_FileAttributeHiddenToSkip">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.FileAttributeHiddenToSkip, Mode=TwoWay}" />
-                        </labs:SettingsCard>
-                        <labs:SettingsCard x:Uid="SettingsPage_FileAttributeOfflineToSkip">
+                        </ctControls:SettingsCard>
+                        <ctControls:SettingsCard x:Uid="SettingsPage_FileAttributeOfflineToSkip">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.FileAttributeOfflineToSkip, Mode=TwoWay}" />
-                        </labs:SettingsCard>
-                        <labs:SettingsCard x:Uid="SettingsPage_FileAttributeSystemToSkip">
+                        </ctControls:SettingsCard>
+                        <ctControls:SettingsCard x:Uid="SettingsPage_FileAttributeSystemToSkip">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.FileAttributeSystemToSkip, Mode=TwoWay}" />
-                        </labs:SettingsCard>
-                    </labs:SettingsExpander.Items>
-                </labs:SettingsExpander>
+                        </ctControls:SettingsCard>
+                    </ctControls:SettingsExpander.Items>
+                </ctControls:SettingsExpander>
 
                 <!-- 副标题: 个性化 -->
                 <TextBlock x:Uid="SettingsPage_Personalization" Style="{StaticResource GroupTitleTextBlockStyle}" />
 
                 <!-- 设置: 哈希字体 -->
-                <labs:SettingsCard x:Uid="SettingsPage_HashFontFamily">
-                    <labs:SettingsCard.HeaderIcon>
+                <ctControls:SettingsCard x:Uid="SettingsPage_HashFontFamily">
+                    <ctControls:SettingsCard.HeaderIcon>
                         <FontIcon Glyph="&#xE8D2;" />
-                    </labs:SettingsCard.HeaderIcon>
+                    </ctControls:SettingsCard.HeaderIcon>
                     <TextBox
                         MinWidth="200"
                         FontFamily="{Binding Path=HashFontFamilyName, Source={StaticResource AppearanceSettingsService}}"
@@ -98,21 +97,21 @@
                         Style="{StaticResource CenterVerticalTextAlignmentTextBoxStyle}"
                         Text="{x:Bind ViewModel.HashFontFamilyName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         TextAlignment="Center" />
-                </labs:SettingsCard>
+                </ctControls:SettingsCard>
 
                 <!-- 设置: 置顶 -->
-                <labs:SettingsCard x:Uid="SettingsPage_AlwaysOnTop">
-                    <labs:SettingsCard.HeaderIcon>
+                <ctControls:SettingsCard x:Uid="SettingsPage_AlwaysOnTop">
+                    <ctControls:SettingsCard.HeaderIcon>
                         <FontIcon Glyph="&#xE840;" />
-                    </labs:SettingsCard.HeaderIcon>
+                    </ctControls:SettingsCard.HeaderIcon>
                     <ToggleSwitch IsOn="{x:Bind ViewModel.IsAlwaysOnTop, Mode=TwoWay}" />
-                </labs:SettingsCard>
+                </ctControls:SettingsCard>
 
                 <!-- 设置: 主题 -->
-                <labs:SettingsCard x:Uid="SettingsPage_Theme">
-                    <labs:SettingsCard.HeaderIcon>
+                <ctControls:SettingsCard x:Uid="SettingsPage_Theme">
+                    <ctControls:SettingsCard.HeaderIcon>
                         <FontIcon Glyph="&#xE790;" />
-                    </labs:SettingsCard.HeaderIcon>
+                    </ctControls:SettingsCard.HeaderIcon>
                     <ComboBox
                         MinWidth="100"
                         ItemsSource="{x:Bind ViewModel.Themes}"
@@ -123,13 +122,13 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                </labs:SettingsCard>
+                </ctControls:SettingsCard>
 
                 <!-- 设置: 语言 -->
-                <labs:SettingsCard x:Uid="SettingsPage_Language">
-                    <labs:SettingsCard.HeaderIcon>
+                <ctControls:SettingsCard x:Uid="SettingsPage_Language">
+                    <ctControls:SettingsCard.HeaderIcon>
                         <FontIcon Glyph="&#xF2B7;" />
-                    </labs:SettingsCard.HeaderIcon>
+                    </ctControls:SettingsCard.HeaderIcon>
                     <ComboBox
                         MinWidth="140"
                         ItemsSource="{x:Bind ViewModel.AppLanguages}"
@@ -140,16 +139,16 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                </labs:SettingsCard>
+                </ctControls:SettingsCard>
 
                 <!-- 副标题: 关于 -->
                 <TextBlock x:Uid="SettingsPage_About" Style="{StaticResource GroupTitleTextBlockStyle}" />
 
                 <!-- 关于: 版本, 描述, 检查更新及其设置 -->
-                <labs:SettingsExpander Description="{x:Bind i18n:Localization.AppDescription}" Header="{x:Bind ViewModel.AppVersionHeader}">
-                    <labs:SettingsExpander.HeaderIcon>
+                <ctControls:SettingsExpander Description="{x:Bind i18n:Localization.AppDescription}" Header="{x:Bind ViewModel.AppVersionHeader}">
+                    <ctControls:SettingsExpander.HeaderIcon>
                         <FontIcon Glyph="&#xE895;" />
-                    </labs:SettingsExpander.HeaderIcon>
+                    </ctControls:SettingsExpander.HeaderIcon>
                     <!-- 检查更新 -->
                     <StackPanel Orientation="Horizontal">
                         <ProgressRing
@@ -158,17 +157,17 @@
                             Visibility="{x:Bind helpers:XamlFunc.VisibleIfTrue(ViewModel.CheckUpdateCommand.IsRunning), Mode=OneWay}" />
                         <Button Command="{x:Bind ViewModel.CheckUpdateCommand}" Content="{x:Bind i18n:Localization.Command_CheckForUpdates}" />
                     </StackPanel>
-                    <labs:SettingsExpander.Items>
+                    <ctControls:SettingsExpander.Items>
                         <!-- 启动时检查更新 -->
-                        <labs:SettingsCard x:Uid="SettingsPage_CheckForUpdatesOnStartup">
+                        <ctControls:SettingsCard x:Uid="SettingsPage_CheckForUpdatesOnStartup">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.CheckForUpdatesOnStartup, Mode=TwoWay}" />
-                        </labs:SettingsCard>
+                        </ctControls:SettingsCard>
                         <!-- 包含预发行版本 -->
-                        <labs:SettingsCard x:Uid="SettingsPage_IncludePreRelease">
+                        <ctControls:SettingsCard x:Uid="SettingsPage_IncludePreRelease">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.IncludePreRelease, Mode=TwoWay}" />
-                        </labs:SettingsCard>
-                    </labs:SettingsExpander.Items>
-                </labs:SettingsExpander>
+                        </ctControls:SettingsCard>
+                    </ctControls:SettingsExpander.Items>
+                </ctControls:SettingsExpander>
 
                 <ctControls:WrapPanel>
                     <ctControls:WrapPanel.Resources>

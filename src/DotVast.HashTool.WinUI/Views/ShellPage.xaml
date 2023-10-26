@@ -4,9 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behaviors="using:DotVast.HashTool.WinUI.Behaviors"
     xmlns:controls="using:DotVast.HashTool.WinUI.Views.Controls"
+    xmlns:ctBehaviors="using:CommunityToolkit.WinUI.Behaviors"
     xmlns:helpers="using:DotVast.HashTool.WinUI.Helpers"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
-    xmlns:labs="using:CommunityToolkit.Labs.WinUI"
     Loaded="OnLoaded">
     <Grid>
         <Grid
@@ -87,7 +87,7 @@
                 </TransitionCollection>
             </InfoBar.Transitions>
             <i:Interaction.Behaviors>
-                <labs:StackedNotificationsBehavior x:Name="NotificationQueue" />
+                <ctBehaviors:StackedNotificationsBehavior x:Name="NotificationQueue" />
             </i:Interaction.Behaviors>
         </InfoBar>
     </Grid>

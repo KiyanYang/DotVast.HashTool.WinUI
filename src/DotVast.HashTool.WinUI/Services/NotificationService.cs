@@ -3,7 +3,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-using CommunityToolkit.Labs.WinUI;
+using CommunityToolkit.WinUI.Behaviors;
 
 namespace DotVast.HashTool.WinUI.Services;
 

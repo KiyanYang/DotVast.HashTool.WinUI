@@ -1,7 +1,7 @@
 // Copyright (c) Kiyan Yang.
 // Licensed under the MIT License.
 
-using CommunityToolkit.Labs.WinUI;
+using CommunityToolkit.WinUI.Behaviors;
 
 namespace DotVast.HashTool.WinUI.Contracts.Services;
 
