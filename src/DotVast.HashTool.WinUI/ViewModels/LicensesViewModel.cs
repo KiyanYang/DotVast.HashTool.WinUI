@@ -15,10 +15,10 @@ public sealed class LicensesViewModel : IViewModel
         new("crates/sha1", License.MIT, "https://github.com/RustCrypto/hashes/blob/master/sha1/LICENSE-MIT", "https://github.com/RustCrypto/hashes"),
         new("crates/sm3", License.MIT, "https://github.com/RustCrypto/hashes/blob/master/sm3/LICENSE-MIT", "https://github.com/RustCrypto/hashes"),
 
-        new("CommunityToolkit.Labs.WinUI", License.MIT, "https://github.com/CommunityToolkit/Labs-Windows/blob/main/License.md", "https://github.com/CommunityToolkit/Labs-Windows"),
         new("CommunityToolkit.Mvvm", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/CommunityToolkit.Mvvm"),
-        new("CommunityToolkit.WinUI.UI", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/CommunityToolkit.WinUI.UI"),
-        new("CommunityToolkit.WinUI.UI.Behaviors", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/CommunityToolkit.WinUI.UI.Behaviors"),
+        new("CommunityToolkit.WinUI.Behaviors", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/CommunityToolkit.WinUI.Behaviors"),
+        new("CommunityToolkit.WinUI.Controls.Primitives", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/CommunityToolkit.WinUI.Controls.Primitives"),
+        new("CommunityToolkit.WinUI.Controls.SettingsControls", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/CommunityToolkit.WinUI.Controls.SettingsControls"),
         new("CommunityToolkit.WinUI.UI.Controls.Markdown", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/CommunityToolkit.WinUI.UI.Controls.Markdown"),
 
         new("DotVast.Toolkit.StringResource", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/DotVast.Toolkit.StringResource"),
