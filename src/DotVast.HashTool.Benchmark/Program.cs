@@ -55,7 +55,7 @@ public class Benchy
 
             var msbuildArg = new MsBuildArgument("/p:SolutionName=DotVast.HashTool.Benchmark");
 
-            AddJob(job.WithRuntime(CoreRuntime.Core70).WithArguments(new[] { msbuildArg }));
+            AddJob(job.WithRuntime(CoreRuntime.Core80).WithArguments(new[] { msbuildArg }));
 
             HideColumns(BenchmarkDotNet.Columns.Column.Error, BenchmarkDotNet.Columns.Column.StdDev);
         }
@@ -75,7 +75,7 @@ public class Benchy
 
             public string? GetLogicalGroupKey(ImmutableArray<BenchmarkCase> allBenchmarksCases, BenchmarkCase benchmarkCase)
             {
-                var index = benchmarkCase.DisplayInfo.IndexOf("_");
+                var index = benchmarkCase.DisplayInfo.IndexOf('_');
                 return index >= 0
                     ? benchmarkCase.DisplayInfo[index..].ToLowerInvariant()
                     : benchmarkCase.DisplayInfo.ToLowerInvariant();
