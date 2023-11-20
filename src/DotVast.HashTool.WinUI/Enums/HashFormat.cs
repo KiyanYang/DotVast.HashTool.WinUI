@@ -8,7 +8,7 @@ namespace DotVast.HashTool.WinUI.Enums;
 /// <summary>
 /// 哈希结果的表示格式.
 /// </summary>
-[JsonConverter(typeof(JsonStringEnumConverter))]
+[JsonConverter(typeof(JsonStringEnumConverter<HashFormat>))]
 public enum HashFormat
 {
     Base16Upper,

@@ -13,7 +13,7 @@ namespace DotVast.HashTool.WinUI.Enums;
 
 // Don't change the enum name unless absolutely necessary.
 // If the name is changed, it will destroy the deserialization and cause the app to start failure.
-[JsonConverter(typeof(JsonStringEnumConverter))]
+[JsonConverter(typeof(JsonStringEnumConverter<HashKind>))]
 public enum HashKind
 {
     CRC_32_V42,
