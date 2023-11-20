@@ -11,21 +11,14 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace DotVast.HashTool.WinUI.ViewModels.Controls;
 
-public sealed partial class HashTaskGridViewModel : ObservableObject
+public sealed partial class HashTaskGridViewModel(
+    IDialogService dialogService,
+    IHashTaskService hashTaskService,
+    INavigationService navigationService) : ObservableObject
 {
-    private readonly IDialogService _dialogService;
-    private readonly IHashTaskService _hashTaskService;
-    private readonly INavigationService _navigationService;
-
-    public HashTaskGridViewModel(
-        IDialogService dialogService,
-        IHashTaskService hashTaskService,
-        INavigationService navigationService)
-    {
-        _dialogService = dialogService;
-        _hashTaskService = hashTaskService;
-        _navigationService = navigationService;
-    }
+    private readonly IDialogService _dialogService = dialogService;
+    private readonly IHashTaskService _hashTaskService = hashTaskService;
+    private readonly INavigationService _navigationService = navigationService;
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(StartTaskCommand))]

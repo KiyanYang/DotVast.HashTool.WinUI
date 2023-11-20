@@ -13,33 +13,22 @@ using WinUIEx;
 
 namespace DotVast.HashTool.WinUI.Services;
 
-public sealed class ActivationService : IActivationService
+public sealed class ActivationService(
+    ILogger<ActivationService> logger,
+    ActivationHandler<LaunchActivatedEventArgs> defaultHandler,
+    IEnumerable<IActivationHandler> activationHandlers,
+    IAppearanceSettingsService appearanceSettingsService,
+    IPreferencesSettingsService preferencesSettingsService,
+    ICheckUpdateService checkUpdateService,
+    IHashTaskService hashTaskService) : IActivationService
 {
-    private readonly ILogger<ActivationService> _logger;
-    private readonly ActivationHandler<LaunchActivatedEventArgs> _defaultHandler;
-    private readonly IEnumerable<IActivationHandler> _activationHandlers;
-    private readonly IAppearanceSettingsService _appearanceSettingsService;
-    private readonly IPreferencesSettingsService _preferencesSettingsService;
-    private readonly ICheckUpdateService _checkUpdateService;
-    private readonly IHashTaskService _hashTaskService;
-
-    public ActivationService(
-        ILogger<ActivationService> logger,
-        ActivationHandler<LaunchActivatedEventArgs> defaultHandler,
-        IEnumerable<IActivationHandler> activationHandlers,
-        IAppearanceSettingsService appearanceSettingsService,
-        IPreferencesSettingsService preferencesSettingsService,
-        ICheckUpdateService checkUpdateService,
-        IHashTaskService hashTaskService)
-    {
-        _logger = logger;
-        _defaultHandler = defaultHandler;
-        _activationHandlers = activationHandlers;
-        _appearanceSettingsService = appearanceSettingsService;
-        _preferencesSettingsService = preferencesSettingsService;
-        _checkUpdateService = checkUpdateService;
-        _hashTaskService = hashTaskService;
-    }
+    private readonly ILogger<ActivationService> _logger = logger;
+    private readonly ActivationHandler<LaunchActivatedEventArgs> _defaultHandler = defaultHandler;
+    private readonly IEnumerable<IActivationHandler> _activationHandlers = activationHandlers;
+    private readonly IAppearanceSettingsService _appearanceSettingsService = appearanceSettingsService;
+    private readonly IPreferencesSettingsService _preferencesSettingsService = preferencesSettingsService;
+    private readonly ICheckUpdateService _checkUpdateService = checkUpdateService;
+    private readonly IHashTaskService _hashTaskService = hashTaskService;
 
     public async Task ActivateAsync(object activationArgs)
     {

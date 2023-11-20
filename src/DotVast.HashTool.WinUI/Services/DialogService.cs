@@ -11,14 +11,9 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace DotVast.HashTool.WinUI.Services;
 
-internal sealed class DialogService : IDialogService
+internal sealed class DialogService(IAppearanceSettingsService appearanceSettingsService) : IDialogService
 {
-    private readonly IAppearanceSettingsService _appearanceSettingsService;
-
-    public DialogService(IAppearanceSettingsService appearanceSettingsService)
-    {
-        _appearanceSettingsService = appearanceSettingsService;
-    }
+    private readonly IAppearanceSettingsService _appearanceSettingsService = appearanceSettingsService;
 
     public Task<ContentDialogResult> ShowDialogAsync(
         string title,

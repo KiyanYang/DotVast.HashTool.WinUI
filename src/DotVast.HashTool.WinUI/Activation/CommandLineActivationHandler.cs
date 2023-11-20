@@ -13,24 +13,17 @@ using Windows.ApplicationModel.Activation;
 
 namespace DotVast.HashTool.WinUI.Activation;
 
-public sealed partial class CommandLineActivationHandler : ActivationHandler<AppActivationArguments>
+public sealed partial class CommandLineActivationHandler(ILogger<CommandLineActivationHandler> logger,
+    INavigationService navigationService,
+    IHashService hashService,
+    IHashTaskService hashTaskService) : ActivationHandler<AppActivationArguments>
 {
     private record struct PathWithMode(string Path, HashTaskMode Mode);
-    private readonly ILogger<CommandLineActivationHandler> _logger;
-    private readonly INavigationService _navigationService;
-    private readonly IHashService _hashService;
-    private readonly IHashTaskService _hashTaskService;
 
-    public CommandLineActivationHandler(ILogger<CommandLineActivationHandler> logger,
-        INavigationService navigationService,
-        IHashService hashService,
-        IHashTaskService hashTaskService)
-    {
-        _logger = logger;
-        _navigationService = navigationService;
-        _hashService = hashService;
-        _hashTaskService = hashTaskService;
-    }
+    private readonly ILogger<CommandLineActivationHandler> _logger = logger;
+    private readonly INavigationService _navigationService = navigationService;
+    private readonly IHashService _hashService = hashService;
+    private readonly IHashTaskService _hashTaskService = hashTaskService;
 
     protected override bool CanHandleInternal(AppActivationArguments args)
     {

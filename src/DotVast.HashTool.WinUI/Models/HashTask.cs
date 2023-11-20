@@ -184,20 +184,15 @@ public sealed partial class HashTask : ObservableObject, IDisposable
 
     #endregion Finalizer, IDisposable
 
-    private sealed class HashTaskManager : IDisposable
+    private sealed class HashTaskManager(HashTask hashTask) : IDisposable
     {
         private readonly ILogger<HashTaskManager> _logger = App.GetLogger<HashTaskManager>();
         private readonly IComputeHashService _computeHashService = App.GetService<IComputeHashService>();
         private readonly IDialogService _dialogService = App.GetService<IDialogService>();
 
-        private readonly HashTask _hashTask;
+        private readonly HashTask _hashTask = hashTask;
         private readonly ManualResetEventSlim _mres = new(true);
         private CancellationTokenSource? _cts;
-
-        public HashTaskManager(HashTask hashTask)
-        {
-            _hashTask = hashTask;
-        }
 
         /// <summary>
         /// 开始计算.

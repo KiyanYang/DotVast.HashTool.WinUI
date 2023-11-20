@@ -4,16 +4,9 @@
 namespace DotVast.HashTool.NativeCrypto;
 
 [AttributeUsage(AttributeTargets.Class)]
-internal sealed class NativeCryptoAttribute : Attribute
+internal sealed class NativeCryptoAttribute(string feature, string fnPrefix, int hashSizeInBytes) : Attribute
 {
-    public string Feature { get; }
-    public string FnPrefix { get; }
-    public int HashSizeInBytes { get; }
-
-    public NativeCryptoAttribute(string feature, string fnPrefix, int hashSizeInBytes)
-    {
-        Feature = feature;
-        FnPrefix = fnPrefix;
-        HashSizeInBytes = hashSizeInBytes;
-    }
+    public string Feature { get; } = feature;
+    public string FnPrefix { get; } = fnPrefix;
+    public int HashSizeInBytes { get; } = hashSizeInBytes;
 }
