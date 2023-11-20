@@ -10,7 +10,7 @@ namespace DotVast.HashTool.WinUI.Services;
 
 internal sealed class HashTaskService : IHashTaskService
 {
-    public ObservableCollection<HashTask> HashTasks { get; } = new();
+    public ObservableCollection<HashTask> HashTasks { get; } = [];
 
     public Task StartupAsync()
     {

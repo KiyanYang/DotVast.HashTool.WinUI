@@ -37,7 +37,7 @@ public abstract class HashTestDriver<T> where T : IHashTest<T>
         using var hasher = T.Create();
 
         hasher.TransformBlock(source, 0, source.Length, null, 0);
-        hasher.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
+        hasher.TransformFinalBlock([], 0, 0);
         var actual = hasher.Hash;
 
         Assert.Equal(expected, actual);
@@ -50,9 +50,9 @@ public abstract class HashTestDriver<T> where T : IHashTest<T>
         using var hasher = T.Create();
 
         hasher.TransformBlock(source, 0, source.Length, null, 0);
-        hasher.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
+        hasher.TransformFinalBlock([], 0, 0);
         hasher.TransformBlock(source, 0, source.Length, null, 0);
-        hasher.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
+        hasher.TransformFinalBlock([], 0, 0);
         var actual = hasher.Hash;
 
         Assert.Equal(expected, actual);

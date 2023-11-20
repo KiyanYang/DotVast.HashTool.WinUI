@@ -7,8 +7,8 @@ namespace DotVast.HashTool.WinUI.ViewModels;
 
 public sealed class LicensesViewModel : IViewModel
 {
-    public LicenseInfo[] Licenses { get; } = new LicenseInfo[]
-    {
+    public LicenseInfo[] Licenses { get; } =
+    [
         new("crates/blake3", License.Apache_2_0, "https://github.com/BLAKE3-team/BLAKE3/blob/master/LICENSE", "https://github.com/BLAKE3-team/BLAKE3"),
         new("crates/md5", License.MIT, "https://github.com/RustCrypto/hashes/blob/master/md5/LICENSE-MIT", "https://github.com/RustCrypto/hashes"),
         new("crates/ripemd", License.MIT, "https://github.com/RustCrypto/hashes/blob/master/ripemd/LICENSE-MIT", "https://github.com/RustCrypto/hashes"),
@@ -36,7 +36,7 @@ public sealed class LicensesViewModel : IViewModel
         new("System.IO.Hashing", License.MIT, NugetLicenseUrl.MIT, "https://www.nuget.org/packages/System.IO.Hashing"),
 
         new("WinUIEx", License.Apache_2_0, NugetLicenseUrl.Apache_2_0, "https://www.nuget.org/packages/WinUIEx"),
-    };
+    ];
 }
 
 static file class License

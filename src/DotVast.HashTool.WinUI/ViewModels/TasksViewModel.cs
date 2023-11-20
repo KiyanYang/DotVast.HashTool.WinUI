@@ -34,7 +34,7 @@ public sealed partial class TasksViewModel : SimpleObservableRecipient, IViewMod
         _hashTaskService.HashTasks.CollectionChanged += HashTasks_CollectionChanged;
     }
 
-    public ObservableCollection<HashTaskCheckable> HashTaskCheckables { get; } = new();
+    public ObservableCollection<HashTaskCheckable> HashTaskCheckables { get; } = [];
 
     private void InitializeHashTaskCheckables()
     {
@@ -107,8 +107,8 @@ public sealed partial class TasksViewModel : SimpleObservableRecipient, IViewMod
             SuggestedFileName = $"{LocalizationCommon.Results}-{DateTime.Now:yyMMdd_HHmmss}",
             SuggestedStartLocation = PickerLocationId.Desktop,
         };
-        picker.FileTypeChoices.Add("Text", new[] { ".txt" });
-        picker.FileTypeChoices.Add("JSON", new[] { ".json" });
+        picker.FileTypeChoices.Add("Text", [".txt"]);
+        picker.FileTypeChoices.Add("JSON", [".json"]);
 
         var hwnd = WinUIEx.HwndExtensions.GetActiveWindow();
         WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);

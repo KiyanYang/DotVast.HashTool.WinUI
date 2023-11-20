@@ -20,7 +20,7 @@ public sealed partial class HashTask : ObservableObject, IDisposable
 
     public string Content { get; set; } = string.Empty;
 
-    public HashOption[] HashOptions { get; set; } = Array.Empty<HashOption>();
+    public HashOption[] HashOptions { get; set; } = [];
 
     /// <summary>
     /// 结果.
