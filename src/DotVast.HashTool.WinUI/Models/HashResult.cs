@@ -8,23 +8,17 @@ using DotVast.HashTool.WinUI.Enums;
 
 namespace DotVast.HashTool.WinUI.Models;
 
-public sealed class HashResult
+public sealed class HashResult(string path, IReadOnlyList<HashResultItem> data)
 {
-    public HashResult(string path, IReadOnlyList<HashResultItem> data)
-    {
-        Path = path;
-        Data = data;
-    }
-
     /// <summary>
     /// 文件路径.
     /// </summary>
-    public string Path { get; }
+    public string Path { get; } = path;
 
     /// <summary>
     /// 哈希结果.
     /// </summary>
-    public IReadOnlyList<HashResultItem> Data { get; }
+    public IReadOnlyList<HashResultItem> Data { get; } = data;
 }
 
 public sealed class HashResultItem : ObservableObject

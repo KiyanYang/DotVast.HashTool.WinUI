@@ -13,7 +13,7 @@ public class ConverterLowerHexStringTests
     [Fact]
     public static void KnownByteSequence()
     {
-        byte[] inputBytes = new byte[] { 0x00, 0x01, 0x02, 0xFD, 0xFE, 0xFF };
+        byte[] inputBytes = [0x00, 0x01, 0x02, 0xFD, 0xFE, 0xFF];
         Assert.Equal("000102fdfeff", Convert.ToLowerHexString(inputBytes));
     }
 

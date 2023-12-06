@@ -12,24 +12,16 @@ using Microsoft.Extensions.Logging;
 
 namespace DotVast.HashTool.WinUI.Services;
 
-internal sealed partial class CheckUpdateService : ICheckUpdateService
+internal sealed partial class CheckUpdateService(
+    IHttpClientFactory httpClientFactory,
+    ILogger<CheckUpdateService> logger,
+    IDialogService dialogService,
+    IPreferencesSettingsService preferencesSettingsService) : ICheckUpdateService
 {
-    private readonly IHttpClientFactory _httpClientFactory;
-    private readonly ILogger<CheckUpdateService> _logger;
-    private readonly IDialogService _dialogService;
-    private readonly IPreferencesSettingsService _preferencesSettingsService;
-
-    public CheckUpdateService(
-        IHttpClientFactory httpClientFactory,
-        ILogger<CheckUpdateService> logger,
-        IDialogService dialogService,
-        IPreferencesSettingsService preferencesSettingsService)
-    {
-        _httpClientFactory = httpClientFactory;
-        _logger = logger;
-        _dialogService = dialogService;
-        _preferencesSettingsService = preferencesSettingsService;
-    }
+    private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
+    private readonly ILogger<CheckUpdateService> _logger = logger;
+    private readonly IDialogService _dialogService = dialogService;
+    private readonly IPreferencesSettingsService _preferencesSettingsService = preferencesSettingsService;
 
     public Task StartupAsync()
     {

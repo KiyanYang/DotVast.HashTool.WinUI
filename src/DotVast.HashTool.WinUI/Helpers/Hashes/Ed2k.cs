@@ -49,7 +49,7 @@ internal sealed class Ed2k : HashAlgorithm
 
     protected override byte[] HashFinal()
     {
-        _md4.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
+        _md4.TransformFinalBlock([], 0, 0);
         if (_chunkHashes.Count == 0)
         {
             return _md4.Hash!;
@@ -57,7 +57,7 @@ internal sealed class Ed2k : HashAlgorithm
         else
         {
             _chunkHashes.AddRange(_md4.Hash!);
-            return _md4.ComputeHash(_chunkHashes.ToArray());
+            return _md4.ComputeHash([.. _chunkHashes]);
         }
     }
 

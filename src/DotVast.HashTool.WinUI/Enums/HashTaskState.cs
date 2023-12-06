@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace DotVast.HashTool.WinUI.Enums;
 
-[JsonConverter(typeof(JsonStringEnumConverter))]
+[JsonConverter(typeof(JsonStringEnumConverter<HashTaskState>))]
 public enum HashTaskState
 {
     /// <summary>

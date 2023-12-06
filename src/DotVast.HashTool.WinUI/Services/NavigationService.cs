@@ -14,10 +14,10 @@ namespace DotVast.HashTool.WinUI.Services;
 
 // For more information on navigation between pages see
 // https://github.com/microsoft/TemplateStudio/blob/main/docs/WinUI/navigation.md
-public sealed class NavigationService : INavigationService
+public sealed class NavigationService(ILogger<NavigationService> logger, IPageService pageService) : INavigationService
 {
-    private readonly ILogger<NavigationService> _logger;
-    private readonly IPageService _pageService;
+    private readonly ILogger<NavigationService> _logger = logger;
+    private readonly IPageService _pageService = pageService;
     private object? _lastParameterUsed;
     private Frame? _frame;
 
@@ -46,12 +46,6 @@ public sealed class NavigationService : INavigationService
 
     [MemberNotNullWhen(true, nameof(Frame), nameof(_frame))]
     public bool CanGoBack => Frame != null && Frame.CanGoBack;
-
-    public NavigationService(ILogger<NavigationService> logger, IPageService pageService)
-    {
-        _logger = logger;
-        _pageService = pageService;
-    }
 
     private void RegisterFrameEvents()
     {

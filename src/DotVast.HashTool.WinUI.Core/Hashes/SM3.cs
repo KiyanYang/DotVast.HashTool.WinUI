@@ -21,8 +21,8 @@ public sealed class SM3 : HashAlgorithm
     private const int BlockSizeInBytes = 64;
 
     // K{j} = T{j} <<< j
-    private static readonly uint[] s_k = new uint[64]
-    {
+    private static readonly uint[] s_k =
+    [
         0x79CC4519u, 0xF3988A32u, 0xE7311465u, 0xCE6228CBu, 0x9CC45197u, 0x3988A32Fu, 0x7311465Eu, 0xE6228CBCu,
         0xCC451979u, 0x988A32F3u, 0x311465E7u, 0x6228CBCEu, 0xC451979Cu, 0x88A32F39u, 0x11465E73u, 0x228CBCE6u,
         0x9D8A7A87u, 0x3B14F50Fu, 0x7629EA1Eu, 0xEC53D43Cu, 0xD8A7A879u, 0xB14F50F3u, 0x629EA1E7u, 0xC53D43CEu,
@@ -31,7 +31,7 @@ public sealed class SM3 : HashAlgorithm
         0x879D8A7Au, 0x0F3B14F5u, 0x1E7629EAu, 0x3CEC53D4u, 0x79D8A7A8u, 0xF3B14F50u, 0xE7629EA1u, 0xCEC53D43u,
         0x9D8A7A87u, 0x3B14F50Fu, 0x7629EA1Eu, 0xEC53D43Cu, 0xD8A7A879u, 0xB14F50F3u, 0x629EA1E7u, 0xC53D43CEu,
         0x8A7A879Du, 0x14F50F3Bu, 0x29EA1E76u, 0x53D43CECu, 0xA7A879D8u, 0x4F50F3B1u, 0x9EA1E762u, 0x3D43CEC5u,
-    };
+    ];
 
     private readonly uint[] _v = new uint[8];
     private readonly uint[] _w = new uint[68];

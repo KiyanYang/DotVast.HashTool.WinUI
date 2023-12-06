@@ -91,7 +91,7 @@ internal sealed class ComputeHashService : IComputeHashService
     private async Task InternalHashFilesAsync(HashTask hashTask, IList<string> filePaths, ManualResetEventSlim mres, CancellationToken cancellationToken)
     {
         var fileAttributesToSkip = _preferencesSettingsService.FileAttributesToSkip;
-        hashTask.Results = new();
+        hashTask.Results = [];
         var failedFilesCount = 0;
         var filesCount = filePaths.Count;
         for (var i = 0; i < filePaths.Count; i++)
@@ -289,7 +289,7 @@ internal sealed class ComputeHashService : IComputeHashService
 
             var hashResultItem = new HashResultItem(hashOption, hashAlgorithm.Hash!);
 
-            return new[] { hashResultItem };
+            return [hashResultItem];
         }
         finally
         {

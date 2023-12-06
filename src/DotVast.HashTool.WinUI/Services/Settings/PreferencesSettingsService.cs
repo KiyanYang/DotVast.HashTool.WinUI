@@ -10,14 +10,9 @@ using DotVast.HashTool.WinUI.Models;
 
 namespace DotVast.HashTool.WinUI.Services.Settings;
 
-internal sealed partial class PreferencesSettingsService : BaseObservableSettings, IPreferencesSettingsService
+internal sealed partial class PreferencesSettingsService(IHashService hashService) : BaseObservableSettings, IPreferencesSettingsService
 {
-    private readonly IHashService _hashService;
-
-    public PreferencesSettingsService(IHashService hashService)
-    {
-        _hashService = hashService;
-    }
+    private readonly IHashService _hashService = hashService;
 
     public override Task InitializeAsync()
     {

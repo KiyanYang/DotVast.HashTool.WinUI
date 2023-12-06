@@ -10,16 +10,11 @@ using Microsoft.Extensions.Logging;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
-public sealed partial class ResultsViewModel : ObservableObject, IViewModel, INavigationAware
+public sealed partial class ResultsViewModel(ILogger<ResultsViewModel> logger,
+    IDialogService dialogService) : ObservableObject, IViewModel, INavigationAware
 {
-    private readonly ILogger<ResultsViewModel> _logger;
-    private readonly IDialogService _dialogService;
-
-    public ResultsViewModel(ILogger<ResultsViewModel> logger, IDialogService dialogService)
-    {
-        _logger = logger;
-        _dialogService = dialogService;
-    }
+    private readonly ILogger<ResultsViewModel> _logger = logger;
+    private readonly IDialogService _dialogService = dialogService;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HashResultsFiltered))]

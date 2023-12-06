@@ -7,14 +7,9 @@ using DotVast.HashTool.WinUI.Models;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
-public sealed partial class HashSettingsViewModel : ObservableObject, IViewModel
+public sealed partial class HashSettingsViewModel(IPreferencesSettingsService preferencesSettingsService) : ObservableObject, IViewModel
 {
-    private readonly IPreferencesSettingsService _preferencesSettingsService;
-
-    public HashSettingsViewModel(IPreferencesSettingsService preferencesSettingsService)
-    {
-        _preferencesSettingsService = preferencesSettingsService;
-    }
+    private readonly IPreferencesSettingsService _preferencesSettingsService = preferencesSettingsService;
 
     public IReadOnlyList<HashSetting> HashSettings => _preferencesSettingsService.HashSettings;
 

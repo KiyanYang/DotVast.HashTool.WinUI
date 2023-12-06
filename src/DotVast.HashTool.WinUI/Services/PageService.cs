@@ -11,7 +11,7 @@ namespace DotVast.HashTool.WinUI.Services;
 
 public sealed class PageService : IPageService
 {
-    private readonly Dictionary<PageKey, Type> _pages = new();
+    private readonly Dictionary<PageKey, Type> _pages = [];
 
     public PageService()
     {
