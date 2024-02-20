@@ -2,7 +2,7 @@
   <PropertyGroup>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>0.7.1</Version>
+    <Version>0.7.2</Version>
 
     <Benchmark>$(SolutionName.Contains('Benchmark'))</Benchmark>
     <NativeLibEnabledHasher>blake3,md5,ripemd,sha1,sm3</NativeLibEnabledHasher>
