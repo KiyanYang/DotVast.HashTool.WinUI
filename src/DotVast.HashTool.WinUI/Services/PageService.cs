@@ -39,7 +39,7 @@ public sealed class PageService : IPageService
 
     private void Configure<VM, V>(PageKey key)
         where VM : IViewModel
-        where V : Page, IView
+        where V : Page, IView<VM>
     {
         lock (_pages)
         {

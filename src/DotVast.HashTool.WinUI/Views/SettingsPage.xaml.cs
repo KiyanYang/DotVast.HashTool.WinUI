@@ -7,11 +7,9 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace DotVast.HashTool.WinUI.Views;
 
-public sealed partial class SettingsPage : Page, IView
+public sealed partial class SettingsPage : Page, IView<SettingsViewModel>
 {
     public SettingsViewModel ViewModel { get; }
-
-    IViewModel IView.ViewModel => ViewModel;
 
     public SettingsPage()
     {

@@ -10,11 +10,9 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace DotVast.HashTool.WinUI.Views;
 
-public sealed partial class ResultsPage : Page, IView
+public sealed partial class ResultsPage : Page, IView<ResultsViewModel>
 {
     public ResultsViewModel ViewModel { get; }
-
-    IViewModel IView.ViewModel => ViewModel;
 
     public ResultsPage()
     {

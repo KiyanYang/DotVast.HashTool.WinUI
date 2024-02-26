@@ -12,11 +12,9 @@ using Windows.System;
 
 namespace DotVast.HashTool.WinUI.Views;
 
-public sealed partial class ShellPage : Page, IView
+public sealed partial class ShellPage : Page, IView<ShellViewModel>
 {
     public ShellViewModel ViewModel { get; }
-
-    IViewModel IView.ViewModel => ViewModel;
 
     public ShellPage(ShellViewModel viewModel)
     {

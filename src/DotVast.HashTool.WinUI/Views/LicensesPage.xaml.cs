@@ -8,11 +8,9 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace DotVast.HashTool.WinUI.Views;
 
-public sealed partial class LicensesPage : Page, IView
+public sealed partial class LicensesPage : Page, IView<LicensesViewModel>
 {
     public LicensesViewModel ViewModel { get; }
-
-    IViewModel IView.ViewModel => ViewModel;
 
     public LicensesPage()
     {

@@ -11,11 +11,9 @@ using Windows.ApplicationModel.DataTransfer;
 
 namespace DotVast.HashTool.WinUI.Views;
 
-public sealed partial class HomePage : Page, IView
+public sealed partial class HomePage : Page, IView<HomeViewModel>
 {
     public HomeViewModel ViewModel { get; }
-
-    IViewModel IView.ViewModel => ViewModel;
 
     public HomePage()
     {
