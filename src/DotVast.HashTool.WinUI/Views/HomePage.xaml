@@ -54,7 +54,7 @@
                         Grid.Column="0"
                         ItemsSource="{x:Bind ViewModel.HashTaskModes}"
                         SelectedItem="{x:Bind ViewModel.InputtingMode, Mode=TwoWay}"
-                        ToolTipService.ToolTip="{x:Bind ViewModel.InputtingMode, Mode=OneWay}">
+                        ToolTipService.ToolTip="{x:Bind enums:HashTaskModeExtensions.ToDisplay(ViewModel.InputtingMode)}">
                         <ComboBox.ItemTemplateSelector>
                             <dataTemplateSelectors:ComboBoxIconDataTemplateSelector>
                                 <dataTemplateSelectors:ComboBoxIconDataTemplateSelector.Normal>
