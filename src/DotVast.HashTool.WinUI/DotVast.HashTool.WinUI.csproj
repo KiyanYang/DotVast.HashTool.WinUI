@@ -63,7 +63,7 @@
     <PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="System.IO.Hashing" Version="8.0.0" />
-    <PackageReference Include="WinUIEx" Version="2.3.3" />
+    <PackageReference Include="WinUIEx" Version="2.3.4" />
   </ItemGroup>
 
   <ItemGroup>
