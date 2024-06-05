@@ -81,7 +81,7 @@ public sealed class QuickXor : HashAlgorithm
 
     public QuickXor()
     {
-        HashSizeValue = HashSizeInBytes;
+        HashSizeValue = HashSizeInBits;
         Initialize();
     }
 

@@ -16,7 +16,7 @@ public class SM3Tests : HashTestDriver<SM3Tests>, IHashTest<SM3Tests>
     {
         var sm3 = Create();
 
-        Assert.Equal(32, sm3.HashSize);
+        Assert.Equal(256, sm3.HashSize);
     }
 
     public static IEnumerable<object[]> TestDataCore()

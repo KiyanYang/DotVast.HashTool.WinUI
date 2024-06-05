@@ -16,7 +16,7 @@ public class QuickXorTests : HashTestDriver<QuickXorTests>, IHashTest<QuickXorTe
     {
         var quickXor = Create();
 
-        Assert.Equal(20, quickXor.HashSize);
+        Assert.Equal(160, quickXor.HashSize);
     }
 
     public static IEnumerable<object[]> TestDataCore()
