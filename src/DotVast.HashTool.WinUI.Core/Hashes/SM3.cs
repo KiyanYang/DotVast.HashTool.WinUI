@@ -5,7 +5,6 @@ using System.Buffers.Binary;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
-using System.Security.Cryptography;
 
 namespace DotVast.HashTool.WinUI.Core.Hashes;
 
@@ -15,7 +14,7 @@ namespace DotVast.HashTool.WinUI.Core.Hashes;
 /// <remarks>
 /// 优化: SM3 杂凑算法的软件快速实现研究 (DOI: 10.11992/tis.201507036)
 /// </remarks>
-public sealed class SM3 : HashAlgorithm
+public sealed class SM3() : BlockHash(HashSizeInBytes, BlockSizeInBytes)
 {
     private const int HashSizeInBytes = 32;
     private const int BlockSizeInBytes = 64;
@@ -35,20 +34,11 @@ public sealed class SM3 : HashAlgorithm
 
     private readonly uint[] _v = new uint[8];
     private readonly uint[] _w = new uint[68];
-    private readonly byte[] _block = new byte[BlockSizeInBytes];
-    private long _lengthSoFar;
-    private int _currentBlockSize;
-
-    public SM3()
-    {
-        HashSizeValue = HashSizeInBytes;
-        Initialize();
-    }
 
     public override void Initialize()
     {
-        _lengthSoFar = 0;
-        _currentBlockSize = 0;
+        base.Initialize();
+
         _v[0] = 0x7380166Fu;
         _v[1] = 0x4914B2B9u;
         _v[2] = 0x172442D7u;
@@ -59,58 +49,33 @@ public sealed class SM3 : HashAlgorithm
         _v[7] = 0xB0FB0E4Eu;
     }
 
-    protected override void HashCore(byte[] array, int ibStart, int cbSize)
-    {
-        _lengthSoFar += cbSize;
-
-        while (cbSize > 0)
-        {
-            var readSize = Math.Min(BlockSizeInBytes - _currentBlockSize, cbSize);
-
-            if (readSize == BlockSizeInBytes)
-            {
-                CF(new ReadOnlySpan<byte>(array, ibStart, BlockSizeInBytes));
-            }
-            else
-            {
-                Array.Copy(array, ibStart, _block, _currentBlockSize, readSize);
-                _currentBlockSize = (_currentBlockSize + readSize) % BlockSizeInBytes;
-                if (_currentBlockSize == 0)
-                {
-                    CF(_block);
-                }
-            }
-
-            ibStart += readSize;
-            cbSize -= readSize;
-        }
-    }
-
     protected override byte[] HashFinal()
     {
-        _block[_currentBlockSize] = 0x80;
-        _currentBlockSize++;
+        _blockBuffer.Span[_blockBuffer.Position] = 0x80;
+        var blockBufferPosition = _blockBuffer.Position;
+        blockBufferPosition++;
 
-        if (_currentBlockSize + 8 <= BlockSizeInBytes)
+        if (blockBufferPosition + 8 <= BlockSizeInBytes)
         {
-            Array.Clear(_block, _currentBlockSize, BlockSizeInBytes - _currentBlockSize - 8);
+            _blockBuffer.Clear(blockBufferPosition, BlockSizeInBytes - blockBufferPosition - 8);
         }
         else
         {
-            Array.Clear(_block, _currentBlockSize, BlockSizeInBytes - _currentBlockSize);
-            CF(_block);
-            Array.Clear(_block, 0, _currentBlockSize);
+            _blockBuffer.Clear(blockBufferPosition, BlockSizeInBytes - blockBufferPosition);
+            ProcessBlock(_blockBuffer);
+            _blockBuffer.Clear(0, blockBufferPosition);
         }
 
-        BinaryPrimitives.WriteUInt64BigEndian(_block.AsSpan(BlockSizeInBytes - 8), (ulong)_lengthSoFar * 8);
-        CF(_block);
+        var lengthInBits = (ulong)_processedBytesCount * 8;
+        BinaryPrimitives.WriteUInt64BigEndian(_blockBuffer.Span[^8..], lengthInBits);
+        ProcessBlock(_blockBuffer);
 
         var ret = new byte[32];
         WriteBigEndian(_v, MemoryMarshal.Cast<byte, uint>(ret));
         return ret;
     }
 
-    void CF(ReadOnlySpan<byte> block)
+    protected override void ProcessBlock(ReadOnlySpan<byte> block)
     {
         #region MessageExpansion 0..19
 
@@ -242,19 +207,7 @@ public sealed class SM3 : HashAlgorithm
     {
         if (BitConverter.IsLittleEndian)
         {
-#if NET8_0_OR_GREATER
             BinaryPrimitives.ReverseEndianness(source, destination);
-#else
-            if (destination.Length < source.Length)
-            {
-                throw new ArgumentException("The destination's length is too small.");
-            }
-
-            for (var i = 0; i < source.Length; i++)
-            {
-                destination[i] = BinaryPrimitives.ReverseEndianness(source[i]);
-            }
-#endif
         }
         else
         {
