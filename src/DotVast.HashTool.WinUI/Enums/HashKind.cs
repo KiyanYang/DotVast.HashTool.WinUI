@@ -4,6 +4,7 @@
 using System.Security.Cryptography;
 using System.Text.Json.Serialization;
 
+using DotVast.HashTool.NativeCrypto;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Helpers.Hashes;
 
@@ -76,8 +77,8 @@ internal static class HashKindExtensions
             HashKind.CRC_32_V42 => new System.IO.Hashing.Crc32().ToHashAlgorithm(reverse: true),
             HashKind.CRC_64_ECMA182 => new System.IO.Hashing.Crc64().ToHashAlgorithm(),
             HashKind.MD4 => HashLib4CSharp.Base.HashFactory.Crypto.CreateMD4().ToHashAlgorithm(),
-            HashKind.MD5 => new NativeCrypto.MD5(),
-            HashKind.SHA1 => new NativeCrypto.SHA1(),
+            HashKind.MD5 => new NativeCrypto.MD5().ToHashAlgorithm(),
+            HashKind.SHA1 => new NativeCrypto.SHA1().ToHashAlgorithm(),
             HashKind.SHA2_224 => HashLib4CSharp.Base.HashFactory.Crypto.CreateSHA2_224().ToHashAlgorithm(),
             HashKind.SHA2_256 => SHA256.Create(),
             HashKind.SHA2_384 => SHA384.Create(),
@@ -86,7 +87,7 @@ internal static class HashKindExtensions
             HashKind.SHA3_256 => HashLib4CSharp.Base.HashFactory.Crypto.CreateSHA3_256().ToHashAlgorithm(),
             HashKind.SHA3_384 => HashLib4CSharp.Base.HashFactory.Crypto.CreateSHA3_384().ToHashAlgorithm(),
             HashKind.SHA3_512 => HashLib4CSharp.Base.HashFactory.Crypto.CreateSHA3_512().ToHashAlgorithm(),
-            HashKind.SM3 => new NativeCrypto.SM3(),
+            HashKind.SM3 => new NativeCrypto.SM3().ToHashAlgorithm(),
             HashKind.BLAKE2b_160 => HashLib4CSharp.Base.HashFactory.Crypto.CreateBlake2B_160().ToHashAlgorithm(),
             HashKind.BLAKE2b_256 => HashLib4CSharp.Base.HashFactory.Crypto.CreateBlake2B_256().ToHashAlgorithm(),
             HashKind.BLAKE2b_384 => HashLib4CSharp.Base.HashFactory.Crypto.CreateBlake2B_384().ToHashAlgorithm(),
@@ -97,7 +98,7 @@ internal static class HashKindExtensions
             HashKind.BLAKE2s_256 => HashLib4CSharp.Base.HashFactory.Crypto.CreateBlake2S_256().ToHashAlgorithm(),
             HashKind.BLAKE2bp => HashLib4CSharp.Base.HashFactory.Crypto.CreateBlake2BP(64, []).ToHashAlgorithm(),
             HashKind.BLAKE2sp => HashLib4CSharp.Base.HashFactory.Crypto.CreateBlake2SP(32, []).ToHashAlgorithm(),
-            HashKind.BLAKE3 => new NativeCrypto.BLAKE3(),
+            HashKind.BLAKE3 => new NativeCrypto.BLAKE3().ToHashAlgorithm(),
             HashKind.XxHash32 => new System.IO.Hashing.XxHash32().ToHashAlgorithm(),
             HashKind.XxHash64 => new System.IO.Hashing.XxHash64().ToHashAlgorithm(),
             HashKind.XxHash3 => new System.IO.Hashing.XxHash3().ToHashAlgorithm(),
@@ -107,10 +108,10 @@ internal static class HashKindExtensions
             HashKind.Keccak_288 => HashLib4CSharp.Base.HashFactory.Crypto.CreateKeccak_288().ToHashAlgorithm(),
             HashKind.Keccak_384 => HashLib4CSharp.Base.HashFactory.Crypto.CreateKeccak_384().ToHashAlgorithm(),
             HashKind.Keccak_512 => HashLib4CSharp.Base.HashFactory.Crypto.CreateKeccak_512().ToHashAlgorithm(),
-            HashKind.RIPEMD_128 => new NativeCrypto.RIPEMD128(),
-            HashKind.RIPEMD_160 => new NativeCrypto.RIPEMD160(),
-            HashKind.RIPEMD_256 => new NativeCrypto.RIPEMD256(),
-            HashKind.RIPEMD_320 => new NativeCrypto.RIPEMD320(),
+            HashKind.RIPEMD_128 => new NativeCrypto.RIPEMD128().ToHashAlgorithm(),
+            HashKind.RIPEMD_160 => new NativeCrypto.RIPEMD160().ToHashAlgorithm(),
+            HashKind.RIPEMD_256 => new NativeCrypto.RIPEMD256().ToHashAlgorithm(),
+            HashKind.RIPEMD_320 => new NativeCrypto.RIPEMD320().ToHashAlgorithm(),
             HashKind.QuickXor => new Core.Hashes.QuickXor(),
             HashKind.Ed2k => new Ed2k(),
             HashKind.HAS_160 => HashLib4CSharp.Base.HashFactory.Crypto.CreateHAS160().ToHashAlgorithm(),

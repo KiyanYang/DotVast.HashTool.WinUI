@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DotVast.HashTool.SourceGenerators\DotVast.HashTool.SourceGenerators.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
+    <ProjectReference Include="..\DotVast.Hashing\DotVast.Hashing.csproj" />
   </ItemGroup>
 
 </Project>
