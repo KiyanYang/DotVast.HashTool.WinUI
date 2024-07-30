@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Runtime.InteropServices;
-using System.Security.Cryptography;
 
 using DotVast.Hashing;
 using DotVast.HashTool.WinUI.Enums;

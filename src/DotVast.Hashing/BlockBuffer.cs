@@ -25,7 +25,6 @@ internal sealed class BlockBuffer(int size)
         // 创建待处理数据，并更新原始数据
         var pendingBlock = source.Slice(0, len);
         source = source.Slice(len);
-        //UpdatedLength += len;
 
         // 此时 Position == 0 且 source.Length >= _size(一个数据块长)，不进行复制，直接返回待处理数据块。
         if (len == _size)
@@ -50,5 +49,11 @@ internal sealed class BlockBuffer(int size)
     internal void Clear(int index, int length)
     {
         Array.Clear(_data, index, length);
+    }
+
+    internal void Reset()
+    {
+        Position = 0;
+        Array.Clear(_data);
     }
 }

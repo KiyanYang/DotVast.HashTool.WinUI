@@ -20,8 +20,7 @@ public abstract class BlockHash : IHasher
     public void Reset()
     {
         _processedBytesCount = 0;
-        _blockBuffer.Position = 0;
-        //_blockBuffer.Clear(0, _blockBuffer.Span.Length);
+        _blockBuffer.Reset();
         ResetCore();
     }
 

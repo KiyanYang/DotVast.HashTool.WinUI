@@ -6,8 +6,6 @@ using System.Security.Cryptography;
 
 using DotVast.Hashing;
 
-using HashLib4CSharp.Interfaces;
-
 namespace DotVast.HashTool.WinUI.Helpers.Hashes;
 
 internal static class HashAlgorithmAdapterExtensions
