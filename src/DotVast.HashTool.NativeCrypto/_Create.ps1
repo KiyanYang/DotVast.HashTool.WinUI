@@ -71,7 +71,7 @@ public sealed partial class $className : IHasher
 
     public void Append(ReadOnlySpan<byte> source) => $fnUpdate(_handle, source, source.Length);
 
-    public byte[] GetCurrentHash()
+    public byte[] Finalize()
     {
         var ret = new byte[$hashLength];
         $fnFinalize(_handle, ret, $hashLength);

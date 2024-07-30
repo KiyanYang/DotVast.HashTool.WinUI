@@ -24,7 +24,7 @@ public sealed partial class BLAKE3 : IHasher
 
     public void Append(ReadOnlySpan<byte> source) => blake3_update(_handle, source, source.Length);
 
-    public byte[] GetCurrentHash()
+    public byte[] Finalize()
     {
         var ret = new byte[32];
         blake3_finalize(_handle, ret, 32);

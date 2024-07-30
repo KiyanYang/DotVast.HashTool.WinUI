@@ -24,7 +24,7 @@ public sealed partial class SHA512 : IHasher
 
     public void Append(ReadOnlySpan<byte> source) => sha512_update(_handle, source, source.Length);
 
-    public byte[] GetCurrentHash()
+    public byte[] Finalize()
     {
         var ret = new byte[64];
         sha512_finalize(_handle, ret, 64);

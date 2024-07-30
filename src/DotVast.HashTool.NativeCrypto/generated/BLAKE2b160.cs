@@ -24,7 +24,7 @@ public sealed partial class BLAKE2b160 : IHasher
 
     public void Append(ReadOnlySpan<byte> source) => blake2b160_update(_handle, source, source.Length);
 
-    public byte[] GetCurrentHash()
+    public byte[] Finalize()
     {
         var ret = new byte[20];
         blake2b160_finalize(_handle, ret, 20);

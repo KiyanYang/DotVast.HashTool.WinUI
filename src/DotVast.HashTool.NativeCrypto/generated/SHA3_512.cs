@@ -24,7 +24,7 @@ public sealed partial class SHA3_512 : IHasher
 
     public void Append(ReadOnlySpan<byte> source) => sha3_512_update(_handle, source, source.Length);
 
-    public byte[] GetCurrentHash()
+    public byte[] Finalize()
     {
         var ret = new byte[64];
         sha3_512_finalize(_handle, ret, 64);

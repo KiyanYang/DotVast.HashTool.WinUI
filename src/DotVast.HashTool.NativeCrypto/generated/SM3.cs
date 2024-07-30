@@ -24,7 +24,7 @@ public sealed partial class SM3 : IHasher
 
     public void Append(ReadOnlySpan<byte> source) => sm3_update(_handle, source, source.Length);
 
-    public byte[] GetCurrentHash()
+    public byte[] Finalize()
     {
         var ret = new byte[32];
         sm3_finalize(_handle, ret, 32);

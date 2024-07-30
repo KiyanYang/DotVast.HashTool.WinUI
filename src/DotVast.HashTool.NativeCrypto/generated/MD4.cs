@@ -24,7 +24,7 @@ public sealed partial class MD4 : IHasher
 
     public void Append(ReadOnlySpan<byte> source) => md4_update(_handle, source, source.Length);
 
-    public byte[] GetCurrentHash()
+    public byte[] Finalize()
     {
         var ret = new byte[16];
         md4_finalize(_handle, ret, 16);

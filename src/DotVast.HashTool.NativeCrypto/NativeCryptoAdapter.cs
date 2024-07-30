@@ -13,7 +13,7 @@ public sealed class NativeCryptoAdapter(IHasher hasher) : HashAlgorithm
 
     public override void Initialize() => _hasher.Reset();
     protected override void HashCore(byte[] array, int ibStart, int cbSize) => _hasher.Append(array.AsSpan(ibStart, cbSize));
-    protected override byte[] HashFinal() => _hasher.GetCurrentHash();
+    protected override byte[] HashFinal() => _hasher.Finalize();
 }
 
 public static class NativeCryptoAdapterExtensions

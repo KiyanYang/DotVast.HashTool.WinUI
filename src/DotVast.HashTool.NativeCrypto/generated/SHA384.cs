@@ -24,7 +24,7 @@ public sealed partial class SHA384 : IHasher
 
     public void Append(ReadOnlySpan<byte> source) => sha384_update(_handle, source, source.Length);
 
-    public byte[] GetCurrentHash()
+    public byte[] Finalize()
     {
         var ret = new byte[48];
         sha384_finalize(_handle, ret, 48);

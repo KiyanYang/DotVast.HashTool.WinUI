@@ -24,7 +24,7 @@ public sealed partial class Keccak256 : IHasher
 
     public void Append(ReadOnlySpan<byte> source) => Keccak256_update(_handle, source, source.Length);
 
-    public byte[] GetCurrentHash()
+    public byte[] Finalize()
     {
         var ret = new byte[32];
         Keccak256_finalize(_handle, ret, 32);

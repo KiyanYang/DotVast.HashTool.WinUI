@@ -24,7 +24,7 @@ public sealed partial class MD5 : IHasher
 
     public void Append(ReadOnlySpan<byte> source) => md5_update(_handle, source, source.Length);
 
-    public byte[] GetCurrentHash()
+    public byte[] Finalize()
     {
         var ret = new byte[16];
         md5_finalize(_handle, ret, 16);

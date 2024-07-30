@@ -24,7 +24,7 @@ public sealed partial class RIPEMD320 : IHasher
 
     public void Append(ReadOnlySpan<byte> source) => ripemd320_update(_handle, source, source.Length);
 
-    public byte[] GetCurrentHash()
+    public byte[] Finalize()
     {
         var ret = new byte[40];
         ripemd320_finalize(_handle, ret, 40);
