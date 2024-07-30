@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Intrinsics;
 
-namespace DotVast.HashTool.WinUI.Core.Hashes;
+namespace DotVast.Hashing;
 
 /// <summary>
 /// <see href="https://www.oscca.gov.cn/sca/xxgk/2010-12/17/1002389/files/302a3ada057c4a73830536d03e683110.pdf">SM3密码杂凑算法</see>.
@@ -35,10 +35,8 @@ public sealed class SM3() : BlockHash(HashSizeInBytes, BlockSizeInBytes)
     private readonly uint[] _v = new uint[8];
     private readonly uint[] _w = new uint[68];
 
-    public override void Initialize()
+    private protected override void ResetCore()
     {
-        base.Initialize();
-
         _v[0] = 0x7380166Fu;
         _v[1] = 0x4914B2B9u;
         _v[2] = 0x172442D7u;
@@ -49,7 +47,7 @@ public sealed class SM3() : BlockHash(HashSizeInBytes, BlockSizeInBytes)
         _v[7] = 0xB0FB0E4Eu;
     }
 
-    protected override byte[] HashFinal()
+    public override byte[] Finalize()
     {
         _blockBuffer.Span[_blockBuffer.Position] = 0x80;
         var blockBufferPosition = _blockBuffer.Position;
@@ -75,7 +73,7 @@ public sealed class SM3() : BlockHash(HashSizeInBytes, BlockSizeInBytes)
         return ret;
     }
 
-    protected override void ProcessBlock(ReadOnlySpan<byte> block)
+    private protected override void ProcessBlock(ReadOnlySpan<byte> block)
     {
         #region MessageExpansion 0..19
 
@@ -223,7 +221,7 @@ public sealed class SM3() : BlockHash(HashSizeInBytes, BlockSizeInBytes)
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     static uint FF16(uint x, uint y, uint z) =>
-        (x & y) | (x & z) | (y & z);
+        x & y | x & z | y & z;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     static uint GG00(uint x, uint y, uint z) =>
@@ -231,7 +229,7 @@ public sealed class SM3() : BlockHash(HashSizeInBytes, BlockSizeInBytes)
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     static uint GG16(uint x, uint y, uint z) =>
-        ((y ^ z) & x) ^ z;
+        (y ^ z) & x ^ z;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     static uint P0(uint x) =>

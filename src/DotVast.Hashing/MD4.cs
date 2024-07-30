@@ -5,7 +5,7 @@ using System.Buffers.Binary;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace DotVast.HashTool.WinUI.Core.Hashes;
+namespace DotVast.Hashing;
 
 public sealed class MD4() : BlockHash(HashSizeInBytes, BlockSizeInBytes)
 {
@@ -17,17 +17,15 @@ public sealed class MD4() : BlockHash(HashSizeInBytes, BlockSizeInBytes)
     private uint _c;
     private uint _d;
 
-    public override void Initialize()
+    private protected override void ResetCore()
     {
-        base.Initialize();
-
         _a = 0x67452301;
         _b = 0xefcdab89;
         _c = 0x98badcfe;
         _d = 0x10325476;
     }
 
-    protected override byte[] HashFinal()
+    public override byte[] Finalize()
     {
         _blockBuffer.Span[_blockBuffer.Position] = 0x80;
         var blockBufferPosition = _blockBuffer.Position;
@@ -56,14 +54,14 @@ public sealed class MD4() : BlockHash(HashSizeInBytes, BlockSizeInBytes)
         return ret;
     }
 
-    protected override void ProcessBlock(ReadOnlySpan<byte> block)
+    private protected override void ProcessBlock(ReadOnlySpan<byte> block)
     {
         var blockInWord = MemoryMarshal.Cast<byte, uint>(block);
 
-        uint aa = _a;
-        uint bb = _b;
-        uint cc = _c;
-        uint dd = _d;
+        var aa = _a;
+        var bb = _b;
+        var cc = _c;
+        var dd = _d;
 
         foreach (var k in (Span<int>)[0, 4, 8, 12])
         {
@@ -73,7 +71,7 @@ public sealed class MD4() : BlockHash(HashSizeInBytes, BlockSizeInBytes)
             bb = Round1Operation(bb, cc, dd, aa, blockInWord[k + 3], 19);
         }
 
-        foreach (int k in (Span<int>)[0, 1, 2, 3])
+        foreach (var k in (Span<int>)[0, 1, 2, 3])
         {
             aa = Round2Operation(aa, bb, cc, dd, blockInWord[k], 3);
             dd = Round2Operation(dd, aa, bb, cc, blockInWord[k + 4], 5);
@@ -81,7 +79,7 @@ public sealed class MD4() : BlockHash(HashSizeInBytes, BlockSizeInBytes)
             bb = Round2Operation(bb, cc, dd, aa, blockInWord[k + 12], 13);
         }
 
-        foreach (int k in (Span<int>)[0, 2, 1, 3])
+        foreach (var k in (Span<int>)[0, 2, 1, 3])
         {
             aa = Round3Operation(aa, bb, cc, dd, blockInWord[k], 3);
             dd = Round3Operation(dd, aa, bb, cc, blockInWord[k + 8], 9);
@@ -97,11 +95,11 @@ public sealed class MD4() : BlockHash(HashSizeInBytes, BlockSizeInBytes)
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static uint Round1Operation(uint a, uint b, uint c, uint d, uint xk, int s) =>
-        uint.RotateLeft(a + ((b & c) | (~b & d)) + xk, s);
+        uint.RotateLeft(a + (b & c | ~b & d) + xk, s);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static uint Round2Operation(uint a, uint b, uint c, uint d, uint xk, int s) =>
-        uint.RotateLeft(a + ((b & c) | (b & d) | (c & d)) + xk + 0x5A827999, s);
+        uint.RotateLeft(a + (b & c | b & d | c & d) + xk + 0x5A827999, s);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static uint Round3Operation(uint a, uint b, uint c, uint d, uint xk, int s) =>

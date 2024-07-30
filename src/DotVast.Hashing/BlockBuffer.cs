@@ -1,7 +1,7 @@
 // Copyright (c) Kiyan Yang.
 // Licensed under the MIT License.
 
-namespace DotVast.HashTool.WinUI.Core.Hashes;
+namespace DotVast.Hashing;
 
 internal sealed class BlockBuffer(int size)
 {
