@@ -11,5 +11,12 @@ public interface IHasher
 
     void Append(ReadOnlySpan<byte> source);
 
-    byte[] GetCurrentHash();
+    byte[] Finalize();
+
+    byte[] FinalizeAndReset()
+    {
+        var ret = Finalize();
+        Reset();
+        return ret;
+    }
 }
