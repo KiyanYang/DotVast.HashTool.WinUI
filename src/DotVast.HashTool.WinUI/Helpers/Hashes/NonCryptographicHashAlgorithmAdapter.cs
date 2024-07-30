@@ -2,17 +2,18 @@
 // Licensed under the MIT License.
 
 using System.IO.Hashing;
-using System.Security.Cryptography;
+
+using DotVast.Hashing;
 
 namespace DotVast.HashTool.WinUI.Helpers.Hashes;
 
 internal static class NonCryptographicHashAlgorithmAdapterExtensions
 {
-    public static HashAlgorithm ToHashAlgorithm(this NonCryptographicHashAlgorithm hash, bool reverse = false) =>
+    public static IHasher ToIHasher(this NonCryptographicHashAlgorithm hash, bool reverse = false) =>
         new NonCryptographicHashAlgorithmAdapter(hash, reverse);
 }
 
-sealed file class NonCryptographicHashAlgorithmAdapter : HashAlgorithm
+sealed file class NonCryptographicHashAlgorithmAdapter : IHasher
 {
     private readonly NonCryptographicHashAlgorithm _hash;
     private readonly bool _reverse;
@@ -21,19 +22,15 @@ sealed file class NonCryptographicHashAlgorithmAdapter : HashAlgorithm
     {
         _hash = hash;
         _reverse = reverse;
-        HashSizeValue = hash.HashLengthInBytes * 8;
     }
 
-    public override void Initialize() =>
-        _hash.Reset();
+    public int HashLengthInBytes => _hash.HashLengthInBytes;
 
-    protected override void HashCore(byte[] array, int ibStart, int cbSize) =>
-        _hash.Append(new ReadOnlySpan<byte>(array, ibStart, cbSize));
+    public void Reset() => _hash.Reset();
 
-    protected override void HashCore(ReadOnlySpan<byte> source) =>
-        _hash.Append(source);
+    public void Append(ReadOnlySpan<byte> source) => _hash.Append(source);
 
-    protected override byte[] HashFinal()
+    public byte[] Finalize()
     {
         var hashValue = _hash.GetCurrentHash();
         if (_reverse)
@@ -41,23 +38,5 @@ sealed file class NonCryptographicHashAlgorithmAdapter : HashAlgorithm
             Array.Reverse(hashValue);
         }
         return hashValue;
-    }
-
-    protected override bool TryHashFinal(Span<byte> destination, out int bytesWritten)
-    {
-        var hashSizeInBytes = _hash.HashLengthInBytes;
-
-        if (destination.Length < hashSizeInBytes)
-        {
-            bytesWritten = 0;
-            return false;
-        }
-
-        bytesWritten = _hash.GetCurrentHash(destination);
-        if (_reverse)
-        {
-            destination[..bytesWritten].Reverse();
-        }
-        return true;
     }
 }
