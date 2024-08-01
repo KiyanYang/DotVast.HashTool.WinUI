@@ -4,11 +4,6 @@
     <Nullable>enable</Nullable>
     <Version>0.7.2</Version>
 
-    <Benchmark>$(SolutionName.Contains('Benchmark'))</Benchmark>
-    <NativeLibEnabledHasher>blake3,md5,ripemd,sha1,sm3</NativeLibEnabledHasher>
-
-    <DefineConstants>$(DefineConstants);$(NativeLibEnabledHasher)</DefineConstants>
-    <DefineConstants Condition="'$(Benchmark)' == 'true'">$(DefineConstants);Benchmark</DefineConstants>
     <DefineConstants Condition="'$(GITHUB_ACTIONS)' == 'true'">$(DefineConstants);GITHUB_ACTIONS</DefineConstants>
     <DefineConstants Condition="'$(DotVast_CIRelease)' == 'true'">$(DefineConstants);DotVast_CIRelease</DefineConstants>
   </PropertyGroup>

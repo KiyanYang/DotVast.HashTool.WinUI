@@ -20,10 +20,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DotVast.HashTool.ContextMen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotVast.HashTool.WinUI.Core.Tests", "DotVast.HashTool.WinUI.Core.Tests\DotVast.HashTool.WinUI.Core.Tests.csproj", "{9A09DFA1-306D-454B-988D-2501D42F7B9A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotVast.HashTool.NativeCrypto", "DotVast.HashTool.NativeCrypto\DotVast.HashTool.NativeCrypto.csproj", "{8A0726FA-6411-44B0-A0BC-AA822216894F}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotVast.Hashing", "DotVast.Hashing\DotVast.Hashing.csproj", "{7F456044-8197-4407-9DF4-1BA9177038C0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|arm64 = Debug|arm64
@@ -68,22 +64,6 @@ Global
 		{9A09DFA1-306D-454B-988D-2501D42F7B9A}.Release|arm64.Build.0 = Release|Any CPU
 		{9A09DFA1-306D-454B-988D-2501D42F7B9A}.Release|x64.ActiveCfg = Release|Any CPU
 		{9A09DFA1-306D-454B-988D-2501D42F7B9A}.Release|x64.Build.0 = Release|Any CPU
-		{8A0726FA-6411-44B0-A0BC-AA822216894F}.Debug|arm64.ActiveCfg = Debug|arm64
-		{8A0726FA-6411-44B0-A0BC-AA822216894F}.Debug|arm64.Build.0 = Debug|arm64
-		{8A0726FA-6411-44B0-A0BC-AA822216894F}.Debug|x64.ActiveCfg = Debug|x64
-		{8A0726FA-6411-44B0-A0BC-AA822216894F}.Debug|x64.Build.0 = Debug|x64
-		{8A0726FA-6411-44B0-A0BC-AA822216894F}.Release|arm64.ActiveCfg = Release|arm64
-		{8A0726FA-6411-44B0-A0BC-AA822216894F}.Release|arm64.Build.0 = Release|arm64
-		{8A0726FA-6411-44B0-A0BC-AA822216894F}.Release|x64.ActiveCfg = Release|x64
-		{8A0726FA-6411-44B0-A0BC-AA822216894F}.Release|x64.Build.0 = Release|x64
-		{7F456044-8197-4407-9DF4-1BA9177038C0}.Debug|arm64.ActiveCfg = Debug|Any CPU
-		{7F456044-8197-4407-9DF4-1BA9177038C0}.Debug|arm64.Build.0 = Debug|Any CPU
-		{7F456044-8197-4407-9DF4-1BA9177038C0}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{7F456044-8197-4407-9DF4-1BA9177038C0}.Debug|x64.Build.0 = Debug|Any CPU
-		{7F456044-8197-4407-9DF4-1BA9177038C0}.Release|arm64.ActiveCfg = Release|Any CPU
-		{7F456044-8197-4407-9DF4-1BA9177038C0}.Release|arm64.Build.0 = Release|Any CPU
-		{7F456044-8197-4407-9DF4-1BA9177038C0}.Release|x64.ActiveCfg = Release|Any CPU
-		{7F456044-8197-4407-9DF4-1BA9177038C0}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
