@@ -54,6 +54,7 @@
     <PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.0.240109" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.0.240109" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.Markdown" Version="7.1.2" />
+    <PackageReference Include="DotVast.Hashing" Version="0.1.0" />
     <PackageReference Include="DotVast.Toolkit.StringResource" Version="0.5.1" PrivateAssets="all" ExcludeAssets="runtime" />
     <PackageReference Include="HashLib4CSharp" Version="1.5.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
@@ -67,7 +68,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DotVast.HashTool.NativeCrypto\DotVast.HashTool.NativeCrypto.csproj" />
     <ProjectReference Include="..\DotVast.HashTool.WinUI.Core\DotVast.HashTool.WinUI.Core.csproj" />
     <ProjectReference Include="..\DotVast.HashTool.ContextMenu\DotVast.HashTool.ContextMenu.vcxproj" ReferenceOutputAssembly="False" />
   </ItemGroup>

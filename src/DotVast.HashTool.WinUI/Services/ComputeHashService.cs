@@ -3,10 +3,10 @@
 
 using System.Buffers;
 using System.Diagnostics;
-using System.Security.Cryptography;
 
 using CommunityToolkit.Mvvm.Messaging;
 
+using DotVast.Hashing;
 using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Core.Helpers;
 using DotVast.HashTool.WinUI.Enums;
@@ -16,7 +16,8 @@ namespace DotVast.HashTool.WinUI.Services;
 
 internal sealed class ComputeHashService : IComputeHashService
 {
-    private const int BufferSize = 1024 * 1024;
+    // https://github.com/dotnet/runtime/blob/28c4dce2c6a9a3619faa612095ed2125d03fbecd/src/libraries/System.Private.CoreLib/src/System/IO/Stream.cs#L126
+    private const int BufferSize = 1024 * 80;
     private const long ReportFrequency = 10;
 
     private static int s_currentWorkerThreads = 4; // 设置初值为 4, 模拟其他服务所用的工作线程数
@@ -141,23 +142,23 @@ internal sealed class ComputeHashService : IComputeHashService
     {
         if (hashTask.HashOptions.Length == 1)
         {
-            return HashStreamForSingleHashAlgorithm(hashTask, stream, progressOffset, mres, cancellationToken);
+            return HashStreamForSingleHasher(hashTask, stream, progressOffset, mres, cancellationToken);
         }
         else
         {
-            return HashStreamForMultiHashAlgorithm(hashTask, stream, progressOffset, mres, cancellationToken);
+            return HashStreamForMultiHasher(hashTask, stream, progressOffset, mres, cancellationToken);
         }
     }
 
-    private HashResultItem[] HashStreamForMultiHashAlgorithm(HashTask hashTask,
+    private HashResultItem[] HashStreamForMultiHasher(HashTask hashTask,
         Stream stream,
         double progressOffset,
         ManualResetEventSlim mres,
         CancellationToken cancellationToken)
     {
-        var hashAlgorithms = hashTask.HashOptions.Select(h => h.Kind.ToHashAlgorithm()).ToArray();
+        var hashers = hashTask.HashOptions.Select(h => h.Kind.ToIHasher()).ToArray();
 
-        byte[]? buffer = null;
+        byte[] buffer = ArrayPool<byte>.Shared.Rent(BufferSize);
         int clearLimit = 0;
         var limiter = new ProgressRateLimiter(ReportFrequency);
 
@@ -165,13 +166,12 @@ internal sealed class ComputeHashService : IComputeHashService
         {
             stream.Seek(0, SeekOrigin.Begin);
 
-            buffer = ArrayPool<byte>.Shared.Rent(BufferSize);
             // 每次读取长度。当 stream.Length == 0 时，readLength 为 0，此时不会进入 barrier.postPhaseAction，即保证其内 stream.Length > 0。
             int readLength = Math.Sign(stream.Length);
 
             #region 使用屏障并行计算哈希值
 
-            using Barrier barrier = new(hashAlgorithms.Length, (b) =>
+            using Barrier barrier = new(hashers.Length, (b) =>
             {
                 if (!mres.IsSet)
                 {
@@ -194,50 +194,41 @@ internal sealed class ComputeHashService : IComputeHashService
             });
 
             // 定义本地函数。当读取长度大于 0 时，先屏障同步（包括读取文件、报告进度等），再并行计算。
-            void Action(HashAlgorithm hashAlgorithm)
+            void Action(IHasher hasher)
             {
                 while (readLength > 0)
                 {
                     barrier.SignalAndWait(cancellationToken);
-                    hashAlgorithm.TransformBlock(buffer, 0, readLength, null, 0);
+                    hasher.Append(new ReadOnlySpan<byte>(buffer, 0, readLength));
 #if DOTVAST_SLOWCPU // 睡眠一段时间，以便观察进度条。
                     Thread.Sleep(50);
 #endif
                 }
-                hashAlgorithm.TransformFinalBlock(buffer, 0, 0);
             }
 
-            Parallel.ForEach(hashAlgorithms, Action);
+            Parallel.ForEach(hashers, Action);
 
             // 确保报告计算完成. 主要用于当 stream.Length == 0 时没有在 barrier.postPhaseAction 进行报告的情况.
             limiter.ReportFinal(() => hashTask.ProgressVal = progressOffset + 1);
 
             #endregion
 
-            var hashResultData = new HashResultItem[hashAlgorithms.Length];
+            var hashResultData = new HashResultItem[hashers.Length];
 
-            for (int i = 0; i < hashAlgorithms.Length; i++)
+            for (int i = 0; i < hashers.Length; i++)
             {
-                hashResultData[i] = new(hashTask.HashOptions[i], hashAlgorithms[i].Hash!);
+                hashResultData[i] = new(hashTask.HashOptions[i], hashers[i].Finalize());
             }
 
             return hashResultData;
         }
         finally
         {
-            foreach (var hash in hashAlgorithms)
-            {
-                hash.Dispose();
-            }
-            if (buffer is not null)
-            {
-                CryptographicOperations.ZeroMemory(buffer.AsSpan(0, clearLimit));
-                ArrayPool<byte>.Shared.Return(buffer);
-            }
+            ArrayPool<byte>.Shared.Return(buffer);
         }
     }
 
-    private HashResultItem[] HashStreamForSingleHashAlgorithm(
+    private HashResultItem[] HashStreamForSingleHasher(
         HashTask hashTask,
         Stream stream,
         double progressOffset,
@@ -245,23 +236,19 @@ internal sealed class ComputeHashService : IComputeHashService
         CancellationToken cancellationToken)
     {
         var hashOption = hashTask.HashOptions[0];
-        var hashAlgorithm = hashOption.Kind.ToHashAlgorithm();
+        var hasher = hashOption.Kind.ToIHasher();
 
-        byte[]? buffer = null;
-        int clearLimit = 0;
+        byte[] buffer = ArrayPool<byte>.Shared.Rent(BufferSize);
         var limiter = new ProgressRateLimiter(ReportFrequency);
 
         try
         {
             stream.Seek(0, SeekOrigin.Begin);
 
-            buffer = ArrayPool<byte>.Shared.Rent(BufferSize);
             int readLength = 0;
 
             while ((readLength = stream.Read(buffer, 0, BufferSize)) > 0)
             {
-                clearLimit = Math.Max(clearLimit, readLength);
-
                 if (!mres.IsSet)
                 {
                     _dispatchingService.TryEnqueue(() => hashTask.State = HashTaskState.Paused);
@@ -277,40 +264,23 @@ internal sealed class ComputeHashService : IComputeHashService
                 // 报告进度. stream.Length 在此处始终大于 0.
                 limiter.Report(() => hashTask.ProgressVal = (double)stream.Position / stream.Length + progressOffset);
 
-                hashAlgorithm.TransformBlock(buffer, 0, readLength, null, 0);
+                hasher.Append(new ReadOnlySpan<byte>(buffer, 0, readLength));
 #if DOTVAST_SLOWCPU // 睡眠一段时间，以便观察进度条。
                 Thread.Sleep(50);
 #endif
             }
-            hashAlgorithm.TransformFinalBlock(buffer, 0, 0);
 
             // 确保报告计算完成. 主要用于当 stream.Length == 0 时没有进行过报告的情况.
             limiter.ReportFinal(() => hashTask.ProgressVal = progressOffset + 1);
 
-            var hashResultItem = new HashResultItem(hashOption, hashAlgorithm.Hash!);
+            var hashResultItem = new HashResultItem(hashOption, hasher.Finalize());
 
             return [hashResultItem];
         }
         finally
         {
-            hashAlgorithm.Dispose();
-            if (buffer is not null)
-            {
-                CryptographicOperations.ZeroMemory(buffer.AsSpan(0, clearLimit));
-                ArrayPool<byte>.Shared.Return(buffer, clearArray: false);
-            }
+            ArrayPool<byte>.Shared.Return(buffer, clearArray: false);
         }
-    }
-
-    private static string GetFormattedHash(byte[] hashData, HashOption option)
-    {
-        return option.Format switch
-        {
-            HashFormat.Base16Upper => System.Convert.ToHexString(hashData),
-            HashFormat.Base16Lower => Core.Helpers.Convert.ToLowerHexString(hashData),
-            HashFormat.Base64 => System.Convert.ToBase64String(hashData),
-            _ => throw new ArgumentOutOfRangeException(nameof(option), $"The HashKind {option.Kind} is out of range and cannot be processed."),
-        };
     }
 
     private struct ProgressRateLimiter

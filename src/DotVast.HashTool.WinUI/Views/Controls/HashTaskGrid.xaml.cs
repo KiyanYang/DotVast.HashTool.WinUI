@@ -119,13 +119,11 @@ public sealed partial class HashTaskGrid : UserControl
         return sb.ToString();
     }
 
-    private static readonly string[] s_allProgressText = Enumerable.Range(0, 101).Select(i => i.ToString()).ToArray();
-
     private string GetProgressText(double val, double max)
     {
         var progress = 100 * val / max;
         var index = Math.Clamp((int)progress, 0, 100);
-        return s_allProgressText[index];
+        return index.ToString();
     }
 
     #endregion x:Bind Function

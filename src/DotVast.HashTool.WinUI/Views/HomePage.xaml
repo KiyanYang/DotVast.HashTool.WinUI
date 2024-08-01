@@ -164,7 +164,7 @@
                     HorizontalContentAlignment="Stretch"
                     Command="{x:Bind ViewModel.ShowResultCommand}"
                     CommandParameter="{x:Bind ViewModel.LastHashTask, Mode=OneWay}"
-                    Visibility="{Binding ViewModel.LastHashTask, ElementName=This, Converter={StaticResource NullableToVisibilityConverter}}">
+                    Visibility="{x:Bind ViewModel.LastHashTask, Converter={StaticResource NullableToVisibilityConverter}, Mode=OneWay}">
                     <controls:HashTaskGrid HashTask="{x:Bind ViewModel.LastHashTask, Mode=OneWay}" />
                 </Button>
 
