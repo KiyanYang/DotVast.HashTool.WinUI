@@ -24,7 +24,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DotVast.HashTool.WinUI.Core\DotVast.HashTool.WinUI.Core.csproj" />
-    <ProjectReference Include="..\DotVast.HashTool.NativeCrypto\DotVast.HashTool.NativeCrypto.csproj" />
   </ItemGroup>
 
 </Project>
