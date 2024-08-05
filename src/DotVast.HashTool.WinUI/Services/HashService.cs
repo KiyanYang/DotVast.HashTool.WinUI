@@ -48,7 +48,6 @@ internal sealed partial class HashService : IHashService
         [HashKind.XxHash128] = new("XXH128", Aliases: ["xxHash128"], IsEnabledForApp: true),
         [HashKind.Keccak_224] = new("Keccak-224", Aliases: ["Keccak224"]),
         [HashKind.Keccak_256] = new("Keccak-256", Aliases: ["Keccak256"]),
-        [HashKind.Keccak_288] = new("Keccak-288", Aliases: ["Keccak288"]),
         [HashKind.Keccak_384] = new("Keccak-384", Aliases: ["Keccak384"]),
         [HashKind.Keccak_512] = new("Keccak-512", Aliases: ["Keccak512"]),
         [HashKind.RIPEMD_128] = new("RIPEMD-128", Aliases: ["RIPEMD128"]),
