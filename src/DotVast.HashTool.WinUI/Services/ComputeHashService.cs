@@ -20,8 +20,6 @@ internal sealed class ComputeHashService : IComputeHashService
     private const int BufferSize = 1024 * 80;
     private const long ReportFrequency = 10;
 
-    private static int s_currentWorkerThreads = 4; // 设置初值为 4, 模拟其他服务所用的工作线程数
-
     private readonly IDispatchingService _dispatchingService = App.GetService<IDispatchingService>();
     private readonly IPreferencesSettingsService _preferencesSettingsService = App.GetService<IPreferencesSettingsService>();
 
@@ -33,7 +31,6 @@ internal sealed class ComputeHashService : IComputeHashService
         hashTask.State = HashTaskState.Working;
         hashTask.Elapsed = default;
         hashTask.Results = default;
-        SetMinThreads(hashTask.HashOptions.Length);
 
         try
         {
@@ -76,16 +73,8 @@ internal sealed class ComputeHashService : IComputeHashService
         }
         finally
         {
-            SetMinThreads(-hashTask.HashOptions.Length);
             var elapsed = Stopwatch.GetElapsedTime(startTimestamp);
             _dispatchingService.TryEnqueue(() => hashTask.Elapsed = elapsed);
-        }
-
-        static void SetMinThreads(int workerThreadsDelta)
-        {
-            s_currentWorkerThreads += workerThreadsDelta;
-            var workerThreads = Math.Clamp(s_currentWorkerThreads, Helpers.RuntimeHelper.DefaultMinWorkerThreads, Helpers.RuntimeHelper.DefaultMaxWorkerThreads);
-            ThreadPool.SetMinThreads(workerThreads, Helpers.RuntimeHelper.DefaultMinCompletionPortThreads);
         }
     }
 

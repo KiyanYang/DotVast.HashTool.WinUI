@@ -10,6 +10,7 @@
     <RootNamespace>DotVast.HashTool.WinUI</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <NoWarn>$(NoWarn);SYSLIB1037</NoWarn>
+    <UseWindowsThreadPool>true</UseWindowsThreadPool>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(Configuration) == Debug">
