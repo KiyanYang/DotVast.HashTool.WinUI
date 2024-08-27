@@ -17,8 +17,8 @@ internal sealed partial class PreferencesSettingsService(IHashService hashServic
     public override Task InitializeAsync()
     {
         InitializeHashSettings();
+        InitializeFileExplorerContextMenusEnabled();
         _fileAttributesToSkip = Load(nameof(FileAttributesToSkip), DefaultPreferencesSettings.FileAttributesToSkipWhenFolderMode);
-        _fileExplorerContextMenusEnabled = Load(nameof(FileExplorerContextMenusEnabled), DefaultPreferencesSettings.FileExplorerContextMenusEnabled);
         _includePreRelease = Load(nameof(IncludePreRelease), DefaultPreferencesSettings.IncludePreRelease);
         _checkForUpdatesOnStartup = Load(nameof(CheckForUpdatesOnStartup), DefaultPreferencesSettings.CheckForUpdatesOnStartup);
         _startingWhenCreateHashTask = Load(nameof(StartingWhenCreateHashTask), DefaultPreferencesSettings.StartingWhenCreateHashTask);
@@ -92,6 +92,10 @@ internal sealed partial class PreferencesSettingsService(IHashService hashServic
     #endregion FileAttributesToSkip
 
     #region FileExplorerContextMenusEnabled
+    private void InitializeFileExplorerContextMenusEnabled()
+    {
+        _fileExplorerContextMenusEnabled = Load(SettingsContainerName.ContextMenu, "IsEnabled", DefaultPreferencesSettings.FileExplorerContextMenusEnabled);
+    }
     private bool _fileExplorerContextMenusEnabled;
     public bool FileExplorerContextMenusEnabled
     {
