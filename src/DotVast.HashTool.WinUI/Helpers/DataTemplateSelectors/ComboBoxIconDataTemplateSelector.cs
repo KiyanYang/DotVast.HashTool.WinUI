@@ -6,7 +6,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace DotVast.HashTool.WinUI.Helpers.DataTemplateSelectors;
 
-public sealed class ComboBoxIconDataTemplateSelector : DataTemplateSelector
+public sealed partial class ComboBoxIconDataTemplateSelector : DataTemplateSelector
 {
     public DataTemplate? Normal { get; set; }
     public DataTemplate? DropDown { get; set; }

@@ -6,7 +6,7 @@ using Microsoft.UI.Xaml.Data;
 
 namespace DotVast.HashTool.WinUI.Helpers.Converters;
 
-internal sealed class NullableToVisibilityConverter : IValueConverter
+internal sealed partial class NullableToVisibilityConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, string language)
     {

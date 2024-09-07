@@ -6,7 +6,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace DotVast.HashTool.WinUI.Views.Controls;
 
-public sealed class NavigationViewBodyScrollViewer : ContentControl
+public sealed partial class NavigationViewBodyScrollViewer : ContentControl
 {
     private const string PartScrollViewer = "Decoration";
 
