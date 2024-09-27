@@ -119,12 +119,7 @@ public sealed partial class HashTaskGrid : UserControl
         return sb.ToString();
     }
 
-    private string GetProgressText(double val, double max)
-    {
-        var progress = 100 * val / max;
-        var index = Math.Clamp((int)progress, 0, 100);
-        return index.ToString();
-    }
-
+    private string GetProgressText(double val, double max) => $"{val*100/max:F0}";
+ 
     #endregion x:Bind Function
 }

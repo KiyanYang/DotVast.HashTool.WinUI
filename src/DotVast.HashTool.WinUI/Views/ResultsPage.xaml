@@ -98,7 +98,7 @@
                     <TextBlock
                         Grid.Row="2"
                         Grid.Column="1"
-                        Text="{x:Bind enums:HashTaskStateExtensions.ToDisplay(ViewModel.HashTask.State), Mode=OneWay}" />
+                        Text="{x:Bind GetHashTaskStateText(ViewModel.HashTask.State, ViewModel.HashTask.ProgressVal, ViewModel.HashTask.ProgressMax), Mode=OneWay}" />
                 </Grid>
 
                 <!-- 标题: 任务结果; 筛选文本框 -->

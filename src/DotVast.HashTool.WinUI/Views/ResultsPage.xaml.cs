@@ -1,6 +1,7 @@
 // Copyright (c) Kiyan Yang.
 // Licensed under the MIT License.
 
+using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 using DotVast.HashTool.WinUI.ViewModels;
 
@@ -37,4 +38,15 @@ public sealed partial class ResultsPage : Page, IView<ResultsViewModel>
 
         Loaded -= ResultsPage_Loaded_OnHashTaskChanged;
     }
+
+    #region x:Bind Function
+
+    private string GetHashTaskStateText(HashTaskState state, double val, double max) =>
+        state switch
+        {
+            HashTaskState.Working or HashTaskState.Waiting => $"{state.ToDisplay()} {val/max:P}",
+            _ => state.ToDisplay()
+        };
+
+    #endregion
 }
