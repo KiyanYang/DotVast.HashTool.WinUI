@@ -8,6 +8,7 @@ using DotVast.HashTool.WinUI.Contracts.Services.Settings;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Helpers;
 
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 
 using WGAL = Windows.Globalization.ApplicationLanguages;
@@ -30,7 +31,10 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
         SetIsAlwaysOnTop();
 
         Debug.Assert((App.MainWindow.Content as FrameworkElement)?.RequestedTheme == Theme.ToElementTheme());
-        Debug.Assert(App.MainWindow.IsAlwaysOnTop == IsAlwaysOnTop);
+        if (App.MainWindow.AppWindow.Presenter is OverlappedPresenter presenter)
+        {
+            Debug.Assert(presenter.IsAlwaysOnTop == IsAlwaysOnTop);
+        }
         Debug.Assert(WGAL.PrimaryLanguageOverride == Language.ToTag());
 
         return Task.CompletedTask;
@@ -54,7 +58,10 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
     }
     private void SetIsAlwaysOnTop()
     {
-        App.MainWindow.IsAlwaysOnTop = IsAlwaysOnTop;
+        if (App.MainWindow.AppWindow.Presenter is OverlappedPresenter presenter)
+        {
+            presenter.IsAlwaysOnTop = IsAlwaysOnTop;
+        }
     }
     #endregion IsAlwaysOnTop
 

@@ -9,8 +9,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
 
-using WinUIEx;
-
 namespace DotVast.HashTool.WinUI.Services;
 
 public sealed class ActivationService(
@@ -32,8 +30,10 @@ public sealed class ActivationService(
 
     public async Task ActivateAsync(object activationArgs)
     {
+        var mainWindow = App.MainWindow;
+
         // Set the MainWindow Content.
-        App.MainWindow.Content ??= App.GetService<ShellPage>();
+        mainWindow.Content ??= App.GetService<ShellPage>();
 
         // Execute tasks before activation.
         await InitializeAsync();
@@ -41,10 +41,13 @@ public sealed class ActivationService(
         // Handle activation via ActivationHandlers.
         await HandleActivationAsync(activationArgs);
 
-        App.MainWindow.CenterOnScreen();
+        //TODO: https://github.com/microsoft/WindowsAppSDK/discussions/4710
+        //App.MainWindow.CenterOnScreen();
+        var scale = mainWindow.Content.XamlRoot.RasterizationScale;
+        mainWindow.AppWindow.ResizeClient(new((int)(840 * scale), (int)(540 * scale)));
 
         // Activate the MainWindow.
-        App.MainWindow.Activate();
+        mainWindow.Activate();
 
         // Execute tasks after activation.
         await StartupAsync();

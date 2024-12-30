@@ -110,7 +110,7 @@ public sealed partial class TasksViewModel : SimpleObservableRecipient, IViewMod
         picker.FileTypeChoices.Add("Text", [".txt"]);
         picker.FileTypeChoices.Add("JSON", [".json"]);
 
-        var hwnd = WinUIEx.HwndExtensions.GetActiveWindow();
+        var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
         WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
 
         var file = await picker.PickSaveFileAsync();

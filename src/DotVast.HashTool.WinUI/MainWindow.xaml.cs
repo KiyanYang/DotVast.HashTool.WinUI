@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using Microsoft.Extensions.Logging;
-
-using WinUIEx;
+using Microsoft.UI.Windowing;
+using Microsoft.UI.Xaml;
 
 namespace DotVast.HashTool.WinUI;
 
-public sealed partial class MainWindow : WindowEx
+public sealed partial class MainWindow : Window
 {
     private readonly ILogger<MainWindow> _logger = App.GetLogger<MainWindow>();
 
