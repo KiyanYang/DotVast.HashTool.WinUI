@@ -7,7 +7,7 @@ using DotVast.HashTool.WinUI.Enums;
 
 namespace DotVast.HashTool.WinUI.Models;
 
-public sealed class HashOption : ObservableObject
+public sealed partial class HashOption : ObservableObject
 {
     public HashKind Kind
     {

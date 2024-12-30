@@ -21,7 +21,7 @@ public sealed class HashResult(string path, IReadOnlyList<HashResultItem> data)
     public IReadOnlyList<HashResultItem> Data { get; } = data;
 }
 
-public sealed class HashResultItem : ObservableObject
+public sealed partial class HashResultItem : ObservableObject
 {
     private readonly HashOption _hashOption;
     private readonly byte[] _hashValue;
