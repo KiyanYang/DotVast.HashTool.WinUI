@@ -27,18 +27,18 @@ public sealed partial class HashTask : ObservableObject, IDisposable
     /// </summary>
     public ObservableCollection<HashResult>? Results
     {
-        get => _results;
+        get;
         set
         {
-            if (!EqualityComparerEquals(_results, value))
+            if (field != value)
             {
                 OnPropertyChanging(s_resultsChangingEventArgs);
-                _results = value;
+                field = value;
                 OnPropertyChanged(s_resultsChangedEventArgs);
             }
         }
     }
-    private ObservableCollection<HashResult>? _results;
+
     private static readonly PropertyChangingEventArgs s_resultsChangingEventArgs = new(nameof(Results));
     private static readonly PropertyChangedEventArgs s_resultsChangedEventArgs = new(nameof(Results));
 
@@ -47,18 +47,18 @@ public sealed partial class HashTask : ObservableObject, IDisposable
     /// </summary>
     public TimeSpan Elapsed
     {
-        get => _elapsed;
+        get;
         set
         {
-            if (!EqualityComparerEquals(_elapsed, value))
+            if (field != value)
             {
                 OnPropertyChanging(s_elapsedChangingEventArgs);
-                _elapsed = value;
+                field = value;
                 OnPropertyChanged(s_elapsedChangedEventArgs);
             }
         }
     }
-    private TimeSpan _elapsed;
+
     private static readonly PropertyChangingEventArgs s_elapsedChangingEventArgs = new(nameof(Elapsed));
     private static readonly PropertyChangedEventArgs s_elapsedChangedEventArgs = new(nameof(Elapsed));
 
@@ -67,18 +67,18 @@ public sealed partial class HashTask : ObservableObject, IDisposable
     /// </summary>
     public HashTaskState State
     {
-        get => _state;
+        get;
         set
         {
-            if (_state != value)
+            if (field != value)
             {
                 OnPropertyChanging(s_stateChangingEventArgs);
-                _state = value;
+                field = value;
                 OnPropertyChanged(s_stateChangedEventArgs);
             }
         }
     }
-    private HashTaskState _state;
+
     private static readonly PropertyChangingEventArgs s_stateChangingEventArgs = new(nameof(State));
     private static readonly PropertyChangedEventArgs s_stateChangedEventArgs = new(nameof(State));
 
@@ -88,18 +88,18 @@ public sealed partial class HashTask : ObservableObject, IDisposable
     [JsonIgnore]
     public double ProgressVal
     {
-        get => _progressVal;
+        get;
         set
         {
-            if (_progressVal != value)
+            if (field != value)
             {
                 OnPropertyChanging(s_progressValChangingEventArgs);
-                _progressVal = value;
+                field = value;
                 OnPropertyChanged(s_progressValChangedEventArgs);
             }
         }
     }
-    private double _progressVal;
+
     private static readonly PropertyChangingEventArgs s_progressValChangingEventArgs = new(nameof(ProgressVal));
     private static readonly PropertyChangedEventArgs s_progressValChangedEventArgs = new(nameof(ProgressVal));
 
@@ -109,18 +109,18 @@ public sealed partial class HashTask : ObservableObject, IDisposable
     [JsonIgnore]
     public double ProgressMax
     {
-        get => _progressMax;
+        get;
         set
         {
-            if (_progressMax != value)
+            if (field != value)
             {
                 OnPropertyChanging(s_progressMaxChangingEventArgs);
-                _progressMax = value;
+                field = value;
                 OnPropertyChanged(s_progressMaxChangedEventArgs);
             }
         }
     }
-    private double _progressMax;
+
     private static readonly PropertyChangingEventArgs s_progressMaxChangingEventArgs = new(nameof(ProgressMax));
     private static readonly PropertyChangedEventArgs s_progressMaxChangedEventArgs = new(nameof(ProgressMax));
 
@@ -148,11 +148,6 @@ public sealed partial class HashTask : ObservableObject, IDisposable
         sb.Append(" ]");
         sb.Append(" }");
         return sb.ToString();
-    }
-
-    private static bool EqualityComparerEquals<T>(T? x, T? y)
-    {
-        return EqualityComparer<T>.Default.Equals(x, y);
     }
 
     #region Finalizer, IDisposable
@@ -184,7 +179,7 @@ public sealed partial class HashTask : ObservableObject, IDisposable
 
     #endregion Finalizer, IDisposable
 
-    private sealed class HashTaskManager(HashTask hashTask) : IDisposable
+    private sealed partial class HashTaskManager(HashTask hashTask) : IDisposable
     {
         private readonly ILogger<HashTaskManager> _logger = App.GetLogger<HashTaskManager>();
         private readonly IComputeHashService _computeHashService = App.GetService<IComputeHashService>();

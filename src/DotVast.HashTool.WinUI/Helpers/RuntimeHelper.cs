@@ -1,6 +1,8 @@
 // Copyright (c) Kiyan Yang.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
+
 using Windows.ApplicationModel;
 
 namespace DotVast.HashTool.WinUI.Helpers;
@@ -9,8 +11,8 @@ public sealed class RuntimeHelper
 {
     #region AppVersion
 
-    private static Version? s_appVersion;
-    public static Version AppVersion => s_appVersion ??= GetAppVersion();
+    [field: AllowNull]
+    public static Version AppVersion => field ??= GetAppVersion();
     private static Version GetAppVersion()
     {
         var packageVersion = Package.Current.Id.Version;

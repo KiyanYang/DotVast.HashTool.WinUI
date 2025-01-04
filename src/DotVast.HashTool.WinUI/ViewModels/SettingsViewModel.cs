@@ -83,7 +83,7 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
     public AppLanguage[] AppLanguages { get; } = Enum.GetValues<AppLanguage>();
 
     [ObservableProperty]
-    private AppLanguage _appLanguage;
+    public partial AppLanguage AppLanguage { get; set; }
 
     partial void OnAppLanguageChanged(AppLanguage value)
     {
@@ -103,7 +103,7 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
     public AppTheme[] Themes { get; } = Enum.GetValues<AppTheme>();
 
     [ObservableProperty]
-    private AppTheme _theme;
+    public partial AppTheme Theme { get; set; }
 
     partial void OnThemeChanged(AppTheme value) =>
         _appearanceSettingsService.Theme = value;
@@ -113,7 +113,7 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
     #region HashFontFamily
 
     [ObservableProperty]
-    private string _hashFontFamilyName;
+    public partial string HashFontFamilyName { get; set; }
 
     partial void OnHashFontFamilyNameChanged(string value) =>
         _appearanceSettingsService.HashFontFamilyName = value;
@@ -123,7 +123,7 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
     #region FileExplorerContextMenusEnabled
 
     [ObservableProperty]
-    private bool _fileExplorerContextMenusEnabled;
+    public partial bool FileExplorerContextMenusEnabled { get; set; }
 
     partial void OnFileExplorerContextMenusEnabledChanged(bool value) =>
         _preferencesSettingsService.FileExplorerContextMenusEnabled = value;
@@ -133,7 +133,7 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
     #region IncludePreRelease
 
     [ObservableProperty]
-    private bool _includePreRelease;
+    public partial bool IncludePreRelease { get; set; }
 
     partial void OnIncludePreReleaseChanged(bool value)
     {
@@ -148,7 +148,7 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
     #region CheckForUpdatesOnStartup
 
     [ObservableProperty]
-    private bool _checkForUpdatesOnStartup;
+    public partial bool CheckForUpdatesOnStartup { get; set; }
 
     partial void OnCheckForUpdatesOnStartupChanged(bool value) =>
         _preferencesSettingsService.CheckForUpdatesOnStartup = value;

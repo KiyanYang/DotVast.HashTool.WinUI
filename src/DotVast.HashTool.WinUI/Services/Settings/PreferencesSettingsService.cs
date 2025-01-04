@@ -54,7 +54,7 @@ internal sealed partial class PreferencesSettingsService(IHashService hashServic
     }
 
     #region HashSettings
-    public IReadOnlyList<HashSetting> HashSettings { get; private set; } = Array.Empty<HashSetting>();
+    public IReadOnlyList<HashSetting> HashSettings { get; private set; } = [];
 
     private void InitializeHashSettings()
     {

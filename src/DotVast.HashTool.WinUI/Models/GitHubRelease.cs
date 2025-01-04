@@ -20,10 +20,10 @@ public sealed partial class GitHubRelease
     [JsonPropertyName("tag_name")]
     public string TagName
     {
-        get => _tagName;
+        get;
         set
         {
-            _tagName = value;
+            field = value;
 
             var tagMatch = TagRegex().Match(value);
             var major = int.Parse(tagMatch.Groups["major"].Value);
@@ -31,8 +31,7 @@ public sealed partial class GitHubRelease
             var patch = int.Parse(tagMatch.Groups["patch"].Value);
             Version = new Version(major, minor, patch);
         }
-    }
-    private string _tagName = string.Empty;
+    } = string.Empty;
 
     /// <summary>
     /// 是否为预发布版本.

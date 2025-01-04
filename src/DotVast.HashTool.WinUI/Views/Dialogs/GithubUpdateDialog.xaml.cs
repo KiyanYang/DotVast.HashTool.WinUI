@@ -9,11 +9,9 @@ namespace DotVast.HashTool.WinUI.Views.Dialogs;
 
 public sealed partial class GithubUpdateDialog : ContentDialog
 {
-    private GitHubRelease? _release;
-
     public GitHubRelease? Release
     {
-        get => _release;
+        get;
         set
         {
             if (value is null)
@@ -21,7 +19,7 @@ public sealed partial class GithubUpdateDialog : ContentDialog
                 return;
             }
 
-            _release = value;
+            field = value;
             TitleText.Text = value.TagName;
             PublishAtText.Text = value.PublishAt.ToLocalTime().ToString();
             MarkdownText.Text = value.Description;

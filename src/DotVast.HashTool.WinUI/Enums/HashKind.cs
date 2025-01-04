@@ -1,6 +1,7 @@
 // Copyright (c) Kiyan Yang.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
 using DotVast.Hashing;
@@ -60,13 +61,12 @@ public enum HashKind
 
 internal static class HashKindExtensions
 {
-    private static IHashService? s_hashService;
-    private static IHashService s_HashService =>
-        s_hashService ??= App.GetService<IHashService>();
+    [field: AllowNull]
+    private static IHashService s_HashService => field ??= App.GetService<IHashService>();
 
-    private static IReadOnlyDictionary<HashKind, HashSetting>? s_hashSettings;
+    [field: AllowNull]
     private static IReadOnlyDictionary<HashKind, HashSetting> s_HashSettings =>
-        s_hashSettings ??= App.GetService<IPreferencesSettingsService>().HashSettings.ToDictionary(hs => hs.Kind);
+        field ??= App.GetService<IPreferencesSettingsService>().HashSettings.ToDictionary(hs => hs.Kind);
 
     public static IHasher ToIHasher(this HashKind hashKind)
     {

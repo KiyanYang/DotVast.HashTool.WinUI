@@ -1,6 +1,8 @@
 // Copyright (c) Kiyan Yang.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
+
 using Windows.Globalization;
 
 namespace DotVast.HashTool.WinUI.Enums;
@@ -17,14 +19,14 @@ public enum AppLanguage
 
 public static class AppLanguageExtensions
 {
-    private static AppLanguage[]? s_appLanguages;
-    private static AppLanguage[] _Values => s_appLanguages ??= Enum.GetValues<AppLanguage>();
+    [field: AllowNull]
+    private static AppLanguage[] _Values => field ??= Enum.GetValues<AppLanguage>();
 
-    private static Language? s_enUS;
-    private static Language? s_zhHans;
+    [field: AllowNull]
+    private static Language _EnUS => field ??= new("en-US");
 
-    private static Language _EnUS => s_enUS ??= new("en-US");
-    private static Language _ZhHans => s_zhHans ??= new("zh-Hans");
+    [field: AllowNull]
+    private static Language _ZhHans => field ??= new("zh-Hans");
 
     public static AppLanguage ToAppLanguage(this string languageTag)
     {

@@ -28,8 +28,6 @@ public sealed partial class ResultsViewModel(ILogger<ResultsViewModel> logger,
     [NotifyPropertyChangedFor(nameof(HashResultsFiltered))]
     public partial bool HashResultsFilterIsEnabled { get; set; } = false;
 
-    private IList<HashResult>? _hashResultsFiltered;
-
     public IList<HashResult>? HashResultsFiltered
     {
         get
@@ -37,17 +35,17 @@ public sealed partial class ResultsViewModel(ILogger<ResultsViewModel> logger,
             var filter = HashResultsFilter;
             if (string.IsNullOrEmpty(filter))
             {
-                _hashResultsFiltered = HashTask?.Results;
+                field = HashTask?.Results;
             }
             else if (HashResultsFilterIsEnabled)
             {
-                _hashResultsFiltered = HashTask?.Results?.Where(h =>
+                field = HashTask?.Results?.Where(h =>
                     IgnoreCaseContains(h.Path, filter) || (h.Data?.Any(d => IgnoreCaseContains(d.Value, filter)) ?? false)
                 ).ToArray();
             }
-            return _hashResultsFiltered;
+            return field;
         }
-        private set => SetProperty(ref _hashResultsFiltered, value);
+        private set => SetProperty(ref field, value);
     }
 
     [RelayCommand(CanExecute = nameof(CanConfigure))]

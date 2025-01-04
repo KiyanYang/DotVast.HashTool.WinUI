@@ -17,18 +17,18 @@ public sealed partial class HashOption : ObservableObject
 
     public HashFormat Format
     {
-        get => _format;
+        get;
         set
         {
-            if (_format != value)
+            if (field != value)
             {
                 OnPropertyChanging(s_formatChangingEventArgs);
-                _format = value;
+                field = value;
                 OnPropertyChanged(s_formatChangedEventArgs);
             }
         }
     }
-    private HashFormat _format;
+
     private static readonly PropertyChangingEventArgs s_formatChangingEventArgs = new(nameof(Format));
     private static readonly PropertyChangedEventArgs s_formatChangedEventArgs = new(nameof(Format));
 
