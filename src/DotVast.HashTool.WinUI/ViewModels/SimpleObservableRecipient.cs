@@ -17,7 +17,7 @@ public abstract partial class SimpleObservableRecipient : ObservableObject
     protected IMessenger Messenger { get; }
 
     [ObservableProperty]
-    private bool _isActive;
+    public partial bool IsActive { get; set; }
 
     partial void OnIsActiveChanged(bool value)
     {

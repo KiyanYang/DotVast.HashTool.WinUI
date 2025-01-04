@@ -39,7 +39,7 @@ public sealed partial class HomeViewModel : SimpleObservableRecipient, IViewMode
 
         _hashTaskService.HashTasks.CollectionChanged += (sender, e) => OnPropertyChanged(nameof(LastHashTask));
 
-        _startingWhenCreateHashTask = _preferencesSettingsService.StartingWhenCreateHashTask;
+        StartingWhenCreateHashTask = _preferencesSettingsService.StartingWhenCreateHashTask;
 
         IsActive = true;
     }
@@ -51,14 +51,14 @@ public sealed partial class HomeViewModel : SimpleObservableRecipient, IViewMode
     /// </summary>
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(CreateTaskCommand))]
-    private HashTaskMode _inputtingMode = HashTaskMode.Files;
+    public partial HashTaskMode InputtingMode { get; set; } = HashTaskMode.Files;
 
     /// <summary>
     /// 当前界面输入的哈希任务内容.
     /// </summary>
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(CreateTaskCommand))]
-    private string _inputtingContent = string.Empty;
+    public partial string InputtingContent { get; set; } = string.Empty;
 
     /// <summary>
     /// 哈希任务模式.
@@ -78,7 +78,7 @@ public sealed partial class HomeViewModel : SimpleObservableRecipient, IViewMode
     #region StartingWhenCreateHashTask
 
     [ObservableProperty]
-    private bool _startingWhenCreateHashTask;
+    public partial bool StartingWhenCreateHashTask { get; set; }
 
     partial void OnStartingWhenCreateHashTaskChanged(bool value) =>
         _preferencesSettingsService.StartingWhenCreateHashTask = value;

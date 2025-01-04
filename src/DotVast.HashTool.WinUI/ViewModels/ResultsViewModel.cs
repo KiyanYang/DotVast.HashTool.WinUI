@@ -18,15 +18,15 @@ public sealed partial class ResultsViewModel(ILogger<ResultsViewModel> logger,
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HashResultsFiltered))]
-    private HashTask? _hashTask;
+    public partial HashTask? HashTask { get; set; }
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HashResultsFiltered))]
-    private string _hashResultsFilter = string.Empty;
+    public partial string HashResultsFilter { get; set; } = string.Empty;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HashResultsFiltered))]
-    private bool _hashResultsFilterIsEnabled = false;
+    public partial bool HashResultsFilterIsEnabled { get; set; } = false;
 
     private IList<HashResult>? _hashResultsFiltered;
 

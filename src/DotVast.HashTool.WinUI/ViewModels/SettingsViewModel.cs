@@ -35,23 +35,23 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
         _dialogService = dialogService;
         _notificationService = notificationService;
 
-        _isAlwaysOnTop = _appearanceSettingsService.IsAlwaysOnTop;
+        IsAlwaysOnTop = _appearanceSettingsService.IsAlwaysOnTop;
 
-        _appLanguage = _appearanceSettingsService.Language;
+        AppLanguage = _appearanceSettingsService.Language;
 
-        _theme = _appearanceSettingsService.Theme;
+        Theme = _appearanceSettingsService.Theme;
 
-        _hashFontFamilyName = _appearanceSettingsService.HashFontFamilyName;
+        HashFontFamilyName = _appearanceSettingsService.HashFontFamilyName;
 
-        _fileExplorerContextMenusEnabled = _preferencesSettingsService.FileExplorerContextMenusEnabled;
+        FileExplorerContextMenusEnabled = _preferencesSettingsService.FileExplorerContextMenusEnabled;
 
-        _includePreRelease = _preferencesSettingsService.IncludePreRelease;
+        IncludePreRelease = _preferencesSettingsService.IncludePreRelease;
 
-        _checkForUpdatesOnStartup = _preferencesSettingsService.CheckForUpdatesOnStartup;
+        CheckForUpdatesOnStartup = _preferencesSettingsService.CheckForUpdatesOnStartup;
 
-        _fileAttributeHiddenToSkip = _preferencesSettingsService.FileAttributesToSkip.HasFlag(FileAttributes.Hidden);
-        _fileAttributeOfflineToSkip = _preferencesSettingsService.FileAttributesToSkip.HasFlag(FileAttributes.Offline);
-        _fileAttributeSystemToSkip = _preferencesSettingsService.FileAttributesToSkip.HasFlag(FileAttributes.System);
+        FileAttributeHiddenToSkip = _preferencesSettingsService.FileAttributesToSkip.HasFlag(FileAttributes.Hidden);
+        FileAttributeOfflineToSkip = _preferencesSettingsService.FileAttributesToSkip.HasFlag(FileAttributes.Offline);
+        FileAttributeSystemToSkip = _preferencesSettingsService.FileAttributesToSkip.HasFlag(FileAttributes.System);
 
 #if GITHUB_ACTIONS && !DotVast_CIRelease
         var assemblyInformationalVersion = typeof(SettingsViewModel).Assembly
@@ -71,7 +71,7 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
     #region AlwaysOnTop
 
     [ObservableProperty]
-    private bool _isAlwaysOnTop;
+    public partial bool IsAlwaysOnTop { get; set; }
 
     partial void OnIsAlwaysOnTopChanged(bool value) =>
         _appearanceSettingsService.IsAlwaysOnTop = value;
@@ -158,17 +158,17 @@ public sealed partial class SettingsViewModel : ObservableObject, IViewModel
     #region FileAttributesToSkip
 
     [ObservableProperty]
-    private bool _fileAttributeHiddenToSkip;
+    public partial bool FileAttributeHiddenToSkip { get; set; }
     partial void OnFileAttributeHiddenToSkipChanged(bool value) =>
         ChangeFileAttributeToSkip(FileAttributes.Hidden, value);
 
     [ObservableProperty]
-    private bool _fileAttributeOfflineToSkip;
+    public partial bool FileAttributeOfflineToSkip { get; set; }
     partial void OnFileAttributeOfflineToSkipChanged(bool value) =>
         ChangeFileAttributeToSkip(FileAttributes.Offline, value);
 
     [ObservableProperty]
-    private bool _fileAttributeSystemToSkip;
+    public partial bool FileAttributeSystemToSkip { get; set; }
     partial void OnFileAttributeSystemToSkipChanged(bool value) =>
         ChangeFileAttributeToSkip(FileAttributes.System, value);
 

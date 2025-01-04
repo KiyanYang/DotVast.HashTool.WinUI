@@ -16,10 +16,10 @@ public sealed partial class ShellViewModel : ObservableObject, IViewModel
     public INotificationService NotificationService { get; }
 
     [ObservableProperty]
-    private bool _isBackEnabled;
+    public partial bool IsBackEnabled { get; set; }
 
     [ObservableProperty]
-    private object? _selected;
+    public partial object? Selected { get; set; }
 
     public ShellViewModel(
         INavigationService navigationService,

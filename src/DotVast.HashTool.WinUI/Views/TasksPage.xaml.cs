@@ -26,11 +26,6 @@ public sealed partial class TasksPage : Page, IView<TasksViewModel>
     public sealed partial class AuxiliaryObject : ObservableObject
     {
         [ObservableProperty]
-        private bool _isSelectEnabled;
-
-        public AuxiliaryObject()
-        {
-            _isSelectEnabled = false;
-        }
+        public partial bool IsSelectEnabled { get; set; } = false;
     }
 }

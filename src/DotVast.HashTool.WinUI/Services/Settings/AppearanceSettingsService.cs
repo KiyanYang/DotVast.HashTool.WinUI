@@ -97,7 +97,7 @@ internal sealed partial class AppearanceSettingsService : BaseObservableSettings
 
     #region Language
     [ObservableProperty]
-    private AppLanguage _language = WGAL.PrimaryLanguageOverride.ToAppLanguage();
+    public partial AppLanguage Language { get; set; } = WGAL.PrimaryLanguageOverride.ToAppLanguage();
 
     partial void OnLanguageChanged(AppLanguage value) =>
         SetLanguage();

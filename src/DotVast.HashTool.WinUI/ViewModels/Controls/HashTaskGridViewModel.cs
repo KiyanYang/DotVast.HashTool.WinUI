@@ -26,7 +26,7 @@ public sealed partial class HashTaskGridViewModel(
     [NotifyCanExecuteChangedFor(nameof(CancelTaskCommand))]
     [NotifyCanExecuteChangedFor(nameof(EditTaskCommand))]
     [NotifyCanExecuteChangedFor(nameof(DeleteTaskCommand))]
-    private HashTask? _hashTask;
+    public partial HashTask? HashTask {  get; set; }
 
     partial void OnHashTaskChanging(HashTask? oldValue, HashTask? newValue)
     {
