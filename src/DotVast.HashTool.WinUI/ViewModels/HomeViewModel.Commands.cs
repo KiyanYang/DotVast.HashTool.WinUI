@@ -8,7 +8,7 @@ using DotVast.HashTool.WinUI.Models;
 
 using Microsoft.Extensions.Logging;
 
-using Windows.Storage.Pickers;
+using Microsoft.Windows.Storage.Pickers;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
@@ -25,11 +25,8 @@ public partial class HomeViewModel
         {
             if (InputtingMode == HashTaskMode.Files)
             {
-                FileOpenPicker picker = new();
+                FileOpenPicker picker = new(App.MainWindow.AppWindow.Id);
                 picker.FileTypeFilter.Add("*");
-
-                var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
-                WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
 
                 var result = await picker.PickMultipleFilesAsync();
                 if (result.Count > 0)
@@ -39,14 +36,10 @@ public partial class HomeViewModel
             }
             else if (InputtingMode == HashTaskMode.Folder)
             {
-                FolderPicker picker = new();
-                picker.FileTypeFilter.Add("*");
-
-                var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
-                WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
+                FolderPicker picker = new(App.MainWindow.AppWindow.Id);
 
                 var result = await picker.PickSingleFolderAsync();
-                if (result != null)
+                if (result is not null)
                 {
                     InputtingContent = result.Path;
                 }

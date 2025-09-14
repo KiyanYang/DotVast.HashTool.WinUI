@@ -9,7 +9,7 @@ using CommunityToolkit.Mvvm.Input;
 using DotVast.HashTool.WinUI.Enums;
 using DotVast.HashTool.WinUI.Models;
 
-using Windows.Storage.Pickers;
+using Microsoft.Windows.Storage.Pickers;
 
 namespace DotVast.HashTool.WinUI.ViewModels;
 
@@ -102,16 +102,13 @@ public sealed partial class TasksViewModel : SimpleObservableRecipient, IViewMod
     [RelayCommand(CanExecute = nameof(CanExecuteSave))]
     private async Task SaveAsync()
     {
-        FileSavePicker picker = new()
+        FileSavePicker picker = new(App.MainWindow.AppWindow.Id)
         {
             SuggestedFileName = $"{LocalizationCommon.Results}-{DateTime.Now:yyMMdd_HHmmss}",
             SuggestedStartLocation = PickerLocationId.Desktop,
         };
         picker.FileTypeChoices.Add("Text", [".txt"]);
         picker.FileTypeChoices.Add("JSON", [".json"]);
-
-        var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
-        WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
 
         var file = await picker.PickSaveFileAsync();
         if (file is null)
@@ -120,7 +117,7 @@ public sealed partial class TasksViewModel : SimpleObservableRecipient, IViewMod
         }
 
         var hashTasks = HashTaskCheckables.Where(h => h.IsChecked).Select(h => h.HashTask);
-        ExportKind exportKind = file.FileType switch
+        ExportKind exportKind = Path.GetExtension(file.Path) switch
         {
             ".txt" => ExportKind.Text | ExportKind.HashTask,
             ".json" => ExportKind.Json | ExportKind.HashTask,
