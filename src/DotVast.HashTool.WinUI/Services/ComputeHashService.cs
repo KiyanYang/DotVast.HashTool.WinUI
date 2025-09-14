@@ -82,30 +82,28 @@ internal sealed class ComputeHashService : IComputeHashService
     {
         var fileAttributesToSkip = _preferencesSettingsService.FileAttributesToSkip;
         hashTask.Results = [];
-        var failedFilesCount = 0;
-        var filesCount = filePaths.Count;
+        var processedFilesCount = 0;
         for (var i = 0; i < filePaths.Count; i++)
         {
             var fileAttributes = File.GetAttributes(filePaths[i]);
             if (fileAttributes.HasAnyFlag(fileAttributesToSkip))
             {
-                filesCount--;
                 continue;
             }
 
             // 出现异常情况的频率较低，因此不使用 File.Exists 等涉及 IO 的额外判断操作
             try
             {
-                hashTask.ProgressMax = filesCount - failedFilesCount;
+                hashTask.ProgressMax = filePaths.Count - (i - processedFilesCount);
                 using var stream = File.Open(filePaths[i], FileMode.Open, FileAccess.Read, FileShare.Read);
-                var hashResultItems = await Task.Run(() => HashStream(hashTask, stream, i - failedFilesCount, mres, cancellationToken));
+                var hashResultItems = await Task.Run(() => HashStream(hashTask, stream, processedFilesCount, mres, cancellationToken));
                 var hashResult = new HashResult(filePaths[i], hashResultItems);
                 hashTask.Results.Add(hashResult);
+                processedFilesCount++;
             }
             catch (Exception e) when (e is DirectoryNotFoundException or FileNotFoundException)
             {
                 WeakReferenceMessenger.Default.SendV<IComputeHashService, string>(new(this, filePaths[i]), EMT.IComputeHashService_FileNotFound);
-                failedFilesCount++;
             }
             catch (Exception)
             {
