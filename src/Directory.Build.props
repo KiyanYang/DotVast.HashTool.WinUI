@@ -2,7 +2,7 @@
   <PropertyGroup>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>0.7.3</Version>
+    <Version>0.7.4</Version>
 
     <DefineConstants Condition="'$(GITHUB_ACTIONS)' == 'true'">$(DefineConstants);GITHUB_ACTIONS</DefineConstants>
     <DefineConstants Condition="'$(DotVast_CIRelease)' == 'true'">$(DefineConstants);DotVast_CIRelease</DefineConstants>
